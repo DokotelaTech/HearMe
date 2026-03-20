@@ -1,0 +1,231 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/*logo image and heading in the header section*/
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.logo p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.logo-container img {
+    height: 50px;  
+    width: auto;
+}
+
+/* end of logo image and heading in the header section */
+
+body {
+    background: 
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.15)), 
+    url("images/landingPage-back_img.png");
+    background-size: cover;
+    background-position: center right; 
+    background-position: center;
+    color: white;
+}
+
+/*START OT THE TOP PART OF THE PAGE*/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);   
+}
+
+.logo h1 {
+    font-weight: 700;
+    font-size: 32px;  
+}
+
+.logo span {
+    color: #3ea6ff;
+}
+
+.logo p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.nav a.active,
+.nav a:hover {
+    color: #3ea6ff;
+}
+/* END OF THE TOP PART OF THE PAGE */
+
+
+.get-started {
+    background: #3ea6ff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+/* HERO SECTION */
+.hero {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    padding-left: 80px;
+}
+
+.hero-text {
+    max-width: 600px;
+}
+
+.hero-text h1 {
+    font-size: 65px;
+    
+    margin-bottom: 20px;
+}
+
+.hero-text span {
+    color: #3ea6ff;
+}
+
+.hero-text p {
+    font-size: 18px;
+    line-height: 1.6;
+    opacity: 0.9;
+    font-size: 35px;
+}
+
+p:focus{
+    border: 2px solid #3ea6ff;
+    color: #3ea6ff;
+}
+
+.highlight {
+    color: linear-gradient(90deg, #084516, #0e0523);
+}
+
+
+/* CTA BUTTON */
+.cta {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 20px 60px;
+    background: #3ea6ff;
+    border-radius: 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+}
+
+/* START OF BOTTOM FEATURES SECTION */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #03000afc;
+    max-width: 900px;
+   justify-content: center;
+    margin: 40px auto;
+    border-radius: 15px;
+    
+}
+
+.card {
+    border-right: 2px solid #3ea6ff;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+.last-card{
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+.card span,
+.last-card span {
+    display: block;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+
+/* icons */
+
+/* FEATURES CONTAINER */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 10px;
+    margin-top: -80px; /* pulls cards up over image */
+}
+
+/* CARD STYLE */
+.card {
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+/* HOVER EFFECT */
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* ICON */
+.card img {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+/* TITLE */
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* SUBTEXT */
+.card p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* COLORS */
+.blue { color: #3ea6ff; }
+.purple { color: #a855f7; }
+.orange { color: #f97316; }
+.green { color: #22c55e; }
+
+
+/*  OF BOTTOM FEATURES SECTION */
