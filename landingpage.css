@@ -5,7 +5,18 @@
     font-family: 'Poppins', sans-serif;
 }
 
-
+h3 {
+    font-size: 28px;
+}
+p {
+    font-size: 18px;
+}
+html, body {
+    height: 100%;
+}
+html {
+    scroll-behavior: smooth;
+}
 /*logo image and heading in the header section*/
 .logo-container {
     display: flex;
@@ -31,9 +42,9 @@
 /* end of logo image and heading in the header section */
 
 body {
-    background: 
+    /* background: 
     linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.15)), 
-    url("images/landingPage-back_img.png");
+    url("images/landingPage-back_img.png"); */
     background-size: cover;
     background-position: center right; 
     background-position: center;
@@ -95,9 +106,16 @@ header {
 
 /* HERO SECTION */
 .hero {
-    height: 80vh;
+
+    height: 100vh;
+    background-image: url("images/landingPage-back_img.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
     display: flex;
     align-items: center;
+    /* justify-content: center; */
     padding: 0 60px;
     padding-left: 80px;
 }
@@ -143,6 +161,57 @@ p:focus{
     text-decoration: none;
     color: white;
     font-size: 25px;
+}
+
+/* START OF BOTTOM FEATURES SECTION */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #03000afc;
+    max-width: 900px;
+   justify-content: center;
+    margin: 40px auto;
+    border-radius: 15px;
+    
+}
+
+.card {
+    border-right: 2px solid #3ea6ff;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+.last-card{
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+}
+.card span,
+.last-card span {
+    display: block;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+
+/* FEATURES CONTAINER */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 10px;
+    margin-top: -80px; /* pulls cards up over image */
+}
+
+/* CARD STYLE */
+.card {
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: 0.3s ease;
+    cursor: pointer;
 }
 
 /* START OF BOTTOM FEATURES SECTION */
@@ -229,3 +298,330 @@ p:focus{
 
 
 /*  OF BOTTOM FEATURES SECTION */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #0b1220;
+    color: white;
+}
+/* Styling AI section of support */
+.ai-section {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.ai-section h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+.ai-section h2 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.subtitle-ai {
+    color: #a0aec0;
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.AIcards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card-ai {
+    background: #031a4d;
+    padding: 25px;
+    border-radius: 15px;
+    width: 250px;
+    text-align: left;
+    border: 1px solid #1f2a44;
+    transition: 0.3s;
+}
+
+.card-ai:hover {
+    transform: translateY(-5px);
+    border-color: #3b82f6;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card-ai h3 {
+    margin-bottom: 10px;
+    color: #e2e8f0;
+}
+
+.card-ai p {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* Styling the community section*/
+.findCommunity {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.findCommunity h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+.findCommunity h2 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.subtitle-community {
+    color: #dee2e7;
+    max-width: 500px;
+    margin: 0 auto 40px;
+}
+
+.communityCard-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.community-card {
+    background: #08090a;
+    padding: 25px;
+    border-radius: 15px;
+    width: 250px;
+    text-align: left;
+    border: 1px solid #0b0b0c;
+    transition: 0.3s;
+}
+
+.community-card:hover {
+    transform: translateY(-5px);
+    border-color: #3364b4;
+    box-shadow: 0 10px 25px rgba(243, 242, 242, 0.4);
+}
+
+.community-card h3 {
+    margin-bottom: 10px;
+    color: #0f3a91;
+}
+
+.community-card p {
+    color: #ebecee;
+    font-size: 14px;
+}
+/* Styling the professional part */
+.prof-section {
+    text-align: center;
+    padding: 80px 40px;
+    /* background-color: rgb(56, 84, 177) ;
+    border-style: hidden;
+    border-radius: 20%;*/
+}
+
+.prof-section h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+.prof-section h3 {
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.subtitle-prof {
+    color: #dee2e7;
+    max-width: 500px;
+    margin: 0 auto 40px;
+}
+
+.professional-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.prof-card {
+    background: #aaf3ce;
+    padding: 25px;
+    border-radius: 15px;
+    width: 400px;
+    text-align: center;
+    border: 1px solid #0dbe0d;
+    transition: 0.3s;
+}
+.prof-card:hover {
+    transform: translateY(-5px);
+    border-color: #3364b4;
+    box-shadow: 0 10px 25px rgba(243, 242, 242, 0.4);
+}
+.prof-card h3 {
+    margin-bottom: 10px;
+    color: #02050c;
+}
+.prof-card p {
+    color: #0d0e11;
+    font-size: 14px;
+}
+.prof-card2 {
+    background: #1b2922;
+    padding: 40px;
+    border-radius: 15px;
+    width: 900px;
+    text-align: center;
+    border: 1px solid #0dbe0d;
+    transition: 0.3s;
+}
+.prof-card2:hover {
+    transform: translateY(-10px);
+    border-color: #3364b4;
+    box-shadow: 0 10px 25px rgba(243, 242, 242, 0.4);
+}
+/* Wellness Dashboard styling */
+/* Section background */
+.wellness-section {
+    background: linear-gradient(to bottom, #1e293b, #0f172a);
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* Headings */
+.wellness-section h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 40px;
+}
+
+/* Dashboard container */
+.wellness-dashbord {
+    margin-bottom: 40px;
+}
+
+.wellness-dashbord h2 {
+    margin-bottom: 5px;
+}
+
+.wellness-dashbord p {
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+/* Cards container */
+.wellness-dashbord {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Cards */
+.wellDashboard-card {
+    background: #1f2a44;
+    padding: 15px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+
+.wellDashboard-card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-3px);
+}
+
+/* Active card */
+.wellDashboard-card.active {
+    border-color: #10b981;
+    color: #10b981;
+}
+
+/* Main card */
+.main-card {
+    max-width: 800px;
+    margin: auto;
+    padding: 60px;
+    border-radius: 20px;
+    background: #111827;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Left side */
+.value {
+    font-size: 60px;
+    margin: 0;
+    color: #10b981;
+}
+
+.label {
+    color: #94a3b8;
+}
+
+/* Right side */
+.status {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #10b981;
+    color: #10b981;
+    font-weight: bold;
+}
+/* About style */
+
+/* Page background */
+/* body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(180deg, #0f172a, #1e293b);
+    color: white;
+} */
+
+/* About section container */
+#about {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+/* Top heading */
+#header1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+#header1 span {
+    color: #3b82f6; /* blue highlight */
+}
+/* Subtitle */
+#paragraph1 {
+    font-size: 18px;
+    color: #cbd5f5;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+}
+/* Mission box */
+#header2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+/* Card container effect */
+#paragraph2 {
+    background: rgba(30, 41, 59, 0.9);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-size: 16px;
+    color: #e2e8f0;
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+/* Highlight words */
+.highlight {
+    color: #3b82f6;
+    font-weight: bold;
+}
