@@ -23,9 +23,8 @@
             <a href="#" class="active">Home</a>
             <a href="#about">About</a>
             <a href="#supportSection-tapID">Support</a>
-            <a href="#wellSection-tapID">Wellness</a>
             <a href="#communityTap-id">Community</a>
-            <a href="#">Contact</a>
+            <a href="#">Pricing</a>
         </nav>
 
         <a href="login.html" class="get-started">Get Started</a>
@@ -44,46 +43,31 @@
         </div>
     </section>
 
-
     <section class="features">
         <div class="card">
             <img src="icons/ai-chatbot.png" alt="">
             <h3>AI Chat</h3>
             <p class="blue">Support</p>
         </div>
-        <div class="card">
+        <!--<div class="card">
             <img src="icons/wellness.png" alt="">
             <h3>Wellness</h3>
             <p class="purple">Monitoring</p>
-        </div>
+        </div> -->
         <div class="card">
             <img src="icons/community.png" alt="">
             <h3>Community</h3>
             <p class="orange">Connection</p>
         </div>
 
-        <div class="last-card">
+        <div class="card">
             <img src="" alt="">
             <h3>Professional</h3>
             <p class="green">Help</p>
         </div> 
     </section>
-        <!-- <section id="contact">
-        <h3>Contacts</h3>
-        <p>📞 Phone: 043 455 43424</p>
-        <P>📱 Text: 079 123 5678</P>
-        <p>📧 Email: info@hearme.com</p>
-        <p>📍 Address: University of Johannesburg, Bunting Road Campus, Johannesburg </p>
-        <br> -->
-        <!-- <form>
-            <input type="text" placeholder="Your Name"required><br><br>
-            <input type="email" placeholder="Your Email" required><br><br>
-            <textarea placeholder="Your message"></textarea><br><br>
-            <button type="submit">Send</button>
-        </form> 
-    </section>-->
     <section id="about">
-        <h3 id="header1">About Me</h3>
+        <h3 id="header1">About <span>HearMe</span></h3>
         <p id="paragraph1">
         Breaking down barriers to mental health support through community, AI, and professional care
         </p><br>
@@ -158,7 +142,7 @@
             <!-- Professional part -->
              <section class="prof-section">
                 <h1>Professional Care Pathway</h1>
-                <h3>Seamless Professional Support</h3>
+                <!-- <h4>Seamless <span>Professional Support</span></h4> -->
                 <p class="subtitle-prof">When you're ready for professional help, we make the transition smooth and integrated.</p>
                 <div class="professional-container">
                     <div class="prof-card">
@@ -190,14 +174,14 @@
 
      <!-- Folowing section is for welness tab on the nav bar-->
 
-      <section class="wellness-section" id="wellSection-tapID">
+      <!--<section class="wellness-section" id="wellSection-tapID">
         <h1>Wellness Monitoring</h1>
         <p class="subtitle">Advanced IoT integration for holistic mental health support</p>
         <h2>Live Wellness Dashboard</h2>
         <p>Interactive visualization of your health metrics</p>
         <div class="wellness-dashbord">
 
-            <!-- Cards -->
+            <!-- Cards --
              <div class="wellDashboard-card active" onclick="changeData('heart', this)">
                 <h3>Heart Rate</h3>
             </div>
@@ -208,7 +192,7 @@
                 <h3>Sleep Quality</h3>
             </div>
         </div>
-        <!-- Main Card -->
+        <!-- Main Card --
          <div class="main-card">
             <div class="left">
                 <h2 id="value" class="value">72</h2>
@@ -218,10 +202,81 @@
                 <span id="status" class="status">Normal</span>
             </div>
         </div>
+    </section> -->
+         <section class="pricing">
+
+    <h1>Pricing</h1><br>
+    <p class="subtitle">Choose a plan that works for you</p>
+    <div class="toggle-container">
+        <span>Monthly</span>
+        <label class="switch">
+            <input type="checkbox" id="price-toggle">
+            <span class="slider"></span>
+        </label>
+        <span>Yearly (Save 15%)</span>
+    </div>
+
+    <div class="pricing-container">
+
+        <!-- Basic -->
+        <div class="card-pri">
+            <h3>Free</h3>
+            <p>Community Access</p>
+            <h2>R0</h2>
+
+            <ul>
+                <li>Community support</li>
+                <li>Limited AI chat</li>
+                <li>Basic resources</li>
+            </ul>
+
+            <button><span>Get Started Free</span></button>
+        </div>
+
+        <!-- Standard (highlighted)
+        <div class="card featured">
+            <h3>Standard</h3>
+            <h2>R99<span>/mo</span></h2>
+
+            <ul>
+                <li>Unlimited AI chat</li>
+                <li>Priority support</li>
+                <li>Weekly check-ins</li>
+            </ul>
+
+            <button>Choose Plan</button>
+        </div> -->
+
+        <!-- Premium -->
+         
+        <div class="card-pri">
+            
+            <h3>Premium</h3>
+            <p>AI Support</p>
+            <h2 id="premium-price">R179<span>/month</span></h2>
+            <ul>
+                <li>Everything in Free</li>
+                <li>24/7 AI Chatbot (The Consolidator)</li>
+                <li>Unlimited AI Conversations</li>
+                <li>Personalized Mental Health Insights</li>
+                <li>Crisis Detection & Support</li>
+                <li>Stress Monitoring Alerts</li>
+                <li>Priority Support</li>
+            </ul>
+            <button>Start Trial</button>
+        </div>
+       </div>
+    <section class="areYouGrttingStarted-container">
+        <h1>Ready to Start Your Journey?</h1>
+        <p>Join thousands of people finding support, healing, and growth through HearMe. Start with our free community and upgrade anytime.</p>
+        <div class="decision-group">
+            <a href="login.html" class="btn getingStartedBtn">Start Free Today</a>
+            <a href="#about" class="btn toAboutBtn">Learn More</a>
+        </div>
     </section>
     <footer>
         <p>&copy; 2025 HearMe. All rights reserved.</p>
     </footer>
-    <script src="wellnessTap.js"></script>
+    <script src="pricing.js"></script>
 </body>
 </html>
