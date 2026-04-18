@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe – Anonymous Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="feeds.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-top">
+            <div>
+                <h1>HearMe <span class="badge">Premium</span></h1>
+                <p class="header-sub">Anonymous Feed</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <div class="tab active">All Posts</div>
+        <div class="tab">Struggles</div>
+        <div class="tab">Success</div>
+    </div>
+
+    <!-- FEED (posts injected here by feeds.js) -->
+    <div class="feed"></div>
+
+    <!-- ADD POST FAB -->
+    <a href="createPost.html" class="fab-wrapper">
+        <button class="fab">＋</button>
+    </a>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+                </svg>
+            </span>
+            Feeds
+        </a>
+        <a href="https://aistudio.google.com/apps/df2bd3e4-3b33-459f-a6ee-1516df8ae64c?showPreview=true&showAssistant=true&fullscreenApplet=true" class="nav-item">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2l1.5 4.5H18l-3.75 2.7 1.5 4.5L12 11.1l-3.75 2.6 1.5-4.5L6 6.5h4.5L12 2z"/>
+                    <circle cx="12" cy="19" r="2" fill="currentColor" stroke="none"/>
+                </svg>
+            </span>
+            AI Chat
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+            </span>
+            Inbox
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
+            </span>
+            Profile
+        </a>
+    </div>
+
+    <script src="feeds.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#050816;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* center page */
+.page{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* back link */
+.back-btn{
+    color:#7ec8ff;
+    text-decoration:none;
+    margin-bottom:25px;
+    font-size:15px;
+    background-color: rgb(30, 30, 109);
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.back-btn:hover{
+    color:white;
+}
+
+/* main card */
+.post-box{
+    width:520px;
+    background:linear-gradient(145deg,#10192d,#16223a);
+    padding:30px;
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 0 30px rgba(0,0,0,0.4);
+}
+
+/* heading */
+.post-box h1{
+    color:white;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.post-box p{
+    color:#9aa4c3;
+    margin-bottom:25px;
+    font-size:18px;
+}
+
+/* struggle / success buttons */
+.tabs{
+    display:flex;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.tab{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:15px;
+    background:#1a2640;
+    color:#9aa4c3;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.tab.active{
+    background:#4b2a1e;
+    color:#ff9c42;
+}
+
+/* textarea */
+textarea{
+    width:100%;
+    height:180px;
+    resize:none;
+    border:none;
+    outline:none;
+    border-radius:18px;
+    padding:20px;
+    background:#17233b;
+    color:white;
+    font-size:18px;
+    margin-bottom:25px;
+}
+
+textarea::placeholder{
+    color:#66708f;
+}
+
+/* bottom buttons */
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+.cancel,
+.post{
+    flex:1;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.cancel{
+    background:#16233b;
+    color:#9aa4c3;
+}
+
+.post{
+    color:white;
+    background:linear-gradient(to right,#08c6f9,#b721ff);
+}
+
+/* hover */
+.cancel:hover{
+    background:#223454;
+}
+
+.post:hover{
+    transform:scale(1.03);
+}
