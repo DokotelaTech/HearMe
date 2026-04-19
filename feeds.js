@@ -1,128 +1,67 @@
-/* ── feeds.js ───────────────────────────────────────────────────────────────
-   Handles rendering, liking, and commenting on posts stored in localStorage.
-   ─────────────────────────────────────────────────────────────────────────── */
+const postFeed = document.getElementById('postFeed');
 
-const feed  = document.querySelector(".feed");
-let   posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-// ── Boot ─────────────────────────────────────────────────────────────────────
-showPosts();
-
-// ── Render all posts ──────────────────────────────────────────────────────────
-function showPosts() {
-    feed.innerHTML = "";
-
-    if (posts.length === 0) {
-        feed.innerHTML = `
-            <div class="no-posts">
-                <h2>No posts yet</h2>
-                <p>Be the first to share something anonymously.</p>
-            </div>`;
-        return;
+// Initial Mock Data if localStorage is empty
+const defaultPosts = [
+    {
+        user: "Neon-Shadow-42",
+        time: "2h ago",
+        text: "Sometimes I feel like I'm the only one who gets anxious about checking my phone in public. Anyone else?",
+        tag: "Social Anxiety",
+        likes: 127,
+        comments: 23
+    },
+    {
+        user: "Cyber-Whisper-88",
+        time: "4h ago",
+        text: "Just realized I've been living someone else's dream instead of my own. Time to recalibrate. 🌟",
+        tag: "Self Discovery",
+        likes: 342,
+        comments: 56
     }
+];
 
+function loadPosts() {
+    const posts = JSON.parse(localStorage.getItem("posts")) || defaultPosts;
+    renderPosts(posts);
+}
+
+function renderPosts(posts) {
+    postFeed.innerHTML = "";
     posts.forEach((post, index) => {
-        normalisePost(post);
-        feed.innerHTML += buildCard(post, index);
-    });
-
-    savePosts();
-}
-
-// ── Ensure every post has the required fields ─────────────────────────────────
-function normalisePost(post) {
-    if (!Array.isArray(post.comments)) post.comments = [];
-    if (!post.likes)   post.likes = 0;
-    if (!post.user)    post.user  = "Anonymous User";
-    if (!post.time)    post.time  = "Just now";
-    if (!post.tag)     post.tag   = "General";
-}
-
-// ── Build the card HTML ───────────────────────────────────────────────────────
-function buildCard(post, index) {
-    return `
-    <div class="card">
-
-        <div class="card-header">
-            <div class="user-info">
-                <div class="avatar">👻</div>
-                <div class="user-meta">
-                    <div class="user">${post.user}</div>
-                    <div class="time">${post.time}</div>
+        const tagClass = post.tag === "Social Anxiety" ? "tag-social" : "tag-self";
+        
+        const card = `
+            <div class="card">
+                <div class="card-header">
+                    <div class="avatar">👻</div>
+                    <div class="user-info">
+                        <div class="user-name">${post.user}</div>
+                        <div class="post-time">${post.time}</div>
+                    </div>
+                    <span class="tag ${tagClass}">${post.tag}</span>
+                </div>
+                <div class="post-text">${post.text}</div>
+                <div class="card-footer">
+                    <div class="stat" onclick="handleLike(${index})">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <span>${post.likes}</span>
+                    </div>
+                    <div class="stat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                        <span>${post.comments.length || post.comments} comments</span>
+                    </div>
                 </div>
             </div>
-            <span class="tag ${getTagClass(post.tag)}">${post.tag}</span>
-        </div>
-
-        <div class="text">${post.text}</div>
-
-        <div class="post-reactions">
-            <div class="reaction-row">
-                <button class="like-btn ${post.liked ? 'liked' : ''}"
-                        onclick="likePost(${index})">
-                    ${post.likes} Energy Up
-                </button>
-                <span class="comment-count">${post.comments.length} comments</span>
-            </div>
-
-            <div class="comment-section">
-                <input  type="text"
-                        id="comment${index}"
-                        placeholder="Write a comment…">
-                <button class="comment-btn"
-                        onclick="addComment(${index})">Post</button>
-            </div>
-
-            <div class="comments-list">
-                ${buildComments(post.comments)}
-            </div>
-        </div>
-
-    </div>`;
+        `;
+        postFeed.innerHTML += card;
+    });
 }
 
-// ── Map tag label → CSS modifier class ───────────────────────────────────────
-function getTagClass(tag) {
-    const map = {
-        "Social Anxiety":  "tag-social-anxiety",
-        "Self Discovery":  "tag-self-discovery",
-        "Community":       "tag-community",
-    };
-    return map[tag] || "tag-community";
+function filterPosts(type) {
+    // Basic filter UI logic
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    // Actual filtering logic could be added here
 }
 
-// ── Build comment list HTML ───────────────────────────────────────────────────
-function buildComments(comments) {
-    return comments
-        .map(c => `<p class="single-comment">• ${c}</p>`)
-        .join("");
-}
-
-// ── Like a post (one like per session via the .liked flag) ────────────────────
-function likePost(index) {
-    if (posts[index].liked) return;     // prevent double-liking
-    posts[index].likes++;
-    posts[index].liked = true;
-    savePosts();
-}
-
-// ── Add a comment ─────────────────────────────────────────────────────────────
-function addComment(index) {
-    const input   = document.getElementById("comment" + index);
-    const comment = input.value.trim();
-
-    if (!comment) {
-        input.focus();
-        return;
-    }
-
-    posts[index].comments.push(comment);
-    input.value = "";
-    savePosts();
-}
-
-// ── Persist & re-render ───────────────────────────────────────────────────────
-function savePosts() {
-    localStorage.setItem("posts", JSON.stringify(posts));
-    showPosts();
-}
+window.onload = loadPosts;
