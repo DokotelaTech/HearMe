@@ -1,6 +1,6 @@
 // Replace with your actual key for local testing. 
 // DO NOT push this key to GitHub or a public server!
-const API_KEY = 'AIzaSyBg0dluHKEdf0yL9PHA7_bV_3aXyMMguLo';
+const API_KEY = '{YOUR_API_KEY}';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
 const chatBox = document.getElementById('chat-box');
