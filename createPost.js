@@ -1,102 +1,49 @@
-let form = document.querySelector("form");
-let textarea = document.querySelector("textarea");
+// createPost.js – handles submission and redirect
 
-form.addEventListener("submit", function(e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const submitBtn = document.getElementById("submitPostBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const postText = document.getElementById("postText");
+    const postTag = document.getElementById("postTag");
 
-    let text = textarea.value.trim();
-
-    if (text === "") {
-        alert("Post cannot be empty.");
-        return;
+    function getRandomUsername() {
+        const prefixes = ["Echo", "Quiet", "Lunar", "Aether", "Willow", "Neon", "Cyber", "Phantom", "Misty", "Silent"];
+        const suffixes = ["Soul", "Fox", "Drift", "Shade", "Shadow", "Whisper", "Pulse", "Rain", "Void", "Spark"];
+        const randomPre = prefixes[Math.floor(Math.random() * prefixes.length)];
+        const randomSuf = suffixes[Math.floor(Math.random() * suffixes.length)];
+        const num = Math.floor(Math.random() * 900) + 10;
+        return `${randomPre}-${randomSuf}-${num}`;
     }
 
-    if (text.length < 5) {
-        alert("Post too short.");
-        return;
+    function createPost() {
+        const text = postText.value.trim();
+        if (!text) {
+            alert("Please write something before posting.");
+            return;
+        }
+        const tag = postTag.value;
+        const newPost = {
+            id: crypto.randomUUID ? crypto.randomUUID() : Date.now() + "-" + Math.random(),
+            user: getRandomUsername(),
+            time: "Just now",
+            text: text,
+            tag: tag,
+            likes: 0,
+            liked: false,
+            comments: []
+        };
+
+        // Get existing posts or empty array
+        let posts = JSON.parse(localStorage.getItem("hearMe_posts")) || [];
+        posts.unshift(newPost);
+        localStorage.setItem("hearMe_posts", JSON.stringify(posts));
+
+        // Redirect to feed page
+        window.location.href = "feeds.html";
     }
 
-    let posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-    let newPost = {
-        user: "Anonymous User",
-        time: new Date().toLocaleString(),
-        text: text,
-        likes: 0,
-        comments: []
-    };
-
-    posts.push(newPost);
-
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    alert("Post created!");
-
-    window.location.href = "feeds.html";
+    submitBtn.addEventListener("click", createPost);
+    cancelBtn.addEventListener("click", () => {
+        window.location.href = "feeds.html";
+    });
 });
-
-
-//adding user anonymous name and fixing bug for cancel button and post button when clicked
-let cancelBtn = document.querySelector(".cancel");
-
-// POST
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    let text = textarea.value.trim();
-
-    if (text === "") {
-        alert("Write something first.");
-        return;
-    }
-
-    let posts = JSON.parse(localStorage.getItem("posts")) || [];
-
-    let newPost = {
-        user: generateName(),
-        time: "Just now",
-        text: text,
-        likes: Math.floor(Math.random() * 200) + 10,
-        comments: Math.floor(Math.random() * 50) + 1,
-        tag: randomTag()
-    };
-
-    posts.unshift(newPost);
-
-    localStorage.setItem("posts", JSON.stringify(posts));
-
-    window.location.href = "feeds.html";
-});
-
-// CANCEL
-cancelBtn.addEventListener("click", function () {
-    window.location.href = "feeds.html";
-});
-
-// RANDOM USERNAME
-function generateName() {
-    let names = [
-        "Neon-Shadow-42",
-        "Cyber-Whisper-88",
-        "Ghost-Mind-21",
-        "Silent-Star-11",
-        "Dream-Walker-55",
-        "Pixel-Soul-99"
-    ];
-
-    return names[Math.floor(Math.random() * names.length)];
-}
-
-// RANDOM TAG
-function randomTag() {
-    let tags = [
-        "Social Anxiety",
-        "Self Discovery",
-        "Mental Health",
-        "Relationships",
-        "Success",
-        "Growth"
-    ];
-
-    return tags[Math.floor(Math.random() * tags.length)];
-}
