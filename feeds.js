@@ -170,29 +170,6 @@ function initTabs() {
     });
 }
 
-//  Bottom navigation (demo interactions)
-function initBottomNav() {
-    const navItems = document.querySelectorAll(".nav-item");
-    navItems.forEach(item => {
-        item.addEventListener("click", (e) => {
-            const navType = item.getAttribute("data-nav");
-            navItems.forEach(n => n.classList.remove("active"));
-            item.classList.add("active");
-
-            if (navType === "feed") {
-                // Reset to All Posts tab
-                currentFilter = "all";
-                document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-                const allTab = document.querySelector('.tab[data-filter="all"]');
-                if (allTab) allTab.classList.add("active");
-                renderFeed();
-            } else {
-                alert(`✨ "${navType === 'chat' ? 'AI Chat' : navType === 'inbox' ? 'Inbox' : 'Profile'}" feature coming soon.`);
-            }
-        });
-    });
-}
-
 
 // FAB button – redirect to createPost.html
 function initFab() {
@@ -218,7 +195,7 @@ function initNotification() {
 document.addEventListener("DOMContentLoaded", () => {
     loadPosts();
     initTabs();
-    initBottomNav();
     initFab();
     initNotification();
+    
 });
