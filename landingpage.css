@@ -680,7 +680,8 @@ body {
 /* Main Pricing Section */
 .pricing-section {
     max-width: 1200px;
-    width: 100%;
+    width: 320px;
+    height: 480px;
     margin: 0 auto;
     text-align: center;
 }
@@ -796,9 +797,10 @@ input:checked + .slider:before {
 /* Individual Card */
 .card-pri {
     background: rgb(83, 112, 106);
-    border-radius: 28px;
+    border-radius: 25px;
     padding: 2rem 1.75rem;
-    width: 100%;
+    width: 320px;
+    height: 480px;
     max-width: 360px;
     text-align: left;
     box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);

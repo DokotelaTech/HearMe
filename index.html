@@ -210,60 +210,35 @@
 </section><br><br>
 
 
-            <!-- Professional part -->
-             <section id="prof-section">
-                <h1>Professional Care Pathway</h1>
-                <!-- <h4>Seamless <span>Professional Support</span></h4> -->
-                <p class="subtitle-prof">When you're ready for professional help, we make the transition smooth and integrated.</p>
-                <div class="professional-container">
-                    <div class="prof-card">
-                        <h3>1. AI Support</h3>
-                        <p>Start with 24/7 AI chatbot assistance for immediate help</p>
-                    </div>
-                    <div class="prof-card">
-                        <h3>2. Assessment</h3>
-                        <p>AI detects if professional support would be beneficial</p>
-                    </div>
-                    <div class="prof-card">
-                        <h3>3. SmoothHandoff</h3>
-                        <p>Seamless transition to licensed social workers</p>
-                    </div>
-                    <div class="prof-card">
-                        <h3>4. Ongoing Care</h3>
-                        <p>Continued support from professionals within the platform</p>
-                    </div>
-                    <div class="prof-card2">
-                        <h3>Integrated Care Platform</h3>
-                        <p>Your conversation history, insights, and progress are seamlessly shared with your social worker, 
-                            ensuring continuity of care and personalized support throughout your journey.</p>
-                    </div>
-                   </div>
-             </section><br><br>
-<script>
-(function(){
-// adds a small interactive feedback on pillar click (optional, like a micro interaction)
-const pillars = document.querySelectorAll('.pillar');
-pillars.forEach(p => {
-    p.addEventListener('click', function(e) {
-        // just a soft ripple effect for demonstration (no navigation)
-        this.style.transition = 'all 0.15s';
-        this.style.backgroundColor = '#f5f9ff';
-        setTimeout(() => { this.style.backgroundColor = ''; }, 120);
-        // (could be used to open modals, but we keep it clean)
-    });
-});
-
-// Also prob-card click highlight (satisfying)
-const probCards = document.querySelectorAll('.prob-card');
-probCards.forEach(card => {
-    card.addEventListener('click', () => {
-        card.style.transition = 'background 0.15s';
-        card.style.backgroundColor = '#fbfdff';
-        setTimeout(() => card.style.backgroundColor = '', 100);
-    });
-});
-})();
-</script>
+        <!-- Professional part -->
+            <section id="prof-section">
+            <h1>Professional Care Pathway</h1>
+            <!-- <h4>Seamless <span>Professional Support</span></h4> -->
+            <p class="subtitle-prof">When you're ready for professional help, we make the transition smooth and integrated.</p>
+            <div class="professional-container">
+                <div class="prof-card">
+                    <h3>1. AI Support</h3>
+                    <p>Start with 24/7 AI chatbot assistance for immediate help</p>
+                </div>
+                <div class="prof-card">
+                    <h3>2. Assessment</h3>
+                    <p>AI detects if professional support would be beneficial</p>
+                </div>
+                <div class="prof-card">
+                    <h3>3. SmoothHandoff</h3>
+                    <p>Seamless transition to licensed social workers</p>
+                </div>
+                <div class="prof-card">
+                    <h3>4. Ongoing Care</h3>
+                    <p>Continued support from professionals within the platform</p>
+                </div>
+                <div class="prof-card2">
+                    <h3>Integrated Care Platform</h3>
+                    <p>Your conversation history, insights, and progress are seamlessly shared with your social worker, 
+                        ensuring continuity of care and personalized support throughout your journey.</p>
+                </div>
+                </div>
+            </section><br><br>
 
 
      <!-- Folowing section is for welness tab on the nav bar-->
@@ -372,5 +347,6 @@ probCards.forEach(card => {
         <p>&copy; 2025 HearMe. All rights reserved.</p>
     </footer>
     <script src="pricing.js"></script>
+    <script src="landingpage.js"></script>
 </body>
 </html>
