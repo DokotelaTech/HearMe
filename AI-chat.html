@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI ChatBot</title>
+    <title>HearMe Support</title>
+    <link rel="stylesheet" href="ai-chat.css">
 </head>
 <body>
-    
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="header-info">
+                <h2>HearMe AI</h2>
+                <span>COMPASSIONATE SUPPORT</span>
+            </div>
+            <button id="breathe-btn" class="breathe-btn">💨 Breathe</button>
+        </header>
+
+        <main id="chat-box" class="chat-box">
+            <div class="message ai-message">
+                Hello... I'm HearMe. I'm here to listen and support you in a safe, non-judgmental space. How are you feeling today?
+            </div>
+        </main>
+
+        <footer class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Share what's on your mind..." autocomplete="off">
+            <button id="send-btn" class="send-btn">Send</button>
+        </footer>
+        <div class="disclaimer">ANONYMOUS & SAFE SPACE • NOT A MEDICAL SERVICE</div>
+    </div>
+
+    <script src="ai.js"></script>
 </body>
 </html>

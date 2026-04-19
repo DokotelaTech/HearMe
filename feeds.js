@@ -1,11 +1,8 @@
-// feeds.js – Fully functional anonymous feed (starts empty)
-
 let posts = [];
 let currentFilter = "all";   // 'all', 'social', 'success'
 
-// ------------------------------------------------------------------
-// 1. Load posts from localStorage (no hardcoded demo posts)
-// ------------------------------------------------------------------
+
+//  Load posts from localStorage
 function loadPosts() {
     const stored = localStorage.getItem("hearMe_posts");
     if (stored) {
@@ -28,9 +25,7 @@ function savePosts() {
     localStorage.setItem("hearMe_posts", JSON.stringify(posts));
 }
 
-// ------------------------------------------------------------------
-// 2. Helper functions
-// ------------------------------------------------------------------
+//  Helper functions
 function getTagClass(tag) {
     if (tag === "Social Anxiety") return "tag-social-anxiety";
     if (tag === "Self Discovery") return "tag-self-discovery";
@@ -59,9 +54,7 @@ function escapeHtml(str) {
     });
 }
 
-// ------------------------------------------------------------------
 // 3. Render the feed using the exact HTML structure from your design
-// ------------------------------------------------------------------
 function renderFeed() {
     const container = document.getElementById("feedGrid");
     if (!container) return;
@@ -129,9 +122,7 @@ function renderFeed() {
     });
 }
 
-// ------------------------------------------------------------------
-// 4. Like handler (prevents double-liking)
-// ------------------------------------------------------------------
+// Like handler (prevents double-liking)
 function likeHandler(e) {
     const btn = e.currentTarget;
     const postId = btn.getAttribute('data-id');
@@ -143,9 +134,7 @@ function likeHandler(e) {
     renderFeed();
 }
 
-// ------------------------------------------------------------------
-// 5. Comment handler
-// ------------------------------------------------------------------
+//  Comment handler
 function commentHandler(e) {
     const btn = e.currentTarget;
     const postId = btn.getAttribute('data-id');
@@ -165,9 +154,7 @@ function commentHandler(e) {
     }
 }
 
-// ------------------------------------------------------------------
-// 6. Tab filtering
-// ------------------------------------------------------------------
+//  Tab filtering
 function initTabs() {
     const tabs = document.querySelectorAll(".tab");
     tabs.forEach(tab => {
@@ -183,9 +170,7 @@ function initTabs() {
     });
 }
 
-// ------------------------------------------------------------------
-// 7. Bottom navigation (demo interactions)
-// ------------------------------------------------------------------
+//  Bottom navigation (demo interactions)
 function initBottomNav() {
     const navItems = document.querySelectorAll(".nav-item");
     navItems.forEach(item => {
@@ -208,9 +193,8 @@ function initBottomNav() {
     });
 }
 
-// ------------------------------------------------------------------
-// 8. FAB button – redirect to createPost.html
-// ------------------------------------------------------------------
+
+// FAB button – redirect to createPost.html
 function initFab() {
     const fab = document.getElementById("createPostFab");
     if (fab) {
@@ -220,9 +204,7 @@ function initFab() {
     }
 }
 
-// ------------------------------------------------------------------
-// 9. Notification bell (demo)
-// ------------------------------------------------------------------
+// Notification bell (demo)
 function initNotification() {
     const bell = document.getElementById("notificationBell");
     if (bell) {
@@ -232,9 +214,7 @@ function initNotification() {
     }
 }
 
-// ------------------------------------------------------------------
-// 10. Start everything
-// ------------------------------------------------------------------
+// Start everything
 document.addEventListener("DOMContentLoaded", () => {
     loadPosts();
     initTabs();
