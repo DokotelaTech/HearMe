@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe</title>
     <link rel="stylesheet" href="landingpage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
@@ -24,7 +25,7 @@
             <a href="#about">About</a>
             <a href="#supportSection-tapID">Support</a>
             <a href="#communityTap-id">Community</a>
-            <a href="#">Pricing</a>
+            <a href="#pricing">Pricing</a>
         </nav>
 
         <a href="login.html" class="get-started">Get Started</a>
@@ -66,6 +67,7 @@
             <p class="green">Help</p>
         </div> 
     </section>
+    <!-- ABOUT SECTION  -->
     <section id="about">
         <h3 id="header1">About <span>HearMe</span></h3>
         <p id="paragraph1">
@@ -80,64 +82,127 @@
         </p>
     </section> 
 
-    <!-- Support section -->
-     <section class="support-tap" id="supportSection-tapID">
-        <!-- AI part -->
-        <section class="ai-section">
-            <h1>Support System</h1>
-            <p class="subtitle-ai">Three layers of support designed to meet you wherever you are in your journey</p>
-            <h2>Your 24/7 AI Companion</h2>
-            <p class="subtitle-ai">
-                Powered by advanced natural language processing, our AI chatbot provides 
-                empathetic, intelligent support whenever you need it most.
-            </p>
-            <div class="AIcards-container">
-                <div class="card-ai">
-                    <h3>Empathetic Conversations</h3>
-                    <p>Natural language processing that understands context and emotions</p>
-                </div>
-                <div class="card-ai">
-                    <h3>Crisis Detection</h3>
-                    <p>Intelligent monitoring to identify when professional help is needed</p>
-                </div>
-                <div class="card-ai">
-                    <h3>Instant Availability</h3>
-                    <p>24/7 support whenever you need someone to talk to</p>
-                </div>
-                <div class="card-ai">
-                    <h3>Personalized Care</h3>
-                    <p>Learns your patterns and provides tailored support</p>
+<div class="platform-card">
+    
+    <!-- PROBLEM SECTION (exactly as image) -->
+    <div class="problem-header">
+        <h2>
+            <i class="fas fa-circle-exclamation" style="font-size: 2rem;"></i> 
+            The Problem We're Solving
+        </h2>
+    </div>
+    
+    <div class="problem-grid">
+        <!-- Stigma & Isolation -->
+        <div class="prob-card">
+            <div class="prob-icon"><i class="fas fa-eye-slash"></i></div>
+            <h3>Stigma & Isolation</h3>
+            <div class="prob-desc">
+                <i class="fas fa-message"></i> Many people avoid seeking help due to fear of judgment and social stigma around mental health.
+            </div>
+            <div class="highlight-badge">
+                <i class="fas fa-shield-halved"></i> judgment‑free zone
+            </div>
+        </div>
+        
+        <!-- Cost Barriers (with exact image wording) -->
+        <div class="prob-card">
+            <div class="prob-icon"><i class="fas fa-coins"></i></div>
+            <h3>Cost Barriers</h3>
+            <div class="prob-desc">
+                <i class="fas fa-users"></i> Allowing users to interact and get help from social workers through our app, connecting with available professionals and peer support without traditional financial barriers.
+            </div>
+            <div class="highlight-badge">
+                <i class="fas fa-bolt"></i> affordable access
+            </div>
+        </div>
+        
+        <!-- Limited Support -->
+        <div class="prob-card">
+            <div class="prob-icon"><i class="fas fa-clock"></i></div>
+            <h3>Limited Support</h3>
+            <div class="prob-desc">
+                <i class="fas fa-heart-circle-exclamation"></i> Aiming to address problems of anxiety, stress, loneliness, and the high rate of people committing suicide by providing accessible 24/7 support.
+            </div>
+            <div class="highlight-badge">
+                <i class="fas fa-headset"></i> 24/7 always here
+            </div>
+        </div>
+    </div>
+    
+    <!-- OUR SOLUTION (three pillar) -->
+    <div class="solution-section">
+        <div class="solution-header">
+            <h2>Our Solution</h2>
+            <span class="pillar-tag"><i class="fas fa-cubes"></i> three-pillar approach</span>
+        </div>
+        <p style="margin-bottom: 1.8rem; color: #1f2e4a; font-weight: 460; font-size: 1.1rem; opacity: 0.9;">
+            <i class="fas fa-hand-holding-heart" style="margin-right: 8px; color: #3459e6;"></i>
+            Combining community support, AI intelligence, and professional expertise.
+        </p>
+        
+        <div class="pillars-container">
+            <!-- PILLAR 1: Community Feeds -->
+            <div class="pillar" tabindex="0" role="button" aria-label="Community feeds, anonymous posts">
+                <div class="pillar-icon"><i class="fas fa-users-between-lines"></i></div>
+                <h3>Community Feeds</h3>
+                <p style="margin-bottom: 1.4rem; color: #2a3d62; font-weight: 470;">Share your struggles and celebrate successes anonymously</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-user-secret"></i> Anonymous Struggle Posts <span class="anon-tag">safe space</span></li>
+                    <li><i class="fas fa-trophy"></i> Success Stories</li>
+                    <li><i class="fas fa-comment-dots"></i> Supportive Comments</li>
+                    <li><i class="fas fa-hand-peace"></i> Safe Space</li>
+                </ul>
+                <div class="small-note">
+                    <i class="fas fa-shield"></i> always anonymous · moderated
                 </div>
             </div>
-        </section>
-        <!-- Community part -->
-        <section class="findCommunity" id="communityTap-id">
-            <h1>Community Connection</h1>
-            <p class="subtitle-community">Connect with others who understand what you're going through. Share, support, 
-                and grow together.
-            </p>
-            <div class="communityCard-container">
-                <div class="community-card">
-                    <h3>Share your struggle</h3>
-                    <p>You can post and share anonymously about your challenges
-                        to get help from others
-                    </p>
-                </div>
-                <div class="community-card">
-                    <h3>Success Stories</h3>
-                    <p>Share your experiences or advice on how you overcame challenges
-
-                    </p>
-                </div>
-                <div class="community-card">
-                    <h3>Supportive Community</h3>
-                    <p>Receive encouragement from peers</p>
-                </div>
-                <div class="community-card">
-                    <h3>Safe Environment</h3>
-                    <p>Moderated space free from judgment</p>
+            
+            <!-- PILLAR 2: AI Consolidator (with crisis detection pulse) -->
+            <div class="pillar" tabindex="0">
+                <div class="pillar-icon"><i class="fas fa-brain"></i></div>
+                <h3>AI Consolidator</h3>
+                <p style="margin-bottom: 1.4rem; color: #2a3d62; font-weight: 470;">24/7 intelligent support that truly understands you</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-heart"></i> Empathetic Responses</li>
+                    <li>
+                        <i class="fas fa-exclamation-triangle" style="color:#c52828;"></i> 
+                        Crisis Detection 
+                        <span class="pulse-dot"></span>
+                    </li>
+                    <li><i class="fas fa-chart-line"></i> Personalized Insights</li>
+                    <li><i class="fas fa-infinity"></i> Always Available</li>
+                </ul>
+                <div class="small-note">
+                    <i class="fas fa-robot"></i> smart escalation · real‑time
                 </div>
             </div>
+            
+            <!-- PILLAR 3: Professional Care -->
+            <div class="pillar" tabindex="0">
+                <div class="pillar-icon"><i class="fas fa-user-doctor"></i></div>
+                <h3>Professional Care</h3>
+                <p style="margin-bottom: 1.4rem; color: #2a3d62; font-weight: 470;">Seamless connection to licensed social workers</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-certificate"></i> Verified Professionals</li>
+                    <li><i class="fas fa-arrow-up"></i> Easy Escalation</li>
+                    <li><i class="fas fa-mobile-screen"></i> Integrated Platform</li>
+                    <li><i class="fas fa-tag"></i> Affordable Access</li>
+                </ul>
+                <div class="small-note">
+                    <i class="fas fa-calendar-check"></i> no traditional barriers
+                </div>
+            </div>
+        </div>
+        
+        <!-- extra footer line: hint of interactivity -->
+        <div style="display: flex; justify-content: flex-end; margin-top: 2.3rem; gap: 10px; font-size: 0.9rem; color: #38558b;">
+            <span style="display: flex; align-items: center;"><i class="fas fa-circle-check" style="margin-right: 6px; color:#1f5f2e;"></i> 24/7 accessible</span>
+            <span style="display: flex; align-items: center;"><i class="fas fa-message" style="margin-right: 6px;"></i> anonymous + safe</span>
+            <span style="display: flex; align-items: center;"><i class="fas fa-scale-balanced"></i> integrated care</span>
+        </div>
+    </div>
+</div>
 
             <!-- Professional part -->
              <section class="prof-section">
@@ -170,6 +235,31 @@
              </section>
         </section>
      </section>
+<script>
+(function(){
+// adds a small interactive feedback on pillar click (optional, like a micro interaction)
+const pillars = document.querySelectorAll('.pillar');
+pillars.forEach(p => {
+    p.addEventListener('click', function(e) {
+        // just a soft ripple effect for demonstration (no navigation)
+        this.style.transition = 'all 0.15s';
+        this.style.backgroundColor = '#f5f9ff';
+        setTimeout(() => { this.style.backgroundColor = ''; }, 120);
+        // (could be used to open modals, but we keep it clean)
+    });
+});
+
+// Also prob-card click highlight (satisfying)
+const probCards = document.querySelectorAll('.prob-card');
+probCards.forEach(card => {
+    card.addEventListener('click', () => {
+        card.style.transition = 'background 0.15s';
+        card.style.backgroundColor = '#fbfdff';
+        setTimeout(() => card.style.backgroundColor = '', 100);
+    });
+});
+})();
+</script>
 
 
      <!-- Folowing section is for welness tab on the nav bar-->
@@ -203,8 +293,7 @@
             </div>
         </div>
     </section> -->
-         <section class="pricing">
-
+    <section id="pricing">
     <h1>Pricing</h1><br>
     <p class="subtitle">Choose a plan that works for you</p>
     <div class="toggle-container">
@@ -230,7 +319,7 @@
                 <li>Basic resources</li>
             </ul>
 
-            <button><span>Get Started Free</span></button>
+            <!-- <button><span>Get Started Free</span></button> -->
         </div>
 
         <!-- Standard (highlighted)
@@ -248,24 +337,24 @@
         </div> -->
 
         <!-- Premium -->
-         
+        <section>
         <div class="card-pri">
-            
-            <h3>Premium</h3>
-            <p>AI Support</p>
-            <h2 id="premium-price">R179<span>/month</span></h2>
-            <ul>
-                <li>Everything in Free</li>
-                <li>24/7 AI Chatbot (The Consolidator)</li>
-                <li>Unlimited AI Conversations</li>
-                <li>Personalized Mental Health Insights</li>
-                <li>Crisis Detection & Support</li>
-                <li>Stress Monitoring Alerts</li>
-                <li>Priority Support</li>
-            </ul>
-            <button>Start Trial</button>
-        </div>
-       </div>
+        
+        <h3>Premium</h3>
+        <p>AI Support</p>
+        <h2 id="premium-price">R179<span>/month</span></h2>
+        <ul>
+            <li>Everything in Free</li>
+            <li>24/7 AI Chatbot (The Consolidator)</li>
+            <li>Unlimited AI Conversations</li>
+            <li>Therapists</li>
+            <!-- <li>Crisis Detection & Support</li> -->
+            <!-- <li>Stress Monitoring Alerts</li> -->
+            <li>Priority Support</li>
+        </ul>
+        <!-- <button>Start Trial</button> -->
+    </div>
+    </div>
     <section class="areYouGrttingStarted-container">
         <h1>Ready to Start Your Journey?</h1>
         <p>Join thousands of people finding support, healing, and growth through HearMe. Start with our free community and upgrade anytime.</p>
@@ -273,6 +362,7 @@
             <a href="login.html" class="btn getingStartedBtn">Start Free Today</a>
             <a href="#about" class="btn toAboutBtn">Learn More</a>
         </div>
+        </section>
     </section>
     <footer>
         <p>&copy; 2025 HearMe. All rights reserved.</p>
