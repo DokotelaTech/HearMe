@@ -1,0 +1,159 @@
+/* BASE */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #0f172a, #020617);
+    color: white;
+}
+
+/* MAIN CONTAINER */
+.profile-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+}
+
+/* PROFILE CARD */
+.profile-card {
+    background: linear-gradient(145deg, #1e293b, #0f172a);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* AVATAR */
+.avatar img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #ff7ac6;
+    margin-bottom: 10px;
+}
+
+/* BIO */
+.bio {
+    color: #cbd5f5;
+    margin-bottom: 20px;
+}
+
+/* STATS */
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.stat {
+    background: rgba(255,255,255,0.05);
+    padding: 10px;
+    border-radius: 10px;
+    width: 30%;
+}
+
+.stat h3 {
+    margin: 0;
+    color: #ff7ac6;
+}
+
+.stat p {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* BUTTONS */
+.actions {
+    margin-top: 20px;
+}
+
+.actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    margin: 5px;
+
+    background: linear-gradient(90deg, #ff4da6, #ff7ac6);
+    color: white;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.actions button:hover {
+    transform: scale(1.05);
+}
+
+.actions .secondary {
+    background: transparent;
+    border: 1px solid #ff7ac6;
+}
+
+/* POSTS */
+.posts-section {
+    margin-top: 25px;
+}
+
+.post {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+
+    border-left: 4px solid #ff4da6;
+
+    transition: 0.3s;
+}
+
+.post:hover {
+    transform: translateX(5px);
+}
+
+/* NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #020617;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid #1e293b;
+}
+
+.bottom-nav button {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.bottom-nav .active {
+    color: #ff7ac6;
+}
+
+/* Styling the settings tap */
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    top: -50px;
+}
+
+.settings-btn {
+    font-size: 22px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.settings-btn:hover {
+    transform: rotate(90deg) scale(1.2);
+    color: #f97316; /* orange accent */
+}

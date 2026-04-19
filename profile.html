@@ -4,8 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
-    
+    <div class="profile-container">
+        <!-- TOP CARD -->
+         <div class="profile-card">
+            <div class="avatar">
+                <img src="images/default-avatar.png">
+            </div>
+            <h2>AnonymousUser</h2>
+            <p class="bio">Trying to improve every day</p>
+            <!-- STATS -->
+             <div class="stats">
+                <div class="stat">
+                    <h3>12</h3>
+                    <p>Posts created</p>
+                </div>
+                <div class="stat">
+                    <h3>34</h3>
+                    <p>Comments</p>
+                </div>
+                <div class="stat">
+                    <h3>5</h3>
+                    <p>AI Chats</p>
+                </div>
+            </div>
+            <!-- BUTTONS -->
+             <div class="actions">
+                <button onclick="goToEdit()">Edit</button>
+                <!-- <button class="secondary" onclick="goToActivity()">Activity</button> -->
+            </div>
+        </div>
+        <!-- RECENT POSTS -->
+         <div class="posts-section" id="posts-id">
+            <h3>Recent Posts</h3>
+            <div class="post">
+                <p>Feeling better today after a tough week.</p>
+            </div>
+            <div class="post">
+                <p>Anyone have tips for managing stress?</p>
+            </div>
+        </div>
+    </div>
+    <!-- NAV -->
+     <div class="bottom-nav">
+        <button onclick="goTo('feeds.html')">Feed</button>
+        <button onclick="goTo('AI-chat.html')">AI</button>
+        <button onclick="goTo('Inbox.html')">Inbox</button>
+        <button class="active">Profile</button>
+    </div>
+    <!--settings tap -->
+    <div class="profile-header">
+        <h1>My Profile</h1>
+        <!-- Settings Icon -->
+        <button class="settings-btn" onclick="goToSettings()">⚙️</button>
+    </div>
+    <script src="profile.js"></script>
 </body>
 </html>
