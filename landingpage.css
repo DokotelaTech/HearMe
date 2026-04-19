@@ -107,7 +107,7 @@ header {
 /* HERO SECTION */
 .hero {
 
-    height: 200vh;
+    height: 100vh;
     background-image: url("images/landingPage-back_img.png");
     background-size: cover;
     background-position: center;
@@ -338,6 +338,12 @@ body {
     font-size: 14px;
 }
 /* Styling the professional part */
+/* ============================================
+   🔵🟣 PROFESSIONAL SECTION — NAVY & PURPLE THEME
+   Matches the exact color palette of the main page
+   ============================================ */
+
+/* Professional Section Container */
 .prof-section {
     margin-top: 3.5rem;
     padding-top: 1rem;
@@ -826,6 +832,7 @@ input:checked + .slider:before {
 
 
 
+/* Price */
 /* ============================================
    💎 PRICING CARD & CTA SECTION
    Brighter accents on navy/purple foundation
@@ -1155,11 +1162,10 @@ input:checked + .slider:before {
         font-size: 2.8rem;
     }
 }
-
-
-
 /* PROFESSIONAL AND COMMUNITY STYLES */
 
+
+ 
 * {
     margin: 0;
     padding: 0;
