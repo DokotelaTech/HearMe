@@ -64,11 +64,12 @@
                 <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </a>
 
-            <a href="#" class="menu-item">
+            <a href="subscription.html" class="menu-item">
                 <div class="menu-item-left">
                     <span class="menu-icon">💳</span>
                     <span>Manage Subscription</span>
                 </div>
+
                 <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </a>
         </div>
@@ -84,14 +85,35 @@
                 <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
             </a> -->
 
-            <a href="#" class="menu-item">
+                        <!-- Professional Care Links -->
+            <a href="#" class="menu-item" onclick="showModal()">
                 <div class="menu-item-left">
                     <span class="menu-icon">🤝</span>
-                    <span>Professional Care Links</span>
-                </div>
-                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            </a>
+                    <span>Request Professional Help</span>
         </div>
+
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </a>
+
+
+            <!-- Modal -->
+            <div class="modal" id="myModal">
+
+                <div class="modal-box">
+
+                    <div class="tick">
+                        ✔
+                    </div>
+
+                    <p>Your request was submitted successfully</p>
+
+                    <button onclick="closeModal()">OK</button>
+
+                </div>
+
+            </div>
 
         <button class="logout-btn">Log Out</button>
 
@@ -117,5 +139,6 @@
     </div>
 </div>
 
+<script src="subscription.js"></script>
 </body>
 </html>
