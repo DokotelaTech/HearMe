@@ -2,10 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Profile | HearMe</title>
+    <link rel="stylesheet" href="profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+
+<div class="app">
+    <div class="profile-header">
+        <h1>My Profile</h1>
+    </div>
+
+    <div class="profile-content-container">
+        
+        <div class="user-card">
+            <div class="avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+            <div class="user-info">
+                <h2>Wandering Cloud</h2>
+                <p>Alias #8492</p>
+                <span class="premium-badge">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> 
+                    Premium Member
+                </span>
+            </div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-box">
+                <h3>0</h3>
+                <p>Posts</p>
+            </div>
+            <div class="stat-box">
+                <h3>0</h3>
+                <p>Success Stories</p>
+            </div>
+            <div class="stat-box">
+                <h3>0</h3>
+                <p>Days Active</p>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <h4 class="group-title">Account & Privacy</h4>
+            
+            <a href="#" class="menu-item">
+                <div class="menu-item-left">
+                    <span class="menu-icon">🎭</span>
+                    <span>Change Alias</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            
+            <a href="#" class="menu-item">
+                <div class="menu-item-left">
+                    <span class="menu-icon">🔒</span>
+                    <span>Privacy & Data</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+
+            <a href="#" class="menu-item">
+                <div class="menu-item-left">
+                    <span class="menu-icon">💳</span>
+                    <span>Manage Subscription</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+        </div>
+
+        <div class="settings-group">
+            <h4 class="group-title">Wellness</h4>
+            
+            <!-- <a href="#" class="menu-item">
+                <div class="menu-item-left">
+                    <span class="menu-icon">📝</span>
+                    <span>AI Chat Transcripts</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a> -->
+
+            <a href="#" class="menu-item">
+                <div class="menu-item-left">
+                    <span class="menu-icon">🤝</span>
+                    <span>Professional Care Links</span>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+        </div>
+
+        <button class="logout-btn">Log Out</button>
+
+    </div> <div class="bottom-nav">
+        <a href="feeds.html" class="nav-item">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg></span>
+            Feeds
+        </a>
+        <a href="ai-chat.html" class="nav-item">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l1.5 4.5H18l-3.75 2.7 1.5 4.5L12 11.1l-3.75 2.6 1.5-4.5L6 6.5h4.5L12 2z"/><circle cx="12" cy="19" r="2" fill="currentColor" stroke="none"/></svg></span>
+            AI Chat
+        </a>
+
+        <!-- <a href="inbox.html" class="nav-item">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+            Inbox
+        </a> -->
+
+        <a href="profile.html" class="nav-item active">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+            Profile
+        </a>
+    </div>
+</div>
+
 </body>
 </html>
