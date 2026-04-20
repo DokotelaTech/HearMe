@@ -107,7 +107,7 @@ header {
 /* HERO SECTION */
 .hero {
 
-    height: 200vh;
+    height: 100vh;
     background-image: url("images/landingPage-back_img.png");
     background-size: cover;
     background-position: center;
@@ -405,85 +405,198 @@ body {
     font-size: 14px;
     color: #cbd5f5;
 }
+/* Styling the professional part */
+/* ============================================
+   🔵🟣 PROFESSIONAL SECTION — NAVY & PURPLE THEME
+   Matches the exact color palette of the main page
+   ============================================ */
 
-/*  FLOATING ANIMATION  */
-.community-card {
-    animation: float 4s ease-in-out infinite;
-}
-
-.community-card:nth-child(2) {
-    animation-delay: 0.5s;
-}
-.community-card:nth-child(3) {
-    animation-delay: 1s;
-}
-.community-card:nth-child(4) {
-    animation-delay: 1.5s;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-8px);
-    }
-}
-/* PROFESSIONAL SECTION */
+/* Professional Section Container */
 .prof-section {
-    text-align: center;
-    padding: 80px 20px;
+    margin-top: 3.5rem;
+    padding-top: 1rem;
 }
 
 .prof-section h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: #d6e0ff;
+    margin-bottom: 0.75rem;
+    border-left: 7px solid #7b8ef0;
+    padding-left: 1.5rem;
+}
+
+.prof-section h4 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #b0bef0;
+    margin-bottom: 0.5rem;
+}
+
+.prof-section h4 span {
+    color: #a7b9ff;
+    font-weight: 600;
 }
 
 .subtitle-prof {
-    color: #a0aec0;
-    margin-bottom: 50px;
+    font-size: 1.1rem;
+    font-weight: 460;
+    color: #b8c4f0;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+    padding-left: 1.5rem;
 }
 
-/* CONTAINER */
+/* Professional Container Grid */
 .professional-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-/* STEP CARDS */
+/* Professional Cards — matching navy/purple theme */
 .prof-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    padding: 25px;
-    width: 220px;
-    margin-bottom: 0;
-    transition: 0.3s ease;
-    position: relative;
-
+    background: linear-gradient(145deg, #101b38, #0a1229);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 1.8rem;
+    padding: 1.8rem 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(120, 150, 240, 0.3);
+    box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
-/* NUMBER STYLE (circle effect) */
-.prof-card h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #3ea6ff;
-}
-
-/* TEXT */
-.prof-card p {
-    font-size: 14px;
-    color: #cbd5f5;
-}
-
-/* HOVER EFFECT */
 .prof-card:hover {
-    transform: translateY(-10px);
-    border-color: #3ea6ff;
-    box-shadow: 0 10px 25px rgba(62,166,255,0.2);
+    background: #15204a;
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 28px 36px -14px #2e3f7e;
+    border-color: #7f9cff;
+}
+
+.prof-card h3 {
+    font-size: 1.5rem;
+    font-weight: 650;
+    margin-bottom: 1rem;
+    color: #e1e9ff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.prof-card h3::before {
+    content: "●";
+    font-size: 1rem;
+    color: #8da3ff;
+    opacity: 0.8;
+}
+
+.prof-card p {
+    color: #c6d0f0;
+    line-height: 1.5;
+    font-size: 1rem;
+    font-weight: 460;
+}
+
+/* Special card 2 — spans full width or different style */
+.prof-card2 {
+    grid-column: span 4;
+    background: linear-gradient(145deg, #131e3f, #0f1830);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    padding: 2rem 2.2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(140, 170, 255, 0.35);
+    box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.prof-card2:hover {
+    background: #19224a;
+    transform: translateY(-4px);
+    box-shadow: 0 28px 36px -14px #2e3f7e;
+    border-color: #7f9cff;
+}
+
+.prof-card2 h3 {
+    font-size: 1.7rem;
+    font-weight: 650;
+    margin-bottom: 1rem;
+    color: #e1e9ff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.prof-card2 h3::before {
+    content: "✦";
+    font-size: 1.5rem;
+    color: #a7b9ff;
+}
+
+.prof-card2 p {
+    color: #c0caf0;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    font-weight: 460;
+    max-width: 90%
+    /* margin-top: 5rem;
+    margin-bottom: 3rem; */
+}
+
+/* Icon styling for professional cards (optional add) */
+.prof-card i, .prof-card2 i {
+    color: #8da3ff;
+    margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .professional-container {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    
+    .prof-card2 {
+        grid-column: span 1;
+    }
+    
+    .prof-card2 p {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .prof-section h1 {
+        font-size: 1.8rem;
+    }
+    
+    .prof-card, .prof-card2 {
+        padding: 1.5rem;
+    }
+}
+
+/* Step number animation on hover */
+.prof-card:hover h3::before {
+    color: #c0d0ff;
+    transform: scale(1.1);
+    transition: all 0.2s;
+}
+
+/* Smooth handoff special highlight */
+.prof-card:nth-child(3):hover {
+    background: linear-gradient(145deg, #162150, #0e1735);
+    border-color: #9ab0ff;
+}
+
+/* Interactive click effect (JavaScript enhancement) */
+.prof-card:active, .prof-card2:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
 }
 
 /* BIG FINAL CARD */
@@ -517,24 +630,11 @@ body {
     box-shadow: 0 15px 35px rgba(249,115,22,0.2);
 }
 
-/* CONNECTING LINE */
-.professional-container::before {
-    content: "";
-    position: absolute;
-    width: 60%;
-    height: 2px;
-    background: rgba(255,255,255,0.1);
-    top: 50%;
-    left: 20%;
-    z-index: -1;
-}
-/* ABOUT SECTION  */
+/* About section container */
 #about {
     text-align: center;
-    padding: 80px 20px;
-    position: relative;
-    top: -250px;
-   
+    padding: 60px 20px;
+    margin-top: -100x;
 }
 
 /* Main Heading */
@@ -616,6 +716,10 @@ body {
   color: white;
   text-align: center;
 }
+/* About section */
+/* #about {
+  padding: 60px 20px;
+} */
 
 /* Main heading */
 #header1 {
@@ -638,10 +742,10 @@ body {
 /* Mission card */
 /* Card container */
 #paragraph2 {
-  max-width: 700px;
+  max-width: 1000px;
   margin: auto;
-  padding: 30px;
-  border-radius: 15px;
+  padding: 55px;
+  border-radius: 45px;
 
   background: linear-gradient(135deg, #1e3a8a, #312e81);
   color: #cbd5f5;
@@ -661,7 +765,7 @@ body {
 /* Mission title inside the card */
 .mission-title {
   margin-bottom: 15px;
-  font-size: 22px;
+  font-size: 25px;
   color: white;
 }
 
@@ -682,6 +786,9 @@ body {
   background: linear-gradient(135deg, #020617, #0f172a);
   color: white;
 }
+
+
+
 
 /* Section */
 /* Reset & Base Styles */
@@ -705,10 +812,13 @@ body {
 
 .pricing-section {
     max-width: 1200px;
-    width: 100%;
+    width: 320px;
+    height: 480px;
     margin: 0 auto;
     text-align: center;
 }
+
+
 
 /* Header Styles */
 .pricing-section h1 {
@@ -724,6 +834,9 @@ body {
     color: #5a5a6e;
     margin-bottom: 3rem;
 }
+
+
+
 
 /* Toggle Switch Container */
 .toggle-container {
@@ -755,6 +868,11 @@ body {
     border-radius: 20px;
     margin-left: 0.5rem;
 }
+
+
+
+
+
 
 /* Toggle Switch */
 .switch {
@@ -813,9 +931,10 @@ input:checked + .slider:before {
 /* Individual Card */
 .card-pri {
     background: rgb(83, 112, 106);
-    border-radius: 28px;
+    border-radius: 25px;
     padding: 2rem 1.75rem;
-    width: 100%;
+    width: 320px;
+    height: 480px;
     max-width: 360px;
     text-align: left;
     box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
@@ -843,228 +962,695 @@ input:checked + .slider:before {
     margin-bottom: 1.25rem;
 }
 
+
+
+
+
+
+
+
+
 /* Price */
+/* ============================================
+   💎 PRICING CARD & CTA SECTION
+   Brighter accents on navy/purple foundation
+   ============================================ */
+
+/* Pricing Cards Container (if multiple cards) */
+.pricing-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+
+/* Premium Card — Brighter accents on navy base */
+.card-pri {
+    background: linear-gradient(145deg, #1a2555, #111b3d);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 2.5rem;
+    padding: 2.5rem 2rem;
+    max-width: 380px;
+    width: 100%;
+    transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+    border: 2px solid rgba(160, 180, 255, 0.35);
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(120, 150, 255, 0.1) inset,
+                0 0 30px rgba(80, 120, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+}
+
+/* Brighter glow effect on hover */
+.card-pri:hover {
+    transform: translateY(-8px);
+    background: linear-gradient(145deg, #1f2d62, #15204a);
+    border-color: #8aa3ff;
+    box-shadow: 0 30px 45px -12px rgba(80, 120, 255, 0.3),
+                0 0 0 1px rgba(180, 200, 255, 0.2) inset,
+                0 0 40px rgba(100, 150, 255, 0.2);
+}
+
+/* Subtle shimmer overlay */
+.card-pri::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 20%, rgba(160, 180, 255, 0.08), transparent 60%);
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.card-pri:hover::before {
+    opacity: 1.2;
+}
+
+/* Premium badge/title */
+.card-pri h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #b8ccff;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    background: rgba(100, 140, 255, 0.15);
+    padding: 0.3rem 1.2rem;
+    border-radius: 40px;
+    border: 1px solid rgba(140, 170, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+/* AI Support subtitle */
+.card-pri > p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #d0dcff;
+    margin-bottom: 1.2rem;
+}
+
+/* Price — Brighter accent */
 .card-pri h2 {
-    font-size: 2.75rem;
-    font-weight: 800;
-    color: #1a1a2e;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    text-shadow: 0 2px 10px rgba(100, 150, 255, 0.3);
+}
+
+#premium-price {
+    color: #e8eeff;
 }
 
 .card-pri h2 span {
     font-size: 1rem;
-    font-weight: 500;
-    color: #6211a4;
+    font-weight: 400;
+    color: #a0b5f0;
+    letter-spacing: 0.5px;
+    text-shadow: none;
 }
 
 /* Feature List */
 .card-pri ul {
     list-style: none;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
-.card-pri ul li {
-    font-size: 0.875rem;
-    color: #4a4a5e;
-    padding: 0.5rem 0;
+.card-pri li {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
-    border-bottom: 1px solid #f0f0f5;
+    gap: 12px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 460;
+    color: #c8d4f5;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(120, 150, 240, 0.1);
 }
 
-.card-pri ul li:last-child {
+.card-pri li:last-child {
     border-bottom: none;
 }
 
-/* Checkmark & X styles */
-.card-pri ul li::before {
+/* Brighter checkmark */
+.card-pri li::before {
     content: "✓";
+    color: #7eb8ff;
+    font-weight: 700;
+    font-size: 1.2rem;
+    background: rgba(100, 160, 255, 0.15);
+    width: 24px;
+    height: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
-    background: #e8f5e9;
-    color: #2e7d32;
     border-radius: 50%;
-    font-size: 0.7rem;
-    font-weight: bold;
-    flex-shrink: 0;
+    border: 1px solid rgba(120, 180, 255, 0.4);
 }
 
-/* .card-pri ul li:has(> .no-check)::before,
-.card-pri ul li.no-check::before {
-    content: "✗";
-    background: #ffebee;
-    color: #c62828;
-} */
-
-/* For items with X (Free plan missing features) */
-/* .card-pri ul li.missing::before {
-    content: "✗";
-    background: #ffebee;
-    color: #c62828;
-} */
-
-/* .card ul li:not(:has(✓))::before {
-    content: "✗";
-    background: #ffebee;
-    color: #c62828;
-} */
-
-/* Override for items that should have check */
-/* .card-pri ul li.check::before {
-    content: "✓";
-    background: #e8f5e9;
-    color: #2e7d32;
-} */
-
-/* Button Styles */
+/* Button — Bright glowing accent */
 .card-pri button {
     width: 100%;
-    background: #ed3ac6;
-    color: white;
-    border: none;
-    padding: 0.875rem 1.5rem;
-    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 40px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #4a6cf7, #2a4ad0);
+    border: none;
+    border-radius: 60px;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
-    font-family: inherit;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px -5px rgba(60, 100, 255, 0.4),
+                0 0 0 1px rgba(160, 190, 255, 0.2) inset;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(200, 220, 255, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 
 .card-pri button:hover {
-    background: #6d28d9;
+    background: linear-gradient(135deg, #5f7eff, #3b5ce0);
+    box-shadow: 0 12px 28px -5px rgba(80, 130, 255, 0.6),
+                0 0 0 1px rgba(200, 220, 255, 0.3) inset;
+    transform: scale(1.02) translateY(-2px);
 }
 
 .card-pri button:active {
     transform: scale(0.98);
+    box-shadow: 0 5px 15px -3px rgba(60, 100, 255, 0.5);
 }
 
-/* Free Card Specific Styling */
-.card-pri:first-child button {
-    background: #f0f0f5;
-    color: #1a1a2e;
+/* Button shimmer effect */
+.card-pri button::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
 }
 
-.card-pri:first-child button:hover {
-    background: #e4e4ec;
+.card-pri button:hover::after {
+    opacity: 1;
 }
 
-/* RO / Currency label positioning */
-.card-pri .price-note {
-    font-size: 0.7rem;
-    color: #8e8ea8;
-    margin-top: -0.75rem;
-    margin-bottom: 1rem;
+/* ============================================
+   🚀 CTA SECTION — "Ready to Start Your Journey?"
+   Brighter, more inviting with navy/purple base
+   ============================================ */
+
+.areYouGrttingStarted-container {
+    margin-top: 4rem;
+    padding: 3.5rem 3rem;
+    background: linear-gradient(145deg, #1a2350, #11183a);
+    border-radius: 3rem;
+    text-align: center;
+    border: 1px solid rgba(140, 170, 255, 0.3);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(120, 150, 240, 0.1) inset,
+                0 0 40px rgba(80, 120, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.areYouGrttingStarted-container:hover {
+    box-shadow: 0 25px 50px -15px rgba(60, 100, 220, 0.25),
+                0 0 0 1px rgba(160, 190, 255, 0.15) inset,
+                0 0 50px rgba(100, 150, 255, 0.15);
+    border-color: rgba(160, 190, 255, 0.4);
+}
+
+.areYouGrttingStarted-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 15px rgba(80, 130, 255, 0.3);
+}
+
+.areYouGrttingStarted-container p {
+    font-size: 1.2rem;
+    color: #c0cef5;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    font-weight: 460;
+}
+
+/* Button group */
+.decision-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Primary CTA Button — Bright and prominent */
+.btn.getingStartedBtn {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #5f7eff, #3b5ce0);
+    border: none;
+    border-radius: 60px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(80, 130, 255, 0.5),
+                0 0 0 1px rgba(200, 220, 255, 0.2) inset;
+    border: 1px solid rgba(200, 220, 255, 0.3);
+    letter-spacing: 0.3px;
+    display: inline-block;
+}
+
+.btn.getingStartedBtn:hover {
+    background: linear-gradient(135deg, #708aff, #4a6cf7);
+    box-shadow: 0 15px 35px -5px rgba(90, 150, 255, 0.6),
+                0 0 0 1px rgba(220, 235, 255, 0.3) inset;
+    transform: translateY(-3px);
+}
+
+/* Secondary CTA Button — Softer but bright */
+.btn.toAboutBtn {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #d0dcff;
+    background: transparent;
+    border: 2px solid rgba(140, 170, 255, 0.5);
+    border-radius: 60px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+.btn.toAboutBtn:hover {
+    background: rgba(100, 140, 255, 0.15);
+    border-color: #8aa3ff;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(80, 130, 255, 0.3);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    body {
-        padding: 1rem;
+    .areYouGrttingStarted-container {
+        padding: 2.5rem 1.5rem;
     }
-
-    .pricing-section h1 {
-        font-size: 2.25rem;
+    
+    .areYouGrttingStarted-container h1 {
+        font-size: 2rem;
     }
-
-    .pricing-container {
-        gap: 1.25rem;
+    
+    .decision-group {
+        flex-direction: column;
+        align-items: center;
     }
-
+    
+    .btn.getingStartedBtn,
+    .btn.toAboutBtn {
+        width: 100%;
+        max-width: 300px;
+        text-align: center;
+    }
+    
     .card-pri {
-        max-width: 100%;
-        padding: 1.5rem;
+        padding: 2rem 1.5rem;
     }
-
-    .toggle-container {
-        margin-bottom: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
+    
     .card-pri h2 {
-        font-size: 2.25rem;
+        font-size: 2.8rem;
     }
+}
+/* PROFESSIONAL AND COMMUNITY STYLES */
 
-    .card-pri ul li {
-        font-size: 0.8rem;
-    }
-} 
 
-/* Last section */
- .areYouGrttingStarted-container{
-  background-color: #0b1a30;
-  padding: 70px;
-  padding-top: 90px;
-  border-radius: 70px;
-  text-align: center;
-  color: white;
-  
+ 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* 
+body {
+    🟣 BACKGROUND 1: Deep purple-navy gradient (replaced light gradient)
+    background: linear-gradient(145deg, #0b0e1e 0%, #131834 50%, #1a1040 100%);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+    color: #e5e9f0; /* light text for dark bg 
+} */
+
+/* main card — 🔵 BACKGROUND 2: Navy translucent (replaced white) */
+.platform-card {
+    max-width: 1320px;
+    width: 100%;
+    background: rgba(10, 18, 40, 0.85); /* deep navy, translucent */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 3.5rem;
+    padding: 3rem 2.8rem;
+    box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5),
+                0 8px 18px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(120, 140, 220, 0.2);
+    border: 1px solid rgba(90, 120, 210, 0.25);
+    transition: box-shadow 0.3s ease;
+    margin: 0 auto;
 }
 
-.decision-group {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  margin-top: 30px;
+.platform-card:hover {
+    box-shadow: 0 30px 55px -12px rgba(70, 90, 180, 0.3), inset 0 1px 0 rgba(160, 180, 255, 0.3);
 }
 
-.btn {
-  padding: 15px 30px;
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: bold;
+/* header area */
+.problem-header {
+    margin-bottom: 2.8rem;
 }
 
-.getingStartedBtn {
-  background: linear-gradient(to right, #0061ff, #00c6ff);
-  color: white;
+.problem-header h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* 🟣 TEXT: light purple tint */
+    color: #d0dcff;
+    border-left: 7px solid #7b8ef0;
+    padding-left: 1.5rem;
 }
 
-.toAboutBtn {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-  color: white;
+.problem-header h2 i {
+    color: #a0b4ff;
+    font-size: 1.8rem;
+    opacity: 0.9;
 }
 
-.getingStartedBtn:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4); 
-  transform: translateY(-2px);
-  transition: all 0.5s ease; 
+/* three problem cards grid */
+.problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+    margin-bottom: 3.5rem;
 }
 
-.toAboutBtn:hover {
-  background: rgba(255, 255, 255, 0.15); 
-  border-color: white; 
-  transition: all 0.5s ease;
-}
-/* ===== separating sections on the page === */
-section {
-    padding: 80px 20px;
-    position: relative;
-}
-
-/* divider line between sections */
-section::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    width: 80%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #ff4da6, transparent);
-    opacity: 0.4;
+/* 🔵 PROBLEM CARDS — replaced white with navy gradient */
+.prob-card {
+    background: linear-gradient(145deg, #131e3f, #0f1830);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 1.8rem 1.8rem 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(110, 140, 230, 0.25);
+    transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+    cursor: default;
 }
 
-/* ===== FOOTER ===== */
-footer {
+.prob-card:hover {
+    transform: translateY(-6px);
+    background: #19224a;
+    box-shadow: 0 24px 30px -12px rgba(80, 100, 200, 0.25);
+    border-color: #6d8aff;
+}
+
+.prob-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    /* 🟣 ICON: soft purple */
+    color: #a7b9ff;
+}
+
+.prob-card h3 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.9rem;
+    /* 🟣 HEADING: light lavender */
+    color: #dfe7ff;
+}
+
+.prob-desc {
+    color: #c0caf0;
+    line-height: 1.5;
+    font-size: 1.05rem;
+    font-weight: 450;
+    opacity: 0.95;
+}
+
+.prob-desc i {
+    margin-right: 6px;
+    color: #8fa6ff;
+    font-size: 0.9rem;
+}
+
+/* 🔵 BADGE — navy with purple accent */
+.highlight-badge {
+    display: inline-block;
+    margin-top: 1.2rem;
+    background: #1f2b5c;
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #c6d2ff;
+    border: 1px solid #4a60b0;
+}
+
+/* divider / solution section */
+.solution-section {
+    margin-top: 1rem;
+}
+
+.solution-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 2rem;
+}
+
+.solution-header h2 {
+    font-size: 2.2rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    /* 🟣 LIGHT TEXT */
+    color: #d6e0ff;
+}
+
+/* 🟣 PILLAR TAG — deep purple */
+.pillar-tag {
+    background: #2a1e5c;
+    color: #eceeff;
+    padding: 0.2rem 1.2rem;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    box-shadow: inset 0 1px 2px #6b5cbb40, 0 4px 8px #00000033;
+}
+
+.pillars-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* 🔵 PILLARS — navy/purple gradient (replaced white) */
+.pillar {
+    background: linear-gradient(145deg, #101b38, #0a1229);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 2.2rem;
+    padding: 2rem 1.8rem 2.2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(120, 150, 240, 0.3);
+    box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.pillar:hover {
+    background: #15204a;
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 28px 36px -14px #2e3f7e;
+    border-color: #7f9cff;
+}
+
+.pillar-icon {
+    /* 🟣 ICON BG: deep violet */
+    background: #1f2652;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    margin-bottom: 1.6rem;
+    font-size: 1.9rem;
+    color: #b7c4ff;
+    transition: all 0.2s;
+    box-shadow: inset 0 0 0 1px #3f4d8a, 0 6px 10px -4px #0000004d;
+}
+
+.pillar:hover .pillar-icon {
+    background: #3f4faa;
+    color: #eef2ff;
+    transform: rotate(2deg) scale(1.02);
+}
+
+.pillar h3 {
+    font-size: 1.8rem;
+    font-weight: 650;
+    margin-bottom: 1.1rem;
+    /* 🟣 HEADING: soft white */
+    color: #e1e9ff;
+}
+
+.feature-list {
+    list-style: none;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 460;
+    color: #c6d0f0;
+    transition: transform 0.15s;
+}
+
+.feature-list li i {
+    width: 1.4rem;
+    color: #8da3ff;
+    font-size: 1.1rem;
     text-align: center;
-    padding: 20px;
-    background: black;
+    transition: all 0.15s;
 }
+
+.pillar:hover .feature-list li i {
+    color: #c0d0ff;
+    transform: translateX(3px);
+}
+
+.pillar .feature-list li:hover {
+    transform: translateX(5px);
+    color: #e3ebff;
+    font-weight: 500;
+}
+
+/* crisis detection subtle pulse */
+.pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #ff5e5e;
+    border-radius: 50%;
+    margin-left: 6px;
+    box-shadow: 0 0 0 0 rgba(255, 80, 80, 0.6);
+    animation: pulse-red 1.8s infinite;
+}
+/* 
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(255, 100, 100, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(200, 80, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 80, 80, 0); }
+} */
+
+/* safe space badge */
+.anon-tag {
+    background: #28346e;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #bcc6ff;
+    margin-left: 8px;
+    letter-spacing: -0.2px;
+}
+
+/* 🟣 DESCRIPTIVE TEXT under pillars */
+.pillar p {
+    color: #b7c2ee;
+}
+
+.small-note {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    opacity: 0.9;
+    color: #a5b5e5;
+}
+
+/* solution paragraph */
+.solution-section > p {
+    color: #b8c4f0;
+}
+
+/* bottom line */
+.platform-card > div:last-child span {
+    color: #b7c6f0 !important;
+}
+
+/* responsiveness */
+@media (max-width: 900px) {
+    body { padding: 1.2rem; }
+    .platform-card { padding: 2rem 1.5rem; }
+    .problem-grid, .pillars-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+/* minor adjustments */
+.fa-chevron-right {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+
+/* Global section spacing */
+section {
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+}
+#prof-section {
+    margin-top: 10rem;
+    margin-bottom: 25rem;
+}
+#about {
+    margin-top: 5rem;
+    margin-bottom: 20rem;
+}
+/* Or use a utility class */
+/* .section-spacing {
+    margin: 6rem 0;
+}
+
+.large-spacing {
+    margin: 8rem 0;
+}
+
+.small-spacing {
+    margin: 3rem 0;
+} */
