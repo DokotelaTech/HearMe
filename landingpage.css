@@ -821,12 +821,12 @@ input:checked + .slider:before {
     margin-bottom: 0.25rem;
 }
 
-.card-pri > p {
+/* .card-pri > p {
     font-size: 0.875rem;
     color: #7c3aed;
     font-weight: 500;
     margin-bottom: 1.25rem;
-}
+} */
 
 
 

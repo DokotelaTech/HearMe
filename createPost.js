@@ -1,5 +1,4 @@
 // createPost.js – handles submission and redirect
-
 document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = document.getElementById("submitPostBtn");
     const cancelBtn = document.getElementById("cancelBtn");

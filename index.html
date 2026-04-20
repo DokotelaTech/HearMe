@@ -69,12 +69,12 @@
     </section>
     <!-- ABOUT SECTION  -->
     <section id="about">
-        <h3 id="header1">About <span>HearMe</span></h3>
-        <p id="paragraph1">
+        <h3 id="header1" class="hidden">About <span>HearMe</span></h3>
+        <p id="paragraph1" class="hidden">
         Breaking down barriers to mental health support through community, AI, and professional care
         </p><br>
-        <h3 id="header2">Our mission</h3><br>
-        <p id="paragraph2">
+        <h3 id="header2" class="hidden">Our mission</h3><br>
+        <p id="paragraph2" class="hidden">
             HearMe is a mental health support platform designed to provide accessible, stigma-free assistance through 
             a unique blend of community connection,<span>AI-powered support</span> , and professional social worker integration.
             We believe everyone deserves a safe space to express their feelings, receive empathetic support,
@@ -254,12 +254,33 @@
              <div class="wellDashboard-card active" onclick="changeData('heart', this)">
                 <h3>Heart Rate</h3>
             </div>
-            <div class="wellDashboard-card" onclick="changeData('stress', this)">
-                <h3>Stress Level</h3>
-            </div>
-            <div class="wellDashboard-card" onclick="changeData('sleep', this)">
-                <h3>Sleep Quality</h3>
-            </div>
+            <!-- Standard (highlighted)
+             <div class="card featured">
+                <h3>Standard</h3>
+                <h2>R99<span>/mo</span></h2>
+                <ul>
+                    <li>Unlimited AI chat</li>
+                    <li>Priority support</li>
+                    <li>Weekly check-ins</li>
+                </ul>
+                <button>Choose Plan</button>
+            </div> -->
+            <!-- Premium -->
+             <!-- <div class="card-pri">
+                <h3>Premium</h3>
+                <p>AI Support</p>
+                <h2 id="premium-price">R179<span>/month</span></h2>
+                <ul>
+                    <li>Everything in Free</li>
+                    <li>24/7 AI Chatbot (The Consolidator)</li>
+                    <li>Unlimited AI Conversations</li>
+                    <li>Personalized Mental Health Insights</li>
+                    <li>Crisis Detection & Support</li>
+                    <li>Stress Monitoring Alerts</li>
+                    <li>Priority Support</li>
+                </ul>
+                <button>Start Trial</button>
+            </div> -->
         </div>
         <!-- Main Card --
          <div class="main-card">
@@ -347,6 +368,6 @@
         <p>&copy; 2025 HearMe. All rights reserved.</p>
     </footer>
     <script src="pricing.js"></script>
-    <script src="landingpage.js"></script>
+    <script src="landing.js"></script>
 </body>
 </html>
