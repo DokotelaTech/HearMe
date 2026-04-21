@@ -1,6 +1,8 @@
-package-lock.json
+node-modules
+ackage-lock.json
 package.json
 landing-page/package-lock.json
 landing-page/package.json
 main-app(users)/package-lock.json
 main-app(users)/package.json
+
