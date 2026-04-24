@@ -88,3 +88,4 @@ aiUserInput.addEventListener('keypress', (e) => {
         aiSendBtn.click();
     }
 });
+
