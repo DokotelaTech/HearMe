@@ -1,5 +1,5 @@
 emailjs.init({
-    publicKey: "s4hl6edRLEqLdFzFC", // PUBLIC KEY 
+    publicKey: "", // PUBLIC KEY 
 });
 
 // 2. Wait for the page to load, then attach the form listener

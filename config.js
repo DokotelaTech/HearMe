@@ -1,1 +1,1 @@
-const API_KEY = `AIzaSyDpS6UZFNRwinewH1hJcMfG8tXR-K-wBQk`
+const API_KEY = `google AI studio API_KEY`
