@@ -1,0 +1,72 @@
+:root {
+    --primary: #a820c7;
+    --grad: linear-gradient(90deg, #a820c7, #ff1b7e);
+    --bg: #f8f9fc;
+    --border: #eef0f5;
+    --text: #1a1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+body { background: var(--bg); overflow: hidden; }
+
+/* Fixed Elements */
+.navbar {
+    height: 60px; background: white; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
+}
+
+.app-container { display: flex; height: calc(100vh - 60px); }
+
+.sidebar {
+    width: 240px; background: white; border-right: 1px solid var(--border);
+    padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 0.5rem;
+}
+
+.nav-item {
+    display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem;
+    color: #6b7280; text-decoration: none; border-radius: 8px; transition: 0.2s;
+}
+
+.nav-item.active { background: #f5e6ff; color: var(--primary); font-weight: 600; }
+
+/* Scrollable Content Area */
+.content-scroll-area {
+    flex: 1; overflow-y: auto; scroll-behavior: smooth; padding: 2rem 4rem;
+}
+
+.page-section { padding-bottom: 4rem; margin-bottom: 3rem; border-bottom: 1px solid var(--border); }
+.page-title { font-size: 1.8rem; margin-bottom: 1.5rem; }
+
+/* Specific Modules */
+.profile-header-card {
+    background: var(--grad); border-radius: 20px; padding: 2.5rem; color: white;
+}
+
+.profile-main { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+.avatar-large { width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.stat-box { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 12px; text-align: center; }
+
+.search-bar { display: flex; gap: 1rem; margin-bottom: 1rem; }
+.search-bar input { flex: 1; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border); }
+
+.error-banner { 
+    background: #fff5f5; color: #c53030; padding: 1rem; border-radius: 8px; 
+    display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;
+}
+
+.sos-hero {
+    background: var(--grad); border-radius: 20px; padding: 4rem 2rem; text-align: center; color: white;
+}
+.sos-btn {
+    margin-top: 2rem; background: white; color: var(--primary); border: none;
+    padding: 1rem 3rem; border-radius: 50px; font-weight: 800; cursor: pointer;
+}
+
+.join-btn {
+    background: var(--grad); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer;
+}
+
+.help-fab { position: fixed; bottom: 2rem; right: 2rem; width: 56px; height: 56px; border-radius: 50%; background: var(--primary); color: white; border: none; }
