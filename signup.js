@@ -1,33 +1,65 @@
-const form = document.querySelector("#register-form form");
+document.addEventListener('DOMContentLoaded', () => {
+    const roleOptions = document.querySelectorAll('.role-option');
+    const anonSection = document.getElementById('anon-section');
+    const anonCheckbox = document.getElementById('anonymous');
+    const infoBox = document.getElementById('info-box');
+    const idLabel = document.getElementById('identifier-label');
+    const idInput = document.getElementById('identifier');
 
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
+    roleOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            // UI Update: Active state
+            roleOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            
+            const role = option.dataset.role;
 
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const password = form.password.value.trim();
+            if (role === 'user') {
+                // User View: Show anon toggle, hide info box
+                anonSection.style.display = 'block';
+                infoBox.style.display = 'none';
+                updateUserView();
+            } 
+            else if (role === 'therapist') {
+                // Therapist View: Hide anon toggle, SHOW info box
+                anonSection.style.display = 'none';
+                infoBox.style.display = 'block';
+                setupProfessionalView("Username", "Choose a username");
+            } 
+            else if (role === 'admin') {
+                // Admin View: Hide anon toggle, HIDE info box
+                anonSection.style.display = 'none';
+                infoBox.style.display = 'none';
+                setupProfessionalView("Admin Username", "Enter admin identifier");
+            }
+        });
+    });
 
-    // Check if fields are empty
-    if (name === "" || email === "" || password === "") {
-        alert("Please fill in all fields.");
-        return;
+    // Helper to clean up professional input states
+    function setupProfessionalView(label, placeholder) {
+        idLabel.innerText = label;
+        idInput.placeholder = placeholder;
+        idInput.value = "";
+        idInput.disabled = false;
+        idInput.style.backgroundColor = "transparent"; // Ensure it's not grayed out
     }
 
-    // Simple email format check
-    if (!email.includes("@") || !email.includes(".")) {
-        alert("Please enter a valid email.");
-        return;
+    function updateUserView() {
+        if (anonCheckbox.checked) {
+            idLabel.innerText = "Create Anonymous ID";
+            idInput.placeholder = "Auto-generated ID";
+            idInput.value = "User#" + Math.floor(10000 + Math.random() * 90000);
+            idInput.disabled = true;
+            idInput.style.backgroundColor = "#f1f5f9"; // Grayed out for auto-gen
+        } else {
+            idLabel.innerText = "Email Address";
+            idInput.placeholder = "Enter your email";
+            idInput.value = "";
+            idInput.disabled = false;
+            idInput.style.backgroundColor = "transparent";
+        }
     }
 
-    // Password validation
-    if (password.length < 6) {
-        alert("Password must be at least 6 characters.");
-        return;
-    }
-
-    // If everything is valid
-    alert("Registration successful!");
-
-    // Redirect to login page
-    window.location.href = "login.html";
+    anonCheckbox.addEventListener('change', updateUserView);
+    updateUserView(); // Initialize
 });
