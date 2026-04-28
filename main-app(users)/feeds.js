@@ -1,7 +1,6 @@
 let posts = [];
 let currentFilter = "all";   // 'all', 'social', 'success'
 
-
 //  Load posts from localStorage
 function loadPosts() {
     const stored = localStorage.getItem("hearMe_posts");
@@ -22,6 +21,7 @@ function loadPosts() {
 }
 
 function savePosts() {
+    // localStorage.removeItem("hearMe_posts");
     localStorage.setItem("hearMe_posts", JSON.stringify(posts));
 }
 

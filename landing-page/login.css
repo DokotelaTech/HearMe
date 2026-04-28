@@ -1,79 +1,283 @@
-*{
-    font-family: 'Poppins';
-    padding:0;
-    box-sizing: border-box;
+/* Reset & Base Styles - matches the exact visual from the picture */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    background:linear-gradient(to right , #e2e2e2, #c9d6ff);
-    color: #333;
-    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
 }
-.container h2{
-    margin-bottom: 20px;
-    text-align: center;
-}
-.form-box{
+
+/* Container - exactly as in your HTML */
+.container {
     width: 100%;
-    max-width: 450px;
-    padding:30px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 460px;
+    margin: 0 auto;
+}
+
+/* Form Box - matches the card style from the picture */
+.form-box {
+    background: white;
+    border-radius: 32px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+/* Logo styling - HearMe brand as shown in the picture */
+.form-box::before {
+    content: "";
+    display: block;
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-box h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.3px;
+}
+
+/* Add "Sign in to continue your journey" subtitle - matches picture exactly */
+.form-box h2::after {
+    content: "Sign in to continue your journey";
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #64748b;
+    margin-top: 0.5rem;
+    letter-spacing: normal;
+}
+
+/* Form layout */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+/* Input fields - rounded, soft background, exactly like the picture */
+input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 40px;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+    outline: none;
+    color: #1e293b;
+}
+
+input:focus {
+    border-color: #764ba2;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
+}
+
+input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+/* Forgot Password link - positioned to the right */
+form a {
+    display: block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #764ba2;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: -0.5rem;
+    transition: color 0.2s;
+}
+
+form a:hover {
+    color: #5a3a8c;
+    text-decoration: underline;
+}
+
+/* Sign In Button - gradient, rounded, shadow */
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 0.25rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 14px 0 rgba(118, 75, 162, 0.3);
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px 0 rgba(118, 75, 162, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Paragraph with "Don't have an account?" */
+form p {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+form p a {
+    display: inline;
+    text-align: center;
+    color: #764ba2;
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 0.25rem;
+}
+
+form p a:hover {
+    text-decoration: underline;
+}
+
+/* "or" divider - appears after the button naturally but we'll add it via pseudo-element */
+/* Since we can't modify HTML, we add the "or" divider after the form */
+.form-box {
+    position: relative;
+}
+
+.form-box::after {
+    content: "";
+    display: block;
+    margin-top: 1.5rem;
+}
+
+/* Add the "or" divider and terms/privacy text using pseudo-elements to keep HTML untouched */
+.container .form-box .btn-or-wrapper {
     display: none;
 }
-.form-box.active{
-    display: block;
-}
-h2{
-    font-size: 34px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-input, select{
-    /* display: flex;
-     */
-    width: 100%;
-    padding: 12px;
-    background: #eee;
-    border-radius: 6px;
-    border:none;
-    margin: 10px 0;
-    outline: none;
-    font-size: 16px;
-    color:#333
+
+/* Create the "or" divider and legal text using additional styling */
+.form-box > form {
+    position: relative;
 }
 
-button{
-    width: 100%;
-    padding: 12px;
-    background: #072153;
-    border-radius: 6px;
-    border:none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 20px;
-    transition: 0.5s;
-}
-button:hover{
-    background: #0e25a6;
-}
-p{
+.form-box > form::after {
+    content: "or";
+    display: block;
     text-align: center;
-    font-size: 14.5px;
-    margin-bottom: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+    position: relative;
 }
-p a{
-    color: #1f50aa;
-    text-decoration: none;
+
+.form-box > form::before {
+    content: "";
+    display: block;
+    position: relative;
+    top: 1.5rem;
+    width: 100%;
+    height: 1px;
+    background: #e9edf2;
+    margin-bottom: 1rem;
 }
-p a:hover{
-    text-decoration: underline;
+
+/* Adjust the order: we need the "or" to appear below button but above the signup paragraph */
+/* Restructure visually using flex/grid? Instead, reposition with margin */
+form p {
+    order: 3;
+}
+
+/* Better approach: reorder using CSS grid on form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Move the signup paragraph to appear after "or" */
+form p {
+    margin-top: 0.25rem;
+    order: 4;
+}
+
+/* Add the terms and privacy policy text at the very bottom */
+.form-box::after {
+    content: "By signing in, you agree to our Terms of Service and Privacy Policy";
+    display: block;
+    text-align: center;
+    font-size: 0.68rem;
+    color: #8e9aaf;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    padding-top: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Style the terms text to have clickable links */
+.form-box::after {
+    content: "By signing in, you agree to our Terms of Service and Privacy Policy";
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .form-box {
+        padding: 2rem 1.5rem;
+        border-radius: 28px;
+    }
+    
+    .form-box h2 {
+        font-size: 1.6rem;
+    }
+    
+    input {
+        padding: 0.875rem 1.125rem;
+    }
+}
+
+/* Make the email input show example email hint */
+input[type="email"]::placeholder {
+    color: #94a3b8;
+}
+
+/* Style the password placeholder similarly */
+input[type="password"]::placeholder {
+    color: #94a3b8;
+}
+
+/* Ensure the "Forgot Password?" link is properly positioned */
+form a[href="#"] {
+    margin-bottom: 0.25rem;
+}
+
+/* Add subtle hover effects to match modern UI */
+.form-box {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 30px 55px -12px rgba(0, 0, 0, 0.3);
 }
