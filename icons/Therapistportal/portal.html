@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Therapist Portal</title>
+    <link rel="stylesheet" href="portal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand-area">
+                <span class="logo">HearMe</span>
+                <span class="badge">Therapist Portal</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="clients"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="#" class="nav-item" data-target="calendar"><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="#" class="nav-item" data-target="messages"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="#" class="nav-item" data-target="notes"><i class="fa-regular fa-file-lines"></i> Session Notes</a>
+                <a href="#" class="nav-item" data-target="report"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+            </nav>
+            <div class="overview-box">
+                <h4>Today's Overview</h4>
+                <div class="ov-line">Active Clients <span>28</span></div>
+                <div class="ov-line">Sessions Today <span>5</span></div>
+                <div class="ov-line">Unread Messages <span class="red-text">3</span></div>
+            </div>
+        </aside>
+
+        <main class="main-workspace">
+            <header class="topbar">
+                <div class="topbar-right">
+                    <div class="icon-btn"><i class="fa-regular fa-message"></i><span class="dot"></span></div>
+                    <div class="user-chip">
+                        <div class="avatar">SJ</div>
+                        <div class="user-info">
+                            <strong>Dr. Sarah Johnson</strong>
+                            <span>LCSW, PhD</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-container">
+                
+                <section id="view-clients" class="view-panel active">
+                    <div class="page-header">
+                        <div>
+                            <h1>My Clients</h1>
+                            <p>Manage your client sessions and communications</p>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-card"><span>Total Clients</span><strong>5</strong></div>
+                        <div class="stat-card"><span>Active</span><strong class="green-text">3</strong></div>
+                        <div class="stat-card"><span>Pending</span><strong class="yellow-text">1</strong></div>
+                        <div class="stat-card"><span>New Messages</span><strong class="purple-text">4</strong></div>
+                    </div>
+                    <div class="filter-bar">
+                        <div class="search-input"><i class="fa-solid fa-search"></i> <input type="text" placeholder="Search clients by ID or issue..."></div>
+                        <div class="tabs"><button class="active">All</button><button>Active</button><button>Pending</button><button>Inactive</button></div>
+                    </div>
+                    
+                    <div class="client-card highlight-yellow">
+                        <div class="c-header">
+                            <div class="c-avatar blue">29</div>
+                            <div class="c-title"><h3>User#2931</h3><span>First contact: Mar 15, 2026 • 8 sessions</span></div>
+                            <span class="status-badge green">ACTIVE</span>
+                        </div>
+                        <div class="c-tags"><span class="tag blue">Work Stress</span><span class="tag blue">Anxiety</span><span class="tag blue">Sleep Issues</span></div>
+                        <div class="c-note"><strong>Latest notes:</strong> Making good progress with CBT techniques. Recommended daily journaling.</div>
+                        <div class="c-footer">
+                            <span class="date-info"><i class="fa-regular fa-calendar"></i> Last session: Apr 23, 2026 • <span class="purple-text"><i class="fa-regular fa-message"></i> 2 new messages</span></span>
+                            <div class="actions">
+                                <button class="btn-primary"><i class="fa-regular fa-message"></i> Message Client</button>
+                                <button class="btn-outline"><i class="fa-regular fa-calendar"></i> Schedule Session</button>
+                                <button class="btn-outline"><i class="fa-regular fa-file"></i> View Notes</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-calendar" class="view-panel">
+                    <div class="page-header flex-header">
+                        <div><h1>Calendar & Scheduling</h1><p>Manage your appointments and availability</p></div>
+                        <button class="btn-primary">+ New Appointment</button>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-card"><span>Today's Sessions</span><strong>4</strong></div>
+                        <div class="stat-card"><span>This Week</span><strong>12</strong></div>
+                        <div class="stat-card"><span>Next Available</span><strong>Apr 27, 3:00 PM</strong></div>
+                        <div class="stat-card"><span>Pending Confirmations</span><strong class="yellow-text">1</strong></div>
+                    </div>
+                    <div class="calendar-layout">
+                        <div class="cal-left">
+                            <div class="card">
+                                <h3><i class="fa-regular fa-calendar"></i> Today's Schedule - April 25, 2026</h3>
+                                <div class="appt-item confirmed">
+                                    <div class="time">09:00<span>50 min</span></div>
+                                    <div class="details">
+                                        <h4>User#2931 <i class="fa-solid fa-video"></i> <span class="badge green float-right">CONFIRMED</span></h4>
+                                        <p>Follow-up on CBT homework</p>
+                                        <div class="btn-group"><button class="btn-blue">Join Video Call</button><button class="btn-gray">View Details</button></div>
+                                    </div>
+                                </div>
+                                <div class="appt-item pending">
+                                    <div class="time">16:00<span>50 min</span></div>
+                                    <div class="details">
+                                        <h4>User#7624 <i class="fa-solid fa-video"></i> <span class="badge yellow float-right">PENDING</span></h4>
+                                        <div class="btn-group mt-10"><button class="btn-blue">Join Video Call</button><button class="btn-gray">View Details</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cal-right">
+                            <div class="card">
+                                <h3>Weekly Availability</h3>
+                                <div class="avail-item"><div>Monday<span>9:00 AM - 5:00 PM</span></div><input type="checkbox" checked></div>
+                                <div class="avail-item"><div>Saturday<span class="muted">Unavailable</span></div><input type="checkbox"></div>
+                                <button class="btn-light-blue full-width mt-10">Edit Availability</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-messages" class="view-panel">
+                    <div class="page-header">
+                        <h1>Messages</h1>
+                        <p>Communicate securely with your clients</p>
+                    </div>
+                    <div class="messages-layout">
+                        <div class="inbox-sidebar">
+                            <div class="search-input"><i class="fa-solid fa-search"></i> <input type="text" placeholder="Search conversations..."></div>
+                            <div class="inbox-list">
+                                <div class="inbox-item active">
+                                    <div class="c-avatar blue sm">29</div>
+                                    <div class="inbox-details">
+                                        <div class="flex-bw"><strong>User#2931</strong> <span class="time">2 hours ago</span></div>
+                                        <p>Thank you for the session today. The breat...</p>
+                                    </div>
+                                    <div class="unread-badge">2</div>
+                                </div>
+                                <div class="inbox-item">
+                                    <div class="c-avatar blue sm">12</div>
+                                    <div class="inbox-details">
+                                        <div class="flex-bw"><strong>User#1293</strong> <span class="time">5 hours ago</span></div>
+                                        <p>I had another nightmare last night. Can we ...</p>
+                                    </div>
+                                    <div class="unread-badge">1</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-area">
+                            <div class="chat-header">
+                                <div class="flex-align"><div class="c-avatar blue sm">29</div><div><strong>User#2931</strong><br><span class="muted text-sm">Anonymous Client</span></div></div>
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </div>
+                            <div class="chat-history">
+                                <div class="bubble incoming">
+                                    <p>Hi Dr. Johnson, I wanted to follow up on today's session.</p>
+                                    <span class="time">3 hours ago</span>
+                                </div>
+                                <div class="bubble outgoing">
+                                    <p>Hello! Of course, I'm here. How are you feeling after our session?</p>
+                                    <span class="time">2.5 hours ago</span>
+                                </div>
+                                <div class="bubble incoming">
+                                    <p>Much better actually. The breathing exercises really helped when I started feeling anxious at work.</p>
+                                    <span class="time">2 hours ago</span>
+                                </div>
+                                <div class="bubble outgoing">
+                                    <p>That's wonderful to hear! Remember to practice them daily, even when you're not feeling anxious. It helps build the habit.</p>
+                                    <span class="time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="chat-footer">
+                                <div class="privacy-banner"><strong>Privacy Reminder:</strong> All messages are encrypted and HIPAA-compliant. Do not share identifiable information.</div>
+                                <div class="input-area">
+                                    <i class="fa-solid fa-paperclip attach-icon"></i>
+                                    <input type="text" placeholder="Type your message... (Press Enter to send)">
+                                    <button class="send-btn"><i class="fa-regular fa-paper-plane"></i> Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-notes" class="view-panel">
+                    <div class="page-header flex-header">
+                        <div><h1>Session Notes</h1><p>Confidential clinical documentation</p></div>
+                        <button class="btn-primary">+ New Session Note</button>
+                    </div>
+                    <div class="alert-red">
+                        <i class="fa-solid fa-lock"></i>
+                        <div><strong>Confidential Clinical Records</strong><br>All session notes are encrypted and HIPAA-compliant. Access is restricted.</div>
+                    </div>
+                    
+                    <div class="note-card mt-20">
+                        <div class="c-header flex-bw">
+                            <div class="flex-align"><div class="c-avatar blue sm">29</div><div><h3>User#2931 <i class="fa-solid fa-lock text-sm red-text"></i></h3><span class="muted text-sm"><i class="fa-regular fa-calendar"></i> Apr 23, 2026 Session #8 50 minutes</span></div></div>
+                            <div class="muted"><i class="fa-regular fa-pen-to-square mr-10"></i> <i class="fa-regular fa-trash-can red-text"></i></div>
+                        </div>
+                        <div class="mt-10">
+                            <strong><i class="fa-regular fa-file-lines"></i> Session Summary</strong>
+                            <p class="text-sm mt-5">Client reported significant progress with work-related anxiety. Sleep has improved.</p>
+                        </div>
+                        <div class="grid-2 mt-10">
+                            <div><strong>Clinical Observations</strong><p class="text-sm mt-5">Client appeared more relaxed and confident.</p></div>
+                            <div><strong>Interventions Used</strong><p class="text-sm mt-5">Continued CBT techniques. Introduced progressive muscle relaxation.</p></div>
+                        </div>
+                        <div class="grid-2 mt-10">
+                            <div class="box-pink"><strong>Homework Assigned</strong><p>Practice breathing exercises 2x daily. Journal anxiety triggers.</p></div>
+                            <div class="box-blue"><strong>Next Steps</strong><p>Review journal entries and assess progress. Consider reducing session frequency.</p></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="view-report" class="view-panel">
+                    <div class="page-header">
+                        <h1>Report Issue to Admin</h1>
+                        <p>Submit technical issues, client concerns, or policy questions</p>
+                    </div>
+                    <div class="alert-red">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div><strong>Emergency Situations</strong><br>If you're experiencing a crisis situation... please call the admin emergency line at <strong>(555) 911-HELP</strong>.</div>
+                    </div>
+                    <div class="report-layout mt-20">
+                        <div class="card form-card">
+                            <h3>Submit New Report</h3>
+                            <label class="mt-20 block">Issue Category</label>
+                            <div class="category-grid">
+                                <div class="cat-btn active"><i class="fa-solid fa-wrench"></i> Technical Issue</div>
+                                <div class="cat-btn"><i class="fa-solid fa-user"></i> Client Concern</div>
+                                <div class="cat-btn"><i class="fa-solid fa-shield"></i> Safety/Crisis</div>
+                            </div>
+                            <label class="mt-20 block">Detailed Description</label>
+                            <textarea placeholder="Provide as much detail as possible..."></textarea>
+                            <button class="btn-primary full-width mt-20"><i class="fa-regular fa-paper-plane"></i> Submit Report to Admin</button>
+                        </div>
+                        <div class="card reports-sidebar">
+                            <h3>Your Recent Reports</h3>
+                            <div class="report-item border-green">
+                                <div class="flex-bw"><strong>Video call connection issues</strong> <span class="badge green">RESOLVED</span></div>
+                                <div class="muted text-sm mt-5">Apr 20, 2026</div>
+                                <div class="report-reply green-bg mt-10"><strong>Admin:</strong> Issue resolved. We've upgraded the video server infrastructure.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    <script src="portal.js"></script>
+</body>
+</html>

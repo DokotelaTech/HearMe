@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - AI Support Chat</title>
+    <link rel="stylesheet" href="ai-chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">HearMe</div>
+            <nav>
+                <div class="nav-item"><i class="fa-solid fa-house"></i> Feed</div>
+                <div class="nav-item"><i class="fa-solid fa-users"></i> Groups</div>
+                <div class="nav-item active"><i class="fa-solid fa-comment-dots"></i> AI Chat</div>
+                <div class="nav-item"><i class="fa-solid fa-user-doctor"></i> Experts</div>
+                <div class="nav-item"><i class="fa-solid fa-circle-exclamation"></i> SOS</div>
+                <div class="nav-item"><i class="fa-solid fa-heart"></i> Relief</div>
+                <div class="nav-item"><i class="fa-solid fa-user"></i> Profile</div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="user-avatar">A</div>
+            </header>
+
+            <section class="chat-section">
+                <h1>AI Support Chat</h1>
+                <p class="subtitle">A compassionate AI listener, available 24/7</p>
+
+                <div class="chat-card">
+                    <div id="aiChatBox" class="chat-display">
+                        <div class="ai-message-wrapper">
+                            <div class="ai-avatar-circle">🤖</div>
+                            <div class="ai-bubble">
+                                Hello! I'm here to listen. This is a safe, judgment-free space. You can share anything on your mind, and everything we discuss is completely confidential. How are you feeling today?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-area">
+                        <div class="input-container">
+                            <input type="text" id="aiUserInput" placeholder="Type your message... Remember, this is a safe space.">
+                            <button id="aiSendBtn">
+                                <i class="fa-solid fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                        <p class="disclaimer">
+                            <i class="fa-solid fa-heart"></i> This AI provides emotional support but is not a replacement for professional help. In crisis? Use the SOS button.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="ai-chat-container" id="aiChatBox">
+        <div class="ai-message-wrapper">
+            <div class="ai-avatar">🤖</div>
+            <div class="ai-bubble">
+                Hello! I'm your AI companion, here to listen without judgment. This is a safe space where you can share anything on your mind. How are you feeling today? 💙
+            </div>
+        </div>
+    </div>
+
+    <div class="ai-input-area">
+        <div class="ai-suggestion">
+        </div>
+        <div class="input-wrapper">
+            <input type="text" id="aiUserInput" placeholder="Share your thoughts..." autocomplete="off">
+            <button id="aiSendBtn" class="send-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="feeds.html" class="nav-item">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg></span>
+            Feeds
+        </a>
+        
+        <a href="ai-chat.html" class="nav-item active">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l1.5 4.5H18l-3.75 2.7 1.5 4.5L12 11.1l-3.75 2.6 1.5-4.5L6 6.5h4.5L12 2z"/><circle cx="12" cy="19" r="2" fill="currentColor" stroke="none"/></svg></span>
+            AI Chat
+        </a>
+
+        <a href="inbox.html" class="nav-item">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+            Inbox
+        </a>
+
+        <a href="profile.html" class="nav-item">
+            <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+            Profile
+        </a>
+    </div>
+</div>
+<script src="config.js"></script>
+<script src="ai.js"></script>
+</body>
+</html>
