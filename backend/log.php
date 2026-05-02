@@ -2,7 +2,7 @@
 session_start();
 require "db_connect.php";
 
-echo"this file is working";
+//echo"this file is working";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -20,12 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user["password"])) {
 
             // Store session data
-            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["user_id"] = $user["user_id"];
             $_SESSION["username"] = $user["username"];
 
-            echo "Login successful!";
-            // header("Location: dashboard.php");
+            header("Location: feeds.php");
             exit();
+            // header("Location: dashboard.php");
 
         } else {
             echo "Invalid password.";
