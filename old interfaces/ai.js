@@ -1,5 +1,3 @@
-//API IS NOW COMING FROM config.js 
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
 const aiChatBox = document.getElementById('aiChatBox');
 const aiUserInput = document.getElementById('aiUserInput');

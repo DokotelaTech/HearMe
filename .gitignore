@@ -1,8 +1,12 @@
-node-modules
-ackage-lock.json
+node_modules/package-lock.json
+.env
+a
+old interfaces/package.json
+old interfaces/package-lock.json
+package-lock.json
 package.json
-landing-page/package-lock.json
-landing-page/package.json
-main-app(users)/package-lock.json
-main-app(users)/package.json
+config.js
 
+
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+const API_KEY = `google AI studio API_KEY`
