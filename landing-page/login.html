@@ -17,7 +17,10 @@
     <div class="container">
         <div class="form-box">
             <h2>Welcome Back</h2>
-            <form id="login-form">
+
+            <!-- ✅ IMPORTANT: form connects to PHP -->
+            <form method="POST" action="log.php" id="login-form">
+
                 <p class="label-text">I am a:</p>
                 <div class="role-selector">
                     <div class="role-option active" data-role="user">
@@ -29,7 +32,6 @@
                         <span>Therapist</span>
                     </div>
                     <div class="role-option" data-role="admin">
-                        <i class="fa-outline fa-shield-halved"></i>
                         <i class="fa-solid fa-shield"></i>
                         <span>Admin</span>
                     </div>
@@ -40,22 +42,40 @@
                     <label for="anonymous">Keep me completely anonymous (recommended)</label>
                 </div>
 
+                <!-- ✅ FIXED: EMAIL FIELD -->
                 <div class="input-group">
                     <i class="fa-regular fa-envelope"></i>
-                    <input id="identifier" type="text" placeholder="user#12345" required>
+                    <input 
+                        id="email" 
+                        name="email" 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        required
+                    >
                 </div>
 
+                <!-- ✅ FIXED: PASSWORD FIELD -->
                 <div class="input-group">
                     <i class="fa-solid fa-lock"></i>
-                    <input id="password" type="password" placeholder="Enter your password" required>
+                    <input 
+                        id="password" 
+                        name="password" 
+                        type="password" 
+                        placeholder="Enter your password" 
+                        required
+                    >
                 </div>
 
                 <button type="submit" id="Btn">Sign In</button>
-                <p class="footer-text">Don't have an account? <a href="SignUp.html">Sign up</a></p>
+
+                <p class="footer-text">
+                    Don't have an account? <a href="SignUp.html">Sign up</a>
+                </p>
+
             </form>
         </div>
     </div>
 
-    <script src="login.js"></script>
+    <!-- <script src="login.js"></script> -->
 </body>
 </html>

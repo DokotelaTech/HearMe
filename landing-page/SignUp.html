@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+
     <div class="brand-header">
         <h1>HearMe</h1>
         <p>Your safe space for healing</p>
@@ -17,7 +18,9 @@
     <div class="container">
         <div class="form-box">
             <h2>Join HearMe</h2>
-            <form id="signup-form">
+
+            <form action="reg.php" method="POST" id="signup-form">
+
                 <p class="label-text">I am a:</p>
                 <div class="role-selector">
                     <div class="role-option active" data-role="user">
@@ -41,32 +44,61 @@
                     </div>
                 </div>
 
+                <!-- USERNAME -->
                 <div class="input-field">
-                    <label id="identifier-label" class="label-text">Create Anonymous ID</label>
+                    <label class="label-text">Username</label>
                     <div class="input-group">
-                        <i id="input-icon" class="fa-regular fa-user"></i>
-                        <input id="identifier" type="text" placeholder="Auto-generated ID">
+                        <i class="fa-regular fa-user"></i>
+                        <input 
+                            id="username" 
+                            name="username"
+                            type="text" 
+                            placeholder="Enter your username" 
+                            required
+                        >
                     </div>
                 </div>
 
+                <!-- EMAIL -->
+                <div class="input-field">
+                    <label class="label-text">Email Address</label>
+                    <div class="input-group">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input 
+                            id="email" 
+                            name="email"
+                            type="email" 
+                            placeholder="Enter your email" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- PASSWORD -->
                 <div class="input-field">
                     <label class="label-text">Password</label>
                     <div class="input-group">
                         <i class="fa-solid fa-lock"></i>
-                        <input id="password" type="password" placeholder="Create a secure password" required>
+                        <input 
+                            id="password" 
+                            name="password"
+                            type="password" 
+                            placeholder="Create a secure password" 
+                            required
+                        >
                     </div>
                 </div>
 
-                <div id="info-box" class="info-message" style="display: none;">
-                    Your account will be reviewed by our admin team. You'll need to upload verification documents after signup.
-                </div>
+                <!-- ✅ IMPORTANT FIX -->
+                <button type="submit" name="register" id="Btn">Create Account</button>
 
-                <button type="submit" id="Btn">Create Account</button>
-                <p class="footer-text">Already have an account? <a href="login.html">Sign in</a></p>
+                <p class="footer-text">
+                    Already have an account? <a href="login.html">Sign in</a>
+                </p>
+
             </form>
         </div>
     </div>
 
-    <script src="signup.js"></script>
 </body>
 </html>

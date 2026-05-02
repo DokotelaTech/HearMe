@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["user_id"] = $user["user_id"];
             $_SESSION["username"] = $user["username"];
 
-            header("Location: feeds.php");
+            header("Location: ../user-profiles/community-feeds.html");
             exit();
             // header("Location: dashboard.php");
 
