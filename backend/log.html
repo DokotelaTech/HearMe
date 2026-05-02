@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="log.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons for optional visual, but we'll create pure CSS logo) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class = "container">
+        <div class="form-box active" id = "login-form">
+            <form method="POST" action="log.php">
+                <h2>Login</h2>
+                <input id="email" type="email" name="email" placeholder="Email" required>
+                <input id="password" type="password" name="password" placeholder="Password" required>
+                  <button id="Btn">Login</button>
+                <p>Don't have an account? <a href="reg.html">Register</a></p>
+            </form>
+        </div>
+
+        <script src="log.js"></script>
+</body>
+</html>
