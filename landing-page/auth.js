@@ -1,9 +1,9 @@
-// login.js
+// signup.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. UI LOGIC (Role Selection)
+    // 1. UI LOGIC (Role Selection & Toggles)
     const roleOptions = document.querySelectorAll('.role-option');
-    const anonToggleContainer = document.querySelector('.anon-toggle'); // Matches login.html
+    const anonToggleContainer = document.getElementById('anon-section'); // Matches signup.html
     const anonCheckbox = document.getElementById('anonymous');
     const identifierInput = document.getElementById('identifier');
 
@@ -21,10 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     anonToggleContainer.style.display = 'none';
                     if (anonCheckbox) anonCheckbox.checked = false; 
                     identifierInput.placeholder = "Enter email or username";
+                    identifierInput.type = "text";
                 } else {
-                    anonToggleContainer.style.display = 'flex';
+                    anonToggleContainer.style.display = 'block';
                     if (anonCheckbox) anonCheckbox.checked = true;
-                    identifierInput.placeholder = "user#12345";
+                    identifierInput.placeholder = "Auto-generated ID";
                 }
             }
         });
@@ -33,45 +34,39 @@ document.addEventListener('DOMContentLoaded', () => {
     if (anonCheckbox) {
         anonCheckbox.addEventListener('change', () => {
             if (anonCheckbox.checked) {
-                identifierInput.placeholder = "user#12345";
+                identifierInput.placeholder = "Auto-generated ID";
             } else {
                 identifierInput.placeholder = "Enter your email";
             }
         });
     }
 
-    // 2. LOGIN DATABASE LOGIC
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
+    // 2. SIGN UP DATABASE LOGIC
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault(); // Stop page refresh
 
             const roleElement = document.querySelector('.role-option.active');
             const role = roleElement ? roleElement.getAttribute('data-role') : 'user';
+            const isAnonymous = anonCheckbox ? anonCheckbox.checked : false;
             const identifier = identifierInput.value;
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://localhost:5000/api/auth/login', {
+                const response = await fetch('http://localhost:5000/api/auth/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ role, identifier, password })
+                    body: JSON.stringify({ role, isAnonymous, identifier, password })
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    alert('Login successful! Welcome back to HearMe.');
-                    
-                    // Save secure token to browser
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('userRole', data.user.role);
-                    localStorage.setItem('userIdentifier', data.user.identifier);
-
-                    // Redirect to the main dashboard
-                    window.location.href = '../user-profiles/community-feeds.html'; 
+                    alert('Signup successful! Redirecting to login...');
+                    window.location.href = 'login.html';
                 } else {
-                    alert(`Login failed: ${data.message}`);
+                    alert(`Error: ${data.message}`);
                 }
             } catch (error) {
                 console.error('Error connecting to server:', error);

@@ -31,14 +31,45 @@
                     <h2 class="page-title">Community Feed</h2>
                     <!-- <button id="clear-btn" class="clear-button">Clear Feed</button> -->
                 </div>
+                <!-- Replace your existing .input-card div with this -->
 
-                <div class="input-card">
-                    <div class="post-input-wrapper">
-                        <input type="text" id="post-input" placeholder="Share your thoughts anonymously...">
-                        <button id="post-button" class="post-submit-btn">Post</button>
-                    </div>
-                </div>
+<div class="input-card">
 
+  <!-- COLLAPSED STATE (default) -->
+  <div class="post-input-wrapper" id="post-collapsed">
+    <input type="text" id="post-input-simple" placeholder="Share your thoughts anonymously..." readonly>
+    <button class="post-submit-btn" id="open-composer">Post</button>
+  </div>
+
+  <!-- EXPANDED STATE (shown when clicked) -->
+  <div class="post-composer" id="post-expanded" style="display:none;">
+
+    <div class="post-tabs">
+      <button class="tab-btn active" data-type="struggle">Struggle Post</button>
+      <button class="tab-btn" data-type="success">Success Story</button>
+    </div>
+
+    <textarea id="post-textarea"
+      class="post-textarea"
+      placeholder="Share what you're going through... You're not alone."></textarea>
+
+    <div class="post-actions">
+      <div class="left-actions">
+        <label class="media-upload">
+          <i data-lucide="image"></i>
+          <span>Add image/GIF</span>
+          <input type="file" hidden>
+        </label>
+      </div>
+      <div class="right-actions">
+        <button class="cancel-btn" id="cancel-post">Cancel</button>
+        <button id="post-button" class="post-submit-btn">Post</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
                 <div id="post-container" class="post-list"></div>
             </div>
         </main>
