@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe | Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <h1 class="logo">HearMe</h1>
+        <div class="user-avatar">A</div>
+    </header>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="profile.html" class="nav-item active"><i data-lucide="user"></i><span>Profile</span></a>
+        </nav>
+
+        <main class="profile-area">
+            <div class="profile-header">
+                <h2 class="page-title">Your Profile</h2>
+                <p class="page-subtitle">Track your healing journey and stay connected</p>
+            </div>
+
+            <div class="user-banner">
+                <div class="user-info">
+                    <div class="large-avatar">A</div>
+                    <div class="user-details">
+                        <h3>Anonymous User #8472</h3>
+                        <p>Member since March 2026</p>
+                    </div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-box">
+                        <div class="stat-num">45</div>
+                        <div class="stat-label">Days Active</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num">12</div>
+                        <div class="stat-label">Posts Shared</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num">3</div>
+                        <div class="stat-label">Groups Joined</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-num">5</div>
+                        <div class="stat-label">Sessions Done</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-grid">
+                
+                <div class="card roadmap-card">
+                    <div class="card-header">
+                        <h3>Your Healing Roadmap</h3>
+                        <div class="progress-info">
+                            <i data-lucide="trending-up"></i>
+                            <span id="progress-text">40% Complete</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-bar"></div>
+                    </div>
+
+                    <div class="task-list">
+                        <div class="task-item completed">
+                            <div class="task-check"><i data-lucide="check-circle-2"></i></div>
+                            <div class="task-content">
+                                <h4>Practice daily gratitude</h4>
+                                <p>Write down 3 things you're grateful for each morning</p>
+                            </div>
+                            <span class="badge badge-purple">Daily Practice</span>
+                        </div>
+
+                        <div class="task-item completed">
+                            <div class="task-check"><i data-lucide="check-circle-2"></i></div>
+                            <div class="task-content">
+                                <h4>Join a support group</h4>
+                                <p>Connect with others who share similar experiences</p>
+                            </div>
+                            <span class="badge badge-purple">Community</span>
+                        </div>
+
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Try breathing exercises</h4>
+                                <p>Practice the 4-4-4 breathing technique when feeling anxious</p>
+                            </div>
+                            <span class="badge badge-purple">Stress Management</span>
+                        </div>
+
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Schedule a session</h4>
+                                <p>Book your first session with a verified social worker</p>
+                            </div>
+                            <span class="badge badge-purple">Professional Support</span>
+                        </div>
+
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Share your success</h4>
+                                <p>Post a success story to inspire others in the community</p>
+                            </div>
+                            <span class="badge badge-purple">Give Back</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="card events-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="bell" class="header-icon"></i> Upcoming Events</h3>
+                        </div>
+                        <div class="event-list">
+                            <div class="event-item">
+                                <div class="event-icon"><i data-lucide="calendar"></i></div>
+                                <div class="event-details">
+                                    <h4>Anxiety Warriors Group Session</h4>
+                                    <p>Today at 7:00 PM</p>
+                                    <span class="badge badge-blue">Group</span>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i data-lucide="calendar"></i></div>
+                                <div class="event-details">
+                                    <h4>Mindfulness Workshop</h4>
+                                    <p>Apr 26 at 6:00 PM</p>
+                                    <span class="badge badge-green">Workshop</span>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-icon"><i data-lucide="calendar"></i></div>
+                                <div class="event-details">
+                                    <h4>1-on-1 Session with Dr. Sarah Johnson</h4>
+                                    <p>Apr 28 at 3:00 PM</p>
+                                    <span class="badge badge-purple">Session</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card achievements-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="award" class="header-icon"></i> Achievements</h3>
+                        </div>
+                        <div class="achievement-item">
+                            <div class="achievement-icon">🌟</div>
+                            <div class="achievement-details">
+                                <h4>First Step</h4>
+                                <p>Joined your first community group</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

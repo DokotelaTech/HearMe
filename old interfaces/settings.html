@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - HearMe</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <h1>Settings</h1>
+        <!-- ACCOUNT -->
+         <div class="card">
+            <h2>Account</h2>
+            <button onclick="goToEdit()">Edit Profile</button>
+            <button onclick="changePassword()">Change Password</button>
+        </div>
+        <!-- PRIVACY -->
+         <div class="card">
+            <h2>Privacy</h2>
+            <div class="setting-item">
+                <span>Anonymous Posting</span>
+                <input type="checkbox" id="anonymousToggle">
+            </div>
+            <div class="setting-item">
+                <span>Allow Messages</span>
+                <input type="checkbox" id="messageToggle">
+            </div>
+        </div>
+        <!-- NOTIFICATIONS -->
+         <div class="card">
+            <h2>Notifications</h2>
+            <div class="setting-item">
+                <span>Comments</span>
+                <input type="checkbox" id="commentToggle">
+            </div>
+            <div class="setting-item">
+                <span>Inbox Messages</span>
+                <input type="checkbox" id="inboxToggle">
+            </div>
+        </div>
+        <!-- AI SETTINGS -->
+         <div class="card">
+            <h2>AI Settings</h2>
+            <div class="setting-item">
+                <span>Enable AI Chat</span>
+                <input type="checkbox" id="aiToggle">
+            </div>
+            <button onclick="resetAI()">Reset AI Chat</button>
+        </div>
+        <!-- APPEARANCE -->
+        <div class="card">
+            <h2>Appearance</h2>
+            <div class="setting-item">
+                <span>Dark Mode</span>
+                <input type="checkbox" id="themeToggle">
+            </div>
+        </div>
+        <!-- LOGOUT -->
+         <div class="card danger">
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <script src="settings.js"></script>
+</body>
+</html>

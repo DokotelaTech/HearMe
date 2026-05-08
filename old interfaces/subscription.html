@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Cancel Subscription</title>
+    <link rel="stylesheet" href="subscription.css">
+</head>
+<body>
+
+    <div class="cancel-container">
+        <div class="warning-icon">⚠️</div>
+
+        <h2 class="cancel-title">Cancel Subscription</h2>
+        <p class="warning-text">We're sorry to see you go. If you cancel, you will lose access to the AI Wellness Companion.</p>
+
+        <form id="cancelForm">
+            <div class="input-group">
+                <label class="input-label" for="userEmail">Confirm Your Email</label>
+                <input type="email" id="userEmail" class="email-input" placeholder="e.g. name@example.com" required>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="confirmTerms" class="checkbox-input" required>
+                <label for="confirmTerms" class="checkbox-label">
+                    I understand that my premium features will be disabled immediately upon cancellation.
+                </label>
+            </div>
+
+            <button type="submit" class="btn-cancel">Confirm Cancellation</button>
+        </form>
+
+        <a href="profile.html" class="back-link">Wait, keep my subscription</a>
+    </div>
+
+    <nav class="bottom-nav">
+    </nav>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="subscription.js"></script>
+</body>
+</html>

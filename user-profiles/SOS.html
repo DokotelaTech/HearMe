@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe | All-in-One</title>
+    <link rel="stylesheet" href="SOS.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <header class="navbar">
+        <h1 class="logo">HearMe</h1>
+        <div class="user-avatar">A</div>
+    </header>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="profile.html" class="nav-item active"><i data-lucide="user"></i><span>Profile</span></a>
+        </nav>
+
+        <main class="content-scroll-area">
+            
+            <section id="profile" class="page-section">
+                <h2 class="page-title">Your Profile</h2>
+                <div class="profile-header-card">
+                    <div class="profile-main">
+                        <div class="avatar-large">A</div>
+                        <div class="profile-text">
+                            <h3>Anonymous User #8472</h3>
+                            <p>Member since March 2026</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box"><strong>45</strong><span>Days Active</span></div>
+                        <div class="stat-box"><strong>12</strong><span>Posts Shared</span></div>
+                        <div class="stat-box"><strong>3</strong><span>Groups Joined</span></div>
+                        <div class="stat-box"><strong>5</strong><span>Sessions Done</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="experts" class="page-section">
+                <h2 class="page-title">Find a Social Worker</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search by name or specialty...">
+                    <button class="near-me-btn"><i data-lucide="map-pin"></i> Near Me</button>
+                </div>
+                <div class="error-banner">
+                    <i data-lucide="alert-triangle"></i>
+                    <span>Location permission denied. Please enable location access.</span>
+                </div>
+            </section>
+
+            <section id="groups" class="page-section">
+                <h2 class="page-title">Support Groups</h2>
+                <div class="ai-banner">
+                    <i data-lucide="sparkles"></i>
+                    <div>
+                        <strong>AI-Powered Group Matching</strong>
+                        <p>Join groups that understand your journey.</p>
+                    </div>
+                </div>
+                <div class="group-card">
+                    <h3>Anxiety Warriors</h3>
+                    <p>A safe space for dealing with anxiety.</p>
+                    <button class="join-btn" onclick="toggleJoin(this)">Join Group</button>
+                </div>
+            </section>
+
+            <section id="sos" class="page-section">
+                <h2 class="page-title">Emergency Support</h2>
+                <div class="sos-hero">
+                    <i data-lucide="shield" class="shield-icon"></i>
+                    <h3>Emergency SOS</h3>
+                    <button class="sos-btn" id="sosTrigger">ACTIVATE SOS</button>
+                </div>
+                <div class="hotline-list">
+                    <div class="hotline-card">
+                        <span>National Suicide Prevention Lifeline</span>
+                        <button class="call-btn"><i data-lucide="phone"></i> Call</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <button class="help-fab"><i data-lucide="help-circle"></i></button>
+    <script src="SOS.js"></script>
+</body>
+</html>

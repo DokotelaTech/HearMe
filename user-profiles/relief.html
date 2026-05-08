@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe | Stress Relief</title>
+    <link rel="stylesheet" href="relief.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <h1 class="logo">HearMe</h1>
+        <div class="user-avatar">A</div>
+    </header>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="relief.html" class="nav-item active"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
+        </nav>
+
+        <main class="relief-area">
+            <div class="page-header">
+                <h2 class="page-title">Stress Relief</h2>
+                <p class="page-subtitle">Take a moment to calm your mind and relax</p>
+            </div>
+
+            <div class="exercise-grid">
+                <div class="exercise-card" id="breathing">
+                    <div class="icon-circle bg-blue">
+                        <i data-lucide="wind"></i>
+                    </div>
+                    <h3>Breathing Exercise</h3>
+                    <p>Calm your mind with guided breathing</p>
+                </div>
+
+                <div class="exercise-card" id="meditation">
+                    <div class="icon-circle bg-gradient">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <h3>5-Minute Meditation</h3>
+                    <p>Quick mindfulness practice</p>
+                </div>
+
+                <div class="exercise-card" id="grounding">
+                    <div class="icon-circle bg-green">
+                        <i data-lucide="heart"></i>
+                    </div>
+                    <h3>5-4-3-2-1 Grounding</h3>
+                    <p>Connect with your senses</p>
+                </div>
+            </div>
+
+            <div class="tips-container">
+                <div class="tips-header">
+                    <span class="bulb">💡</span>
+                    <h3>Quick Stress Relief Tips</h3>
+                </div>
+                <ul class="tips-list">
+                    <li>Take a short walk, even just around the room</li>
+                    <li>Listen to calming music or nature sounds</li>
+                    <li>Practice progressive muscle relaxation</li>
+                    <li>Write down your thoughts in a journal</li>
+                    <li>Call a friend or family member</li>
+                    <li>Do something creative like drawing or coloring</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="relief.js"></script>
+</body>
+</html>
