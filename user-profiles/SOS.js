@@ -1,36 +1,36 @@
-lucide.createIcons();
-
-// Toggle Join Button State
-function toggleJoin(btn) {
-    if (btn.innerText === "Join Group") {
-        btn.innerText = "Joined";
-        btn.style.background = "#e5e7eb";
-        btn.style.color = "#4b5563";
-    } else {
-        btn.innerText = "Join Group";
-        btn.style.background = "linear-gradient(90deg, #a820c7, #ff1b7e)";
-        btn.style.color = "white";
-    }
-}
-
+// Adding simple interactivity to the SOS and Call buttons
 document.addEventListener('DOMContentLoaded', () => {
-    const navItems = document.querySelectorAll('.nav-item');
-
-    // Sidebar active state on scroll/click
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            navItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+    
+    // SOS Button Logic
+    const sosButton = document.getElementById('sosButton');
+    
+    if (sosButton) {
+        sosButton.addEventListener('click', () => {
+            // In a real application, this would trigger an emergency protocol API
+            alert('SOS Activated! Initiating emergency protocols and fetching location...');
+            
+            // Visual feedback
+            sosButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ACTIVATING...';
+            sosButton.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                sosButton.innerHTML = 'ACTIVATE SOS';
+                sosButton.style.opacity = '1';
+            }, 3000);
         });
-    });
+    }
 
-    // SOS Logic
-    const sos = document.getElementById('sosTrigger');
-    sos.addEventListener('click', () => {
-        const confirmSOS = confirm("Are you sure you want to activate SOS? This will alert emergency services.");
-        if(confirmSOS) {
-            sos.innerText = "ALERTTING...";
-            sos.style.background = "red";
-        }
+    // Call Buttons Logic
+    const callButtons = document.querySelectorAll('.btn-call');
+    
+    callButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            // Find the associated phone number in the same card
+            const card = e.target.closest('.hotline-card');
+            const phoneNumberElement = card.querySelector('.phone-number');
+            const phoneNumberText = phoneNumberElement.innerText.trim();
+            
+            alert(`Opening dialer for: ${phoneNumberText}`);
+        });
     });
 });
