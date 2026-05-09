@@ -44,3 +44,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// new appointment code.
+
+async function loadAppointments() {
+
+    const response = await fetch(
+        "http://localhost:5000/appointments"
+    );
+
+    const appointments = await response.json();
+
+    const appointmentsList =
+        document.getElementById("appointmentsList");
+
+    appointmentsList.innerHTML = "";
+
+    appointments.forEach(app => {
+
+        appointmentsList.innerHTML += `
+
+        <div class="avail-item">
+
+            <div>
+                ${app.clientName}
+
+                <span>
+                    ${app.date} • ${app.time}
+                </span>
+            </div>
+
+            <span class="green-text">
+                ${app.status}
+            </span>
+
+        </div>
+
+        `;
+    });
+}
+
+loadAppointments();

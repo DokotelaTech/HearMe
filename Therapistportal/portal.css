@@ -170,3 +170,60 @@ textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; pad
 .border-green { border-left-color: var(--green-text); }
 .report-reply { padding: 10px; border-radius: 6px; font-size: 0.85rem; }
 .green-bg { background: var(--green-bg); color: #064e3b; }
+
+/*new appointment form*/
+
+.appointment-page{
+    width:100%;
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#f4f7fb;
+}
+
+.appointment-card{
+    width:400px;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.appointment-card h1{
+    margin-bottom:20px;
+}
+
+.appointment-card input{
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+}
+
+.appointment-card button{
+    width:100%;
+
+    padding:14px;
+
+    background:#4f46e5;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}

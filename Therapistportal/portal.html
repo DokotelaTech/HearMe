@@ -76,7 +76,10 @@
                             <span class="date-info"><i class="fa-regular fa-calendar"></i> Last session: Apr 23, 2026 • <span class="purple-text"><i class="fa-regular fa-message"></i> 2 new messages</span></span>
                             <div class="actions">
                                 <button class="btn-primary"><i class="fa-regular fa-message"></i> Message Client</button>
-                                <button class="btn-outline"><i class="fa-regular fa-calendar"></i> Schedule Session</button>
+                                <a href="appoint_form.html" class="btn-outline">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Schedule Session
+                                </a>
                                 <button class="btn-outline"><i class="fa-regular fa-file"></i> View Notes</button>
                             </div>
                         </div>
@@ -86,7 +89,9 @@
                 <section id="view-calendar" class="view-panel">
                     <div class="page-header flex-header">
                         <div><h1>Calendar & Scheduling</h1><p>Manage your appointments and availability</p></div>
-                        <button class="btn-primary">+ New Appointment</button>
+                        <a href="appoint_form.html" class="btn-primary">
+                        + New Appointment
+                        </a>
                     </div>
                     <div class="stats-row">
                         <div class="stat-card"><span>Today's Sessions</span><strong>4</strong></div>
@@ -98,6 +103,7 @@
                         <div class="cal-left">
                             <div class="card">
                                 <h3><i class="fa-regular fa-calendar"></i> Today's Schedule - April 25, 2026</h3>
+                                <div id="todayAppointments"></div>
                                 <div class="appt-item confirmed">
                                     <div class="time">09:00<span>50 min</span></div>
                                     <div class="details">
@@ -118,6 +124,7 @@
                         <div class="cal-right">
                             <div class="card">
                                 <h3>Weekly Availability</h3>
+                                <div id="appointmentsList"></div>
                                 <div class="avail-item"><div>Monday<span>9:00 AM - 5:00 PM</span></div><input type="checkbox" checked></div>
                                 <div class="avail-item"><div>Saturday<span class="muted">Unavailable</span></div><input type="checkbox"></div>
                                 <button class="btn-light-blue full-width mt-10">Edit Availability</button>

@@ -158,3 +158,4 @@ app.post('/api/posts', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Server error while creating post.' });
     }
 });
+
