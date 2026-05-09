@@ -18,8 +18,8 @@
         <div class="form-box">
             <h2>Welcome Back</h2>
 
-            <!-- ✅ IMPORTANT: form connects to PHP -->
-            <form method="POST" action="log.php" id="login-form">
+            <!-- Removed action="log.php" as we are using Node.js API -->
+            <form id="login-form">
 
                 <p class="label-text">I am a:</p>
                 <div class="role-selector">
@@ -42,14 +42,14 @@
                     <label for="anonymous">Keep me completely anonymous (recommended)</label>
                 </div>
 
-                <!-- ✅ FIXED: EMAIL FIELD -->
+                <!-- ✅ FIXED: ID changed to "identifier" and type to "text" -->
                 <div class="input-group">
-                    <i class="fa-regular fa-envelope"></i>
+                    <i class="fa-regular fa-user"></i>
                     <input 
-                        id="email" 
-                        name="email" 
-                        type="email" 
-                        placeholder="Enter your email" 
+                        id="identifier" 
+                        name="identifier" 
+                        type="text" 
+                        placeholder="Enter your email or username" 
                         required
                     >
                 </div>

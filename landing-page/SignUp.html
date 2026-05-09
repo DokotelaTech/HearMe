@@ -19,7 +19,7 @@
         <div class="form-box">
             <h2>Join HearMe</h2>
 
-            <form action="reg.php" method="POST" id="signup-form">
+            <form id="signup-form">
 
                 <p class="label-text">I am a:</p>
                 <div class="role-selector">
@@ -44,16 +44,16 @@
                     </div>
                 </div>
 
-                <!-- USERNAME -->
+                <!-- IDENTIFIER (WAS USERNAME) -->
                 <div class="input-field">
-                    <label class="label-text">Username</label>
+                    <label class="label-text">Username / ID</label>
                     <div class="input-group">
                         <i class="fa-regular fa-user"></i>
                         <input 
-                            id="username" 
-                            name="username"
+                            id="identifier" 
+                            name="identifier"
                             type="text" 
-                            placeholder="Enter your username" 
+                            placeholder="Auto-generated ID" 
                             required
                         >
                     </div>
@@ -89,8 +89,7 @@
                     </div>
                 </div>
 
-                <!-- ✅ IMPORTANT FIX -->
-                <button type="submit" name="register" id="Btn">Create Account</button>
+                <button type="submit" id="Btn">Create Account</button>
 
                 <p class="footer-text">
                     Already have an account? <a href="login.html">Sign in</a>

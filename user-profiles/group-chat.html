@@ -1,0 +1,29 @@
+
+<!-- Include Socket.io client library -->
+<script src="http://localhost:5000/socket.io/socket.io.js"></script>
+<script src="group-chat.js"></script>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <link rel="stylesheet" href="group-chat.css">
+                
+    </head>
+    <body>
+
+        <div class="chat-container">
+    <div class="chat-header">
+        <h2 id="group-title">Group Chat</h2>
+    </div>
+    <div id="chat-messages" class="messages-display"></div>
+    <form id="chat-form">
+        <input type="text" id="message-input" placeholder="Type a message..." required>
+        <button type="submit">Send</button>
+    </form>
+</div>
+    </body>
+    </html>

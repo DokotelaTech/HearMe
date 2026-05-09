@@ -1,31 +1,67 @@
-// Initialize Lucide Icons
+// 1. Initialize Icons immediately
 lucide.createIcons();
 
-// Roadmap Interactivity Logic
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // --- AUTHENTICATION CHECK ---
+    const token = localStorage.getItem('token');
+    const currentUserIdentifier = localStorage.getItem('userIdentifier');
+
+    if (!token) {
+        alert("Please log in to view your profile.");
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // --- FETCH & RENDER PROFILE DATA ---
+    try {
+        const response = await fetch('http://localhost:5000/api/user/profile', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            // Update Name and Member Since Date
+            const profileName = document.querySelector('.profile-name');
+            const memberSince = document.querySelector('.member-since');
+            const avatarLarge = document.querySelector('.profile-avatar-large');
+            const postStatCount = document.getElementById('stat-posts-shared');
+
+            if (profileName) profileName.innerText = data.identifier;
+            if (memberSince) memberSince.innerText = `Member since ${new Date(data.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`;
+            if (avatarLarge) avatarLarge.innerText = data.identifier.charAt(0).toUpperCase();
+            
+            // Update the "Posts Shared" box from your screenshot
+            if (postStatCount) postStatCount.innerText = data.postCount;
+
+        } else {
+            console.error('Failed to load profile data');
+        }
+    } catch (err) {
+        console.error("Profile load error:", err);
+    }
+
+    // --- ROADMAP INTERACTIVITY LOGIC ---
     const taskItems = document.querySelectorAll('.task-item');
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
 
     function updateProgress() {
+        if (!taskItems.length) return;
+
         const totalTasks = taskItems.length;
         const completedTasks = document.querySelectorAll('.task-item.completed').length;
         
-        // Calculate Percentage
         const percentage = Math.round((completedTasks / totalTasks) * 100);
         
-        // Update UI Elements
-        progressBar.style.width = `${percentage}%`;
-        progressText.innerText = `${percentage}% Complete`;
+        if (progressBar) progressBar.style.width = `${percentage}%`;
+        if (progressText) progressText.innerText = `${percentage}% Complete`;
     }
 
-    // Add click events to toggle tasks
     taskItems.forEach(item => {
         item.addEventListener('click', () => {
-            // Toggle completed class
             item.classList.toggle('completed');
 
-            // Toggle icon between check and outline
             const checkContainer = item.querySelector('.task-check');
             if (item.classList.contains('completed')) {
                 checkContainer.innerHTML = '<i data-lucide="check-circle-2"></i>';
@@ -33,14 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkContainer.innerHTML = '<div class="circle-outline"></div>';
             }
             
-            // Re-initialize any new icons that were just added to the DOM
+            // Refresh icons for the newly added checkmarks
             lucide.createIcons();
-            
-            // Recalculate progress bar
             updateProgress();
         });
     });
 
-    // Run once on load to establish the initial 40% (2 out of 5 tasks)
+    // Initial progress calculation
     updateProgress();
+
+    // --- LOGOUT LOGIC (Optional, but recommended here) ---
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+    }
 });
