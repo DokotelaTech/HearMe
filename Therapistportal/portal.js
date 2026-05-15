@@ -49,39 +49,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadAppointments() {
 
-    const response = await fetch(
-        "http://localhost:5000/appointments"
-    );
+    try {
 
-    const appointments = await response.json();
+        const response = await fetch(
+            "http://localhost:5000/appointments"
+        );
 
-    const appointmentsList =
-        document.getElementById("appointmentsList");
+        const appointments =
+            await response.json();
 
-    appointmentsList.innerHTML = "";
+        const container =
+            document.getElementById(
+                "upcomingAppointments"
+            );
 
-    appointments.forEach(app => {
+        container.innerHTML = "";
 
-        appointmentsList.innerHTML += `
+        appointments.forEach((appointment) => {
 
-        <div class="avail-item">
+            const appointmentDiv =
+                document.createElement("div");
 
-            <div>
-                ${app.clientName}
+            appointmentDiv.classList.add(
+                "appt-item",
+                "confirmed"
+            );
 
-                <span>
-                    ${app.date} • ${app.time}
-                </span>
-            </div>
+            appointmentDiv.innerHTML = `
 
-            <span class="green-text">
-                ${app.status}
-            </span>
+                <div class="time">
+                    ${appointment.time}
+                </div>
 
-        </div>
+                <div class="details">
 
-        `;
-    });
+                    <h4>
+                        ${appointment.clientName}
+                    </h4>
+
+                    <p>
+                        Appointment Date:
+                        ${appointment.date}
+                    </p>
+
+                </div>
+
+            `;
+            container.appendChild(
+                appointmentDiv
+            );
+        });
+    } catch (error) {
+
+        console.log(error);
+
+    }
 }
-
 loadAppointments();

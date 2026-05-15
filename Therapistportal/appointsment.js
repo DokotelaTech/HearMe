@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema({
+
     clientName: {
         type: String,
         required: true
@@ -16,15 +17,14 @@ const appointmentSchema = new mongoose.Schema({
         required: true
     },
 
-    duration: {
-        type: String,
-        default: "50 min"
-    },
-
-    status: {
-        type: String,
-        default: "CONFIRMED"
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
+
 });
 
-module.exports = mongoose.model("Appointment", appointmentSchema);
+module.exports = mongoose.model(
+    "Appointment",
+    appointmentSchema
+);
