@@ -1,0 +1,268 @@
+/* =========================================
+   Base & Reset
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    overflow: hidden; /* Keeps the app feeling like a native desktop app */
+}
+
+/* =========================================
+   Global Layout
+   ========================================= */
+/* Top Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    height: 60px;
+    border-bottom: 1px solid #eee;
+    padding: 0 20px;
+}
+
+.logo {
+    color: #9c27b0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.app-container {
+    display: flex;
+    height: calc(100vh - 60px); /* Fill remaining height below navbar */
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: #ba68c8;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* =========================================
+   Sidebar Navigation
+   ========================================= */
+.sidebar {
+    width: 240px;
+    background: white;
+    border-right: 1px solid #eee;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    padding: 12px 25px;
+    color: #666;
+    text-decoration: none; /* For link tags */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background-color: #f3e5f5;
+    color: #9c27b0;
+}
+
+.nav-item:hover {
+    background-color: #f3e5f5;
+    color: #9c27b0;
+    border-radius: 0 20px 20px 0;
+    margin-right: 10px;
+}
+
+/* =========================================
+   Main Content Area
+   ========================================= */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.top-bar {
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 30px;
+}
+
+/* =========================================
+   AI Chat Section
+   ========================================= */
+.chat-section {
+    padding: 20px 50px;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.chat-section h1 {
+    font-size: 32px;
+    color: #1a237e;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.chat-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-display {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Message Bubbles */
+.ai-message-wrapper {
+    display: flex;
+    gap: 15px;
+    max-width: 80%;
+}
+
+.user-message-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.ai-avatar-circle, .ai-avatar {
+    width: 40px;
+    height: 40px;
+    background: #ba68c8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ai-bubble {
+    background: #f3f0ff;
+    padding: 15px 20px;
+    border-radius: 0 15px 15px 15px;
+    line-height: 1.5;
+    color: #444;
+}
+
+.user-bubble {
+    background: #9c27b0;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 15px 15px 0 15px;
+    max-width: 70%;
+}
+
+/* Input Area */
+.input-area {
+    padding: 20px 30px;
+    border-top: 1px solid #eee;
+}
+
+.input-container {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#aiUserInput {
+    flex: 1;
+    border: none;
+    padding: 15px;
+    outline: none;
+    font-size: 14px;
+}
+
+#aiSendBtn {
+    background: linear-gradient(45deg, #9c27b0, #e91e63);
+    color: white;
+    border: none;
+    padding: 0 25px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+}
+
+#aiSendBtn:hover {
+    opacity: 0.9;
+}
+
+.disclaimer {
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+}
+
+.disclaimer i {
+    color: #9c27b0;
+}
+
+/* =========================================
+   Floating Help Button
+   ========================================= */
+.help-fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #9c27b0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.help-fab:hover {
+    transform: scale(1.05);
+}
+
+/* =========================================
+   Alternative AI Chat UI (Hidden by default to prevent overlapping)
+   ========================================= */
+.ai-chat-container {
+    display: none; 
+}
+.ai-input-area {
+    display: none;
+}
