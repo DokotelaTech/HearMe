@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe | Therapist Dashboard</title>
+
+    <link rel="stylesheet" href="relief.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+
+    <!-- Lucide -->
+    <script src="https://unpkg.com"></script>
+
+    <!-- Google Font -->
+    <link href="https://googleapis.com" rel="stylesheet">
+</head>
+<body class="admin-dashboard-body">
+
+<header class="navbar therapist-navbar">
+    <h1 class="logo">HearMe <span class="portal-badge">Therapist Portal</span></h1>
+    <div class="user-avatar therapist-avatar">DR</div>
+</header>
+
+<div class="app-container">
+
+    <!-- Sidebar View (Management Controls Context) -->
+    <nav class="sidebar">
+        <a href="index.html" class="nav-item switch-view-btn"><i data-lucide="arrow-left"></i><span>Switch to User View</span></a>
+        <div class="sidebar-divider"></div>
+        <a href="#" class="nav-item active"><i data-lucide="plus-circle"></i><span>Publish Links</span></a>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="relief-area">
+
+        <div class="page-header">
+            <h2 class="page-title">Resource Content Manager</h2>
+            <p class="page-subtitle">
+                Add or remove resources that will immediately show up on the users side
+            </p>
+        </div>
+
+        <!-- Upload Forms Section (Exclusive to Therapist Side) -->
+        <div class="upload-section">
+
+            <div class="upload-card">
+
+                <div class="upload-header">
+                    <i class="fa-solid fa-headphones"></i>
+                    <h3>Add Podcast Link</h3>
+                </div>
+
+                <input type="text" id="audio-title" placeholder="Podcast title">
+                <input type="text" id="audio-therapist" placeholder="Therapist name">
+                <input type="text" id="audio-link" placeholder="Spotify / YouTube / Online audio link">
+
+                <button onclick="addAudio()">
+                    Publish Podcast
+                </button>
+
+            </div>
+
+            <div class="upload-card">
+
+                <div class="upload-header">
+                    <i class="fa-solid fa-video"></i>
+                    <h3>Add Video Link</h3>
+                </div>
+
+                <input type="text" id="video-title" placeholder="Video title">
+                <input type="text" id="video-therapist" placeholder="Therapist name">
+                <input type="text" id="video-link" placeholder="YouTube / Vimeo / Online video link">
+
+                <button onclick="addVideo()">
+                    Publish Video
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Real-Time Sync Feeds (With Active Admin Delete Triggers) -->
+        <div class="media-wrapper">
+
+            <!-- Podcasts Preview List -->
+            <div class="media-box">
+
+                <div class="section-header">
+                    <i class="fa-solid fa-headphones-simple"></i>
+                    <h3>Live Podcast Feed Preview</h3>
+                </div>
+
+                <div id="audio-list" class="media-list"></div>
+
+            </div>
+
+            <!-- Videos Preview List -->
+            <div class="media-box">
+
+                <div class="section-header">
+                    <i class="fa-solid fa-play"></i>
+                    <h3>Live Video Feed Preview</h3>
+                </div>
+
+                <div id="video-list" class="media-list"></div>
+
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="relief.js"></script>
+
+<script>
+    lucide.createIcons();
+    // Initialize the shared data feed under the administrative "therapist" scope clearance
+    document.addEventListener("DOMContentLoaded", () => initSharedFeed("therapist"));
+</script>
+
+</body>
+</html>
