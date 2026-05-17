@@ -4,77 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Stress Relief</title>
+
     <link rel="stylesheet" href="relief.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+
+    <!-- Lucide -->
+    <script src="https://unpkg.com"></script>
+
+    <!-- Google Font -->
+    <link href="https://googleapis.com" rel="stylesheet">
 </head>
 <body>
 
-    <header class="navbar">
-        <h1 class="logo">HearMe</h1>
-        <div class="user-avatar">A</div>
-    </header>
+<header class="navbar">
+    <h1 class="logo">HearMe</h1>
+    <div class="user-avatar">A</div>
+</header>
 
-    <div class="app-container">
-        <nav class="sidebar">
-            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
-            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-            <a href="relief.html" class="nav-item active"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
-        </nav>
+<div class="app-container">
 
-        <main class="relief-area">
-            <div class="page-header">
-                <h2 class="page-title">Stress Relief</h2>
-                <p class="page-subtitle">Take a moment to calm your mind and relax</p>
+    <!-- Sidebar View (Read Only Context) -->
+    <nav class="sidebar">
+        <a href="#" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+        <a href="#" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+        <a href="#" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+        <a href="#" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+        <a href="#" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+        <a href="#" class="nav-item active"><i data-lucide="heart"></i><span>Relief</span></a>
+        <a href="#" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
+        
+        <!-- Portal routing button link for administrators -->
+        <a href="therapist.html" class="nav-item switch-view-btn"><i data-lucide="user-check"></i><span>Therapist Portal</span></a>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="relief-area">
+
+        <div class="page-header">
+            <h2 class="page-title">Stress Relief</h2>
+            <p class="page-subtitle">
+                Take a moment to calm your mind and relax
+            </p>
+        </div>
+
+        <!-- Exercises -->
+        <div class="exercise-grid">
+
+            <div class="exercise-card">
+                <div class="icon-circle bg-blue">
+                    <i data-lucide="wind"></i>
+                </div>
+
+                <h3>Breathing Exercise</h3>
+                <p>Calm your mind with guided breathing</p>
             </div>
 
-            <div class="exercise-grid">
-                <div class="exercise-card" id="breathing">
-                    <div class="icon-circle bg-blue">
-                        <i data-lucide="wind"></i>
-                    </div>
-                    <h3>Breathing Exercise</h3>
-                    <p>Calm your mind with guided breathing</p>
+            <div class="exercise-card">
+                <div class="icon-circle bg-gradient">
+                    <i data-lucide="sparkles"></i>
                 </div>
 
-                <div class="exercise-card" id="meditation">
-                    <div class="icon-circle bg-gradient">
-                        <i data-lucide="sparkles"></i>
-                    </div>
-                    <h3>5-Minute Meditation</h3>
-                    <p>Quick mindfulness practice</p>
-                </div>
-
-                <div class="exercise-card" id="grounding">
-                    <div class="icon-circle bg-green">
-                        <i data-lucide="heart"></i>
-                    </div>
-                    <h3>5-4-3-2-1 Grounding</h3>
-                    <p>Connect with your senses</p>
-                </div>
+                <h3>5-Minute Meditation</h3>
+                <p>Quick mindfulness practice</p>
             </div>
 
-            <div class="tips-container">
-                <div class="tips-header">
-                    <span class="bulb">💡</span>
-                    <h3>Quick Stress Relief Tips</h3>
+            <div class="exercise-card">
+                <div class="icon-circle bg-green">
+                    <i data-lucide="heart"></i>
                 </div>
-                <ul class="tips-list">
-                    <li>Take a short walk, even just around the room</li>
-                    <li>Listen to calming music or nature sounds</li>
-                    <li>Practice progressive muscle relaxation</li>
-                    <li>Write down your thoughts in a journal</li>
-                    <li>Call a friend or family member</li>
-                    <li>Do something creative like drawing or coloring</li>
-                </ul>
-            </div>
-        </main>
-    </div>
 
-    <script src="relief.js"></script>
+                <h3>5-4-3-2-1 Grounding</h3>
+                <p>Connect with your senses</p>
+            </div>
+
+        </div>
+
+        <!-- Tips Stacked Under One Another -->
+        <div class="tips-container">
+
+            <div class="tips-header">
+                <span>💡</span>
+                <h3>Quick Stress Relief Tips</h3>
+            </div>
+
+            <ul class="tips-list">
+                <li>Take a short walk</li>
+                <li>Listen to calming music</li>
+                <li>Practice relaxation</li>
+                <li>Write your thoughts</li>
+                <li>Call a friend</li>
+            </ul>
+
+        </div>
+
+        <!-- Media Output Panels -->
+        <div class="media-wrapper">
+
+            <!-- Podcasts Feed Display -->
+            <div class="media-box">
+
+                <div class="section-header">
+                    <i class="fa-solid fa-headphones-simple"></i>
+                    <h3>Healing Podcasts</h3>
+                </div>
+
+                <p class="media-subtitle">
+                    Listen to expert guidance and calming stories
+                </p>
+
+                <div id="audio-list" class="media-list"></div>
+
+            </div>
+
+            <!-- Videos Feed Display -->
+            <div class="media-box">
+
+                <div class="section-header">
+                    <i class="fa-solid fa-play"></i>
+                    <h3>Educational Videos</h3>
+                </div>
+
+                <p class="media-subtitle">
+                    Watch guided exercises and therapeutic techniques
+                </p>
+
+                <div id="video-list" class="media-list"></div>
+
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+<script src="relief.js"></script>
+
+<script>
+    lucide.createIcons();
+    // Initialize the shared data feed under the "user" scope clearance
+    document.addEventListener("DOMContentLoaded", () => initSharedFeed("user"));
+</script>
+
 </body>
 </html>
