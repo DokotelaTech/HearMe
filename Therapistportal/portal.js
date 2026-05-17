@@ -44,3 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('profileToggle');
+  const dropdown = document.getElementById('profileDropdown');
+
+  // Toggle the dropdown when clicking the profile button
+  toggleBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevents the anchor tag from jumping the page
+    dropdown.classList.toggle('show');
+  });
+
+  // Close the dropdown if the user clicks outside of it
+  window.addEventListener('click', (e) => {
+    if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.remove('show');
+    }
+  });
+});

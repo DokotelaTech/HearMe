@@ -24,26 +24,49 @@
             </nav>
             <div class="overview-box">
                 <h4>Today's Overview</h4>
-                <div class="ov-line">Active Clients <span>28</span></div>
-                <div class="ov-line">Sessions Today <span>5</span></div>
-                <div class="ov-line">Unread Messages <span class="red-text">3</span></div>
+                <div class="ov-line">Active Clients <span>0</span></div>
+                <div class="ov-line">Sessions Today <span>0</span></div>
+                <div class="ov-line">Unread Messages <span class="red-text">0</span></div>
             </div>
         </aside>
 
-        <main class="main-workspace">
-            <header class="topbar">
-                <div class="topbar-right">
-                    <div class="icon-btn"><i class="fa-regular fa-message"></i><span class="dot"></span></div>
-                    <div class="user-chip">
-                        <div class="avatar">SJ</div>
-                        <div class="user-info">
-                            <strong>Dr. Sarah Johnson</strong>
-                            <span>LCSW, PhD</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
+<main class="main-workspace">
 
+    <header class="topbar">
+
+        <div class="topbar-right">
+
+            <div class="icon-btn">
+                <i class="fa-regular fa-message"></i>
+                <span class="dot"></span>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-container">
+                
+                <a href="/Therapistportal/index.html" id="profileToggle" class="profile-btn">
+                    <div class="avatar">SJ</div>
+
+                    <div class="profile-info">
+                        <span class="profile-name">Dr. Sarah Johnson</span>
+                        <span class="profile-role">LCSW, PhD</span>
+                    </div>
+                </a>
+
+                <div id="profileDropdown" class="dropdown-menu">
+                    <a href="/Therapistportal/index.html">Account Settings</a>
+                    <!-- <a href="#preferences">Preferences</a> -->
+
+                    <hr>
+
+                    <a href="/old interfaces/login.html" class="logout-btn">Log Out</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
             <div class="content-container">
                 
                 <section id="view-clients" class="view-panel active">
@@ -54,10 +77,10 @@
                         </div>
                     </div>
                     <div class="stats-row">
-                        <div class="stat-card"><span>Total Clients</span><strong>5</strong></div>
-                        <div class="stat-card"><span>Active</span><strong class="green-text">3</strong></div>
-                        <div class="stat-card"><span>Pending</span><strong class="yellow-text">1</strong></div>
-                        <div class="stat-card"><span>New Messages</span><strong class="purple-text">4</strong></div>
+                        <div class="stat-card"><span>Total Clients</span><strong>0</strong></div>
+                        <div class="stat-card"><span>Active</span><strong class="green-text">0</strong></div>
+                        <div class="stat-card"><span>Pending</span><strong class="yellow-text">0</strong></div>
+                        <div class="stat-card"><span>New Messages</span><strong class="purple-text">0</strong></div>
                     </div>
                     <div class="filter-bar">
                         <div class="search-input"><i class="fa-solid fa-search"></i> <input type="text" placeholder="Search clients by ID or issue..."></div>
@@ -66,8 +89,8 @@
                     
                     <div class="client-card highlight-yellow">
                         <div class="c-header">
-                            <div class="c-avatar blue">29</div>
-                            <div class="c-title"><h3>User#2931</h3><span>First contact: Mar 15, 2026 • 8 sessions</span></div>
+                            <div class="c-avatar blue">0</div>
+                            <div class="c-title"><h3>User#2931</h3><span>First contact: Mar 15, 2026 • 0 sessions</span></div>
                             <span class="status-badge green">ACTIVE</span>
                         </div>
                         <div class="c-tags"><span class="tag blue">Work Stress</span><span class="tag blue">Anxiety</span><span class="tag blue">Sleep Issues</span></div>
@@ -89,10 +112,10 @@
                         <button class="btn-primary">+ New Appointment</button>
                     </div>
                     <div class="stats-row">
-                        <div class="stat-card"><span>Today's Sessions</span><strong>4</strong></div>
-                        <div class="stat-card"><span>This Week</span><strong>12</strong></div>
+                        <div class="stat-card"><span>Today's Sessions</span><strong>0</strong></div>
+                        <div class="stat-card"><span>This Week</span><strong>0</strong></div>
                         <div class="stat-card"><span>Next Available</span><strong>Apr 27, 3:00 PM</strong></div>
-                        <div class="stat-card"><span>Pending Confirmations</span><strong class="yellow-text">1</strong></div>
+                        <div class="stat-card"><span>Pending Confirmations</span><strong class="yellow-text">0</strong></div>
                     </div>
                     <div class="calendar-layout">
                         <div class="cal-left">
@@ -149,7 +172,7 @@
                                         <div class="flex-bw"><strong>User#1293</strong> <span class="time">5 hours ago</span></div>
                                         <p>I had another nightmare last night. Can we ...</p>
                                     </div>
-                                    <div class="unread-badge">1</div>
+                                    <div class="unread-badge">0</div>
                                 </div>
                             </div>
                         </div>
@@ -200,7 +223,7 @@
                     
                     <div class="note-card mt-20">
                         <div class="c-header flex-bw">
-                            <div class="flex-align"><div class="c-avatar blue sm">29</div><div><h3>User#2931 <i class="fa-solid fa-lock text-sm red-text"></i></h3><span class="muted text-sm"><i class="fa-regular fa-calendar"></i> Apr 23, 2026 Session #8 50 minutes</span></div></div>
+                            <div class="flex-align"><div class="c-avatar blue sm">0</div><div><h3>User#2931 <i class="fa-solid fa-lock text-sm red-text"></i></h3><span class="muted text-sm"><i class="fa-regular fa-calendar"></i> Apr 23, 2026 Session #8 50 minutes</span></div></div>
                             <div class="muted"><i class="fa-regular fa-pen-to-square mr-10"></i> <i class="fa-regular fa-trash-can red-text"></i></div>
                         </div>
                         <div class="mt-10">
