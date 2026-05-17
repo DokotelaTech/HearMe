@@ -175,6 +175,7 @@ textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; pad
 .report-item { border: 1px solid var(--border); padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid transparent; }
 .border-green { border-left-color: var(--green-text); }
 .report-reply { padding: 10px; border-radius: 6px; font-size: 0.85rem; }
+<<<<<<< HEAD:Therapistportal/css/style.css
 .green-bg { background: var(--green-bg); color: #064e3b; } */
 
 /* ==========================================================================
@@ -680,6 +681,9 @@ textarea::placeholder {
 
 .report-reply.green-bg strong { color: #166534; }
 
+=======
+.green-bg { background: var(--green-bg); color: #064e3b; }
+>>>>>>> 7804664 (quality-assurance):Therapistportal/portal.css
 /* Container needs relative positioning so the dropdown aligns to it */
 .profile-container {
   position: relative;
@@ -722,6 +726,7 @@ textarea::placeholder {
   border: 0;
   border-top: 1px solid #eee;
   margin: 8px 0;
+<<<<<<< HEAD:Therapistportal/css/style.css
 }
 
 .profile-container{
@@ -826,4 +831,6 @@ textarea::placeholder {
 
 .logout-btn{
     color: #ef4444;
+=======
+>>>>>>> 7804664 (quality-assurance):Therapistportal/portal.css
 }
