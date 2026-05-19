@@ -1,231 +1,117 @@
-/* ========================= */
-/* THERAPIST INFO */
-/* ========================= */
+// NAVIGATION
 
-const therapist = {
+const navItems = document.querySelectorAll(".nav-item");
+const panels = document.querySelectorAll(".view-panel");
 
-    name: "Dr. Sarah Johnson",
+navItems.forEach(item => {
 
-    role: "LCSW, PhD",
+    item.addEventListener("click", function(e){
 
-    initials: "SJ"
+        e.preventDefault();
 
-};
+        navItems.forEach(nav => nav.classList.remove("active"));
+        this.classList.add("active");
 
-/* ========================= */
-/* DYNAMIC SYSTEM DATA */
-/* ========================= */
+        panels.forEach(panel => {
+            panel.classList.remove("active");
+        });
 
-let activeClients = 28;
+        const target = this.dataset.target;
 
-let sessionsToday = 5;
+        document
+            .getElementById(`view-${target}`)
+            .classList.add("active");
 
-let unreadMessages = 3;
-
-/* ========================= */
-/* STRESS RELIEF TIPS */
-/* ========================= */
-
-const tips = [
-
-    "Take a short walk, even around the room",
-
-    "Listen to calming music or nature sounds",
-
-    "Practice progressive muscle relaxation",
-
-    "Write your thoughts in a journal",
-
-    "Call a friend or family member",
-
-    "Do something creative like drawing or coloring"
-
-];
-
-/* ========================= */
-/* RESOURCES DATA */
-/* ========================= */
-
-let resources = [
-
-    {
-        title: "Breathing Techniques for Anxiety",
-
-        description:
-        "Simple breathing exercises that help reduce panic attacks and calm the mind.",
-
-        link:
-        "https://www.youtube.com/watch?v=odADwWzHR24",
-
-        category: "Video",
-
-        image:
-        "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80"
-    },
-
-    {
-        title: "Relaxing Sleep Podcast",
-
-        description:
-        "A peaceful guided sleep meditation and calming sounds for stress relief.",
-
-        link:
-        "https://open.spotify.com/",
-
-        category: "Podcast",
-
-        image:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1200&q=80"
-    }
-
-];
-
-/* ========================= */
-/* PROFILE INFO */
-/* ========================= */
-
-function loadTherapistInfo(){
-
-    document.getElementById("therapistName").textContent =
-    therapist.name;
-
-    document.getElementById("therapistRole").textContent =
-    therapist.role;
-
-    document.getElementById("therapistInitials").textContent =
-    therapist.initials;
-}
-
-/* ========================= */
-/* OVERVIEW */
-/* ========================= */
-
-function loadOverview(){
-
-    document.getElementById("activeClientsCount").textContent =
-    activeClients;
-
-    document.getElementById("sessionsTodayCount").textContent =
-    sessionsToday;
-
-    document.getElementById("unreadMessagesCount").textContent =
-    unreadMessages;
-}
-
-/* ========================= */
-/* TIPS */
-/* ========================= */
-
-function loadTips(){
-
-    const tipsList =
-    document.getElementById("tipsList");
-
-    tipsList.innerHTML = "";
-
-    tips.forEach((tip)=>{
-
-        tipsList.innerHTML += `
-            <li>${tip}</li>
-        `;
     });
 
-}
+});
 
-/* ========================= */
-/* STATS */
-/* ========================= */
+// TIPS
+
+const tips = [
+    "Practice deep breathing for 2 minutes daily.",
+    "Drink water regularly during stressful days.",
+    "Listen to calming music before sleeping.",
+    "Meditation improves emotional regulation.",
+    "Short walks reduce anxiety significantly."
+];
+
+const tipsList = document.getElementById("tipsList");
+
+tips.forEach(tip => {
+
+    const li = document.createElement("li");
+    li.textContent = tip;
+
+    tipsList.appendChild(li);
+
+});
+
+// RESOURCES
+
+const resourceForm = document.getElementById("resourceForm");
+const resourcesContainer = document.getElementById("resourcesContainer");
+
+let resources = [];
 
 function updateStats(){
 
-    document.getElementById("totalResources").textContent =
-    resources.length;
+    document.getElementById("totalResources").textContent = resources.length;
 
-    const videoCount =
-    resources.filter(resource =>
-        resource.category === "Video"
-    ).length;
+    const videos = resources.filter(r => r.category === "Video").length;
+    const podcasts = resources.filter(r => r.category === "Podcast").length;
 
-    document.getElementById("videoCount").textContent =
-    videoCount;
+    document.getElementById("videoCount").textContent = videos;
+    document.getElementById("podcastCount").textContent = podcasts;
 
-    const podcastCount =
-    resources.filter(resource =>
-        resource.category === "Podcast"
-    ).length;
+    const categoryCount = {};
 
-    document.getElementById("podcastCount").textContent =
-    podcastCount;
+    resources.forEach(r => {
 
-    const categories = {};
-
-    resources.forEach(resource => {
-
-        if(categories[resource.category]){
-
-            categories[resource.category]++;
-
-        }else{
-
-            categories[resource.category] = 1;
-        }
+        categoryCount[r.category] =
+            (categoryCount[r.category] || 0) + 1;
 
     });
 
-    let popularCategory = "None";
+    let topCategory = "None";
+    let max = 0;
 
-    let highest = 0;
+    for(let category in categoryCount){
 
-    for(let category in categories){
+        if(categoryCount[category] > max){
 
-        if(categories[category] > highest){
+            max = categoryCount[category];
+            topCategory = category;
 
-            highest = categories[category];
-
-            popularCategory = category;
         }
 
     }
 
     document.getElementById("popularCategory").textContent =
-    popularCategory;
+        topCategory;
+
 }
 
-/* ========================= */
-/* LOAD RESOURCES */
-/* ========================= */
-
-function loadResources(){
-
-    const resourcesContainer =
-    document.getElementById("resourcesContainer");
-
-    resourcesContainer.innerHTML = "";
+function renderResources(){
 
     if(resources.length === 0){
 
         resourcesContainer.innerHTML = `
-
             <div class="empty-state">
-
-                <i class="fa-regular fa-folder-open"></i>
-
+                <i class="fa-solid fa-photo-film"></i>
                 <h3>No Resources Yet</h3>
-
-                <p>
-                    Uploaded resources will appear here.
-                </p>
-
+                <p>Uploaded resources will appear here.</p>
             </div>
-
         `;
 
         updateStats();
-
         return;
+
     }
 
-    resources.forEach((resource,index)=>{
+    resourcesContainer.innerHTML = "";
+
+    resources.forEach((resource, index) => {
 
         let badgeClass = "badge-video";
 
@@ -246,23 +132,23 @@ function loadResources(){
             <div class="resource-item">
 
                 <img
-                    src="${resource.image}"
+                    src="${resource.image || 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200&auto=format&fit=crop'}"
                     class="resource-image"
                 >
 
                 <div class="resource-content">
 
-                    <div class="resource-top">
+                    <span class="resource-badge ${badgeClass}">
+                        ${resource.category}
+                    </span>
 
-                        <span class="resource-badge ${badgeClass}">
-                            ${resource.category}
-                        </span>
+                    <h3 style="margin-top:15px;">
+                        ${resource.title}
+                    </h3>
 
-                    </div>
-
-                    <h4>${resource.title}</h4>
-
-                    <p>${resource.description}</p>
+                    <p style="margin-top:12px; color:#6b7280;">
+                        ${resource.description}
+                    </p>
 
                     <div class="resource-actions">
 
@@ -270,7 +156,7 @@ function loadResources(){
                             class="open-btn"
                             onclick="window.open('${resource.link}')"
                         >
-                            Open Resource
+                            Open
                         </button>
 
                         <button
@@ -287,80 +173,52 @@ function loadResources(){
             </div>
 
         `;
+
     });
 
     updateStats();
+
 }
 
-/* ========================= */
-/* ADD RESOURCE */
-/* ========================= */
-
-const resourceForm =
-document.getElementById("resourceForm");
-
-resourceForm.addEventListener("submit",(e)=>{
+resourceForm.addEventListener("submit", function(e){
 
     e.preventDefault();
 
     const title =
-    document.getElementById("resourceTitle").value;
+        document.getElementById("resourceTitle").value;
 
     const description =
-    document.getElementById("resourceDescription").value;
+        document.getElementById("resourceDescription").value;
 
     const link =
-    document.getElementById("resourceLink").value;
+        document.getElementById("resourceLink").value;
 
     const category =
-    document.getElementById("resourceCategory").value;
+        document.getElementById("resourceCategory").value;
 
     const image =
-    document.getElementById("resourceImage").value;
+        document.getElementById("resourceImage").value;
 
-    const newResource = {
-
+    resources.unshift({
         title,
-
         description,
-
         link,
-
         category,
+        image
+    });
 
-        image:
-        image ||
-        "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80"
-    };
-
-    resources.unshift(newResource);
-
-    loadResources();
+    renderResources();
 
     resourceForm.reset();
 
 });
 
-/* ========================= */
-/* DELETE RESOURCE */
-/* ========================= */
-
 function deleteResource(index){
 
-    resources.splice(index,1);
+    resources.splice(index, 1);
 
-    loadResources();
+    renderResources();
 
 }
 
-/* ========================= */
-/* INIT */
-/* ========================= */
-
-loadTherapistInfo();
-
-loadOverview();
-
-loadTips();
-
-loadResources();
+renderResources();

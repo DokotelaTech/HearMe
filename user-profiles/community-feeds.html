@@ -4,48 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Community Feed</title>
+
     <link rel="stylesheet" href="community-feeds.css">
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
+    <!-- NAVBAR -->
     <header class="navbar">
+
         <h1 class="logo">HearMe</h1>
-        <div class="user-avatar">A</div>
+
+        <!-- USER MENU -->
+        <div class="user-menu-container">
+
+            <!-- AVATAR -->
+            <div class="user-avatar" id="user-avatar-main">
+                A
+            </div>
+
+            <!-- DROPDOWN -->
+            <div class="dropdown-menu" id="user-dropdown">
+
+                <a href="profile.html">
+                    View Profile
+                </a>
+
+                <button id="logout-btn">
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
     </header>
 
+    <!-- MAIN APP -->
     <div class="app-container">
-     <nav class="sidebar">
-        <a href="community-feeds.html" class="nav-item active"><i data-lucide="home"></i><span>Feed</span></a>
-        <a href="groups.html" class="nav-item active"><i data-lucide="users"></i><span>Groups</span></a>
-        <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-        <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
-        <a href="sos.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-        <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-        <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
-    </nav>
 
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+
+            <a href="community-feeds.html" class="nav-item active">
+                <i data-lucide="home"></i>
+                <span>Feed</span>
+            </a>
+
+            <a href="groups.html" class="nav-item">
+                <i data-lucide="users"></i>
+                <span>Groups</span>
+            </a>
+
+            <a href="ai-chat.html" class="nav-item">
+                <i data-lucide="message-square"></i>
+                <span>AI Chat</span>
+            </a>
+
+            <a href="experts.html" class="nav-item">
+                <i data-lucide="user-plus"></i>
+                <span>Experts</span>
+            </a>
+
+            <a href="sos.html" class="nav-item">
+                <i data-lucide="alert-circle"></i>
+                <span>SOS</span>
+            </a>
+
+            <a href="relief.html" class="nav-item">
+                <i data-lucide="heart"></i>
+                <span>Relief</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <i data-lucide="user"></i>
+                <span>Profile</span>
+            </a>
+
+        </nav>
+
+        <!-- FEED AREA -->
         <main class="feed-area">
+
             <div class="feed-content">
+
                 <div class="feed-header">
                     <h2 class="page-title">Community Feed</h2>
-                    <!-- <button id="clear-btn" class="clear-button">Clear Feed</button> -->
                 </div>
 
+                <!-- CREATE POST -->
                 <div class="input-card">
-                    <div class="post-input-wrapper">
-                        <input type="text" id="post-input" placeholder="Share your thoughts anonymously...">
-                        <button id="post-button" class="post-submit-btn">Post</button>
+
+                    <!-- COLLAPSED -->
+                    <div class="post-input-wrapper" id="post-collapsed">
+
+                        <input
+                            type="text"
+                            id="post-input-simple"
+                            placeholder="Share your thoughts anonymously..."
+                            readonly
+                        >
+
+                        <button class="post-submit-btn" id="open-composer">
+                            Post
+                        </button>
+
                     </div>
+
+                    <!-- EXPANDED -->
+                    <div class="post-composer" id="post-expanded">
+
+                        <div class="post-tabs">
+
+                            <button class="tab-btn active" data-type="struggle">
+                                Struggle Post
+                            </button>
+
+                            <button class="tab-btn" data-type="success">
+                                Success Story
+                            </button>
+
+                        </div>
+
+                        <textarea
+                            id="post-textarea"
+                            class="post-textarea"
+                            placeholder="Share what you're going through... You're not alone."
+                        ></textarea>
+
+                        <div class="post-actions">
+
+                            <div class="left-actions">
+
+                                <label class="media-upload">
+                                    <i data-lucide="image"></i>
+                                    <span>Add image/GIF</span>
+                                    <input type="file" hidden>
+                                </label>
+
+                            </div>
+
+                            <div class="right-actions">
+
+                                <button class="cancel-btn" id="cancel-post">
+                                    Cancel
+                                </button>
+
+                                <button id="post-button" class="post-submit-btn">
+                                    Post
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div id="post-container" class="post-list"></div>
+                <!-- POSTS -->
+                <div id="post-container" class="post-list">
+                    <!-- POSTS LOAD HERE -->
+                </div>
+
             </div>
+
         </main>
+
     </div>
 
-    <button class="help-fab"><i data-lucide="help-circle"></i></button>
+    <!-- HELP BUTTON -->
+    <button class="help-fab">
+        <i data-lucide="help-circle"></i>
+    </button>
 
+    <!-- JS -->
     <script src="community-feeds.js"></script>
+
 </body>
 </html>

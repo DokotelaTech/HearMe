@@ -531,20 +531,11 @@ body {
     transition: transform 0.1s;
 }
 
-<<<<<<< HEAD:landing-page/landingpage.css
-/* BIG FINAL CARD */
-.prof-card2 {
-    width: 80%;
-    max-width: 700px;
-
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-=======
 /* Main card */
 .main-card {
     max-width: 900px;
     margin: auto;
     padding: 60px;
->>>>>>> quality-assurance:landingpage.css
     border-radius: 20px;
     background: #192711;
     display: flex;
@@ -1528,8 +1519,4 @@ section {
 
 .small-spacing {
     margin: 3rem 0;
-<<<<<<< HEAD:landing-page/landingpage.css
 } */
-=======
-} */
->>>>>>> quality-assurance:landingpage.css

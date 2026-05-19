@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>HearMe - Therapist Portal</title>
 
     <link rel="stylesheet" href="portal.css">
@@ -26,73 +26,59 @@
 
         <nav class="nav-menu">
 
-            <a href="#" class="nav-item active">
+            <a href="#" class="nav-item active" data-target="clients">
                 <i class="fa-solid fa-user-group"></i>
                 My Clients
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#" class="nav-item" data-target="calendar">
                 <i class="fa-regular fa-calendar"></i>
                 Calendar
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#" class="nav-item" data-target="messages">
                 <i class="fa-regular fa-message"></i>
                 Messages
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#" class="nav-item" data-target="stress-relief">
                 <i class="fa-solid fa-heart"></i>
                 Stress Relief Uploads
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#" class="nav-item" data-target="notes">
                 <i class="fa-regular fa-file-lines"></i>
                 Session Notes
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="#" class="nav-item" data-target="report">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 Report Issue
             </a>
 
         </nav>
 
-        <!-- DYNAMIC OVERVIEW -->
         <div class="overview-box">
 
             <h4>Today's Overview</h4>
 
             <div class="ov-line">
                 Active Clients
-                <span id="activeClientsCount">0</span>
+                <span id="activeClientsCount">28</span>
             </div>
 
             <div class="ov-line">
                 Sessions Today
-                <span id="sessionsTodayCount">0</span>
+                <span id="sessionsTodayCount">5</span>
             </div>
 
             <div class="ov-line">
                 Unread Messages
-                <span class="red-text" id="unreadMessagesCount">0</span>
+                <span class="red-text" id="unreadMessagesCount">3</span>
             </div>
 
         </div>
-       <div class="relief-icon green-bg">
-                        <i class="fa-regular fa-heart"></i>
-                    </div>
 
-                    <h3>5-4-3-2-1 Grounding</h3>
-
-                    <p>
-                        Techniques that help users reconnect with their senses
-                        during anxiety and stress episodes.
-                    </p>
-
-                </div>
-
-            </div>
     </aside>
 
     <!-- MAIN -->
@@ -110,13 +96,13 @@
 
                 <div class="user-chip">
 
-                    <div class="avatar" id="therapistInitials">
+                    <div class="avatar">
                         SJ
                     </div>
 
                     <div class="user-info">
-                        <strong id="therapistName"></strong>
-                        <span id="therapistRole"></span>
+                        <strong>Dr. Sarah Johnson</strong>
+                        <span>LCSW, PhD</span>
                     </div>
 
                 </div>
@@ -128,199 +114,297 @@
         <!-- CONTENT -->
         <div class="content-container">
 
-            <!-- PAGE HEADER -->
-            <div class="page-header">
+            <!-- CLIENTS -->
+            <section id="view-clients" class="view-panel active">
 
-                <div>
-                    <h1>Stress Relief Resources</h1>
-
-                    <p>
-                        Upload calming resources, meditation videos,
-                        motivational podcasts, and healing content
-                        for your users.
-                    </p>
+                <div class="page-header">
+                    <div>
+                        <h1>My Clients</h1>
+                        <p>Manage your client sessions and communications.</p>
+                    </div>
                 </div>
 
-            </div>
+                <div class="stats-row">
 
-            <!-- DYNAMIC STATS -->
-            <div class="stats-row">
-
-                <div class="stat-card">
-                    <span>Total Resources</span>
-                    <strong id="totalResources">0</strong>
-                </div>
-
-                <div class="stat-card">
-                    <span>Total Videos</span>
-                    <strong class="purple-text" id="videoCount">0</strong>
-                </div>
-
-                <div class="stat-card">
-                    <span>Total Podcasts</span>
-                    <strong class="green-text" id="podcastCount">0</strong>
-                </div>
-
-                <div class="stat-card">
-                    <span>Most Popular Category</span>
-                    <strong class="yellow-text" id="popularCategory">
-                        None
-                    </strong>
-                </div>
-
-            </div>
-
-            <!-- RELIEF -->
-            <div class="relief-grid">
-
-                <div class="relief-card">
-
-                    <div class="relief-icon blue-bg">
-                        <i class="fa-solid fa-wind"></i>
+                    <div class="stat-card">
+                        <span>Total Clients</span>
+                        <strong>5</strong>
                     </div>
 
-                    <h3>Breathing Exercise</h3>
-
-                    <p>
-                        Help users calm anxiety with guided breathing exercises
-                        and panic recovery techniques.
-                    </p>
-
-                </div>
-
-                <div class="relief-card">
-
-                    <div class="relief-icon gradient-bg">
-                        <i class="fa-solid fa-spa"></i>
+                    <div class="stat-card">
+                        <span>Active</span>
+                        <strong class="green-text">3</strong>
                     </div>
 
-                    <h3>5-Minute Meditation</h3>
-
-                    <p>
-                        Short mindfulness practices users can do anywhere
-                        to relax and reset mentally.
-                    </p>
-
-                </div>
-
-                <div class="relief-card">
-
-             
-
-            <!-- TIPS -->
-            <div class="tips-box">
-
-                <div class="tips-title">
-                    💡 Quick Stress Relief Tips
-                </div>
-
-                <ul id="tipsList"></ul>
-
-            </div>
-
-            <!-- RESOURCE AREA -->
-            <div class="resource-layout">
-
-                <!-- LEFT -->
-                <div class="resource-form-card">
-
-                    <div class="section-heading">
-
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-
-                        <h3>Upload New Resource</h3>
-
+                    <div class="stat-card">
+                        <span>Pending</span>
+                        <strong class="yellow-text">1</strong>
                     </div>
 
-                    <form id="resourceForm">
-
-                        <label>Resource Title</label>
-
-                        <input
-                            type="text"
-                            id="resourceTitle"
-                            placeholder="Enter resource title"
-                            required
-                        >
-
-                        <label>Description</label>
-
-                        <textarea
-                            id="resourceDescription"
-                            placeholder="Describe how this resource helps users..."
-                            required
-                        ></textarea>
-
-                        <label>Online Resource Link</label>
-
-                        <input
-                            type="url"
-                            id="resourceLink"
-                            placeholder="Paste YouTube, Spotify, article, or podcast link"
-                            required
-                        >
-
-                        <label>Category</label>
-
-                        <select id="resourceCategory">
-
-                            <option value="Video">
-                                Educational Video
-                            </option>
-
-                            <option value="Podcast">
-                                Podcast / Audio
-                            </option>
-
-                            <option value="Meditation">
-                                Meditation
-                            </option>
-
-                            <option value="Motivation">
-                                Motivation
-                            </option>
-
-                        </select>
-
-                        <label>Thumbnail Image URL</label>
-
-                        <input
-                            type="url"
-                            id="resourceImage"
-                            placeholder="Paste image URL"
-                        >
-
-                        <button
-                            type="submit"
-                            class="btn-primary full-width mt-20"
-                        >
-
-                            <i class="fa-solid fa-plus"></i>
-
-                            Publish Resource
-
-                        </button>
-
-                    </form>
+                    <div class="stat-card">
+                        <span>New Messages</span>
+                        <strong class="purple-text">4</strong>
+                    </div>
 
                 </div>
 
-                <!-- RIGHT -->
-                <div class="resource-list-card">
+            </section>
 
-                    <div class="section-heading">
+            <!-- CALENDAR -->
+            <section id="view-calendar" class="view-panel">
 
-                        <i class="fa-solid fa-photo-film"></i>
+                <div class="page-header">
+                    <div>
+                        <h1>Calendar</h1>
+                        <p>Manage appointments and scheduling.</p>
+                    </div>
+                </div>
 
-                        <h3>Published Resources</h3>
+            </section>
+
+            <!-- MESSAGES -->
+            <section id="view-messages" class="view-panel">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Messages</h1>
+                        <p>Communicate securely with clients.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- STRESS RELIEF -->
+            <section id="view-stress-relief" class="view-panel">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Stress Relief Resources</h1>
+
+                        <p>
+                            Upload calming resources, meditation videos,
+                            motivational podcasts, and healing content
+                            for your users.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- STATS -->
+                <div class="stats-row">
+
+                    <div class="stat-card">
+                        <span>Total Resources</span>
+                        <strong id="totalResources">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Total Videos</span>
+                        <strong class="purple-text" id="videoCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Total Podcasts</span>
+                        <strong class="green-text" id="podcastCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Most Popular Category</span>
+                        <strong class="yellow-text" id="popularCategory">
+                            None
+                        </strong>
+                    </div>
+
+                </div>
+
+                <!-- RELIEF GRID -->
+                <div class="relief-grid">
+
+                    <div class="relief-card">
+
+                        <div class="relief-icon blue-bg">
+                            <i class="fa-solid fa-wind"></i>
+                        </div>
+
+                        <h3>Breathing Exercise</h3>
+
+                        <p>
+                            Guided breathing exercises for anxiety reduction.
+                        </p>
 
                     </div>
 
-                    <div id="resourcesContainer"></div>
+                    <div class="relief-card">
+
+                        <div class="relief-icon gradient-bg">
+                            <i class="fa-solid fa-spa"></i>
+                        </div>
+
+                        <h3>5-Minute Meditation</h3>
+
+                        <p>
+                            Quick mindfulness exercises for relaxation.
+                        </p>
+
+                    </div>
+
+                    <div class="relief-card">
+
+                        <div class="relief-icon green-bg">
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
+
+                        <h3>5-4-3-2-1 Grounding</h3>
+
+                        <p>
+                            Reconnect with your senses during stressful moments.
+                        </p>
+
+                    </div>
 
                 </div>
 
-            </div>
+                <!-- TIPS -->
+                <div class="tips-box">
+
+                    <div class="tips-title">
+                        💡 Quick Stress Relief Tips
+                    </div>
+
+                    <ul id="tipsList"></ul>
+
+                </div>
+
+                <!-- RESOURCE AREA -->
+                <div class="resource-layout">
+
+                    <!-- FORM -->
+                    <div class="resource-form-card">
+
+                        <div class="section-heading">
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                            <h3>Upload New Resource</h3>
+
+                        </div>
+
+                        <form id="resourceForm">
+
+                            <label>Resource Title</label>
+
+                            <input
+                                type="text"
+                                id="resourceTitle"
+                                placeholder="Enter resource title"
+                                required
+                            >
+
+                            <label>Description</label>
+
+                            <textarea
+                                id="resourceDescription"
+                                placeholder="Describe how this resource helps users..."
+                                required
+                            ></textarea>
+
+                            <label>Online Resource Link</label>
+
+                            <input
+                                type="url"
+                                id="resourceLink"
+                                placeholder="Paste YouTube, Spotify, article, or podcast link"
+                                required
+                            >
+
+                            <label>Category</label>
+
+                            <select id="resourceCategory">
+
+                                <option value="Video">
+                                    Educational Video
+                                </option>
+
+                                <option value="Podcast">
+                                    Podcast / Audio
+                                </option>
+
+                                <option value="Meditation">
+                                    Meditation
+                                </option>
+
+                                <option value="Motivation">
+                                    Motivation
+                                </option>
+
+                            </select>
+
+                            <label>Thumbnail Image URL</label>
+
+                            <input
+                                type="url"
+                                id="resourceImage"
+                                placeholder="Paste image URL"
+                            >
+
+                            <button
+                                type="submit"
+                                class="btn-primary full-width mt-20"
+                            >
+
+                                <i class="fa-solid fa-plus"></i>
+
+                                Publish Resource
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                    <!-- LIST -->
+                    <div class="resource-list-card">
+
+                        <div class="section-heading">
+
+                            <i class="fa-solid fa-photo-film"></i>
+
+                            <h3>Published Resources</h3>
+
+                        </div>
+
+                        <div id="resourcesContainer"></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- NOTES -->
+            <section id="view-notes" class="view-panel">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Session Notes</h1>
+                        <p>Confidential clinical notes.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- REPORT -->
+            <section id="view-report" class="view-panel">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Report Issue</h1>
+                        <p>Submit technical or safety issues.</p>
+                    </div>
+                </div>
+
+            </section>
 
         </div>
 
