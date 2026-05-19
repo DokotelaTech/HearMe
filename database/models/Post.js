@@ -11,6 +11,7 @@ const commentSchema = new mongoose.Schema({
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const reportSchema = new mongoose.Schema({
     reporterIdentifier: { type: String, required: true },
     reason: { type: String, required: true },
@@ -43,6 +44,9 @@ const reportSchema = new mongoose.Schema({
 }, { timestamps: true }); // Automatically adds createdAt and updatedAt dates
 */
 >>>>>>> 8bfd832 (project)
+=======
+
+>>>>>>> ebb70e2 (d)
 const postSchema = new mongoose.Schema({
     authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     authorIdentifier: { type: String, required: true },
