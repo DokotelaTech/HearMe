@@ -1,23 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>HearMe - Welcome Back</title>
 
     <link rel="stylesheet" href="login.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    >
+
 </head>
 
 <body>
 
     <div class="brand-header">
+
         <h1>HearMe</h1>
+
         <p>Your safe space for healing</p>
+
     </div>
 
     <div class="container">
@@ -26,30 +41,46 @@
 
             <h2>Welcome Back</h2>
 
+            <p class="subtitle">
+                Continue your healing journey
+            </p>
+
             <form id="login-form">
 
-                <p class="label-text">I am a:</p>
+                <!-- ROLE -->
+
+                <p class="label-text">
+                    Sign in as:
+                </p>
 
                 <div class="role-selector">
 
-                    <div class="role-option active" data-role="user">
+                    <div
+                        class="role-option active"
+                        data-role="user"
+                    >
+
                         <i class="fa-regular fa-user"></i>
+
                         <span>User</span>
+
                     </div>
 
-                    <div class="role-option" data-role="therapist">
+                    <div
+                        class="role-option"
+                        data-role="therapist"
+                    >
+
                         <i class="fa-solid fa-user-doctor"></i>
-                        <span>Therapist</span>
-                    </div>
 
-                    <div class="role-option" data-role="admin">
-                        <i class="fa-solid fa-shield"></i>
-                        <span>Admin</span>
+                        <span>Therapist</span>
+
                     </div>
 
                 </div>
 
                 <!-- EMAIL -->
+
                 <div class="input-group">
 
                     <i class="fa-regular fa-envelope"></i>
@@ -57,13 +88,14 @@
                     <input
                         id="email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder="Email Address"
                         required
                     >
 
                 </div>
 
                 <!-- PASSWORD -->
+
                 <div class="input-group">
 
                     <i class="fa-solid fa-lock"></i>
@@ -71,22 +103,73 @@
                     <input
                         id="password"
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Password"
                         required
                     >
 
                 </div>
 
+                <!-- REMEMBER -->
+
+                <div class="extra-options">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Remember me
+
+                    </label>
+
+                    <a href="#">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+                <!-- BUTTON -->
+
                 <button type="submit" id="Btn">
+
                     Sign In
+
                 </button>
 
                 <p class="footer-text">
+
                     Don't have an account?
-                    <a href="signup.html">Sign up</a>
+
+                    <a href="signup.html">
+
+                        Create Account
+
+                    </a>
+
                 </p>
 
             </form>
+
+        </div>
+
+    </div>
+
+    <!-- LOADING MODAL -->
+
+    <div class="loading-modal" id="loadingModal">
+
+        <div class="loading-content">
+
+            <div class="avatar-circle">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="loader"></div>
+
+            <h3>Loading...</h3>
+
+            <p>Please wait while we prepare your space</p>
 
         </div>
 
