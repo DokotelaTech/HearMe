@@ -203,6 +203,7 @@ document.getElementById('signup-form')
             await response.json();
 
         if(response.ok){
+<<<<<<< HEAD
             alert('Account created successfully!');
             window.location.href =
                 '/login';
@@ -213,4 +214,24 @@ document.getElementById('signup-form')
         console.log(err);
         alert('Server error');
     }
+=======
+
+            alert('Account created successfully!');
+
+            window.location.href =
+                'login.html';
+
+        }else{
+
+            alert(data.message);
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        alert('Server error');
+    }
+
+>>>>>>> e9da0a9 (therapists)
 });
