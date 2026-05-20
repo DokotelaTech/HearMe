@@ -5,13 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Community Feed</title>
     <link rel="stylesheet" href="community-feeds.css">
+    <link href="ai-chat.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
-        <div class="user-avatar">A</div>
+       <div class="user-menu-container">
+
+    <!-- AVATAR -->
+    <div class="user-avatar" id="user-avatar-main">
+        A
+    </div>
+
+    <!-- DROPDOWN -->
+    <div class="dropdown-menu" id="user-dropdown">
+
+        <a href="profile.html">
+            View Profile
+        </a>
+
+        <button id="logout-btn">
+            Logout
+        </button>
+
+    </div>
+
+</div>
     </header>
 
     <div class="app-container">
@@ -47,5 +68,6 @@
     <button class="help-fab"><i data-lucide="help-circle"></i></button>
 
     <script src="community-feeds.js"></script>
+    <script src="ai-chat.js"></script>
 </body>
 </html>

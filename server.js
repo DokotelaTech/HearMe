@@ -4,13 +4,19 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const User = require('./database/models/users');
 const Post = require('./database/models/Post');
+const resourceRoutes = require('./database/routes/resourceRoutes');
+
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Parses incoming JSON data from the frontend
+app.use(express.json());
+
+// Mount resource routes
+app.use('/api/resources', resourceRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
@@ -18,8 +24,9 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => console.error('MongoDB connection error:', err));
 
 
-//  1. SIGNUP ROUTE
-// ==========================================
+// =========================
+// 1. SIGNUP ROUTE
+// =========================
 app.post('/api/auth/signup', async (req, res) => {
     try {
         const { role, isAnonymous, identifier, password } = req.body;
@@ -49,8 +56,9 @@ app.post('/api/auth/signup', async (req, res) => {
 });
 
 
+// =========================
 // 2. LOGIN ROUTE
-// ==========================================
+// =========================
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { role, identifier, password } = req.body;
@@ -70,12 +78,12 @@ app.post('/api/auth/login', async (req, res) => {
         }
 
         const token = jwt.sign(
-            { userId: user._id, role: user.role }, 
-            process.env.JWT_SECRET, 
+            { userId: user._id, role: user.role },
+            process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
 
-        res.status(200).json({ 
+        res.status(200).json({
             message: 'Logged in successfully',
             token,
             user: { identifier: user.identifier, role: user.role }
@@ -88,15 +96,21 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 
-// Middleware to verify if a user is logged in
+// =========================
+// VERIFY TOKEN MIDDLEWARE
+// =========================
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization');
+
     if (!token) {
         return res.status(401).json({ message: 'Access denied. No token provided.' });
     }
 
     try {
-        const decoded = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET);
+        const decoded = jwt.verify(
+            token.replace('Bearer ', ''),
+            process.env.JWT_SECRET
+        );
         req.user = decoded;
         next();
     } catch (error) {
@@ -105,8 +119,9 @@ const verifyToken = (req, res, next) => {
 };
 
 
-// 3. POSTS ROUTES (Feed, Create, Like, Comment)
-// ==========================================
+// =========================
+// 3. POSTS ROUTES
+// =========================
 
 // GET ALL POSTS
 app.get('/api/posts', verifyToken, async (req, res) => {
@@ -130,8 +145,8 @@ app.post('/api/posts', verifyToken, async (req, res) => {
             authorIdentifier: user.identifier,
             postType,
             content,
-            likes: [], // Initialize empty
-            comments: [] // Initialize empty
+            likes: [],
+            comments: []
         });
 
         await newPost.save();
@@ -142,18 +157,16 @@ app.post('/api/posts', verifyToken, async (req, res) => {
     }
 });
 
-// ✅TOGGLE LIKE ON A POST
+// TOGGLE LIKE ON A POST
 app.post('/api/posts/:id/like', verifyToken, async (req, res) => {
     try {
         const postId = req.params.id;
-        // Get the user from the token (verifyToken middleware provides req.user)
         const user = await User.findById(req.user.userId);
         const userIdentifier = user.identifier;
 
         const post = await Post.findById(postId);
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
-        // Initialize arrays if they don't exist
         if (!post.likes) post.likes = [];
 
         const likeIndex = post.likes.indexOf(userIdentifier);
@@ -162,7 +175,7 @@ app.post('/api/posts/:id/like', verifyToken, async (req, res) => {
         } else {
             post.likes.splice(likeIndex, 1);
         }
-        
+
         await post.save();
         res.json({ likesCount: post.likes.length, isLiked: likeIndex === -1 });
     } catch (error) {
@@ -171,7 +184,7 @@ app.post('/api/posts/:id/like', verifyToken, async (req, res) => {
     }
 });
 
-//  ADD A COMMENT TO A POST
+// ADD A COMMENT TO A POST
 app.post('/api/posts/:id/comment', verifyToken, async (req, res) => {
     try {
         const postId = req.params.id;
@@ -185,17 +198,17 @@ app.post('/api/posts/:id/comment', verifyToken, async (req, res) => {
 
         if (!post.comments) post.comments = [];
 
-        const newComment = { 
-            userIdentifier: user.identifier, 
-            text: text 
+        const newComment = {
+            userIdentifier: user.identifier,
+            text: text
         };
 
         post.comments.push(newComment);
         await post.save();
 
-        res.json({ 
-            comment: post.comments[post.comments.length - 1], 
-            commentsCount: post.comments.length 
+        res.json({
+            comment: post.comments[post.comments.length - 1],
+            commentsCount: post.comments.length
         });
     } catch (error) {
         console.error("Comment Error:", error);
@@ -203,13 +216,12 @@ app.post('/api/posts/:id/comment', verifyToken, async (req, res) => {
     }
 });
 
-// ✅ DELETE A POST
+// DELETE A POST
 app.delete('/api/posts/:id', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
-        // Only allow the author to delete
         if (post.authorId.toString() !== req.user.userId) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
@@ -221,7 +233,7 @@ app.delete('/api/posts/:id', verifyToken, async (req, res) => {
     }
 });
 
-//  DELETE A COMMENT
+// DELETE A COMMENT
 app.delete('/api/posts/:postId/comments/:commentId', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId);
@@ -230,7 +242,6 @@ app.delete('/api/posts/:postId/comments/:commentId', verifyToken, async (req, re
         const comment = post.comments.id(req.params.commentId);
         if (!comment) return res.status(404).json({ message: 'Comment not found' });
 
-        // Verify user owns the comment (assuming you store userIdentifier or authorId in comments)
         const user = await User.findById(req.user.userId);
         if (comment.userIdentifier !== user.identifier) {
             return res.status(403).json({ message: 'Unauthorized' });
@@ -244,24 +255,29 @@ app.delete('/api/posts/:postId/comments/:commentId', verifyToken, async (req, re
     }
 });
 
-//  GET PROFILE DATA
+
+// =========================
+// 4. PROFILE ROUTE
+// =========================
 app.get('/api/user/profile', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
         const postCount = await Post.countDocuments({ authorId: user._id });
-        
+
         res.json({
             identifier: user.identifier,
             createdAt: user.createdAt,
-            postCount: postCount,
-            // You can add logic for groupsJoined or sessionsDone here later
+            postCount: postCount
         });
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
     }
 });
 
-// Start the server
+
+// =========================
+// START SERVER
+// =========================
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
