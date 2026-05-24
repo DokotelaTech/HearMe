@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const Report = require('../database/models/Report');
 const Post = require('../database/models/Post');
 const User = require('../database/models/users');
@@ -70,3 +71,57 @@ const deleteReportedPost = async (req, res) => {
 };
 
 module.exports = { createReport, getReports, dismissReport, deleteReportedPost };
+=======
+const getReports =
+async (req,res) => {
+
+    try{
+
+        return res.status(200).json({
+
+            reports:[]
+        });
+
+    }catch(error){
+
+        return res.status(500).json({
+            message:error.message
+        });
+    }
+};
+
+const createReport =
+async (req,res) => {
+
+    try{
+
+        const {
+            category,
+            description
+        } = req.body;
+
+        return res.status(201).json({
+
+            message:"Report created",
+
+            report:{
+                category,
+                description
+            }
+        });
+
+    }catch(error){
+
+        return res.status(500).json({
+            message:error.message
+        });
+    }
+};
+
+module.exports = {
+
+    getReports,
+
+    createReport
+};
+>>>>>>> 98ea0a3 (sprint 2)

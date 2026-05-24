@@ -13,9 +13,14 @@ async function loadTherapistData(){
         if(!token){
 
             window.location.href =
+<<<<<<< HEAD
             "/login";
 
             alert("session expired!")
+=======
+            "/old interfaces/login.html";
+
+>>>>>>> 98ea0a3 (sprint 2)
             return;
         }
 

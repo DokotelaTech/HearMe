@@ -11,4 +11,8 @@ const {
 router.get("/", authMiddleware, getReports);
 router.post("/", authMiddleware, createReport);
 
+<<<<<<< HEAD
 module.exports = router; 
+=======
+module.exports = router; 
+>>>>>>> 98ea0a3 (sprint 2)

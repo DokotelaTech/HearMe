@@ -4,6 +4,10 @@ const API_BASE = 'http://localhost:5000/api/admin';
 // PAGE LOAD
 // ========================================
 
+<<<<<<< HEAD
+=======
+// Add this at the very top of admin-dashboard.js
+>>>>>>> 98ea0a3 (sprint 2)
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
@@ -14,7 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
     loadMetrics();
     loadPendingTherapists();
+<<<<<<< HEAD
     loadReports(); // Step 5 — added after loadPendingTherapists
+=======
+>>>>>>> 98ea0a3 (sprint 2)
     setupProfileDropdown();
     initSettingsPopupSystem();
 });
@@ -90,7 +97,11 @@ async function loadMetrics() {
         document.getElementById('metric-total-users').textContent = data.totalUsers;
         document.getElementById('metric-verified-workers').textContent = data.verifiedWorkers;
         document.getElementById('metric-pending-review').textContent = data.pendingReview;
+<<<<<<< HEAD
         document.getElementById('metric-flagged-content').textContent = data.flaggedContent || 0; // Step 5 — updated
+=======
+        document.getElementById('metric-flagged-content').textContent = 0;
+>>>>>>> 98ea0a3 (sprint 2)
     } catch (error) {
         console.error('Error loading metrics:', error);
     }
@@ -199,6 +210,7 @@ async function denyTherapist(id) {
 }
 
 // ========================================
+<<<<<<< HEAD
 // LOAD REPORTS  (Step 5)
 // ========================================
 
@@ -258,6 +270,8 @@ async function deleteReportedPost(postId) {
 }
 
 // ========================================
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 // SETTINGS MODAL
 // ========================================
 
@@ -310,6 +324,7 @@ async function handleSettingsUpdate(event) {
     }
 }
 
+<<<<<<< HEAD
 
 async function loadReports() {
     const tbody = document.getElementById('reports-table-body');
@@ -381,6 +396,9 @@ async function dismissReport(reportId) {
 // LOGOUT
 // ========================================
 
+=======
+// logout 
+>>>>>>> 98ea0a3 (sprint 2)
 document.getElementById('logoutBtn').addEventListener('click', (e) => {
     e.preventDefault();
     localStorage.removeItem('adminToken');

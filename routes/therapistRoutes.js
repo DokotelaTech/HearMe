@@ -36,6 +36,7 @@ router.post('/submit-for-review', verifyToken, async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 // get all verified therapists
 router.get('/verified', verifyToken, async (req, res) => {
     try {
@@ -50,4 +51,6 @@ router.get('/verified', verifyToken, async (req, res) => {
     }
 });
 
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 module.exports = router; 

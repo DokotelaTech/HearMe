@@ -14,6 +14,10 @@ document.getElementById(
 );
 
 // TOGGLE DROPDOWN
+<<<<<<< HEAD
+=======
+
+>>>>>>> 98ea0a3 (sprint 2)
 profileToggle?.addEventListener(
     "click",
     (event) => {
@@ -56,6 +60,10 @@ window.addEventListener(
 );
 
 // LOGOUT
+<<<<<<< HEAD
+=======
+
+>>>>>>> 98ea0a3 (sprint 2)
 document.getElementById(
     "logoutBtn"
 )?.addEventListener(
@@ -71,6 +79,10 @@ document.getElementById(
         );
 
         window.location.href =
+<<<<<<< HEAD
         "/login";
+=======
+        "../../landing-page/login.html";
+>>>>>>> 98ea0a3 (sprint 2)
     }
 );

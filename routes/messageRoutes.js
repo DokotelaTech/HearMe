@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -309,5 +310,43 @@ router.patch('/read', verifyToken, async (req, res) => {
         return sendDbError(res, error, 'mark messages read');
     }
 });
+=======
+const express = require("express");
+
+const router = express.Router();
+
+// MIDDLEWARE
+
+const {authMiddleware }=
+require("../middleware/authMiddleware");
+
+// CONTROLLERS
+
+const {
+    getConversations,
+    getConversationMessages,
+    sendMessage
+} = require("../controllers/messageController");
+
+// ROUTES
+
+router.get(
+    "/conversations",
+    authMiddleware,
+    getConversations
+);
+
+router.get(
+    "/:id",
+    authMiddleware,
+    getConversationMessages
+);
+
+router.post(
+    "/send",
+    authMiddleware,
+    sendMessage
+);
+>>>>>>> 98ea0a3 (sprint 2)
 
 module.exports = router;

@@ -126,6 +126,9 @@ router.post('/login', async (req, res) => {
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 
 // POST /api/auth/admin-login
 router.post('/admin-login', async (req, res) => {
@@ -162,6 +165,9 @@ router.post('/admin-login', async (req, res) => {
     }
 });
 
+<<<<<<< HEAD
 =======
 >>>>>>> e9da0a9 (therapists)
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 module.exports = router;

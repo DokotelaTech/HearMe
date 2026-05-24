@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root{
     --primary:#a855f7;
     --secondary:#ec4899;
@@ -16,6 +17,33 @@
 }
 
 <<<<<<< HEAD:Therapistportal/css/style.css
+=======
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-main: #f8fafc;
+    --bg-white: #ffffff;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    
+    /* Specific Image Colors */
+    --brand-blue: #0ea5e9;
+    --nav-active-bg: #eff6ff;
+    --yellow-card-bg: #fefce8;
+    --yellow-card-border: #fef08a;
+    --yellow-accent: #f59e0b;
+    --green-bg: #dcfce7;
+    --green-text: #15803d;
+    --pink-bg: #fdf4ff;
+    --pink-text: #86198f;
+    --red-bg: #fef2f2;
+    --red-text: #b91c1c;
+    
+    --sidebar-w: 260px;
+}
+
+>>>>>>> 98ea0a3 (sprint 2)
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 body { background: var(--bg-main); color: var(--text-dark); }
 .app-layout { display: flex; height: 100vh; overflow: hidden; }
@@ -115,12 +143,15 @@ body { background: var(--bg-main); color: var(--text-dark); }
 
 /* ---------------- MESSAGES (INBOX) VIEW ---------------- */
 .messages-layout { display: flex; height: 600px; background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+<<<<<<< HEAD
 
 .inbox-empty {
     color: #6b7280;
     padding: 1.25rem;
     font-size: 0.9rem;
 }
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 .inbox-sidebar { width: 320px; border-right: 1px solid var(--border); display: flex; flex-direction: column; }
 .inbox-sidebar .search-input { margin: 15px; border-radius: 20px; background: #f1f5f9; border: none; }
 .inbox-list { flex: 1; overflow-y: auto; }
@@ -168,7 +199,10 @@ textarea { width: 100%; border: 1px solid var(--border); border-radius: 8px; pad
 .report-item { border: 1px solid var(--border); padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid transparent; }
 .border-green { border-left-color: var(--green-text); }
 .report-reply { padding: 10px; border-radius: 6px; font-size: 0.85rem; }
+<<<<<<< HEAD
 <<<<<<< HEAD:Therapistportal/css/style.css
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 .green-bg { background: var(--green-bg); color: #064e3b; } */
 
 /* ==========================================================================
@@ -674,13 +708,17 @@ textarea::placeholder {
 
 .report-reply.green-bg strong { color: #166534; }
 
+<<<<<<< HEAD
 =======
 .green-bg { background: var(--green-bg); color: #064e3b; }
 >>>>>>> 7804664 (quality-assurance):Therapistportal/portal.css
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 /* Container needs relative positioning so the dropdown aligns to it */
 .profile-container {
   position: relative;
   display: inline-block;
+<<<<<<< HEAD
 =======
 *{
     margin:0;
@@ -726,11 +764,50 @@ body{
 }
 
 <<<<<<< HEAD:Therapistportal/css/style.css
+=======
+}
+
+/* Style for the actual dropdown box */
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  right: 0; /* Aligns to the right edge of the profile button */
+  top: 100%; /* Sits directly below the button */
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 8px 0;
+  z-index: 1000;
+}
+
+/* Show class that JavaScript will toggle */
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Dropdown links styling */
+.dropdown-menu a {
+  color: #333;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f5f5f5;
+}
+
+>>>>>>> 98ea0a3 (sprint 2)
 .dropdown-menu hr {
   border: 0;
   border-top: 1px solid #eee;
   margin: 8px 0;
+<<<<<<< HEAD
 <<<<<<< HEAD:Therapistportal/css/style.css
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 }
 
 .profile-container{
@@ -835,6 +912,7 @@ body{
 
 .logout-btn{
     color: #ef4444;
+<<<<<<< HEAD
 =======
 >>>>>>> 7804664 (quality-assurance):Therapistportal/portal.css
 =======
@@ -1435,4 +1513,6 @@ body{
         padding:0 20px;
     }
 >>>>>>> 8bfd832 (project):Therapistportal/portal.css
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 }

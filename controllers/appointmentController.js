@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const Appointment = require('../database/models/Appointment');
 const User = require('../database/models/users');
 
@@ -163,10 +164,116 @@ const deleteAppointment = async (req, res) => {
         return res.status(200).json({ message: 'Appointment deleted' });
     } catch (error) {
         return res.status(500).json({ message: error.message });
+=======
+const getAppointments =
+async (req,res) => {
+
+    try{
+
+        // DATABASE LOGIC LATER
+
+        return res.status(200).json({
+
+            appointments:[]
+        });
+
+    }catch(error){
+
+        return res.status(500).json({
+            message:error.message
+        });
+    }
+};
+
+// CREATE
+
+const createAppointment =
+async (req,res) => {
+
+    try{
+
+        const appointmentData =
+            req.body;
+
+        // SAVE TO DB LATER
+
+        return res.status(201).json({
+
+            message:
+            "Appointment created",
+
+            appointment:
+            appointmentData
+        });
+
+    }catch(error){
+
+        return res.status(500).json({
+            message:error.message
+        });
+    }
+};
+
+// UPDATE
+
+const updateAppointment =
+async (req,res) => {
+
+    try{
+
+        const appointmentId =
+            req.params.id;
+
+        const updatedData =
+            req.body;
+
+        return res.status(200).json({
+
+            message:
+            "Appointment updated",
+
+            appointmentId,
+
+            updatedData
+        });
+
+    }catch(error){
+
+        return res.status(500).json({
+            message:error.message
+        });
+    }
+};
+
+// DELETE
+
+const deleteAppointment =
+async (req,res) => {
+
+    try{
+
+        const appointmentId =
+            req.params.id;
+
+        return res.status(200).json({
+
+            message:
+            "Appointment deleted",
+
+            appointmentId
+        });
+
+    }catch(error){
+
+        return res.status(500).json({
+            message:error.message
+        });
+>>>>>>> 98ea0a3 (sprint 2)
     }
 };
 
 module.exports = {
+<<<<<<< HEAD
     getAppointments,
     getMyAppointments,
     getTherapistAppointments,
@@ -174,5 +281,14 @@ module.exports = {
     updateAppointmentStatus,
     cancelAppointment,
     updateAppointment,
+=======
+
+    getAppointments,
+
+    createAppointment,
+
+    updateAppointment,
+
+>>>>>>> 98ea0a3 (sprint 2)
     deleteAppointment
 };

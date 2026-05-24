@@ -573,6 +573,7 @@ textarea {
 /* ===================================================================
    RESOURCES CONTAINER
 =================================================================== */
+<<<<<<< HEAD
 /* ===================================================================
    RESOURCES CONTAINER
 =================================================================== */
@@ -580,10 +581,17 @@ textarea {
 #resourcesContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+=======
+
+#resourcesContainer {
+    display: flex;
+    flex-direction: column;
+>>>>>>> 98ea0a3 (sprint 2)
     gap: 20px;
 }
 
 /* ===================================================================
+<<<<<<< HEAD
    RESOURCE CARD (Matches JS Output)
 =================================================================== */
 
@@ -594,10 +602,24 @@ textarea {
     background: white;
     display: flex;
     flex-direction: column;
+=======
+   RESOURCE CARD
+=================================================================== */
+
+.resource-card {
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: white;
+>>>>>>> 98ea0a3 (sprint 2)
 }
 
 .resource-image {
     width: 100%;
+<<<<<<< HEAD
     height: 180px;
     object-fit: cover;
 }
@@ -642,10 +664,52 @@ textarea {
     line-height: 1.5;
     margin-bottom: 24px;
     flex: 1; /* Pushes the action buttons to the absolute bottom */
+=======
+    height: 220px;
+
+    object-fit: cover;
+}
+
+.resource-body {
+    padding: 20px;
+}
+
+.resource-category {
+    display: inline-block;
+
+    background: #eff6ff;
+
+    color: var(--primary);
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 0.75rem;
+
+    font-weight: 600;
+
+    margin-bottom: 14px;
+}
+
+.resource-title {
+    font-size: 1.1rem;
+
+    margin-bottom: 10px;
+}
+
+.resource-description {
+    color: var(--text-muted);
+
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+>>>>>>> 98ea0a3 (sprint 2)
 }
 
 .resource-actions {
     display: flex;
+<<<<<<< HEAD
     gap: 12px;
     align-items: center;
     margin-top: auto;
@@ -696,6 +760,36 @@ textarea {
 .delete-btn:hover {
     background: #fca5a5;
 }
+=======
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resource-link {
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.delete-btn {
+    background: var(--red-bg);
+
+    color: var(--red-text);
+
+    border: none;
+
+    padding: 10px 14px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+>>>>>>> 98ea0a3 (sprint 2)
 /* ===================================================================
    TIPS LIST
 =================================================================== */
@@ -741,6 +835,7 @@ textarea {
     .stats-row {
         grid-template-columns: 1fr;
     }
+<<<<<<< HEAD
 }
 
 @media (max-width: 700px) {
@@ -749,4 +844,6 @@ textarea {
     #resourcesContainer {
         grid-template-columns: 1fr;
     }
+=======
+>>>>>>> 98ea0a3 (sprint 2)
 }

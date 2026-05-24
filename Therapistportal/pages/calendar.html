@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 98ea0a3 (sprint 2)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Calendar & Scheduling</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="/therapist/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+=======
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+>>>>>>> 98ea0a3 (sprint 2)
 <body>
     <div class="app-layout">
         <aside class="sidebar">
@@ -16,11 +28,19 @@
                 <span class="badge">Therapist Portal</span>
             </div>
             <nav class="nav-menu">
+<<<<<<< HEAD
                 <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item active"><i class="fa-regular fa-calendar"></i> Calendar</a>
                 <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
                 <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+=======
+                <a href="client.html" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="calendar.html" class="nav-item active"><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="message.html" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="reliefs.html" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="report.html" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+>>>>>>> 98ea0a3 (sprint 2)
             </nav>
             <div class="overview-box">
                 <h4>Today's Overview</h4>
@@ -31,6 +51,7 @@
         </aside>
 
         <main class="main-workspace">
+<<<<<<< HEAD
             <header class="topbar">
                 <div class="topbar-right">
                     <div class="icon-btn">
@@ -65,6 +86,96 @@
                         </div>
                     </div>
                 </div>
+=======
+                <header class="topbar">
+
+    <div class="topbar-right">
+
+        <div class="icon-btn">
+            <i class="fa-regular fa-message"></i>
+            <span class="dot"></span>
+        </div>
+
+        <!-- PROFILE -->
+
+        <div class="profile-container">
+
+            <button
+            id="profileToggle"
+            class="profile-btn"
+            >
+
+                <!-- AVATAR -->
+
+                <div
+                class="avatar"
+                id="nav-avatar"
+                >
+                    SJ
+                </div>
+
+                <!-- PROFILE INFO -->
+
+                <div class="profile-info">
+
+                    <span
+                    class="profile-name"
+                    id="nav-name"
+                    >
+                        Loading...
+                    </span>
+
+                    <span
+                    class="profile-role"
+                    id="nav-role"
+                    >
+                        Therapist
+                    </span>
+
+                </div>
+
+                <!-- DROPDOWN ARROW -->
+
+                <div class="dropdown-arrow">
+
+                    <i
+                    class="fa-solid fa-chevron-down"
+                    id="dropdownIcon"
+                    ></i>
+
+                </div>
+
+            </button>
+
+            <!-- DROPDOWN -->
+
+            <div id="profileDropdown"class="dropdown-menu">
+                <a href="profiles.html">
+                    <i class="fa-regular fa-user"></i>
+                     <span>My Profile</span>
+                    </a>
+
+                <a href="#"><i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+                <hr>
+
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+                    <span>Sign Out</span>
+                    
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+>>>>>>> 98ea0a3 (sprint 2)
             </header>
 
             <div class="content-container">
@@ -73,21 +184,38 @@
                         <h1>Calendar & Scheduling</h1>
                         <p>Manage your appointments and availability</p>
                     </div>
+<<<<<<< HEAD
+=======
+                    <button class="btn-primary" id="btn-new-appointment">+ New Appointment</button>
+>>>>>>> 98ea0a3 (sprint 2)
                 </div>
 
                 <div class="stats-row">
                     <div class="stat-card"><span>Today's Sessions</span><strong id="cal-today">0</strong></div>
                     <div class="stat-card"><span>This Week</span><strong id="cal-week">0</strong></div>
                     <div class="stat-card"><span>Next Available</span><strong id="cal-next">--:-- PM</strong></div>
+<<<<<<< HEAD
                     <div class="stat-card"><span>Pending Confirmations</span><strong class="yellow-text" id="cal-pending">0</strong></div>
+=======
+                    <div class="stat-card"><span>Pending Confirmations</span><strong class="yellow-text"
+                            id="cal-pending">0</strong></div>
+>>>>>>> 98ea0a3 (sprint 2)
                 </div>
 
                 <div class="calendar-layout">
                     <div class="cal-left">
                         <div class="card">
+<<<<<<< HEAD
                             <h3><i class="fa-regular fa-calendar"></i> Upcoming Sessions</h3>
                             <div id="appointments-list-container">
                                 <p class="muted text-sm" style="padding:20px; text-align:center;">Loading schedule...</p>
+=======
+                            <h3 id="current-schedule-date"><i class="fa-regular fa-calendar"></i> Today's Schedule</h3>
+
+                            <div id="appointments-list-container">
+                                <p class="muted text-sm" style="padding: 20px; text-align: center;">Loading schedule...
+                                </p>
+>>>>>>> 98ea0a3 (sprint 2)
                             </div>
                         </div>
                     </div>
@@ -95,6 +223,7 @@
                     <div class="cal-right">
                         <div class="card">
                             <h3>Weekly Availability</h3>
+<<<<<<< HEAD
                             <div id="availability-list-container">
                                 <p class="muted text-sm" style="padding:10px 0; text-align:center;">Loading availability...</p>
                             </div>
@@ -104,10 +233,25 @@
                         </div>
                     </div>
                 </div>
+=======
+
+                            <div id="availability-list-container">
+                                <p class="muted text-sm" style="padding: 10px 0; text-align: center;">Loading
+                                    availability...</p>
+                            </div>
+
+                            <button class="btn-light-blue full-width mt-10" id="btn-edit-availability">Edit
+                                Availability</button>
+                        </div>
+                    </div>
+                </div>
+
+>>>>>>> 98ea0a3 (sprint 2)
             </div>
         </main>
     </div>
 
+<<<<<<< HEAD
     <!-- VIDEO MODAL OVERLAY -->
     <div id="video-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999;"></div>
 
@@ -139,4 +283,12 @@
     <script src="/therapist/js/calendar.js"></script>
     <script src="/therapist/js/portal.js"></script>
 </body>
+=======
+
+    <script src="../js/shared/loadTherapistData.js"></script>
+    <script src="../js/shared/profileDropdown.js"></script>
+    <script src="portal.js"></script>
+</body>
+
+>>>>>>> 98ea0a3 (sprint 2)
 </html>
