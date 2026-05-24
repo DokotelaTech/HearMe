@@ -12,10 +12,14 @@
 
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
-        <div class="user-avatar">A</div>
+        <div class="nav-right">
+            <span class="user-tag">User</span>
+            <div class="user-avatar-small">U</div>
+        </div>
     </header>
 
     <div class="app-container">
+        <!-- Fixed Sidebar Navigation -->
         <nav class="sidebar">
             <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
             <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
@@ -23,15 +27,11 @@
             <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
             <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
             <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="profile.html" class="nav-item active"><i data-lucide="user"></i><span>Profile</span></a>
+            <a href="profile.html" class="nav-item ative"><i data-lucide="user"></i><span>Profile</span></a>
         </nav>
 
         <main class="profile-area">
-            <div class="profile-header">
-                <h2 class="page-title">Your Profile</h2>
-                <p class="page-subtitle">Track your healing journey and stay connected</p>
-            </div>
-
+            <!-- Statistics Banner: Hard-codes removed, starts at 0 -->
             <div class="user-banner">
                 <div class="user-info">
                     <div class="large-avatar">A</div>
@@ -42,76 +42,71 @@
                 </div>
                 <div class="user-stats">
                     <div class="stat-box">
-                        <div class="stat-num">45</div>
+                        <div class="stat-num" id="stat-days">0</div>
                         <div class="stat-label">Days Active</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-num">12</div>
+                        <div class="stat-num" id="stat-posts">0</div>
                         <div class="stat-label">Posts Shared</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-num">3</div>
+                        <div class="stat-num" id="stat-groups">0</div>
                         <div class="stat-label">Groups Joined</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-num">5</div>
+                        <div class="stat-num" id="stat-sessions">0</div>
                         <div class="stat-label">Sessions Done</div>
                     </div>
                 </div>
             </div>
 
             <div class="profile-grid">
-                
+                <!-- Roadmap Section (5 Tasks) -->
                 <div class="card roadmap-card">
                     <div class="card-header">
                         <h3>Your Healing Roadmap</h3>
                         <div class="progress-info">
-                            <i data-lucide="trending-up"></i>
-                            <span id="progress-text">40% Complete</span>
+                            <i data-lucide="trending-up" class="purple-icon"></i>
+                            <span id="progress-text">0% Complete</span>
                         </div>
                     </div>
-                    
                     <div class="progress-track">
-                        <div class="progress-fill" id="progress-bar"></div>
+                        <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
                     </div>
 
                     <div class="task-list">
-                        <div class="task-item completed">
-                            <div class="task-check"><i data-lucide="check-circle-2"></i></div>
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
                             <div class="task-content">
                                 <h4>Practice daily gratitude</h4>
                                 <p>Write down 3 things you're grateful for each morning</p>
                             </div>
                             <span class="badge badge-purple">Daily Practice</span>
                         </div>
-
-                        <div class="task-item completed">
-                            <div class="task-check"><i data-lucide="check-circle-2"></i></div>
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
                             <div class="task-content">
                                 <h4>Join a support group</h4>
                                 <p>Connect with others who share similar experiences</p>
                             </div>
                             <span class="badge badge-purple">Community</span>
                         </div>
-
                         <div class="task-item">
                             <div class="task-check"><div class="circle-outline"></div></div>
                             <div class="task-content">
                                 <h4>Try breathing exercises</h4>
-                                <p>Practice the 4-4-4 breathing technique when feeling anxious</p>
+                                <p>Practice the 4-4-4 breathing technique</p>
                             </div>
                             <span class="badge badge-purple">Stress Management</span>
                         </div>
-
                         <div class="task-item">
                             <div class="task-check"><div class="circle-outline"></div></div>
                             <div class="task-content">
                                 <h4>Schedule a session</h4>
-                                <p>Book your first session with a verified social worker</p>
+                                <p>Book your first session with a verified expert</p>
                             </div>
                             <span class="badge badge-purple">Professional Support</span>
                         </div>
-
                         <div class="task-item">
                             <div class="task-check"><div class="circle-outline"></div></div>
                             <div class="task-content">
@@ -123,57 +118,28 @@
                     </div>
                 </div>
 
+                <!-- Independent Dynamic Sidebar Sections -->
                 <div class="right-column">
-                    <div class="card events-card">
+                    <div class="card side-card">
                         <div class="card-header">
-                            <h3><i data-lucide="bell" class="header-icon"></i> Upcoming Events</h3>
+                            <h3><i data-lucide="bell" class="purple-icon"></i> Upcoming Events</h3>
                         </div>
-                        <div class="event-list">
-                            <div class="event-item">
-                                <div class="event-icon"><i data-lucide="calendar"></i></div>
-                                <div class="event-details">
-                                    <h4>Anxiety Warriors Group Session</h4>
-                                    <p>Today at 7:00 PM</p>
-                                    <span class="badge badge-blue">Group</span>
-                                </div>
-                            </div>
-                            <div class="event-item">
-                                <div class="event-icon"><i data-lucide="calendar"></i></div>
-                                <div class="event-details">
-                                    <h4>Mindfulness Workshop</h4>
-                                    <p>Apr 26 at 6:00 PM</p>
-                                    <span class="badge badge-green">Workshop</span>
-                                </div>
-                            </div>
-                            <div class="event-item">
-                                <div class="event-icon"><i data-lucide="calendar"></i></div>
-                                <div class="event-details">
-                                    <h4>1-on-1 Session with Dr. Sarah Johnson</h4>
-                                    <p>Apr 28 at 3:00 PM</p>
-                                    <span class="badge badge-purple">Session</span>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Emptied: Handled by JS localStorage logic -->
+                        <div id="dynamic-events" class="dynamic-container"></div>
                     </div>
-
-                    <div class="card achievements-card">
+                    
+                    <div class="card side-card">
                         <div class="card-header">
-                            <h3><i data-lucide="award" class="header-icon"></i> Achievements</h3>
+                            <h3><i data-lucide="award" class="gold-icon"></i> Achievements</h3>
                         </div>
-                        <div class="achievement-item">
-                            <div class="achievement-icon">🌟</div>
-                            <div class="achievement-details">
-                                <h4>First Step</h4>
-                                <p>Joined your first community group</p>
-                            </div>
-                        </div>
+                        <!-- Emptied: Handled by JS independent data array -->
+                        <div id="dynamic-achievements" class="dynamic-container"></div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
-
+    
     <script src="profile.js"></script>
 </body>
 </html>

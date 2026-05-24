@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Admin Gateway</title>
+    <link rel="stylesheet" href="adminLogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="login-universe">
+        <div class="ambient-blob blob-1"></div>
+        <div class="ambient-blob blob-2"></div>
+
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo">HearMe</div>
+                <h1>System Authorization</h1>
+                <p>Enter administrative root credentials to access the secure console.</p>
+            </div>
+
+            <div class="error-banner" id="errorBanner">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="errorText">Invalid authorization payload.</span>
+            </div>
+
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label for="adminEmail">Administrative Email</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="adminEmail" required placeholder="admin@hearme.com" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">Secure Keyphrase</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="adminPassword" required placeholder="••••••••••••">
+                        <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <div class="form-utilities">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="checkmark"></span>
+                        <span class="label-text">Trust this secure node</span>
+                    </label>
+                    <a href="#" class="forgot-link" onclick="alert('Please contact your systems root administrator for database key recovery protocols.'); return false;">Lost Access?</a>
+                </div>
+
+                <button type="submit" class="btn-login" id="submitBtn">
+                    <span class="btn-text">Authorize Shell</span>
+                    <div class="spinner" id="btnSpinner"></div>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p><i class="fa-solid fa-shield-halved"></i> End-to-end encrypted admin session environment.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="adminLogin.js"></script>
+</body>
+</html>

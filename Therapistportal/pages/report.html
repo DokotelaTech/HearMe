@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Report Issue</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand-area">
+                <span class="logo">HearMe</span>
+                <span class="badge">Therapist Portal</span>
+            </div>
+            <nav class="nav-menu">
+
+                <a href="client.html" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="calendar.html" class="nav-item "><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="message.html" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="reliefs.html" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="report.html" class="nav-item active"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+
+            </nav>
+            <div class="overview-box">
+                <h4>Today's Overview</h4>
+                <div class="ov-line">Active Clients <span id="overview-active-clients">0</span></div>
+                <div class="ov-line">Sessions Today <span id="overview-sessions-today">0</span></div>
+                <div class="ov-line">Unread Messages <span class="red-text" id="overview-unread">0</span></div>
+            </div>
+        </aside>
+
+        <main class="main-workspace">
+            <header class="topbar">
+                <div class="topbar-right">
+                    
+                    <div class="icon-btn">
+                        <i class="fa-regular fa-message"></i>
+                        <span class="dot"></span>
+                    </div>
+
+                    <div class="profile-container">
+                        <button id="profileToggle" class="profile-btn">
+                            
+                            <div class="avatar" id="nav-avatar">
+                                </div>
+
+                            <div class="profile-info">
+                                <span class="profile-name" id="nav-name">
+                                    Loading...
+                                </span>
+                                <span class="profile-role" id="nav-role">
+                                    Therapist
+                                </span>
+                            </div>
+
+                            <div class="dropdown-arrow">
+                                <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
+                            </div>
+                        </button>
+
+                        <div id="profileDropdown" class="dropdown-menu">
+                            <a href="profiles.html"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                            <hr>
+                            <button id="logoutBtn" class="logout-btn">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-container">
+                <div class="page-header">
+                    <h1>Report Issue to Admin</h1>
+                    <p>Submit technical issues, client concerns, or policy questions</p>
+                </div>
+                
+                <div class="alert-red" style="background-color: #fee2e2; border-left: 4px solid #ef4444; padding: 15px; border-radius: 4px; display: flex; gap: 15px; color: #b91c1c; margin-bottom: 20px;">
+                    <i class="fa-solid fa-triangle-exclamation" style="margin-top: 3px;"></i>
+                    <div><strong>Emergency Situations</strong><br>If you're experiencing a crisis situation... please call the admin emergency line at <strong>10111 HELP</strong>.</div>
+                </div>
+                
+                <div class="report-layout" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div class="card form-card" style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px;">
+                        <h3>Submit New Report</h3>
+                        <form id="report-issue-form">
+                            <label style="display:block; margin-top: 20px; margin-bottom: 5px; font-weight: 500;">Issue Category</label>
+                            
+                            <div class="category-grid" id="report-category-selector" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                                <div class="cat-btn active" data-type="technical" style="border: 1px solid #3b82f6; background-color: #eff6ff; color: #1d4ed8; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-wrench" style="font-size: 20px;"></i> Technical Issue
+                                </div>
+                                <div class="cat-btn" data-type="client" style="border: 1px solid #e5e7eb; background: white; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-user" style="font-size: 20px; color: #8b5cf6;"></i> Client Concern
+                                </div>
+                                <div class="cat-btn" data-type="safety" style="border: 1px solid #e5e7eb; background: white; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                    <i class="fa-solid fa-shield" style="font-size: 20px; color: #ef4444;"></i> Safety/Crisis
+                                </div>
+                            </div>
+                            <input type="hidden" id="report-category-input" value="technical">
+                            
+                            <label style="display:block; margin-top: 20px; margin-bottom: 5px; font-weight: 500;">Detailed Description</label>
+                            <textarea id="report-description-input" style="width: 100%; height: 120px; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px;" placeholder="Provide as much detail as possible..." required></textarea>
+                            
+                            <button type="submit" class="btn-primary full-width mt-20" style="padding: 12px; font-weight: 600; width: 100%; margin-top: 20px;"><i class="fa-regular fa-paper-plane"></i> Submit Report to Admin</button>
+                        </form>
+                    </div>
+                    
+                    <div class="card reports-sidebar" style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px;">
+                        <h3>Your Recent Reports</h3>
+                        <div id="recent-reports-container" style="margin-top: 15px;">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="../js/shared/loadTherapistData.js"></script>
+    <script src="../js/shared/profileDropdown.js"></script>
+    <script src="../js/shared/api.js"></script>
+    <script src="../js/shared/utils.js"></script>
+    <script src="../js/shared/authGuard.js"></script>
+    <script src="../js/shared/sidebar.js"></script>
+    <script src="../js/shared/therapistProfile.js"></script>
+        <script src="../js/theProfile.js"></script>
+    <!-- <script src="portal.js"></script> -->
+</body>
+</html>

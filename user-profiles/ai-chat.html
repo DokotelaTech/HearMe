@@ -3,49 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HearMe | Community Feed</title>
-    <link rel="stylesheet" href="community-feeds.css">
+    <title>HearMe | AI Chat</title>
+    <link rel="stylesheet" href="ai-chat.css">
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- FontAwesome (Needed for the paper-plane and heart icons in the chat section) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <!-- Top Navbar -->
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
         <div class="user-avatar">A</div>
     </header>
 
     <div class="app-container">
-     <nav class="sidebar">
-        <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-        <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-        <a href="ai-chat.html" class="nav-item active"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-        <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
-        <a href="sos.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-        <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-        <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
-    </nav>
-    </div>
+        
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <a href="community-feeds.html" class="nav-item active">
+                <i data-lucide="home"></i>
+                <span>Feed</span>
+            </a>
+            <a href="groups.html" class="nav-item">
+                <i data-lucide="users"></i>
+                <span>Groups</span>
+            </a>
+            <a href="ai-chat.html" class="nav-item">
+                <i data-lucide="message-square"></i>
+                <span>AI Chat</span>
+            </a>
+            <a href="experts.html" class="nav-item">
+                <i data-lucide="user-plus"></i>
+                <span>Experts</span>
+            </a>
+            <a href="sos.html" class="nav-item">
+                <i data-lucide="alert-circle"></i>
+                <span>SOS</span>
+            </a>
+            <a href="relief.html" class="nav-item">
+                <i data-lucide="heart"></i>
+                <span>Relief</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i data-lucide="user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
 
-        <!-- <main class="feed-area">
-            <div class="feed-content">
-                <div class="feed-header">
-                    <h2 class="page-title">Community Feed</h2>
-                </div>
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="user-avatar">A</div>
+            </header>
 
-                <div class="input-card">
-                    <div class="post-input-wrapper">
-                        <input type="text" id="post-input" placeholder="Share your thoughts anonymously...">
-                        <button id="post-button" class="post-submit-btn">Post</button>
+            <section class="chat-section">
+                <h1>AI Support Chat</h1>
+                <p class="subtitle">A compassionate AI listener, available 24/7</p>
+
+                <div class="chat-card">
+                    <div id="aiChatBox" class="chat-display">
+                        <div class="ai-message-wrapper">
+                            <div class="ai-avatar-circle">🤖</div>
+                            <div class="ai-bubble">
+                                Hello! I'm here to listen. This is a safe, judgment-free space. You can share anything on your mind, and everything we discuss is completely confidential. How are you feeling today?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-area">
+                        <div class="input-container">
+                            <input type="text" id="aiUserInput" placeholder="Type your message... Remember, this is a safe space.">
+                            <button id="aiSendBtn">
+                                <i class="fa-solid fa-paper-plane"></i> Send
+                            </button>
+                        </div>
+                        <p class="disclaimer">
+                            <i class="fa-solid fa-heart"></i> This AI provides emotional support but is not a replacement for professional help. In crisis? Use the SOS button.
+                        </p>
                     </div>
                 </div>
-
-                <div id="post-container" class="post-list"></div>
-            </div>
+            </section>
         </main>
-    </div> -->
 
+        <!-- Alternative AI Chat UI Components -->
+        <div class="ai-chat-container" id="aiChatBox2">
+            <div class="ai-message-wrapper">
+                <div class="ai-avatar">🤖</div>
+                <div class="ai-bubble">
+                    Hello! I'm your AI companion, here to listen without judgment. This is a safe space where you can share anything on your mind. How are you feeling today? 💙
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-input-area">
+            <div class="ai-suggestion"></div>
+            <div class="input-wrapper">
+                <input type="text" id="aiUserInput2" placeholder="Share your thoughts..." autocomplete="off">
+                <button id="aiSendBtn2" class="send-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </button>
+            </div>
+        </div>
+
+    </div> <!-- End of app-container -->
+
+    <!-- Floating Help Button -->
     <button class="help-fab"><i data-lucide="help-circle"></i></button>
 
-    <script src="community-feeds.js"></script>
+    <!-- Scripts -->
+    <script src="ai-chat.js"></script>
+    <script>
+        // Initialize the lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>
