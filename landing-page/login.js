@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }else{
 
                         window.location.href =
-                            '../Therapistportal/profile.html';
+                            '../Therapistportal/pages/profiles.html';
                     }
 
                 }, 3000);

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Messages</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand-area">
+                <span class="logo">HearMe</span>
+                <span class="badge">Therapist Portal</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="client.html" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="calendar.html" class="nav-item "><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="message.html" class="nav-item active"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="reliefs.html" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="report.html" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+            </nav>
+            <div class="overview-box">
+                <h4>Today's Overview</h4>
+                <div class="ov-line">Active Clients <span id="overview-active-clients">0</span></div>
+                <div class="ov-line">Sessions Today <span id="overview-sessions-today">0</span></div>
+                <div class="ov-line">Unread Messages <span class="red-text" id="overview-unread">0</span></div>
+            </div>
+        </aside>
+
+        <main class="main-workspace">
+            <header class="topbar">
+                <div class="topbar-right">
+                    <div class="icon-btn">
+                        <i class="fa-regular fa-message"></i>
+                        <span class="dot"></span>
+                    </div>
+
+                    <div class="profile-container">
+                        <button id="profileToggle" class="profile-btn">
+                            <div class="avatar" id="nav-avatar">
+                                </div>
+
+                            <div class="profile-info">
+                                <span class="profile-name" id="nav-name">
+                                    Loading...
+                                </span>
+                                <span class="profile-role" id="nav-role">
+                                    Therapist
+                                </span>
+                            </div>
+
+                            <div class="dropdown-arrow">
+                                <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
+                            </div>
+                        </button>
+
+                        <div id="profileDropdown" class="dropdown-menu">
+                            <a href="profiles.html"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                            <hr>
+                            <button id="logoutBtn" class="logout-btn">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-container">
+                <div class="page-header">
+                    <h1>Messages</h1>
+                    <p>Communicate securely with your clients</p>
+                </div>
+                
+                <div class="messages-layout">
+                    <div class="inbox-sidebar">
+                        <div class="search-input">
+                            <i class="fa-solid fa-search"></i> 
+                            <input type="text" id="message-search" placeholder="Search conversations...">
+                        </div>
+                        
+                        <div class="inbox-list" id="inbox-list-container">
+                            <p class="muted text-sm" style="padding: 20px; text-align: center;">Loading conversations...</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-area">
+                        <div class="chat-header" id="active-chat-header">
+                            <div class="flex-align">
+                                <div class="c-avatar blue sm">--</div>
+                                <div><strong>Select a conversation</strong><br><span class="muted text-sm">--</span></div>
+                            </div>
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </div>
+                        
+                        <div class="chat-history" id="chat-history-container">
+                            <div class="bubble incoming" style="opacity: 0.5;">
+                                <p>Waiting for database sync...</p>
+                                <span class="time">Just now</span>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-footer">
+                            <div class="privacy-banner"><strong>Privacy Reminder:</strong> All messages are encrypted and HIPAA-compliant. Do not share identifiable information.</div>
+                            <div class="input-area">
+                                <i class="fa-solid fa-paperclip attach-icon"></i>
+                                <input type="text" id="chat-input" placeholder="Type your message... (Press Enter to send)" disabled>
+                                <button class="send-btn" id="btn-send-message" disabled><i class="fa-regular fa-paper-plane"></i> Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+    
+    <script src="../js/shared/loadTherapistData.js"></script>
+    <script src="../js/shared/profileDropdown.js"></script>
+    <script src="../js/shared/api.js"></script>
+    <script src="../js/shared/utils.js"></script>
+    <script src="../js/shared/authGuard.js"></script>
+    <script src="../js/shared/sidebar.js"></script>
+    <script src="../js/shared/therapistProfile.js"></script>
+    
+    <script src="portal.js"></script>
+</body>
+</html>

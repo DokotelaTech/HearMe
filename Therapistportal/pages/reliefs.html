@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Therapist Portal</title>
+
+    <link rel="stylesheet" href="../css/stressRelief.css">
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="brand-area">
+                <span class="logo">HearMe</span>
+                <!-- <span class="badge">Therapist Portal</span> -->
+            </div>
+
+            <nav class="nav-menu">
+                <a href="client.html" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="calendar.html" class="nav-item "><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="message.html" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="reliefs.html" class="nav-item active"><i class="fa-solid fa-heart"></i>Stress Relief
+                    Uploads</a>
+                <a href="report.html" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+
+            </nav>
+
+            <!-- DYNAMIC OVERVIEW -->
+            <div class="overview-box">
+
+                <h4>Today's Overview</h4>
+
+                <div class="ov-line">
+                    Active Clients
+                    <span id="activeClientsCount">0</span>
+                </div>
+
+                <div class="ov-line">
+                    Sessions Today
+                    <span id="sessionsTodayCount">0</span>
+                </div>
+
+                <div class="ov-line">
+                    Unread Messages
+                    <span class="red-text" id="unreadMessagesCount">0</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- MAIN -->
+        <main class="main-workspace">
+
+            <!-- TOPBAR -->
+           <header class="topbar">
+
+    <div class="topbar-right">
+
+        <div class="icon-btn">
+            <i class="fa-regular fa-message"></i>
+            <span class="dot"></span>
+        </div>
+
+        <div class="profile-container">
+
+            <button class="profile-btn" id="profileBtn">
+
+                <div class="avatar" id="therapistInitials">
+                    
+                </div>
+
+                <div class="profile-info">
+                    <span class="profile-name" id="therapistName">
+                        
+                    </span>
+
+                    <span class="profile-role" id="therapistRole">
+
+                    </span>
+                </div>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </button>
+
+            <div id="profileDropdown" class="dropdown-menu">
+
+                <a href="profiles.html">
+                    <i class="fa-regular fa-user"></i>
+                    <span>My Profile</span>
+                </a>
+
+                <a href="#">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+                <hr>
+
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Sign Out</span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+            <!-- CONTENT -->
+            <div class="content-container">
+
+                <!-- PAGE HEADER -->
+                <div class="page-header">
+
+                    <div>
+                        <h1>Stress Relief Resources</h1>
+
+                        <p>
+                            Upload calming resources, meditation videos,
+                            motivational podcasts, and healing content
+                            for your users.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- DYNAMIC STATS -->
+                <div class="stats-row">
+
+                    <div class="stat-card">
+                        <span>Total Resources</span>
+                        <strong id="totalResources">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Total Videos</span>
+                        <strong class="purple-text" id="videoCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Total Podcasts</span>
+                        <strong class="green-text" id="podcastCount">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>Most Popular Category</span>
+                        <strong class="yellow-text" id="popularCategory">
+                            None
+                        </strong>
+                    </div>
+
+                </div>
+
+                <!-- RELIEF -->
+
+
+                <!-- TIPS -->
+
+
+                <ul id="tipsList"></ul>
+
+            </div>
+
+            <!-- RESOURCE AREA -->
+            <div class="resource-layout">
+
+                <!-- LEFT -->
+                <div class="resource-form-card">
+
+                    <div class="section-heading">
+
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                        <h3>Upload New Resource</h3>
+
+                    </div>
+
+                    <form id="resourceForm">
+
+                        <label>Resource Title</label>
+
+                        <input type="text" id="resourceTitle" placeholder="Enter resource title" required>
+
+                        <label>Description</label>
+
+                        <textarea id="resourceDescription" placeholder="Describe how this resource helps users..."
+                            required></textarea>
+
+                        <label>Online Resource Link</label>
+
+                        <input type="url" id="resourceLink"
+                            placeholder="Paste YouTube, Spotify, article, or podcast link" required>
+
+                        <label>Category</label>
+
+                        <select id="resourceCategory">
+
+                            <option value="Video">
+                                Educational Video
+                            </option>
+
+                            <option value="Podcast">
+                                Podcast / Audio
+                            </option>
+
+                            <option value="Meditation">
+                                Meditation
+                            </option>
+
+                            <option value="Motivation">
+                                Motivation
+                            </option>
+
+                        </select>
+
+                        <label>Thumbnail Image URL</label>
+
+                        <input type="url" id="resourceImage" placeholder="Paste image URL">
+
+                        <button type="submit" class="btn-primary full-width mt-20">
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Publish Resource
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="resource-list-card">
+
+                    <div class="section-heading">
+
+                        <i class="fa-solid fa-photo-film"></i>
+
+                        <h3>Published Resources</h3>
+
+                    </div>
+
+                    <div id="resourcesContainer"></div>
+
+                </div>
+
+            </div>
+
+    </div>
+
+    </main>
+
+    </div>
+
+    <script src="../js/shared/loadTherapistData.js"></script>
+    <script src="../js/shared/profileDropdown.js"></script>
+    <script src="../js/shared/api.js"></script>
+    <script src="../js/shared/utils.js"></script>
+    <script src="../js/shared/authGuard.js"></script>
+    <script src="../js/shared/sidebar.js"></script>
+    <script src="../js/shared/therapistProfile.js"></script>
+    <script src="../js/theProfile.js"></script>
+    <script src="../js/stressRelief.js"></script>
+
+</body>
+
+</html>
