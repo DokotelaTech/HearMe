@@ -5,10 +5,7 @@ const { verifyToken } = require('../middleware/authMiddleware');
 const nodemailer = require('nodemailer');
 const fs = require('fs')
 const path = require('path')
-<<<<<<< HEAD
 const Report = require('../database/models/Report');
-=======
->>>>>>> 98ea0a3 (sprint 2)
 // =========================================
 //    EMAIL TRANSPORTER
 const transporter = nodemailer.createTransport({
@@ -58,12 +55,8 @@ router.get('/metrics', verifyToken, adminOnly, async (req, res) => {
         const verifiedWorkers = await User.countDocuments({ role: 'therapist', profileStatus: 'verified' });
         const pendingReview = await User.countDocuments({ role: 'therapist', profileStatus: 'verifying' });
 
-<<<<<<< HEAD
         const flaggedContent = await Report.countDocuments({ status: 'pending' });
         res.status(200).json({ totalUsers, verifiedWorkers, pendingReview, flaggedContent });
-=======
-        res.status(200).json({ totalUsers, verifiedWorkers, pendingReview });
->>>>>>> 98ea0a3 (sprint 2)
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -73,18 +66,6 @@ router.get('/metrics', verifyToken, adminOnly, async (req, res) => {
 //    POST /api/admin/approve/:id
 router.post('/approve/:id', verifyToken, adminOnly, async (req, res) => {
     try {
-<<<<<<< HEAD
-=======
-
-        fs.readFile(path.join(__dirname, '../admin/admin.html'), 'utf8', (err, res)=>{
-            if(err){
-                res.status(400).json({err:"could not load the page"})
-            }else{
-                
-                res.sendFile(path.join(__dirname, '../admin/admin.html'))
-            }
-            
-        })
         const therapist = await User.findByIdAndUpdate(
             req.params.id,
             { $set: { profileStatus: 'verified' } },
@@ -93,78 +74,14 @@ router.post('/approve/:id', verifyToken, adminOnly, async (req, res) => {
 
         if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
 
-        // Send approval email
-        await transporter.sendMail({
-            from: `"HearMe" <${process.env.EMAIL_USER}>`,
-            to: therapist.email,
-            subject: 'Your HearMe Profile Has Been Approved!',
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h2 style="color: #4CAF50;">Congratulations, ${therapist.firstName}!</h2>
-                    <p>Your therapist profile on <strong>HearMe</strong> has been reviewed and <strong>approved</strong>.</p>
-                    <p>You can now log in and start connecting with users who need your support.</p>
-                    <a href="${process.env.FRONTEND_URL}/login" 
-                       style="background:#4CAF50;color:white;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;margin-top:16px;">
-                        Go to HearMe
-                    </a>
-                    <p style="margin-top: 24px; color: #888;">The HearMe Team</p>
-                </div>
-            `
-        });
-
-        res.status(200).json({ message: 'Therapist approved and notified via email' });
-    } catch (error) {
-        console.error('Approve error:', error);
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// =========================================
-//    POST /api/admin/deny/:id
-router.post('/approve/:id', verifyToken, adminOnly, async (req, res) => {
-    try {
->>>>>>> 98ea0a3 (sprint 2)
-        const therapist = await User.findByIdAndUpdate(
-            req.params.id,
-            { $set: { profileStatus: 'verified' } },
-            { returnDocument: 'after' }
-        );
-
-        if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
-
-<<<<<<< HEAD
         // await transporter.sendMail({ ... });
 
         res.status(200).json({ message: 'Therapist approved and notified via email' });
     } catch (error) {
-=======
-        await transporter.sendMail({
-            from: `"HearMe" <${process.env.EMAIL_USER}>`,
-            to: therapist.email,
-            subject: 'Your HearMe Profile Has Been Approved!',
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h2 style="color: #4CAF50;">Congratulations, ${therapist.firstName}!</h2>
-                    <p>Your therapist profile on <strong>HearMe</strong> has been reviewed and <strong>approved</strong>.</p>
-                    <p>You can now log in and start connecting with users who need your support.</p>
-                    <a href="${process.env.FRONTEND_URL}/login" 
-                       style="background:#4CAF50;color:white;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;margin-top:16px;">
-                        Go to HearMe
-                    </a>
-                    <p style="margin-top: 24px; color: #888;">The HearMe Team</p>
-                </div>
-            `
-        });
-
-        res.status(200).json({ message: 'Therapist approved and notified via email' });
-    } catch (error) {
-        console.error('Approve error:', error);
->>>>>>> 98ea0a3 (sprint 2)
         res.status(500).json({ message: error.message });
     }
 });
 
-<<<<<<< HEAD
 // =========================================
 //    POST /api/admin/deny/:id
 router.post('/deny/:id', verifyToken, adminOnly, async (req, res) => {
@@ -186,6 +103,4 @@ router.post('/deny/:id', verifyToken, adminOnly, async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-=======
->>>>>>> 98ea0a3 (sprint 2)
 module.exports = router;
