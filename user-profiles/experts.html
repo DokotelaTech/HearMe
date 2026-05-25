@@ -7,32 +7,20 @@
     <link rel="stylesheet" href="experts.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
 
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
         <div class="user-menu-container">
-
-    <!-- AVATAR -->
-    <div class="user-avatar" id="user-avatar-main">
-        A
-    </div>
-
-    <!-- DROPDOWN -->
-    <div class="dropdown-menu" id="user-dropdown">
-
-        <a href="profile.html">
-            View Profile
-        </a>
-
-        <button id="logout-btn">
-            Logout
-        </button>
-
-    </div>
-
-</div>
+            <div class="user-avatar" id="user-avatar-main">A</div>
+            <div class="dropdown-menu" id="user-dropdown">
+                <a href="profile.html">View Profile</a>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
     </header>
 
     <div class="app-container">
@@ -41,6 +29,7 @@
             <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
             <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
             <a href="#" class="nav-item active"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="messages.html" class="nav-item"><i data-lucide="inbox"></i><span>Messages</span></a>
             <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
             <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
             <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
@@ -62,7 +51,6 @@
                         <i data-lucide="map-pin"></i> Near Me
                     </button>
                 </div>
-                
                 <div class="filter-tags" id="specialty-filters">
                     <button class="tag active">All Specialties</button>
                     <button class="tag">Anxiety</button>
@@ -83,7 +71,7 @@
             </div>
 
             <div class="experts-list">
-                
+
                 <div class="expert-card">
                     <div class="expert-avatar avatar-pink">D</div>
                     <div class="expert-details">
@@ -97,25 +85,21 @@
                                 <span class="status-badge available">Available Now</span>
                             </div>
                         </div>
-                        
                         <div class="expert-stats">
                             <span class="rating"><i data-lucide="star" class="star-icon"></i> 4.9 (127 reviews)</span>
                             <span class="experience">15 years experience</span>
                         </div>
-                        
                         <div class="specialty-badges">
                             <span class="badge">Anxiety</span>
                             <span class="badge">Depression</span>
                             <span class="badge">Trauma</span>
                         </div>
-                        
                         <p class="expert-bio">Licensed clinical social worker specializing in anxiety and trauma recovery. 15+ years helping people find their path to healing.</p>
-                        
                         <div class="expert-actions">
                             <button class="btn btn-primary contact-btn">
                                 <i data-lucide="message-circle"></i> Contact
                             </button>
-                            <button class="btn btn-outline schedule-btn">
+                            <button class="btn btn-outline schedule-btn" onclick="window.location.href='booking.html?expert=Dr. Sarah Johnson'">
                                 <i data-lucide="calendar"></i> Schedule
                             </button>
                         </div>
@@ -134,25 +118,21 @@
                                 <span class="distance"><i data-lucide="map-pin"></i> 5.7 mi away</span>
                             </div>
                         </div>
-                        
                         <div class="expert-stats">
                             <span class="rating"><i data-lucide="star" class="star-icon"></i> 4.8 (89 reviews)</span>
                             <span class="experience">10 years experience</span>
                         </div>
-                        
                         <div class="specialty-badges">
                             <span class="badge">PTSD</span>
                             <span class="badge">Family Therapy</span>
                             <span class="badge">Addiction</span>
                         </div>
-                        
                         <p class="expert-bio">Compassionate support for trauma survivors and families. Specializing in EMDR and cognitive behavioral therapy.</p>
-                        
                         <div class="expert-actions">
                             <button class="btn btn-primary contact-btn">
                                 <i data-lucide="message-circle"></i> Contact
                             </button>
-                            <button class="btn btn-outline schedule-btn">
+                            <button class="btn btn-outline schedule-btn" onclick="window.location.href='booking.html?expert=Michael Chen'">
                                 <i data-lucide="calendar"></i> Schedule
                             </button>
                         </div>
@@ -161,6 +141,39 @@
 
             </div>
         </main>
+    </div>
+
+    <!-- ── MODAL OVERLAY ── -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- ── CONTACT FORM MODAL ── -->
+    <div class="contact-modal" id="contact-modal">
+        <div class="modal-header">
+            <div>
+                <h3>Contact <span id="modal-expert-name"></span></h3>
+                <p>Send a message and they'll get back to you shortly.</p>
+            </div>
+            <button class="close-btn" id="close-modal-btn">✕</button>
+        </div>
+
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="contact-name">Your Name</label>
+                <input type="text" id="contact-name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" placeholder="Describe what you're going through or what kind of help you're looking for..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+
+        <!-- Success state shown after submit -->
+        <div class="form-success" id="form-success">
+            <div class="success-icon">✅</div>
+            <h4>Message Sent!</h4>
+            <p>Your message has been delivered. <span id="modal-expert-name-2"></span> will respond within 24 hours.</p>
+        </div>
     </div>
 
     <script src="experts.js"></script>

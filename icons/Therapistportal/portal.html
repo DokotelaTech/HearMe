@@ -4,583 +4,280 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Therapist Portal</title>
-
-    <link rel="stylesheet" href="portal.css">
-
+    <link rel="stylesheet" href="portal.css?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSP fixed: added img-src and data: so avatars/images load -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+                   connect-src 'self' http://localhost:5000 http://127.0.0.1:5502 ws://127.0.0.1:5502;
+                   script-src 'self' 'unsafe-inline';
+                   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+                   font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+                   img-src 'self' data: https: http:;">
 </head>
-
 <body>
-
 <div class="app-layout">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
-
         <div class="brand-area">
             <span class="logo">HearMe</span>
             <span class="badge">Therapist Portal</span>
         </div>
-
-        <!-- NAVIGATION -->
         <nav class="nav-menu">
-
             <a href="#" class="nav-item active" data-target="clients">
-                <i class="fa-solid fa-user-group"></i>
-                My Clients
+                <i class="fa-solid fa-user-group"></i> My Clients
             </a>
-
             <a href="#" class="nav-item" data-target="calendar">
-                <i class="fa-regular fa-calendar"></i>
-                Calendar
+                <i class="fa-regular fa-calendar"></i> Calendar
             </a>
-
             <a href="#" class="nav-item" data-target="messages">
-                <i class="fa-regular fa-message"></i>
-                Messages
+                <i class="fa-regular fa-message"></i> Messages
             </a>
-
-            <!-- STRESS RELIEF BUTTON -->
             <a href="#" class="nav-item" data-target="stress-relief">
-                <i class="fa-solid fa-heart"></i>
-                Stress Relief Uploads
+                <i class="fa-solid fa-heart"></i> Stress Relief Uploads
             </a>
-
             <a href="#" class="nav-item" data-target="notes">
-                <i class="fa-regular fa-file-lines"></i>
-                Session Notes
+                <i class="fa-regular fa-file-lines"></i> Session Notes
             </a>
-
             <a href="#" class="nav-item" data-target="report">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                Report Issue
+                <i class="fa-solid fa-triangle-exclamation"></i> Report Issue
             </a>
-
         </nav>
 
-        <!-- OVERVIEW -->
-        <div class="overview-box">
-
-            <h4>Today's Overview</h4>
-
-            <div class="ov-line">
-                Active Clients
-                <span id="activeClientsCount">28</span>
+        <div id="successBanner" class="success-banner hidden">
+            <div class="banner-content">
+                <span class="banner-icon">✓</span>
+                <span id="successBannerMessage">Done!</span>
             </div>
-
-            <div class="ov-line">
-                Sessions Today
-                <span id="sessionsTodayCount">5</span>
-            </div>
-
-            <div class="ov-line">
-                Unread Messages
-                <span class="red-text" id="unreadMessagesCount">3</span>
-            </div>
-
         </div>
 
+        <div class="overview-box">
+            <h4>Today's Overview</h4>
+            <div class="ov-line">Active Clients <span id="activeClientsCount">28</span></div>
+            <div class="ov-line">Sessions Today <span id="sessionsTodayCount">5</span></div>
+            <div class="ov-line">Unread Messages <span class="red-text" id="unreadMessagesCount">0</span></div>
+        </div>
     </aside>
 
     <!-- MAIN -->
     <main class="main-workspace">
-
-        <!-- TOPBAR -->
         <header class="topbar">
-
             <div class="topbar-right">
-
                 <div class="icon-btn">
                     <i class="fa-regular fa-message"></i>
                     <span class="dot"></span>
                 </div>
-
                 <div class="user-chip">
-
-                    <div class="avatar" id="therapistInitials">
-                        SJ
-                    </div>
-
+                    <div class="avatar" id="therapistInitials">SJ</div>
                     <div class="user-info">
-                        <strong id="therapistName">
-                            Dr. Sarah Johnson
-                        </strong>
-
-                        <span id="therapistRole">
-                            LCSW, PhD
-                        </span>
+                        <strong id="therapistName">Dr. Sarah Johnson</strong>
+                        <span id="therapistRole">LCSW, PhD</span>
                     </div>
-
                 </div>
-
             </div>
-
         </header>
 
-        <!-- CONTENT -->
         <div class="content-container">
 
             <!-- CLIENTS -->
             <section id="view-clients" class="view-panel active">
-
                 <div class="page-header">
                     <div>
                         <h1>My Clients</h1>
                         <p>Manage your client sessions and communications</p>
                     </div>
                 </div>
-
                 <div class="stats-row">
-
-                    <div class="stat-card">
-                        <span>Total Clients</span>
-                        <strong>5</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <span>Active</span>
-                        <strong class="green-text">3</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <span>Pending</span>
-                        <strong class="yellow-text">1</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <span>New Messages</span>
-                        <strong class="purple-text">4</strong>
-                    </div>
-
+                    <div class="stat-card"><span>Total Clients</span><strong>6</strong></div>
+                    <div class="stat-card"><span>Active</span><strong class="green-text">3</strong></div>
+                    <div class="stat-card"><span>Pending</span><strong class="yellow-text">1</strong></div>
+                    <div class="stat-card"><span>New Messages</span><strong class="purple-text">4</strong></div>
                 </div>
-
                 <div class="filter-bar">
-
                     <div class="search-input">
                         <i class="fa-solid fa-search"></i>
-                        <input type="text" placeholder="Search clients by ID or issue...">
+                        <input type="text" id="clientSearch" placeholder="Search clients...">
                     </div>
-
                     <div class="tabs">
-                        <button class="active">All</button>
-                        <button>Active</button>
-                        <button>Pending</button>
-                        <button>Inactive</button>
+                        <button class="tab-btn active" data-filter="ALL">All</button>
+                        <button class="tab-btn" data-filter="ACTIVE">Active</button>
+                        <button class="tab-btn" data-filter="PENDING">Pending</button>
+                        <button class="tab-btn" data-filter="INACTIVE">Inactive</button>
                     </div>
-
                 </div>
-
                 <div id="client-container"></div>
-
             </section>
 
             <!-- CALENDAR -->
             <section id="view-calendar" class="view-panel">
-
                 <div class="page-header flex-header">
-
                     <div>
                         <h1>Calendar & Scheduling</h1>
                         <p>Manage your appointments and availability</p>
                     </div>
-
-                    <a href="appoint_form.html" class="btn-primary">
-                        + New Appointment
-                    </a>
-
+                    <button type="button" class="btn-primary">+ New Appointment</button>
                 </div>
-
                 <div class="calendar-layout">
-
                     <div class="cal-left">
-
-                        <div class="card">
-
-                            <h3>
-                                <i class="fa-regular fa-calendar"></i>
-                                Today's Schedule
-                            </h3>
-
-                            <div class="appt-item confirmed">
-
-                                <div class="time">
-                                    09:00
-                                    <span>50 min</span>
-                                </div>
-
-                                <div class="details">
-
-                                    <h4>
-                                        User#2931
-                                        <span class="badge green">CONFIRMED</span>
-                                    </h4>
-
-                                    <p>Follow-up on CBT homework</p>
-
-                                </div>
-
-                            </div>
-
+                        <div class="card" id="scheduleCard">
+                            <h3><i class="fa-regular fa-calendar"></i> Today's Schedule</h3>
+                            <div id="appointmentsContainer"><p style="padding:15px;color:#64748b;">Loading...</p></div>
                         </div>
-
                     </div>
-
                     <div class="cal-right">
-
-                        <div class="card">
-
+                        <div class="card" id="availabilityCard">
                             <h3>Weekly Availability</h3>
-
-                            <div class="avail-item">
-                                <div>
-                                    Monday
-                                    <span>9:00 AM - 5:00 PM</span>
-                                </div>
-
-                                <input type="checkbox" checked>
-                            </div>
-
-                            <button class="btn-light-blue full-width mt-10">
-                                Edit Availability
-                            </button>
-
+                            <div id="availabilityContainer"><p style="padding:15px;color:#64748b;">Loading...</p></div>
+                            <button class="btn-light-blue full-width mt-10" id="editAvailabilityBtn">Edit Availability</button>
                         </div>
-
                     </div>
-
                 </div>
-
             </section>
 
             <!-- MESSAGES -->
             <section id="view-messages" class="view-panel">
-
                 <div class="page-header">
                     <h1>Messages</h1>
                     <p>Communicate securely with your clients</p>
                 </div>
-
                 <div class="messages-layout">
-
                     <div class="inbox-sidebar">
-
                         <div class="search-input">
                             <i class="fa-solid fa-search"></i>
                             <input type="text" placeholder="Search conversations...">
                         </div>
-
-                        <div class="inbox-list">
-
-                            <div class="inbox-item active">
-
-                                <div class="c-avatar blue sm">
-                                    29
-                                </div>
-
-                                <div class="inbox-details">
-
-                                    <div class="flex-bw">
-                                        <strong>User#2931</strong>
-                                        <span class="time">2 hours ago</span>
-                                    </div>
-
-                                    <p>
-                                        Thank you for the session today...
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
+                        <div class="inbox-list"></div>
                     </div>
-
-                    <div class="chat-area">
-
-                        <div class="chat-history">
-
-                            <div class="bubble incoming">
-                                <p>Hi Dr. Johnson!</p>
-                            </div>
-
-                            <div class="bubble outgoing">
-                                <p>Hello! How are you feeling today?</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                    <div class="chat-area"></div>
                 </div>
-
             </section>
 
             <!-- STRESS RELIEF -->
             <section id="view-stress-relief" class="view-panel">
-
                 <div class="page-header">
-
                     <div>
                         <h1>Stress Relief Resources</h1>
-
-                        <p>
-                            Upload calming resources,
-                            meditation videos, podcasts,
-                            and healing content.
-                        </p>
+                        <p>Upload calming resources, meditation videos, podcasts, and healing content.</p>
                     </div>
-
                 </div>
-
-                <!-- STATS -->
                 <div class="stats-row">
-
-                    <div class="stat-card">
-                        <span>Total Resources</span>
-                        <strong id="totalResources">0</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <span>Total Videos</span>
-                        <strong class="purple-text" id="videoCount">0</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <span>Total Podcasts</span>
-                        <strong class="green-text" id="podcastCount">0</strong>
-                    </div>
-
-                    <div class="stat-card">
-                        <span>Most Popular Category</span>
-                        <strong class="yellow-text" id="popularCategory">
-                            None
-                        </strong>
-                    </div>
-
+                    <div class="stat-card"><span>Total Resources</span><strong id="totalResources">0</strong></div>
+                    <div class="stat-card"><span>Total Videos</span><strong class="purple-text" id="videoCount">0</strong></div>
+                    <div class="stat-card"><span>Total Podcasts</span><strong class="green-text" id="podcastCount">0</strong></div>
+                    <div class="stat-card"><span>Most Popular</span><strong class="yellow-text" id="popularCategory">None</strong></div>
                 </div>
-
-                <!-- CARDS -->
                 <div class="relief-grid">
-
                     <div class="relief-card">
-
-                        <div class="relief-icon blue-bg">
-                            <i class="fa-solid fa-wind"></i>
-                        </div>
-
+                        <div class="relief-icon blue-bg"><i class="fa-solid fa-wind"></i></div>
                         <h3>Breathing Exercise</h3>
-
-                        <p>
-                            Guided breathing exercises for anxiety relief.
-                        </p>
-
+                        <p>Guided breathing exercises for anxiety relief.</p>
                     </div>
-
                     <div class="relief-card">
-
-                        <div class="relief-icon gradient-bg">
-                            <i class="fa-solid fa-spa"></i>
-                        </div>
-
+                        <div class="relief-icon gradient-bg"><i class="fa-solid fa-spa"></i></div>
                         <h3>5-Minute Meditation</h3>
-
-                        <p>
-                            Quick mindfulness practices for daily calmness.
-                        </p>
-
+                        <p>Quick mindfulness practices for daily calmness.</p>
                     </div>
-
                     <div class="relief-card">
-
-                        <div class="relief-icon green-bg">
-                            <i class="fa-regular fa-heart"></i>
-                        </div>
-
+                        <div class="relief-icon green-bg"><i class="fa-regular fa-heart"></i></div>
                         <h3>Grounding Techniques</h3>
-
-                        <p>
-                            Techniques that reconnect users during stress.
-                        </p>
-
+                        <p>Techniques that reconnect users during stress.</p>
                     </div>
-
                 </div>
-
-                <!-- RESOURCE AREA -->
                 <div class="resource-layout">
-
-                    <!-- FORM -->
                     <div class="resource-form-card">
-
                         <div class="section-heading">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                             <h3>Upload New Resource</h3>
                         </div>
-
                         <form id="resourceForm">
-
                             <label>Resource Title</label>
                             <input type="text" id="resourceTitle" required>
-
                             <label>Description</label>
                             <textarea id="resourceDescription" required></textarea>
-
                             <label>Online Resource Link</label>
                             <input type="url" id="resourceLink" required>
-
                             <label>Category</label>
-
                             <select id="resourceCategory">
-
-                                <option value="Video">
-                                    Educational Video
-                                </option>
-
-                                <option value="Podcast">
-                                    Podcast / Audio
-                                </option>
-
-                                <option value="Meditation">
-                                    Meditation
-                                </option>
-
-                                <option value="Motivation">
-                                    Motivation
-                                </option>
-
+                                <option value="Video">Educational Video</option>
+                                <option value="Podcast">Podcast / Audio</option>
+                                <option value="Meditation">Meditation</option>
+                                <option value="Motivation">Motivation</option>
                             </select>
-
                             <label>Thumbnail Image URL</label>
                             <input type="url" id="resourceImage">
-
                             <button type="submit" class="btn-primary full-width mt-20">
-
-                                <i class="fa-solid fa-plus"></i>
-                                Publish Resource
-
+                                <i class="fa-solid fa-plus"></i> Publish Resource
                             </button>
-
                         </form>
-
                     </div>
-
-                    <!-- RESOURCE LIST -->
                     <div class="resource-list-card">
-
                         <div class="section-heading">
-
                             <i class="fa-solid fa-photo-film"></i>
-
                             <h3>Published Resources</h3>
-
                         </div>
-
                         <div id="resourcesContainer"></div>
-
                     </div>
-
                 </div>
-
             </section>
 
             <!-- NOTES -->
             <section id="view-notes" class="view-panel">
-
                 <div class="page-header">
-
                     <h1>Session Notes</h1>
-
-                    <p>
-                        Confidential clinical documentation
-                    </p>
-
+                    <p>Confidential clinical documentation</p>
                 </div>
-
                 <div class="note-card">
-
                     <h3>User#2931</h3>
-
-                    <p>
-                        Client reported significant progress with anxiety.
-                    </p>
-
+                    <p>Client reported significant progress with anxiety.</p>
                 </div>
-
             </section>
 
             <!-- REPORT -->
             <section id="view-report" class="view-panel">
-
                 <div class="page-header">
-
                     <h1>Report Issue to Admin</h1>
-
-                    <p>
-                        Submit technical or safety concerns.
-                    </p>
-
+                    <p>Submit technical or safety concerns.</p>
                 </div>
-
                 <div class="report-layout">
-
                     <div class="card form-card">
-
                         <h3>Submit New Report</h3>
-
                         <textarea placeholder="Describe the issue..."></textarea>
-
-                        <button class="btn-primary full-width mt-20">
-                            Submit Report
-                        </button>
-
+                        <button class="btn-primary full-width mt-20">Submit Report</button>
                     </div>
-
                 </div>
-
             </section>
 
         </div>
-
     </main>
-
 </div>
 
-<!-- SCRIPT -->
-<script>
+<!-- APPOINTMENT MODAL -->
+<div id="appointmentModal" class="modal">
+    <div class="modal-content">
+        <h3>Add New Appointment</h3>
+        <form id="appointmentForm">
+            <label for="clientName">Client Name:</label>
+            <input type="text" id="clientName" placeholder="e.g. Tshepo Motaung" required>
+            <label for="appTime">Time:</label>
+            <input type="time" id="appTime" required>
+            <label for="duration">Duration (mins):</label>
+            <input type="number" id="duration" value="50" required>
+            <label for="appType">Session Type:</label>
+            <select id="appType">
+                <option value="Intake Session">Intake Session</option>
+                <option value="Therapy Session">Therapy Session</option>
+                <option value="Check-in">Check-in</option>
+            </select>
+            <div class="modal-actions">
+                <button type="button" id="cancelAppointmentBtn" class="btn-secondary">Cancel</button>
+                <button type="submit" class="btn-primary">OK</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-const navItems = document.querySelectorAll(".nav-item");
-const viewPanels = document.querySelectorAll(".view-panel");
-
-navItems.forEach(item => {
-
-    item.addEventListener("click", () => {
-
-        navItems.forEach(nav => {
-            nav.classList.remove("active");
-        });
-
-        item.classList.add("active");
-
-        const target = item.dataset.target;
-
-        viewPanels.forEach(panel => {
-            panel.classList.remove("active");
-        });
-
-        document
-            .getElementById(`view-${target}`)
-            .classList.add("active");
-
-    });
-
-});
-
-</script>
-
-<script src="portal.js"></script>
-
+<script src="portal.js?v=2"></script>
 </body>
 </html>

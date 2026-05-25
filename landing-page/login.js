@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('userRole', data.user.role);
                     localStorage.setItem('userIdentifier', data.user.identifier);
+                    localStorage.setItem('user', JSON.stringify(data.user));
 
                     // Redirect to the main dashboard
                     window.location.href = '../user-profiles/community-feeds.html'; 

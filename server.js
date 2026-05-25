@@ -5,23 +5,59 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// Models
 const User = require('./database/models/users');
 const Post = require('./database/models/Post');
+
+// Routes Modules
 const resourceRoutes = require('./database/routes/resourceRoutes');
+const appointmentRoutes = require('./database/routes/appointmentRoutes');
+const messageRoutes = require('./database/routes/messageRoutes');
 
 const app = express();
 
-// Middleware
+// CORE GLOBAL MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-// Mount resource routes
-app.use('/api/resources', resourceRoutes);
+const expertRoutes = require('./database/routes/expertRoutes');
+console.log("Loading expert routes...");
+app.use('/api/experts', expertRoutes);
 
-// Connect to MongoDB
+// MOUNT API ROUTES
+app.use('/api/resources', resourceRoutes);
+app.use('/api', appointmentRoutes);
+app.use('/api/messages', messageRoutes);
+
+// ==========================================
+// CONNECT TO DATABASE (MongoDB)
+// ==========================================
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB successfully!'))
   .catch((err) => console.error('MongoDB connection error:', err));
+
+
+// =========================
+// VERIFY TOKEN MIDDLEWARE
+// =========================
+const verifyToken = (req, res, next) => {
+    const token = req.header('Authorization');
+
+    if (!token) {
+        return res.status(401).json({ message: 'Access denied. No token provided.' });
+    }
+
+    try {
+        const decoded = jwt.verify(
+            token.replace('Bearer ', ''),
+            process.env.JWT_SECRET
+        );
+        req.user = decoded;
+        next();
+    } catch (error) {
+        res.status(400).json({ message: 'Invalid token.' });
+    }
+};
 
 
 // =========================
@@ -94,29 +130,6 @@ app.post('/api/auth/login', async (req, res) => {
         res.status(500).json({ message: 'Server error during login.' });
     }
 });
-
-
-// =========================
-// VERIFY TOKEN MIDDLEWARE
-// =========================
-const verifyToken = (req, res, next) => {
-    const token = req.header('Authorization');
-
-    if (!token) {
-        return res.status(401).json({ message: 'Access denied. No token provided.' });
-    }
-
-    try {
-        const decoded = jwt.verify(
-            token.replace('Bearer ', ''),
-            process.env.JWT_SECRET
-        );
-        req.user = decoded;
-        next();
-    } catch (error) {
-        res.status(400).json({ message: 'Invalid token.' });
-    }
-};
 
 
 // =========================
@@ -271,6 +284,22 @@ app.get('/api/user/profile', verifyToken, async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
+// =========================
+// 5. CLIENTS ROUTE  ← NEW
+// =========================
+// GET all clients (patients) for the therapist portal
+app.get('/api/clients', verifyToken, async (req, res) => {
+    try {
+        // Only return users with role 'user' (patients), never expose passwords
+        const clients = await User.find({ role: 'user' }).select('-password');
+        res.status(200).json(clients);
+    } catch (error) {
+        console.error('Error fetching clients:', error);
+        res.status(500).json({ message: 'Server error fetching clients.' });
     }
 });
 

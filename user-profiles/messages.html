@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe | Messages</title>
+    <link rel="stylesheet" href="messages.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <h1 class="logo">HearMe</h1>
+        <div class="user-menu-container">
+            <div class="user-avatar" id="user-avatar-main">A</div>
+            <div class="dropdown-menu" id="user-dropdown">
+                <a href="profile.html">View Profile</a>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="groups.html"          class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="ai-chat.html"         class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="experts.html"         class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="SOS.html"             class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="relief.html"          class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="messages.html"        class="nav-item active"><i data-lucide="mail"></i><span>Messages</span></a>
+            <a href="profile.html"         class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
+        </nav>
+
+        <!-- MAIN AREA -->
+        <main class="messages-main">
+
+            <div class="page-header">
+                <h2 class="page-title">My Messages</h2>
+                <p class="page-subtitle">Replies from your therapists and experts</p>
+            </div>
+
+            <!-- MESSAGES LAYOUT -->
+            <div class="messages-layout">
+
+                <!-- LEFT: conversation list -->
+                <div class="inbox-panel">
+                    <div class="inbox-search">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="inboxSearch" placeholder="Search messages...">
+                    </div>
+                    <div id="inboxList" class="inbox-list">
+                        <!-- filled by JS -->
+                    </div>
+                </div>
+
+                <!-- RIGHT: open message -->
+                <div class="chat-panel" id="chatPanel">
+                    <div class="empty-state">
+                        <i data-lucide="mail-open" class="empty-icon"></i>
+                        <p>Select a conversation to read it</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <script src="messages.js"></script>
+</body>
+</html>
