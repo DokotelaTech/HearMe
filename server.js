@@ -266,12 +266,12 @@ app.get('/api/user/profile', verifyToken, async (req, res) => {
 app.post('/api/chat', verifyToken, async (req, res) => {
     const userText = req.body.message;
     const API_KEY = process.env.GOOGLE_API_KEY;
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+    const API_URL = https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY};
 
     const systemInstruction = "You are HearMe, an anonymous, compassionate AI listener. Your goal is to provide a safe, non-judgmental space for users. Keep your responses concise, empathetic, and always end by gently guiding the conversation forward or asking how they feel.";
 
     const requestBody = {
-        contents: [{ role: "user", parts: [{ text: `${systemInstruction}\n\nUser says: ${userText}` }] }],
+        contents: [{ role: "user", parts: [{ text: ${systemInstruction}\n\nUser says: ${userText} }] }],
         generationConfig: { temperature: 0.7 }
     };
 
@@ -296,5 +296,5 @@ app.post('/api/chat', verifyToken, async (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(Server is running on port ${PORT});
 });

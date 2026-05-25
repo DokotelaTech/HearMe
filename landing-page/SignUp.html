@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Join Us</title>
     <link rel="stylesheet" href="signup.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -19,26 +18,21 @@
         <div class="form-box">
             <h2>Join HearMe</h2>
 
-<<<<<<< HEAD
             <form action="reg.php" method="POST" id="signup-form">
-=======
-            <form id="signup-form">
->>>>>>> testing
-
                 <p class="label-text">I am a:</p>
                 <div class="role-selector">
                     <div class="role-option active" data-role="user">
                         <i class="fa-regular fa-user"></i>
                         <span>User</span>
                     </div>
-                    <div class="role-option" data-role="therapist">
+                    <a href="therapist-signup.html" class="role-option" data-role="therapist">
                         <i class="fa-solid fa-user-doctor"></i>
                         <span>Therapist</span>
-                    </div>
-                    <div class="role-option" data-role="admin">
+                    </a>
+                    <a href="admin-signup.html" class="role-option" data-role="admin">
                         <i class="fa-solid fa-shield"></i>
                         <span>Admin</span>
-                    </div>
+                    </a>
                 </div>
 
                 <div id="anon-section">
@@ -48,78 +42,39 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                <!-- USERNAME -->
                 <div class="input-field">
                     <label class="label-text">Username</label>
                     <div class="input-group">
+                        <input id="username" name="username" type="text" placeholder="Enter your username" required>
                         <i class="fa-regular fa-user"></i>
-                        <input 
-                            id="username" 
-                            name="username"
-                            type="text" 
-                            placeholder="Enter your username" 
-=======
-                <!-- IDENTIFIER (WAS USERNAME) -->
-                <div class="input-field">
-                    <label class="label-text">Username / ID</label>
-                    <div class="input-group">
-                        <i class="fa-regular fa-user"></i>
-                        <input 
-                            id="identifier" 
-                            name="identifier"
-                            type="text" 
-                            placeholder="Auto-generated ID" 
->>>>>>> testing
-                            required
-                        >
                     </div>
                 </div>
 
-                <!-- EMAIL -->
                 <div class="input-field">
                     <label class="label-text">Email Address</label>
                     <div class="input-group">
+                        <input id="email" name="email" type="email" placeholder="Enter your email" required>
                         <i class="fa-regular fa-envelope"></i>
-                        <input 
-                            id="email" 
-                            name="email"
-                            type="email" 
-                            placeholder="Enter your email" 
-                            required
-                        >
                     </div>
                 </div>
 
-                <!-- PASSWORD -->
                 <div class="input-field">
                     <label class="label-text">Password</label>
                     <div class="input-group">
+                        <input id="password" name="password" type="password" placeholder="Create a secure password" required>
                         <i class="fa-solid fa-lock"></i>
-                        <input 
-                            id="password" 
-                            name="password"
-                            type="password" 
-                            placeholder="Create a secure password" 
-                            required
-                        >
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                <!-- ✅ IMPORTANT FIX -->
                 <button type="submit" name="register" id="Btn">Create Account</button>
-=======
-                <button type="submit" id="Btn">Create Account</button>
->>>>>>> testing
 
                 <p class="footer-text">
-                    Already have an account? <a href="login.html">Sign in</a>
+                    Already have an account?<a href="login.html">Sign in</a>
                 </p>
-
             </form>
         </div>
     </div>
-<script src="auth.js"></script>
+
+    <script src="auth.js"></script>
 </body>
 </html>

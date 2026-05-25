@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Super Admin Dashboard</title>
+    <link rel="stylesheet" href="admins.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">HearMe</div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="dashboard-view">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </a>
+                <a href="#" class="nav-item" data-target="reports-view">
+                    <i class="fa-solid fa-triangle-exclamation"></i> User Reports 
+                    <span class="badge-count" id="sidebar-reports-badge" style="display: none;">0</span>
+                </a>
+                <a href="#" class="nav-item" data-target="profile-view">
+                    <i class="fa-solid fa-user"></i> My Profile
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="route-info" id="current-route">/admin/dashboard</div>
+                <div class="user-profile-container">
+                    <div class="user-profile" id="profileMenuBtn">
+                        <span class="role-badge">Admin</span>
+                        <div class="avatar" id="header-avatar">-</div>
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="#" class="dropdown-item" data-target="profile-view"><i class="fa-solid fa-gear"></i> Settings</a>
+                        <hr>
+                        <a href="#" class="dropdown-item logout-link" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </header>
+
+            <div id="dashboard-view" class="content-section active">
+                <div class="dashboard-header">
+                    <h1>Super Admin Dashboard</h1>
+                    <p>Manage platform safety, verify social workers, and handle user infractions.</p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="card">
+                        <div class="card-info">
+                            <span class="card-title">Total Users</span>
+                            <span class="card-value" id="metric-total-users">...</span>
+                        </div>
+                        <i class="fa-solid fa-users icon-users"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <span class="card-title">Verified Workers</span>
+                            <span class="card-value" id="metric-verified-workers">...</span>
+                        </div>
+                        <i class="fa-solid fa-shield-halved icon-workers"></i>
+                    </div>
+                    <div class="card">
+                        <div class="card-info">
+                            <span class="card-title">Pending Review</span>
+                            <span class="card-value" id="metric-pending-review">...</span>
+                        </div>
+                        <i class="fa-solid fa-file-invoice icon-pending"></i>
+                    </div>
+                    <div class="card clickable-card" id="flagged-card">
+                        <div class="card-info">
+                            <span class="card-title">Flagged Content</span>
+                            <span class="card-value" id="metric-flagged-content">...</span>
+                        </div>
+                        <i class="fa-solid fa-triangle-exclamation icon-flagged"></i>
+                    </div>
+                </div>
+
+                <section class="queue-section">
+                    <h2 class="section-title"><i class="fa-solid fa-shield-halved"></i> Social Worker Verification Queue</h2>
+                    <div id="verification-queue-container">
+                        <div class="loading-spinner">Connecting to database container...</div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="reports-view" class="content-section">
+                <div class="dashboard-header">
+                    <h1>User Behavior & Bad Conduct Reports</h1>
+                    <p>Review and act upon incidents reported by members of the community regarding hostile behavior.</p>
+                </div>
+
+                <div class="reports-table-container">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Reported User</th>
+                                <th>Reason / Violation</th>
+                                <th>Reporter</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-table-body">
+                            <tr>
+                                <td colspan="5" class="empty-state">Awaiting database sync...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="profile-view" class="content-section">
+                <div class="dashboard-header">
+                    <h1>My Profile & Security</h1>
+                    <p>Manage account authorizations, platform parameters, and view access audit trails.</p>
+                </div>
+
+                <div class="profile-grid">
+                    <div class="profile-col-main">
+                        <div class="profile-card hero-profile-card">
+                            <div class="profile-avatar-large" id="profile-large-avatar">-</div>
+                            <div class="profile-meta">
+                                <h2 id="profile-name">Fetching profile parameters...</h2>
+                                <p id="profile-email">...</p>
+                                <span class="clearance-badge"><i class="fa-solid fa-key"></i> Full Root Access Clearance</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-sliders"></i> Dashboard Preferences</h3>
+                            <div class="settings-form-group">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="pref-email-alerts" checked>
+                                    <span class="slider"></span>
+                                    <span class="label-text">Dispatch email updates for high-priority user reports</span>
+                                </label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="pref-auto-refresh">
+                                    <span class="slider"></span>
+                                    <span class="label-text">Auto-refresh live metrics queue data (Every 60s)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-col-side">
+                        <div class="profile-card">
+                            <h3><i class="fa-solid fa-lock"></i> Authentication Terminal</h3>
+                            <form id="passwordChangeForm" onsubmit="handlePasswordChange(event)">
+                                <div class="input-element">
+                                    <label>Current Secure Keyphrase</label>
+                                    <input type="password" required id="password-old">
+                                </div>
+                                <div class="input-element">
+                                    <label>New Secret Keyphrase</label>
+                                    <input type="password" required id="password-new">
+                                </div>
+                                <button type="submit" class="btn btn-approve" style="width: 100%; margin-top: 10px;">
+                                    Update Credentials
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-card audit-log-card">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Security Audit Trail & Access Logs</h3>
+                    <div class="table-scroll-container">
+                        <table class="audit-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Action Log Event Context</th>
+                                    <th>Terminal IP Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-logs-container">
+                                <tr>
+                                    <td colspan="3" class="empty-state">Syncing server telemetry parameters...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="admins.js"></script>
+</body>
+</html>

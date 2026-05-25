@@ -4,145 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Experts</title>
+
     <link rel="stylesheet" href="experts.css">
+
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 </head>
+
 <body>
 
+    <!-- NAVBAR -->
     <header class="navbar">
-        <h1 class="logo">HearMe</h1>
-        <div class="user-avatar">A</div>
+
+        <h1 class="logo">
+            HearMe
+        </h1>
+
+        <!-- USER SIDE LOGO -->
+        <div class="user-profile-section">
+
+            <a href="messages.html" class="msg-icon-btn" title="Messages">
+                <i data-lucide="message-square"></i>
+                <span class="msg-badge"></span> </a>
+
+            <div class="user-dropdown-container">
+                <div class="user-profile-trigger" id="dropdownTrigger">
+                    <div class="user-badge">
+                        User
+                    </div>
+                    <div class="user-avatar">
+                        U
+                    </div>
+                </div>
+
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="profile.html" class="dropdown-item">
+                        <i data-lucide="user"></i>
+                        <span>My Profile</span>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="logout.html" class="dropdown-item logout-item">
+                        <i data-lucide="log-out"></i>
+                        <span>Log Out</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
     </header>
 
     <div class="app-container">
+
+        <!-- SIDEBAR -->
         <nav class="sidebar">
-            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-            <a href="#" class="nav-item active"><i data-lucide="user-plus"></i><span>Experts</span></a>
-            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
+
+            <a href="community-feeds.html" class="nav-item">
+                <i data-lucide="home"></i>
+                <span>Feed</span>
+            </a>
+
+            <a href="groups.html" class="nav-item">
+                <i data-lucide="users"></i>
+                <span>Groups</span>
+            </a>
+
+            <a href="ai-chat.html" class="nav-item">
+                <i data-lucide="message-square"></i>
+                <span>AI Chat</span>
+            </a>
+
+            <a href="#" class="nav-item active">
+                <i data-lucide="user-plus"></i>
+                <span>Experts</span>
+            </a>
+
+            <a href="SOS.html" class="nav-item">
+                <i data-lucide="alert-circle"></i>
+                <span>SOS</span>
+            </a>
+
+            <a href="relief.html" class="nav-item">
+                <i data-lucide="heart"></i>
+                <span>Relief</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <i data-lucide="user"></i>
+                <span>Profile</span>
+            </a>
+
         </nav>
 
+        <!-- MAIN -->
         <main class="experts-area">
+
             <div class="page-header">
-                <h2 class="page-title">Find a Social Worker</h2>
-                <p class="page-subtitle">Verified professionals ready to help you on your healing journey</p>
+
+                <h2 class="page-title">
+                    Find a Social Worker
+                </h2>
+
+                <p class="page-subtitle">
+                    Verified professionals ready to help you on your healing journey
+                </p>
+
             </div>
 
+            <!-- SEARCH -->
             <div class="search-filter-card">
+
                 <div class="search-row">
+
                     <div class="search-input-wrapper">
+
                         <i data-lucide="search" class="search-icon"></i>
-                        <input type="text" placeholder="Search by name or specialty...">
+
+                        <input
+                            type="text"
+                            id="search-input"
+                            placeholder="Search by name or specialty..."
+                        >
+
                     </div>
+
                     <button class="near-me-btn" id="near-me-btn">
-                        <i data-lucide="map-pin"></i> Near Me
+
+                        <i data-lucide="map-pin"></i>
+
+                        Near Me
+
                     </button>
+
                 </div>
-                
+
                 <div class="filter-tags" id="specialty-filters">
-                    <button class="tag active">All Specialties</button>
-                    <button class="tag">Anxiety</button>
-                    <button class="tag">Depression</button>
-                    <button class="tag">Trauma</button>
-                    <button class="tag">PTSD</button>
-                    <button class="tag">Family Therapy</button>
-                    <button class="tag">Addiction</button>
+
+                    <button class="tag active" data-specialty="all">
+                        All Specialties
+                    </button>
+
+                    <button class="tag" data-specialty="Anxiety">
+                        Anxiety
+                    </button>
+
+                    <button class="tag" data-specialty="Depression">
+                        Depression
+                    </button>
+
+                    <button class="tag" data-specialty="Trauma">
+                        Trauma
+                    </button>
+
+                    <button class="tag" data-specialty="PTSD">
+                        PTSD
+                    </button>
+
+                    <button class="tag" data-specialty="Family Therapy">
+                        Family Therapy
+                    </button>
+
+                    <button class="tag" data-specialty="Addiction">
+                        Addiction
+                    </button>
+
                 </div>
+
             </div>
 
+            <!-- ALERT -->
             <div class="alert-banner error" id="location-error">
+
                 <i data-lucide="map-pin" class="alert-icon"></i>
+
                 <div class="alert-content">
-                    <h4>Location Error</h4>
-                    <p>Location permission denied. Please enable location access.</p>
-                </div>
-            </div>
 
-            <div class="experts-list">
-                
-                <div class="expert-card">
-                    <div class="expert-avatar avatar-pink">D</div>
-                    <div class="expert-details">
-                        <div class="expert-header">
-                            <div class="expert-title">
-                                <h3>Dr. Sarah Johnson</h3>
-                                <i data-lucide="check-circle-2" class="verified-icon"></i>
-                            </div>
-                            <div class="expert-location-status">
-                                <span class="distance"><i data-lucide="map-pin"></i> 2.3 mi away</span>
-                                <span class="status-badge available">Available Now</span>
-                            </div>
-                        </div>
-                        
-                        <div class="expert-stats">
-                            <span class="rating"><i data-lucide="star" class="star-icon"></i> 4.9 (127 reviews)</span>
-                            <span class="experience">15 years experience</span>
-                        </div>
-                        
-                        <div class="specialty-badges">
-                            <span class="badge">Anxiety</span>
-                            <span class="badge">Depression</span>
-                            <span class="badge">Trauma</span>
-                        </div>
-                        
-                        <p class="expert-bio">Licensed clinical social worker specializing in anxiety and trauma recovery. 15+ years helping people find their path to healing.</p>
-                        
-                        <div class="expert-actions">
-                            <button class="btn btn-primary contact-btn">
-                                <i data-lucide="message-circle"></i> Contact
-                            </button>
-                            <button class="btn btn-outline schedule-btn">
-                                <i data-lucide="calendar"></i> Schedule
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    <h4>
+                        Location Status
+                    </h4>
 
-                <div class="expert-card">
-                    <div class="expert-avatar avatar-purple">M</div>
-                    <div class="expert-details">
-                        <div class="expert-header">
-                            <div class="expert-title">
-                                <h3>Michael Chen, LCSW</h3>
-                                <i data-lucide="check-circle-2" class="verified-icon"></i>
-                            </div>
-                            <div class="expert-location-status">
-                                <span class="distance"><i data-lucide="map-pin"></i> 5.7 mi away</span>
-                            </div>
-                        </div>
-                        
-                        <div class="expert-stats">
-                            <span class="rating"><i data-lucide="star" class="star-icon"></i> 4.8 (89 reviews)</span>
-                            <span class="experience">10 years experience</span>
-                        </div>
-                        
-                        <div class="specialty-badges">
-                            <span class="badge">PTSD</span>
-                            <span class="badge">Family Therapy</span>
-                            <span class="badge">Addiction</span>
-                        </div>
-                        
-                        <p class="expert-bio">Compassionate support for trauma survivors and families. Specializing in EMDR and cognitive behavioral therapy.</p>
-                        
-                        <div class="expert-actions">
-                            <button class="btn btn-primary contact-btn">
-                                <i data-lucide="message-circle"></i> Contact
-                            </button>
-                            <button class="btn btn-outline schedule-btn">
-                                <i data-lucide="calendar"></i> Schedule
-                            </button>
-                        </div>
-                    </div>
+                    <p id="location-error-text">
+                        Location permission required to find nearby experts.
+                    </p>
+
                 </div>
 
             </div>
+
+            <!-- EXPERTS -->
+            <div
+                class="experts-list"
+                id="experts-container"
+            ></div>
+
         </main>
+
     </div>
 
     <script src="experts.js"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+
 </body>
 </html>

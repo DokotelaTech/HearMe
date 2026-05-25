@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe | Messages</title>
+
+
+    <link rel="stylesheet" href="messages.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <header class="page-header">
+        <div class="header-title-area">
+            <a href="javascript:history.back()" class="back-btn" title="Go Back">
+                <i data-lucide="arrow-left"></i>
+            </a>
+            <div>
+                <h1>Messages</h1>
+                <p>Communicate securely with your clients</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-container">
+
+        <aside class="sidebar-left">
+            <div class="search-box-container">
+                <div class="search-wrapper">
+                    <i data-lucide="search"></i>
+                    <input type="text" class="search-input" placeholder="Search conversations...">
+                </div>
+            </div>
+
+            <div class="conversations-list">
+                
+                <div class="convo-item active">
+                    <div class="avatar-circle bg-id-29">29</div>
+                    <div class="convo-info">
+                        <div class="convo-header-row">
+                            <span class="client-id">User#2931</span>
+                            <span class="convo-timestamp">2 hours ago</span>
+                        </div>
+                        <div class="convo-preview">Thank you for the session today. The breath...</div>
+                    </div>
+                    <div class="unread-indicator">2</div>
+                </div>
+
+                <div class="convo-item">
+                    <div class="avatar-circle bg-id-12">12</div>
+                    <div class="convo-info">
+                        <div class="convo-header-row">
+                            <span class="client-id">User#1293</span>
+                            <span class="convo-timestamp">5 hours ago</span>
+                        </div>
+                        <div class="convo-preview">I had another nightmare last night. Can we ...</div>
+                    </div>
+                    <div class="unread-indicator">1</div>
+                </div>
+
+                <div class="convo-item">
+                    <div class="avatar-circle bg-id-58">58</div>
+                    <div class="convo-info">
+                        <div class="convo-header-row">
+                            <span class="client-id">User#5847</span>
+                            <span class="convo-timestamp">Yesterday</span>
+                        </div>
+                        <div class="convo-preview">See you next week!</div>
+                    </div>
+                </div>
+
+                <div class="convo-item">
+                    <div class="avatar-circle bg-id-76">76</div>
+                    <div class="convo-info">
+                        <div class="convo-header-row">
+                            <span class="client-id">User#7624</span>
+                            <span class="convo-timestamp">2 days ago</span>
+                        </div>
+                        <div class="convo-preview">I wanted to schedule a check-in for next m...</div>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <main class="chat-main-window">
+            
+            <div class="chat-header-bar">
+                <div class="active-client-meta">
+                    <div class="avatar-circle bg-id-29">29</div>
+                    <div class="client-meta-text">
+                        <h3>User#2931</h3>
+                        <span>Anonymous Client</span>
+                    </div>
+                </div>
+                <button class="header-actions-btn">
+                    <i data-lucide="more-vertical"></i>
+                </button>
+            </div>
+
+            <div class="message-history-area" id="chatHistoryWindow">
+                
+                <div class="msg-bubble-wrapper incoming">
+                    <div class="bubble-content">
+                        Hi Dr. Johnson, I wanted to follow up on today's session.
+                    </div>
+                    <span class="bubble-meta-time">3 hours ago</span>
+                </div>
+
+                <div class="msg-bubble-wrapper outgoing">
+                    <div class="bubble-content">
+                        Hello! Of course, I'm here. How are you feeling after our session?
+                    </div>
+                    <span class="bubble-meta-time">2.5 hours ago</span>
+                </div>
+
+                <div class="msg-bubble-wrapper incoming">
+                    <div class="bubble-content">
+                        Much better actually. The breathing exercises really helped when I started feeling anxious at work.
+                    </div>
+                    <span class="bubble-meta-time">2 hours ago</span>
+                </div>
+
+                <div class="msg-bubble-wrapper outgoing">
+                    <div class="bubble-content">
+                        That's wonderful to hear! Remember to practice them daily, even when you're not feeling anxious. It helps build habits.
+                    </div>
+                    <span class="bubble-meta-time">Just now</span>
+                </div>
+
+            </div>
+
+            <div class="privacy-reminder-banner">
+                <strong>Privacy Reminder:</strong> All messages are encrypted and HIPAA-compliant. Do not share identifiable information.
+            </div>
+
+            <div class="chat-input-bar-panel">
+                <button class="attachment-trigger-btn" title="Attach Document/Image">
+                    <i data-lucide="paperclip"></i>
+                </button>
+
+                <form class="input-form-wrapper" id="chatInputForm">
+                    <input type="text" id="msgInputField" class="message-text-entry" placeholder="Type your message... (Press Enter to send)" autocomplete="off">
+                    <button type="submit" class="send-message-btn">
+                        <i data-lucide="send"></i>
+                        <span>Send</span>
+                    </button>
+                </form>
+            </div>
+
+        </main>
+
+    </div>
+
+    <script>
+        // Keep this small line inline to convert data-lucide attributes to SVGs safely
+        lucide.createIcons();
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="messages.js"> </script>
+</body>
+</html>

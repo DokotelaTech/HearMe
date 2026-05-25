@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe Admin - Account Settings</title>
+    <link rel="stylesheet" href="admin-settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="logo">HearMe</div>
+            <nav class="nav-menu">
+                <a href="admin.html" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i><span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-users"></i><span>Community</span>
+                </a>
+                <a href="admin-settings.html" class="nav-item active">
+                    <i class="fa-solid fa-user-gear"></i><span>My Profile</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="user-profile-container">
+                    <div class="user-profile">
+                        <span class="role-badge">Admin</span>
+                        <div class="avatar">A</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-section">
+                <div class="settings-container">
+                    <h2 class="settings-main-title">Account Settings</h2>
+
+                    <form id="adminSettingsForm" onsubmit="handleSettingsUpdate(event)">
+                        
+                        <div class="settings-card">
+                            <label class="settings-label" for="settingsEmail">Email</label>
+                            <input type="email" id="settingsEmail" class="settings-input" value="admin@hearme.app" required>
+                        </div>
+
+                        <div class="settings-card 2fa-row">
+                            <div class="2fa-info">
+                                <span class="settings-label">Two-Factor Authentication</span>
+                                <div class="status-indicator">
+                                    <i class="fa-solid fa-lock status-icon-enabled"></i>
+                                    <span class="status-text">Enabled</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-configure" onclick="alert('Launching system MFA configuration console...')">Configure</button>
+                        </div>
+
+                        <div class="settings-card">
+                            <span class="settings-label">Notification Preferences</span>
+                            <div class="checkbox-group">
+                                
+                                <label class="custom-checkbox-container">
+                                    <input type="checkbox" id="prefNewVerifications" checked>
+                                    <span class="custom-checkmark"></span>
+                                    <span class="checkbox-text">Email alerts for new verifications</span>
+                                </label>
+
+                                <label class="custom-checkbox-container">
+                                    <input type="checkbox" id="prefSecurityAlerts" checked>
+                                    <span class="custom-checkmark"></span>
+                                    <span class="checkbox-text">Security alerts and warnings</span>
+                                </label>
+
+                                <label class="custom-checkbox-container">
+                                    <input type="checkbox" id="prefDailySummaries">
+                                    <span class="custom-checkmark"></span>
+                                    <span class="checkbox-text">Daily activity summaries</span>
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="settings-actions">
+                            <button type="submit" class="btn-save-changes">Save Changes</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin-settings.js"></script>
+</body>
+</html>

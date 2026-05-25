@@ -1,0 +1,72 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#0f172a;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.otp-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.otp-card{
+    background:white;
+    width:400px;
+    padding:40px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+.otp-card h1{
+    margin-bottom:15px;
+    color:#111827;
+}
+
+.otp-card p{
+    margin-bottom:20px;
+    color:#6b7280;
+}
+
+.otp-card input{
+    width:100%;
+    padding:14px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    margin-bottom:20px;
+    font-size:18px;
+    text-align:center;
+    letter-spacing:5px;
+}
+
+.otp-card button{
+    width:100%;
+    padding:14px;
+    background:#7c3aed;
+    border:none;
+    color:white;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.otp-card button:hover{
+    background:#6d28d9;
+}
+
+#message{
+    margin-top:15px;
+    font-weight:bold;
+}
