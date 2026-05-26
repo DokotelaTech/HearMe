@@ -4,15 +4,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-
+const bcrypt = require('bcrypt');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/therapist', express.static(path.join(__dirname, 'Therapistportal')));
 
 // =========================================
 // VERIFY TOKEN MIDDLEWARE
-
+// =========================================
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization');
 
@@ -34,7 +35,7 @@ const verifyToken = (req, res, next) => {
 
 // =========================================
 // ROUTE FILES
-
+// =========================================
 const therapistRoutes = require('./routes/therapistRoutes');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -43,7 +44,9 @@ const appointmentRoutes = require('./routes/appointmentRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const reliefRoutes = require('./routes/reliefRoutes');
 
+app.use('/api/relief', reliefRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/auth', authRoutes);
@@ -55,34 +58,83 @@ app.use('/api/reports', reportRoutes);
 
 // =========================================
 // STATIC FILES & CLEAN URLs
-
-// app.use(express.static(path.join(__dirname, 'admin')));
+// =========================================
 app.use(express.static(path.join(__dirname, 'landing-page')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
+app.use('/user', express.static(path.join(__dirname, 'user-profiles')));
+app.use('/therapist', express.static(path.join(__dirname, 'Therapistportal')));
 
-// Admin clean URLs - no .html in browser
+// Admin routes
 app.get('/admin/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'adminLogin.html'));
 });
-
 app.get('/admin/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'admins.html'));
 });
 
-
+// Auth routes
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'landing-page', 'login.html')); // change filename to match yours
+    res.sendFile(path.join(__dirname, 'landing-page', 'login.html'));
+});
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, 'landing-page', 'signup.html'));
+});
+
+// Therapist routes
+app.get('/therapist/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'profiles.html'));
+});
+app.get('/therapist/calendar', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'calendar.html'));
+});
+app.get('/therapist/clients', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'client.html'));
+});
+app.get('/therapist/messages', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'message.html'));
+});
+app.get('/therapist/reliefs', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'reliefs.html'));
+});
+app.get('/therapist/report', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'report.html'));
+});
+
+// User routes
+app.get('/user/community', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'community-feeds.html'));
+});
+app.get('/user/groups', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'groups.html'));
+});
+app.get('/user/chat', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'ai-chat.html'));
+});
+app.get('/user/experts', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'experts.html'));
+});
+app.get('/user/messages', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'messages.html'));
+});
+app.get('/user/sos', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'SOS.html'));
+});
+app.get('/user/relief', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'relief.html'));
+});
+app.get('/user/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'user-profiles', 'profile.html'));
 });
 
 // =========================================
 // MODELS
-
+// =========================================
 const User = require('./database/models/users');
 const Post = require('./database/models/Post');
 
 // =========================================
 // POSTS ROUTES
-
+// =========================================
 app.get('/api/posts', verifyToken, async (req, res) => {
     try {
         const posts = await Post.find().sort({ createdAt: -1 });
@@ -115,7 +167,6 @@ app.post('/api/posts', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Server error while creating post.' });
     }
 });
-
 
 app.post('/api/posts/:id/like', verifyToken, async (req, res) => {
     try {
@@ -167,7 +218,6 @@ app.post('/api/posts/:id/comment', verifyToken, async (req, res) => {
     }
 });
 
-
 app.delete('/api/posts/:id', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
@@ -183,7 +233,6 @@ app.delete('/api/posts/:id', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-
 
 app.delete('/api/posts/:postId/comments/:commentId', verifyToken, async (req, res) => {
     try {
@@ -213,10 +262,9 @@ app.delete('/api/posts/:postId/comments/:commentId', verifyToken, async (req, re
     }
 });
 
-
 // =========================================
 // USER PROFILE
-
+// =========================================
 app.get('/api/user/profile', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
@@ -233,10 +281,9 @@ app.get('/api/user/profile', verifyToken, async (req, res) => {
     }
 });
 
-
 // =========================================
 // AI CHAT ROUTE
-
+// =========================================
 app.post('/api/chat', verifyToken, async (req, res) => {
     const userText = req.body.message;
     const API_KEY = process.env.GOOGLE_API_KEY;
@@ -266,13 +313,13 @@ app.post('/api/chat', verifyToken, async (req, res) => {
     }
 });
 
+
 // =========================================
 // CONNECT TO MONGODB & START SERVER
-
+// =========================================
 mongoose.connect(process.env.MONGODB_URI, { family: 4 })
-
     .then(() => console.log('Connected to MongoDB successfully!'))
     .catch((err) => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server is running on  http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));

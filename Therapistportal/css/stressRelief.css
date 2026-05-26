@@ -573,100 +573,129 @@ textarea {
 /* ===================================================================
    RESOURCES CONTAINER
 =================================================================== */
+/* ===================================================================
+   RESOURCES CONTAINER
+=================================================================== */
 
 #resourcesContainer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
 /* ===================================================================
-   RESOURCE CARD
+   RESOURCE CARD (Matches JS Output)
 =================================================================== */
 
-.resource-card {
+.resource-item {
     border: 1px solid var(--border);
-
-    border-radius: 14px;
-
+    border-radius: 16px;
     overflow: hidden;
-
     background: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .resource-image {
     width: 100%;
-    height: 220px;
-
+    height: 180px;
     object-fit: cover;
 }
 
-.resource-body {
+.resource-content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allows cards to be equal height */
 }
 
-.resource-category {
-    display: inline-block;
+.resource-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
 
-    background: #eff6ff;
+/* Hide the author name to perfectly match the target image */
+.resource-top small {
+    display: none; 
+}
 
-    color: var(--primary);
-
-    padding: 6px 12px;
-
-    border-radius: 999px;
-
+.resource-badge {
+    background: #f4e8ff; /* Light purple background */
+    color: #a855f7; /* Dark purple text */
+    padding: 6px 14px;
+    border-radius: 20px;
     font-size: 0.75rem;
-
-    font-weight: 600;
-
-    margin-bottom: 14px;
+    font-weight: 700;
 }
 
-.resource-title {
-    font-size: 1.1rem;
-
-    margin-bottom: 10px;
+.resource-content h4 {
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    font-weight: 700;
 }
 
-.resource-description {
+.resource-content p {
     color: var(--text-muted);
-
-    line-height: 1.6;
-
-    margin-bottom: 18px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex: 1; /* Pushes the action buttons to the absolute bottom */
 }
 
 .resource-actions {
     display: flex;
-    justify-content: space-between;
+    gap: 12px;
     align-items: center;
+    margin-top: auto;
 }
 
-.resource-link {
-    color: var(--primary);
-
-    text-decoration: none;
-
+.open-btn {
+    flex: 1; /* Takes up remaining space */
+    background: linear-gradient(90deg, #bd54f1, #e84895); /* Purple to Pink gradient */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
     font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: center;
+}
+
+/* Hide the icon inside the Open button to match the screenshot */
+.open-btn i {
+    display: none; 
+}
+
+.open-btn:hover {
+    opacity: 0.9;
 }
 
 .delete-btn {
-    background: var(--red-bg);
-
-    color: var(--red-text);
-
+    background: #fee2e2; /* Light red */
+    color: #ef4444; /* Dark red */
     border: none;
-
-    padding: 10px 14px;
-
-    border-radius: 8px;
-
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-
-    font-weight: 600;
+    transition: 0.2s;
+    flex-shrink: 0;
 }
 
+.delete-btn i {
+    font-size: 1.1rem;
+}
+
+.delete-btn:hover {
+    background: #fca5a5;
+}
 /* ===================================================================
    TIPS LIST
 =================================================================== */
@@ -710,6 +739,14 @@ textarea {
     }
 
     .stats-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    /* ... your existing mobile rules ... */
+    
+    #resourcesContainer {
         grid-template-columns: 1fr;
     }
 }

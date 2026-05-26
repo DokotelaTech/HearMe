@@ -64,16 +64,6 @@ router.get('/metrics', verifyToken, adminOnly, async (req, res) => {
 //    POST /api/admin/approve/:id
 router.post('/approve/:id', verifyToken, adminOnly, async (req, res) => {
     try {
-
-        fs.readFile(path.join(__dirname, '../admin/admin.html'), 'utf8', (err, res)=>{
-            if(err){
-                res.status(400).json({err:"could not load the page"})
-            }else{
-                
-                res.sendFile(path.join(__dirname, '../admin/admin.html'))
-            }
-            
-        })
         const therapist = await User.findByIdAndUpdate(
             req.params.id,
             { $set: { profileStatus: 'verified' } },
@@ -82,67 +72,33 @@ router.post('/approve/:id', verifyToken, adminOnly, async (req, res) => {
 
         if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
 
-        // Send approval email
-        await transporter.sendMail({
-            from: `"HearMe" <${process.env.EMAIL_USER}>`,
-            to: therapist.email,
-            subject: 'Your HearMe Profile Has Been Approved!',
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h2 style="color: #4CAF50;">Congratulations, ${therapist.firstName}!</h2>
-                    <p>Your therapist profile on <strong>HearMe</strong> has been reviewed and <strong>approved</strong>.</p>
-                    <p>You can now log in and start connecting with users who need your support.</p>
-                    <a href="${process.env.FRONTEND_URL}/login" 
-                       style="background:#4CAF50;color:white;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;margin-top:16px;">
-                        Go to HearMe
-                    </a>
-                    <p style="margin-top: 24px; color: #888;">The HearMe Team</p>
-                </div>
-            `
-        });
+        // await transporter.sendMail({ ... });
 
         res.status(200).json({ message: 'Therapist approved and notified via email' });
     } catch (error) {
-        console.error('Approve error:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
 // =========================================
 //    POST /api/admin/deny/:id
-router.post('/approve/:id', verifyToken, adminOnly, async (req, res) => {
+router.post('/deny/:id', verifyToken, adminOnly, async (req, res) => {
     try {
         const therapist = await User.findByIdAndUpdate(
             req.params.id,
-            { $set: { profileStatus: 'verified' } },
+            { $set: { profileStatus: 'incomplete' } }, // ← different status
             { returnDocument: 'after' }
         );
 
         if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
 
         await transporter.sendMail({
-            from: `"HearMe" <${process.env.EMAIL_USER}>`,
-            to: therapist.email,
-            subject: 'Your HearMe Profile Has Been Approved!',
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h2 style="color: #4CAF50;">Congratulations, ${therapist.firstName}!</h2>
-                    <p>Your therapist profile on <strong>HearMe</strong> has been reviewed and <strong>approved</strong>.</p>
-                    <p>You can now log in and start connecting with users who need your support.</p>
-                    <a href="${process.env.FRONTEND_URL}/login" 
-                       style="background:#4CAF50;color:white;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;margin-top:16px;">
-                        Go to HearMe
-                    </a>
-                    <p style="margin-top: 24px; color: #888;">The HearMe Team</p>
-                </div>
-            `
+            // ← different email content for denial
         });
 
-        res.status(200).json({ message: 'Therapist approved and notified via email' });
+        res.status(200).json({ message: 'Therapist denied and notified' });
     } catch (error) {
-        console.error('Approve error:', error);
         res.status(500).json({ message: error.message });
     }
 });
-
 module.exports = router;

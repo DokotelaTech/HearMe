@@ -32,3 +32,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// =========================
+// PAGE TRANSITION SYSTEM
+// =========================
+
+// Fade IN when page loads
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.style.opacity = "1";
+});
+
+// Handle navigation clicks
+document.querySelectorAll("a.nav-item").forEach(link => {
+    link.addEventListener("click", function (e) {
+
+        const href = this.getAttribute("href");
+
+        // Only apply to internal links
+        if (href && !href.startsWith("#")) {
+            e.preventDefault();
+
+            // fade out current page
+            document.body.classList.add("fade-out");
+
+            // wait for animation then go
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300); // must match CSS duration
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('dropdownTrigger');
+    const menu = document.getElementById('dropdownMenu');
+
+    if (trigger && menu) {
+        // Toggle menu view when clicking the profile element
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+        });
+
+        // Close menu dynamically if the user clicks anywhere else outside of it
+        document.addEventListener('click', (e) => {
+            if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    }
+});

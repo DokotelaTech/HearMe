@@ -36,4 +36,18 @@ router.post('/submit-for-review', verifyToken, async (req, res) => {
     }
 });
 
+// get all verified therapists
+router.get('/verified', verifyToken, async (req, res) => {
+    try {
+        const therapists = await User.find({
+            role: 'therapist',
+            profileStatus: 'verified'
+        }).select('-password');
+
+        res.status(200).json({ therapists });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router; 

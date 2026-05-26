@@ -20,6 +20,8 @@
 body {
     background-color: var(--bg-main);
     color: var(--text-dark);
+    height: 100vh;
+    overflow: hidden; /* Lock viewport scroll to feel like a native application interface */
 }
 
 /* Header */
@@ -33,6 +35,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    height: 60px;
 }
 
 .logo h2 {
@@ -49,8 +52,8 @@ body {
 }
 
 .user-badge {
-    background-color: var(--primary-purple);
-    color: white;
+    background-color: #f3e5f5; /* Light soft purple background */
+    color: var(--primary-purple); /* Bold accent purple text matching your design */
     padding: 4px 12px;
     border-radius: 16px;
     font-size: 0.85rem;
@@ -74,10 +77,11 @@ body {
     font-size: 0.8rem;
 }
 
-/* Layout */
+/* Layout Frame Setup */
 .app-container {
     display: flex;
-    min-height: calc(100vh - 60px);
+    height: calc(100vh - 60px);
+    width: 100%;
 }
 
 /* Sidebar */
@@ -86,6 +90,7 @@ body {
     background-color: var(--bg-white);
     border-right: 1px solid var(--border-color);
     padding: 24px 0;
+    flex-shrink: 0;
 }
 
 .nav-menu {
@@ -109,12 +114,14 @@ body {
 
 .nav-item i {
     font-size: 1.1rem;
-    width: 20px;
+    width: 24px;
     text-align: center;
+    transition: color 0.2s ease;
 }
 
 .nav-item:hover {
     background-color: #f3f4f6;
+    color: var(--text-dark);
 }
 
 .nav-item.active {
@@ -122,26 +129,38 @@ body {
     color: var(--primary-purple);
 }
 
-/* Main Content */
+.nav-item.active i {
+    color: var(--primary-purple);
+}
+
+/* Main Content (UPDATED TO CENTRALIZE PANELS) */
 .main-content {
     flex: 1;
     padding: 40px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* Centers content card canvas horizontally */
+    justify-content: center;  /* Centers content card canvas vertically */
+    background-color: #fafafa;
 }
 
 .content-wrapper {
-    max-width: 800px;
-    margin: 0 auto ;
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .page-header {
     margin-bottom: 24px;
+    text-align: left;
 }
 
 .page-header h1 {
     font-size: 1.75rem;
     color: var(--text-dark);
     margin-bottom: 4px;
+    font-weight: 700;
 }
 
 .page-header p {
@@ -185,6 +204,7 @@ body {
     text-align: center;
     color: white;
     margin-bottom: 40px;
+    box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.2);
 }
 
 .sos-icon {
@@ -215,12 +235,13 @@ body {
     font-size: 1rem;
     cursor: pointer;
     margin-bottom: 24px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
 }
 
 .btn-activate-sos:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
 }
 
 .location-info {
@@ -236,6 +257,8 @@ body {
 .section-title {
     font-size: 1.25rem;
     margin-bottom: 16px;
+    color: var(--text-dark);
+    font-weight: 600;
 }
 
 .hotline-card {
@@ -247,12 +270,13 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
 }
 
 .hotline-info h3 {
     font-size: 1.1rem;
     margin-bottom: 4px;
+    color: var(--text-dark);
 }
 
 .hotline-info p {
@@ -302,4 +326,137 @@ body {
 
 .btn-call:hover {
     background-color: #9333ea;
+}
+/* Ensure SVGs inherit colors correctly from the menu layout */
+.nav-item svg {
+    flex-shrink: 0;
+    transition: stroke 0.2s ease;
+}
+
+/* Inherit the muted gray on hover */
+.nav-item:hover svg {
+    stroke: var(--text-dark);
+}
+
+/* Dynamically force the active purple color onto the active SVG icon */
+.nav-item.active svg {
+    stroke: var(--primary-purple) !important;
+}
+/* =========================
+   PAGE TRANSITION SYSTEM
+========================= */
+
+body {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* When page is leaving */
+body.fade-out {
+    opacity: 0;
+}
+/* --- User Profile Section Alignment --- */
+.user-profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between message icon and user avatar combo */
+}
+
+/* --- Message Icon Styles --- */
+.msg-icon-btn {
+    position: relative;
+    color: #6b7280; /* Neutral gray, or match your sidebar icon colors */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.msg-icon-btn:hover {
+    color: #a855f7; /* Purple accents matching your theme */
+}
+
+.msg-icon-btn i {
+    width: 22px;
+    height: 22px;
+}
+
+/* Optional Notification Dot */
+.msg-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444; /* Red indicator */
+    border-radius: 50%;
+}
+
+/* --- Dropdown Layout --- */
+.user-dropdown-container {
+    position: relative; /* Keeps the dropdown attached underneath */
+}
+
+.user-profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    min-width: 160px;
+    padding: 6px;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+
+/* Toggle Class */
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Items inside the dropdown */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-item i {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+/* Log Out custom coloring */
+.dropdown-item.logout-item {
+    color: #dc2626;
+}
+
+.dropdown-item.logout-item:hover {
+    background-color: #fef2f2;
+}
+
+.dropdown-divider {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin: 6px 0;
 }

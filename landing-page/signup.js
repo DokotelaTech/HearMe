@@ -203,22 +203,14 @@ document.getElementById('signup-form')
             await response.json();
 
         if(response.ok){
-
             alert('Account created successfully!');
-
             window.location.href =
-                'login.html';
-
+                '/login';
         }else{
-
             alert(data.message);
         }
-
     }catch(err){
-
         console.log(err);
-
         alert('Server error');
     }
-
 });

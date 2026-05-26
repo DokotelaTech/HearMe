@@ -15,30 +15,72 @@ body {
     color: var(--text-dark);
 }
 
-/* Navbar */
+/* NAVBAR */
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     padding: 10px 40px;
+
     background: white;
+
     border-bottom: 1px solid var(--border);
 }
 
-.logo { color: var(--primary); font-size: 24px; font-weight: bold; }
+.logo {
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* USER PROFILE TOP RIGHT */
+
+.user-profile-section{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-badge{
+    background:#f3e8ff;
+    color:var(--primary);
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    font-size:13px;
+    font-weight:700;
+}
 
 .user-avatar {
-    width: 35px; height: 35px;
-    background: var(--primary);
+    width: 38px;
+    height: 38px;
+
+    background: var(--gradient);
+
     color: white;
+
     border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-weight: 700;
+    font-size: 15px;
 }
 
-/* Layout */
-.app-container { display: flex; height: calc(100vh - 56px); }
+/* LAYOUT */
+
+.app-container {
+    display: flex;
+    height: calc(100vh - 56px);
+}
+
+/* SIDEBAR */
 
 .sidebar {
     width: 240px;
@@ -55,6 +97,12 @@ body {
     color: var(--text-gray);
     gap: 15px;
     cursor: pointer;
+    transition:0.2s;
+}
+
+.nav-item:hover{
+    background:#faf5ff;
+    color:var(--primary);
 }
 
 .nav-item.active {
@@ -63,19 +111,30 @@ body {
     border-right: 3px solid var(--primary);
 }
 
-.nav-item i { width: 20px; }
+.nav-item i {
+    width: 20px;
+}
 
-/* Content Area */
+/* CONTENT AREA */
+
 .content-area {
     flex: 1;
     padding: 30px 60px;
     overflow-y: auto;
 }
 
-.header-section h2 { font-size: 28px; margin-bottom: 5px; }
-.header-section p { color: var(--text-gray); margin-bottom: 30px; }
+.header-section h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
 
-/* AI Banner */
+.header-section p {
+    color: var(--text-gray);
+    margin-bottom: 30px;
+}
+
+/* AI BANNER */
+
 .ai-banner {
     background: var(--gradient);
     color: white;
@@ -89,17 +148,33 @@ body {
 .ai-icon {
     font-size: 30px;
     background: rgba(255,255,255,0.2);
-    width: 50px; height: 50px;
+
+    width: 50px;
+    height: 50px;
+
     border-radius: 10px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.ai-text h3 { margin: 0 0 10px 0; }
-.ai-text p { font-size: 14px; opacity: 0.9; margin-bottom: 15px; }
+.ai-text h3 {
+    margin: 0 0 10px 0;
+}
 
-.ai-tags { display: flex; gap: 10px; }
+.ai-text p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 15px;
+    line-height:1.6;
+}
+
+.ai-tags {
+    display: flex;
+    gap: 10px;
+}
+
 .ai-tag {
     background: rgba(255,255,255,0.2);
     padding: 4px 12px;
@@ -107,8 +182,15 @@ body {
     font-size: 12px;
 }
 
-/* Filters */
-.filter-bar { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; }
+/* FILTERS */
+
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+}
+
 .filter-btn {
     padding: 8px 18px;
     border-radius: 20px;
@@ -117,6 +199,12 @@ body {
     color: var(--text-gray);
     cursor: pointer;
     white-space: nowrap;
+    transition:0.2s;
+}
+
+.filter-btn:hover{
+    background:#faf5ff;
+    color:var(--primary);
 }
 
 .filter-btn.active {
@@ -125,7 +213,8 @@ body {
     border-color: var(--primary);
 }
 
-/* Cards */
+/* CARDS */
+
 .group-card {
     background: white;
     border: 1px solid var(--border);
@@ -134,8 +223,17 @@ body {
     margin-bottom: 20px;
 }
 
-.group-title-row { display: flex; align-items: center; gap: 15px; margin-bottom: 8px; }
-.group-title-row h3 { margin: 0; font-size: 18px; }
+.group-title-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 8px;
+}
+
+.group-title-row h3 {
+    margin: 0;
+    font-size: 18px;
+}
 
 .category-tag {
     background: #f3e5f5;
@@ -154,9 +252,18 @@ body {
     margin-bottom: 12px;
 }
 
-.group-meta i { width: 14px; height: 14px; vertical-align: middle; }
+.group-meta i {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+}
 
-.description { font-size: 14px; color: #555; line-height: 1.5; margin-bottom: 15px; }
+.description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
 
 .next-session {
     font-size: 13px;
@@ -167,8 +274,12 @@ body {
     margin-bottom: 20px;
 }
 
-/* Buttons */
-.group-actions { display: flex; gap: 10px; }
+/* BUTTONS */
+
+.group-actions {
+    display: flex;
+    gap: 10px;
+}
 
 .join-group-btn {
     width: 100%;
@@ -200,4 +311,305 @@ body {
     align-items: center;
     gap: 8px;
     cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .content-area{
+        padding:20px;
+    }
+
+    .user-badge{
+        display:none;
+    }
+}
+/* =========================
+   PAGE TRANSITION SYSTEM
+========================= */
+
+body {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* When page is leaving */
+body.fade-out {
+    opacity: 0;
+}
+/* --- User Profile Section Alignment --- */
+.user-profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between message icon and user avatar combo */
+}
+
+/* --- Message Icon Styles --- */
+.msg-icon-btn {
+    position: relative;
+    color: #6b7280; /* Neutral gray, or match your sidebar icon colors */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.msg-icon-btn:hover {
+    color: #a855f7; /* Purple accents matching your theme */
+}
+
+.msg-icon-btn i {
+    width: 22px;
+    height: 22px;
+}
+
+/* Optional Notification Dot */
+.msg-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444; /* Red indicator */
+    border-radius: 50%;
+}
+
+/* --- Dropdown Layout --- */
+.user-dropdown-container {
+    position: relative; /* Keeps the dropdown attached underneath */
+}
+
+.user-profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    min-width: 160px;
+    padding: 6px;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+
+/* Toggle Class */
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Items inside the dropdown */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-item i {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+/* Log Out custom coloring */
+.dropdown-item.logout-item {
+    color: #dc2626;
+}
+
+.dropdown-item.logout-item:hover {
+    background-color: #fef2f2;
+}
+
+.dropdown-divider {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin: 6px 0;
+}
+/* ==========================================
+   1. FIXED LAYOUT ARCHITECTURE
+   ========================================== */
+
+/* Keeps the top navbar pinned still */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #ffffff;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 1px solid #e5e7eb;
+    box-sizing: border-box;
+}
+
+/* Pushes the app container down so it isn't hidden under the navbar */
+.app-container {
+    margin-top: 70px; 
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+
+/* Keeps the sidebar pinned on the left while main content scrolls */
+.sidebar {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 240px;
+    height: calc(100vh - 70px);
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* Offsets the main content area so it doesn't overlap the fixed sidebar */
+.content-area {
+    margin-left: 240px;
+    flex-1: 1;
+    padding: 40px;
+    background-color: #fafafa; /* Optional light background contrast */
+    min-height: 100%;
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   2. HEADER USER SECTION & DROPDOWN
+   ========================================== */
+
+.user-profile-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Message Icon Button */
+.msg-icon-btn {
+    position: relative;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.msg-icon-btn:hover {
+    color: #a855f7; /* Matches HearMe purple */
+}
+
+.msg-icon-btn i {
+    width: 22px;
+    height: 22px;
+}
+
+/* Notification Badge Dot */
+.msg-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444;
+    border-radius: 50%;
+}
+
+/* Dropdown Container Position */
+.user-dropdown-container {
+    position: relative;
+}
+
+.user-profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Hidden Dropdown Menu Card */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    min-width: 170px;
+    padding: 6px;
+    display: none; /* Hidden by default */
+    z-index: 1010;
+}
+
+/* JS Class to toggle visibility */
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Menu Items */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    color: #374151;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-item i {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6;
+}
+
+/* Logout Specific Styling */
+.dropdown-item.logout-item {
+    color: #dc2626;
+}
+
+.dropdown-item.logout-item:hover {
+    background-color: #fef2f2;
+}
+
+.dropdown-divider {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin: 6px 0;
 }

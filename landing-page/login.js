@@ -120,13 +120,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if(selectedRole === 'user'){
 
-                        window.location.href =
-                            '../user-profiles/community-feeds.html';
+                        window.location.href = '/user/community';
 
                     }else{
 
-                        window.location.href =
-                            '../Therapistportal/pages/profiles.html';
+                        window.location.href = '/therapist/profile';
                     }
 
                 }, 3000);
