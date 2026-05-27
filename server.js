@@ -6,6 +6,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const app = express();
+const { startReminderJob } = require('./utils/reminderJob');
 
 app.use(cors());
 app.use(express.json());
@@ -313,6 +314,8 @@ app.post('/api/chat', verifyToken, async (req, res) => {
     }
 });
 
+// sends email
+// startReminderJob();
 
 // =========================================
 // CONNECT TO MONGODB & START SERVER

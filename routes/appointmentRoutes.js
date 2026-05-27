@@ -1,8 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../database/models/Appointment');
-const User = require('../database/models/users');
 const { verifyToken } = require('../middleware/authMiddleware');
+
+const {
+    getAppointments,
+    getMyAppointments,
+    getTherapistAppointments,
+    createAppointment,
+    updateAppointmentStatus,
+    cancelAppointment,
+    updateAppointment,
+    deleteAppointment
+} = require('../controllers/appointmentController');
 
 // =========================================
 // DAILY.CO ROOM CREATOR
@@ -28,115 +38,32 @@ async function createDailyRoom(appointmentId) {
 }
 
 // =========================================
-// POST /api/appointments — user books
+// STATIC ROUTES FIRST (before /:id)
 // =========================================
-router.post('/', verifyToken, async (req, res) => {
-    try {
-        const { therapistId, date, time, type, note } = req.body;
 
-        if (!therapistId || !date || !time) {
-            return res.status(400).json({ message: 'Therapist, date and time are required' });
-        }
+// GET /api/appointments/my — user's own appointments
+router.get('/my', verifyToken, getMyAppointments);
 
-        const user = await User.findById(req.user.userId);
-        const therapist = await User.findById(therapistId);
-        if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
+// GET /api/appointments/therapist — therapist sees their incoming bookings
+router.get('/therapist', verifyToken, getTherapistAppointments);
 
-        const appointment = new Appointment({
-            userId: req.user.userId,
-            therapistId,
-            therapistName: `${therapist.firstName} ${therapist.lastName}`,
-            clientName: user.anonymousName || user.username || user.email,
-            date,
-            time,
-            type: type || 'online',
-            note,
-            status: 'pending'
-        });
+// GET /api/appointments — all appointments for logged-in user
+router.get('/', verifyToken, getAppointments);
 
-        await appointment.save();
-        res.status(201).json({ message: 'Appointment booked successfully', appointment });
-
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+// POST /api/appointments — user books appointment
+router.post('/', verifyToken, createAppointment);
 
 // =========================================
-// GET /api/appointments/my — user's appointments
+// DYNAMIC ROUTES (/:id last)
 // =========================================
-router.get('/my', verifyToken, async (req, res) => {
-    try {
-        const appointments = await Appointment.find({
-            userId: req.user.userId
-        }).sort({ date: 1, time: 1 });
 
-        res.status(200).json({ appointments });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
+// PATCH /api/appointments/:id/status — therapist approves or denies
+router.patch('/:id/status', verifyToken, updateAppointmentStatus);
 
-// =========================================
-// GET /api/appointments/therapist
-// =========================================
-router.get('/therapist', verifyToken, async (req, res) => {
-    try {
-        const appointments = await Appointment.find({
-            therapistId: req.user.userId
-        }).sort({ date: 1, time: 1 });
+// PATCH /api/appointments/:id/cancel — user cancels (sets status to cancelled, does NOT delete)
+router.patch('/:id/cancel', verifyToken, cancelAppointment);
 
-        res.status(200).json({ appointments });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// =========================================
-// GET /api/appointments — all for logged-in user
-// =========================================
-router.get('/', verifyToken, async (req, res) => {
-    try {
-        const appointments = await Appointment.find({
-            userId: req.user.userId
-        }).sort({ date: 1, time: 1 });
-
-        res.status(200).json({ appointments });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// =========================================
-// PATCH /api/appointments/:id/status
-// Therapist confirms or declines
-// =========================================
-router.patch('/:id/status', verifyToken, async (req, res) => {
-    try {
-        const { status } = req.body;
-
-        if (!['approved', 'denied'].includes(status)) {
-            return res.status(400).json({ message: 'Invalid status' });
-        }
-
-        const appointment = await Appointment.findOneAndUpdate(
-            { _id: req.params.id, therapistId: req.user.userId },
-            { $set: { status } },
-            { new: true }
-        );
-
-        if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
-
-        res.status(200).json({ message: `Appointment ${status}`, appointment });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// =========================================
-// POST /api/appointments/:id/join
-// Create Daily.co room and return URL
-// =========================================
+// POST /api/appointments/:id/join — creates Daily.co room and returns URL
 router.post('/:id/join', verifyToken, async (req, res) => {
     try {
         const appointment = await Appointment.findById(req.params.id);
@@ -184,39 +111,10 @@ router.post('/:id/join', verifyToken, async (req, res) => {
     }
 });
 
-// =========================================
-// DELETE /api/appointments/:id
-// =========================================
-router.delete('/:id', verifyToken, async (req, res) => {
-    try {
-        const appointment = await Appointment.findOneAndDelete({
-            _id: req.params.id,
-            userId: req.user.userId
-        });
+// PUT /api/appointments/:id — general update
+router.put('/:id', verifyToken, updateAppointment);
 
-        if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
-
-        res.status(200).json({ message: 'Appointment deleted' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// POST or PATCH /api/appointments/:id/cancel
-// router.patch('/:id/cancel', verifyToken, async (req, res) => {
-//     try {
-//         const appointment = await Appointment.findOneAndUpdate(
-//             { _id: req.params.id, userId: req.user._id }, // Ensure the user owns this appointment
-//             { $set: { status: 'canceled' } },
-//             { new: true }
-//         );
-
-//         if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
-
-//         res.status(200).json({ message: 'Appointment canceled successfully', appointment });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
+// DELETE /api/appointments/:id — hard delete
+router.delete('/:id', verifyToken, deleteAppointment);
 
 module.exports = router;

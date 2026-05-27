@@ -1,7 +1,7 @@
 (function() {
 
 const clientsContainer = document.getElementById("clients-list-container");
-if (!clientsContainer) return; // ← now valid, inside a function
+if (!clientsContainer) return;
 
 let pendingAppointments = [];
 
@@ -31,19 +31,17 @@ function renderClients() {
                     <div class="c-avatar">
                         ${appointment.clientName?.charAt(0) || '?'}
                     </div>
-                    
                     <div>
                         <h3>${appointment.clientName || 'Unknown'}</h3>
                         <p>${appointment.type} — ${appointment.date} at ${appointment.time}</p>
                         <p>${appointment.notes || 'No notes provided'}</p>
                     </div>
                 </div>
-                
                 <div class="c-footer">
-                    <button class="btn-primary" onclick="updateStatus('${appointment._id}', 'confirmed')">
+                    <button class="btn-primary" onclick="updateStatus('${appointment._id}', 'approved')">
                         Accept
                     </button>
-                    <button class="btn-secondary" onclick="updateStatus('${appointment._id}', 'declined')">
+                    <button class="btn-secondary" onclick="updateStatus('${appointment._id}', 'denied')">
                         Decline
                     </button>
                 </div>
@@ -73,7 +71,6 @@ async function updateStatus(appointmentId, status) {
     }
 }
 
-// expose updateStatus so onclick can reach it
 window.updateStatus = updateStatus;
 
 fetchClients();

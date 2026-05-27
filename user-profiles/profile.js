@@ -1,10 +1,7 @@
 const API_BASE = 'http://localhost:5000/api';
 const token = localStorage.getItem('token');
 
-// Redirect if not logged in
-if (!token) {
-    window.location.href = '/login';
-}
+if (!token) window.location.href = '/login';
 
 // =========================================
 // HEALING ROADMAP DATA
@@ -31,9 +28,7 @@ async function loadProfile() {
         const res = await fetch(`${API_BASE}/user/profile`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-
         if (!res.ok) throw new Error('Failed to fetch profile');
-
         const data = await res.json();
 
         const name = data.identifier || 'Anonymous User';
@@ -47,7 +42,8 @@ async function loadProfile() {
 
         if (data.createdAt) {
             const date = new Date(data.createdAt);
-            document.getElementById('profile-since').textContent = `Member since ${date.toLocaleString('default', { month: 'long', year: 'numeric' })}`;
+            document.getElementById('profile-since').textContent =
+                `Member since ${date.toLocaleString('default', { month: 'long', year: 'numeric' })}`;
             const days = Math.floor((Date.now() - date) / (1000 * 60 * 60 * 24));
             document.getElementById('stat-days').textContent = days;
         }
@@ -58,7 +54,7 @@ async function loadProfile() {
 }
 
 // =========================================
-// LOAD UPCOMING APPOINTMENTS
+// LOAD APPOINTMENTS
 // =========================================
 async function loadUpcomingAppointments() {
     const container = document.getElementById('dynamic-events');
@@ -68,139 +64,146 @@ async function loadUpcomingAppointments() {
         const res = await fetch(`${API_BASE}/appointments/my`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-
         if (!res.ok) throw new Error('Failed to fetch appointments');
 
         const data = await res.json();
-        
-        // Filter out canceled/denied sessions for the normal user's view
-        const appointments = (data.appointments || []).filter(a => a.status === 'approved' || a.status === 'pending');
+        const appointments = data.appointments || [];
 
-        const statElement = document.getElementById('stat-sessions');
-        if(statElement) statElement.textContent = appointments.filter(a => a.status === 'approved').length;
+        // Stat: count only approved sessions
+        const approvedCount = appointments.filter(a => a.status === 'approved').length;
+        const statEl = document.getElementById('stat-sessions');
+        if (statEl) statEl.textContent = approvedCount;
 
         if (appointments.length === 0) {
             container.innerHTML = `
-                <p class="empty-state" style="text-align: center; padding: 20px; color: #64748b;">
-                    No upcoming sessions yet.
-                    <br><br>
-                    <a href="/user/experts" style="background: #a855f7; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none;">Book one now</a>
+                <p style="text-align:center; padding:20px; color:#64748b;">
+                    No upcoming sessions yet.<br><br>
+                    <a href="/user/experts" style="background:#a855f7; color:white; padding:8px 16px; border-radius:8px; text-decoration:none;">Book one now</a>
                 </p>`;
             return;
         }
 
-        let htmlOutput = `
-            <div style="margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <i class="fa-regular fa-bell" style="color: #a855f7; font-size: 1.2rem;"></i>
-                <h3 style="margin: 0; color: #0f172a; font-size: 1.2rem; font-weight: 700;"></h3>
-            </div>
-        `;
-
-        htmlOutput += appointments.map(a => {
+        container.innerHTML = appointments.map(a => {
             const sessionDateTime = new Date(`${a.date}T${a.time}`);
             const now = new Date();
             const diffMinutes = (sessionDateTime - now) / (1000 * 60);
 
-            let dateStr = "";
+            // Format date string
+            let dateStr;
             if (sessionDateTime.toDateString() === now.toDateString()) {
                 dateStr = `Today at ${sessionDateTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
             } else {
                 dateStr = sessionDateTime.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-                dateStr = dateStr.replace(',', ' at');
             }
 
+            // Status badge config
+            const statusConfig = {
+                pending:   { text: 'Pending Approval', bg: '#fef3c7', color: '#d97706' },
+                approved:  { text: 'Approved',         bg: '#dcfce7', color: '#16a34a' },
+                denied:    { text: 'Denied',            bg: '#fee2e2', color: '#dc2626' },
+                cancelled: { text: 'Cancelled',         bg: '#f1f5f9', color: '#64748b' },
+                completed: { text: 'Completed',         bg: '#e0e7ff', color: '#4f46e5' }
+            };
+            const badge = statusConfig[a.status] || statusConfig.pending;
+
+            // Type badge
+            const typeBadge = a.type === 'in-person'
+                ? { text: 'In-Person', bg: '#dcfce7', color: '#16a34a' }
+                : { text: 'Online', bg: '#e0f2fe', color: '#0284c7' };
+
+            // Can user join? Only 10 min before and up to 60 min after start
             const canJoin = a.status === 'approved' && a.type === 'online' && diffMinutes <= 10 && diffMinutes >= -60;
-            
-            const btnActiveStyle = "background: #0ea5e9; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2); transition: 0.2s;";
-            const btnDisabledStyle = "background: #e2e8f0; color: #94a3b8; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: not-allowed; display: flex; align-items: center; gap: 6px; font-size: 0.85rem;";
-            const btnCancelStyle = "background: #fee2e2; color: #ef4444; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 0.85rem; transition: 0.2s;";
 
-            let tagText = a.status === 'pending' ? "Pending" : "Session";
-            let tagBg = a.status === 'pending' ? "#fef3c7" : "#f3e8ff"; 
-            let tagColor = a.status === 'pending' ? "#d97706" : "#9333ea"; 
-            
-            if (a.type === 'in-person') {
-                tagText = "In-Person"; tagBg = "#dcfce7"; tagColor = "#16a34a";
-            }
+            // Cancelled sessions get a muted look
+            const isCancelled = a.status === 'cancelled' || a.status === 'denied';
+            const cardOpacity = isCancelled ? 'opacity: 0.6;' : '';
 
             return `
-                <div style="background: #14bf6ad5; border: 1px solid #f3e8ff; border-radius: 12px; padding: 16px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 16px;">
-                    <div style="background: #a855f7; color: white; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.3rem;">
-                        <i class="fa-regular fa-calendar"></i>
-                    </div>
-                    <div style="flex-grow: 1;">
-                        <h4 style="margin: 0 0 6px 0; color: #112f75; font-size: 1rem; font-weight: 700; line-height: 1.3;">
-                            1-on-1 Session with ${a.therapistName || 'Therapist'}
-                        </h4>
-                        <p style="margin: 0 0 12px 0; color: #64748b; font-size: 0.85rem;">
-                            ${dateStr}
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="background: ${tagBg}; color: ${tagColor}; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">
-                                ${tagText}
-                            </span>
-                            
-                            <div style="display: flex; gap: 8px;">
-                                <button onclick="cancelSession('${a._id}')" style="${btnCancelStyle}">
-                                    <i class="fa-solid fa-xmark"></i> Cancel
-                                </button>
-                                
-                                ${canJoin 
-                                    ? `<button onclick="joinSession('${a._id}', '${a.therapistName}')" style="${btnActiveStyle}">
-                                           <i class="fa-solid fa-video"></i> Join Call
-                                       </button>`
-                                    : `<button disabled style="${btnDisabledStyle}">
-                                           <i class="fa-solid fa-video"></i> Join Call
-                                       </button>`
-                                }
+                <div style="background:#15dd80c1; border:1px solid #0e1ba9; border-radius:12px; padding:16px; margin-bottom:16px; ${cardOpacity}">
+                    <div style="display:flex; align-items:flex-start; gap:14px;">
+
+                        <div style="background:${isCancelled ? '#e2f0e5' : '#a855f7'}; color:white; width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.2rem;">
+                            <i data-lucide="calendar"></i>
+                        </div>
+
+                        <div style="flex:1; min-width:0;">
+                            <p style="margin:0 0 4px 0; font-weight:700; font-size:0.95rem; color:#0f172a;">
+                                Session with ${a.therapistName || 'Therapist'}
+                            </p>
+                            <p style="margin:0 0 10px 0; font-size:0.82rem; color:#64748b;">${dateStr}</p>
+
+                            <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:space-between;">
+                                <div style="display:flex; gap:6px;">
+                                    <span style="background:${badge.bg}; color:${badge.color}; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600;">
+                                        ${badge.text}
+                                    </span>
+                                    <span style="background:${typeBadge.bg}; color:${typeBadge.color}; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600;">
+                                        ${typeBadge.text}
+                                    </span>
+                                </div>
+
+                                ${!isCancelled ? `
+                                <div style="display:flex; gap:8px;">
+                                    <button onclick="cancelSession('${a._id}')"
+                                        style="background:#fee2e2; color:#ef4444; border:none; padding:6px 14px; border-radius:8px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+                                        Cancel
+                                    </button>
+
+                                    ${canJoin
+                                        ? `<button onclick="joinSession('${a._id}', '${a.therapistName}')"
+                                               style="background:#0ea5e9; color:white; border:none; padding:6px 14px; border-radius:8px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+                                               Join Call
+                                           </button>`
+                                        : `<button disabled
+                                               style="background:#e2e8f0; color:#94a3b8; border:none; padding:6px 14px; border-radius:8px; font-size:0.8rem; font-weight:600; cursor:not-allowed;">
+                                               Join Call
+                                           </button>`
+                                    }
+                                </div>` : ''}
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
         }).join('');
 
-        container.innerHTML = htmlOutput;
-        if(typeof lucide !== 'undefined') lucide.createIcons();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
 
     } catch (err) {
         console.error('Appointments load error:', err);
-        if (container) container.innerHTML = '<p class="empty-state">Could not load sessions.</p>';
+        if (container) container.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">Could not load sessions.</p>';
     }
 }
 
 // =========================================
-// CANCEL SESSION API CALL
+// CANCEL SESSION
+// Sets to 'cancelled' in DB, stays visible as cancelled
 // =========================================
 async function cancelSession(appointmentId) {
-    if (!confirm("Are you sure you want to cancel this session? This action cannot be undone.")) return;
+    if (!confirm('Are you sure you want to cancel this session?')) return;
 
     try {
         const res = await fetch(`${API_BASE}/appointments/${appointmentId}/cancel`, {
             method: 'PATCH',
-            headers: { 
+            headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ status: 'canceled' })
+            }
         });
 
-        if (!res.ok) {
-            const data = await res.json();
-            throw new Error(data.message || 'Failed to cancel session');
-        }
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Failed to cancel');
 
-        // Successfully canceled in database, reload UI so it disappears
+        // Reload appointments so the card updates to show "Cancelled" badge
         loadUpcomingAppointments();
 
     } catch (err) {
         alert(err.message);
-        console.error('Cancel session error:', err);
+        console.error('Cancel error:', err);
     }
 }
 
 // =========================================
-// JOIN SESSION
+// JOIN SESSION — opens Daily.co modal
 // =========================================
 async function joinSession(appointmentId, therapistName) {
     try {
@@ -210,7 +213,6 @@ async function joinSession(appointmentId, therapistName) {
         });
 
         const data = await res.json();
-
         if (!res.ok) {
             alert(data.message);
             return;
@@ -223,7 +225,7 @@ async function joinSession(appointmentId, therapistName) {
 
     } catch (err) {
         alert('Failed to join session. Please try again.');
-        console.error('Join session error:', err);
+        console.error('Join error:', err);
     }
 }
 
@@ -237,34 +239,31 @@ document.getElementById('close-video-modal')?.addEventListener('click', () => {
 });
 
 // =========================================
-// ROADMAP RENDERING
+// ROADMAP
 // =========================================
 function renderRoadmap() {
     const taskContainer = document.getElementById('roadmap-task-list');
     if (!taskContainer) return;
 
-    taskContainer.innerHTML = roadmapTasks.map(task => {
-        const itemClass = task.completed ? 'task-item completed' : 'task-item';
-        const iconMarkup = task.completed
-            ? '<i data-lucide="check-circle-2" class="success-check" style="color: #15803d;"></i>'
-            : '<div class="circle-outline"></div>';
-
-        return `
-            <div class="${itemClass}" data-id="${task.id}">
-                <div class="task-left">
-                    <div class="task-check">${iconMarkup}</div>
-                    <div class="task-text">
-                        <h4>${task.title}</h4>
-                        <p>${task.desc}</p>
-                    </div>
+    taskContainer.innerHTML = roadmapTasks.map(task => `
+        <div class="${task.completed ? 'task-item completed' : 'task-item'}" data-id="${task.id}">
+            <div class="task-left">
+                <div class="task-check">
+                    ${task.completed
+                        ? '<i data-lucide="check-circle-2" style="color:#15803d;"></i>'
+                        : '<div class="circle-outline"></div>'}
                 </div>
-                <span class="task-tag tag-${task.tag.toLowerCase().replace(/\s+/g, '-')}">${task.tag}</span>
+                <div class="task-text">
+                    <h4>${task.title}</h4>
+                    <p>${task.desc}</p>
+                </div>
             </div>
-            `;
-    }).join('');
+            <span class="task-tag tag-${task.tag.toLowerCase().replace(/\s+/g, '-')}">${task.tag}</span>
+        </div>`
+    ).join('');
 
     calculateProgress();
-    if(typeof lucide !== 'undefined') lucide.createIcons();
+    if (typeof lucide !== 'undefined') lucide.createIcons();
     attachRoadmapListeners();
 }
 
@@ -281,18 +280,14 @@ function calculateProgress() {
 function attachRoadmapListeners() {
     document.querySelectorAll('.task-item').forEach(item => {
         item.onclick = function () {
-            const taskId = parseInt(this.getAttribute('data-id'));
-            const task = roadmapTasks.find(t => t.id === taskId);
-            if (task) {
-                task.completed = !task.completed;
-                renderRoadmap();
-            }
+            const task = roadmapTasks.find(t => t.id === parseInt(this.getAttribute('data-id')));
+            if (task) { task.completed = !task.completed; renderRoadmap(); }
         };
     });
 }
 
 // =========================================
-// ACHIEVEMENTS RENDERING
+// ACHIEVEMENTS
 // =========================================
 function renderAchievements() {
     const container = document.getElementById('dynamic-achievements');
@@ -300,10 +295,7 @@ function renderAchievements() {
     container.innerHTML = achievementsData.map(a => `
         <div class="ach-box">
             <div class="ach-icon">${a.icon}</div>
-            <div>
-                <h4>${a.title}</h4>
-                <p>${a.desc}</p>
-            </div>
+            <div><h4>${a.title}</h4><p>${a.desc}</p></div>
         </div>`
     ).join('');
 }
@@ -315,23 +307,16 @@ function initDropdown() {
     const trigger = document.getElementById('dropdownTrigger');
     const menu = document.getElementById('dropdownMenu');
     if (!trigger || !menu) return;
-
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('show');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!trigger.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove('show');
-        }
+    trigger.addEventListener('click', e => { e.stopPropagation(); menu.classList.toggle('show'); });
+    document.addEventListener('click', e => {
+        if (!trigger.contains(e.target) && !menu.contains(e.target)) menu.classList.remove('show');
     });
 }
 
 // =========================================
 // LOGOUT
 // =========================================
-document.getElementById('logout-btn')?.addEventListener('click', (e) => {
+document.getElementById('logout-btn')?.addEventListener('click', e => {
     e.preventDefault();
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -359,11 +344,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initDropdown();
     renderRoadmap();
     renderAchievements();
-
-    await Promise.all([
-        loadProfile(),
-        loadUpcomingAppointments()
-    ]);
-
-    if(typeof lucide !== 'undefined') lucide.createIcons();
+    await Promise.all([loadProfile(), loadUpcomingAppointments()]);
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 });
