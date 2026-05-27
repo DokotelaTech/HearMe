@@ -1,29 +1,4 @@
 const mongoose = require('mongoose');
-<<<<<<< HEAD
-
-const userSchema = new mongoose.Schema({
-    role: {
-        type: String,
-        required: true,
-        enum: ['user', 'therapist', 'admin'], 
-        default: 'user'
-    },
-    isAnonymous: {
-        type: Boolean,
-        default: true
-    },
-    identifier: {
-        type: String,
-        required: true,
-        unique: true, 
-        trim: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
-}, { timestamps: true }); 
-=======
 const bcrypt = require('bcrypt'); 
 
 const userSchema = new mongoose.Schema({
@@ -132,6 +107,5 @@ userSchema.pre('save', async function() {
 userSchema.methods.comparePassword = async function(candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 };
->>>>>>> testing
 
 module.exports = mongoose.model('User', userSchema);

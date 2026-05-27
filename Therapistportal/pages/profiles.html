@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Therapist Profile</title>
-    <link rel="stylesheet" href="../css/therapistprofile.css">
+    <!-- <link rel="stylesheet" href="../css/therapistprofile.css"> -->
+     <link rel="stylesheet" href="/therapist/css/therapistprofile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -30,7 +31,7 @@
                 </button>
 
                 <div id="profileDropdown" class="dropdown-menu">
-                    <a href="profiles.html"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                    <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
                     <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                     <hr>
                     <button id="logoutBtn" class="logout-btn">
@@ -46,11 +47,11 @@
         
         <aside class="sidebar">
             <nav class="nav-menu">
-                <a href="client.html" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
-                <a href="calendar.html" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
-                <a href="message.html" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="reliefs.html" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
-                <a href="report.html" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="/therapist/reliefs" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
                 <h4>Today's Overview</h4>
@@ -162,7 +163,7 @@
                             </div>
 
                             <div id="session-edit" class="edit-form hidden">
-                                <label>Price per Session ($)</label>
+                                <label>Price per Session (Rands)</label>
                                 <input type="number" id="session-price" placeholder="e.g. 150">
                                 
                                 <label>Session Duration (Minutes)</label>
@@ -234,11 +235,13 @@
         </main>
     </div>
 
-    <script src="../js/shared/profileDropdown.js"></script>
-    <script src="../js/shared/api.js"></script>
-    <script src="../js/shared/utils.js"></script>
-    <script src="../js/shared/authGuard.js"></script>
-    <script src="../js/shared/sidebar.js"></script>
-    <script src="../js/theProfile.js"></script>
+
+    
+    <script src="/therapist/js/shared/profileDropdown.js"></script>
+    <script src="/therapist/js/shared/api.js"></script>
+    <script src="/therapist/js/shared/utils.js"></script>
+    <script src="/therapist/js/shared/authGuard.js"></script>
+    <script src="/therapist/js/shared/sidebar.js"></script>
+    <script src="/therapist/js/theProfile.js"></script>
 </body>
 </html>

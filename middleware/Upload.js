@@ -63,4 +63,4 @@ const uploadCredential = multer({
     limits: { fileSize: 10 * 1024 * 1024 }  // 10MB max
 });
 
-module.exports = { uploadProfileImage, uploadCredential };
+// module.exports =  {uploadProfileImage, uploadCredential};

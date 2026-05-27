@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Check if we are on the Calendar page
-    if (document.getElementById('appointments-list-container')) {
-        fetchAndRenderAppointments();
-    }
+if (document.getElementById('appointments-list-container')) {
+    fetchAppointments(); 
+}
 
     // Check if we are on the Report page
     if (document.getElementById('report-issue-form')) {

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Cancelled - HearMe</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            max-width: 480px;
+            width: 90%;
+        }
+        .icon { font-size: 4rem; margin-bottom: 16px; }
+        h1 { color: #dc2626; margin-bottom: 12px; }
+        p { color: #64748b; margin-bottom: 24px; line-height: 1.6; }
+        .btn {
+            background: #7c3aed;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">❌</div>
+        <h1>Payment Cancelled</h1>
+        <p>Your payment was cancelled and no booking was made. You can try again anytime.</p>
+        <a href="/user/experts" class="btn">Back to Experts</a>
+    </div>
+
+    <script>
+        // Clean up the cancelled appointment
+        const params = new URLSearchParams(window.location.search);
+        const appointmentId = params.get('appointmentId');
+        const token = localStorage.getItem('token');
+
+        if (appointmentId && token) {
+            fetch(`/api/appointments/${appointmentId}/cancel`, {
+                method: 'PATCH',
+                headers: { 'Authorization': `Bearer ${token}` }
+            }).catch(err => console.error(err));
+        }
+    </script>
+</body>
+</html>

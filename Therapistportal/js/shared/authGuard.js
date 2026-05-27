@@ -1,5 +1,4 @@
 // CHECK TOKEN
-
 const token =
     localStorage.getItem("token");
 
@@ -7,6 +6,6 @@ const token =
 
 if(!token){
 
-    window.location.href =
-        "/old interfaces/login.html";
+    window.location.href = "/login";
+    alert("could not perfom this function please login")
 }

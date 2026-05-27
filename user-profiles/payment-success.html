@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - HearMe</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            max-width: 480px;
+            width: 90%;
+        }
+        .icon { font-size: 4rem; margin-bottom: 16px; }
+        h1 { color: #16a34a; margin-bottom: 12px; }
+        p { color: #64748b; margin-bottom: 24px; line-height: 1.6; }
+        .btn {
+            background: #7c3aed;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .appointment-info {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .appointment-info p { margin-bottom: 4px; color: #166534; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">✅</div>
+        <h1>Payment Successful!</h1>
+        <p>Your session has been booked successfully. The therapist will confirm your appointment shortly.</p>
+        <div class="appointment-info" id="appointment-info">
+            <p>Loading booking details...</p>
+        </div>
+        <a href="/user/profile" class="btn">View My Sessions</a>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const appointmentId = params.get('appointmentId');
+        const token = localStorage.getItem('token');
+
+        if (appointmentId && token) {
+            fetch(`/api/payments/confirm/${appointmentId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(res => res.json())
+            .then(data => {
+                const a = data.appointment;
+                if (a) {
+                    document.getElementById('appointment-info').innerHTML = `
+                        <p><strong>Therapist:</strong> ${a.therapistName}</p>
+                        <p><strong>Date:</strong> ${a.date}</p>
+                        <p><strong>Time:</strong> ${a.time}</p>
+                        <p><strong>Type:</strong> ${a.type}</p>
+                    `;
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    </script>
+</body>
+</html>

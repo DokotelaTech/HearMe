@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../database/models/users');
 const { verifyToken } = require('../middleware/authMiddleware');
-const { uploadProfileImage, uploadCredential } = require('../middleware/upload');
+// const  {uploadProfileImage, uploadCredential}  = require('../middleware/upload');
 
 // =========================================
 //    POST /api/upload/profile-image

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Profile</title>
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="/user/profile.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -12,32 +12,47 @@
 
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
-        <div class="nav-right">
-            <span class="user-tag">User</span>
-            <div class="user-avatar-small">U</div>
+        <div class="user-profile-section">
+            </a>
+            <div class="user-dropdown-container">
+                <div class="user-profile-trigger" id="dropdownTrigger">
+                    <div class="user-badge">User</div>
+                    <div class="user-avatar">U</div>
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/user/profile" class="dropdown-item">
+                        <i data-lucide="user"></i>
+                        <span>My Profile</span>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="#" class="dropdown-item logout-item" id="logout-btn">
+                        <i data-lucide="log-out"></i>
+                        <span>Log Out</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </header>
 
     <div class="app-container">
-        <!-- Fixed Sidebar Navigation -->
         <nav class="sidebar">
-            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
-            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="profile.html" class="nav-item ative"><i data-lucide="user"></i><span>Profile</span></a>
+            <a href="/user/community" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="/user/chat" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="/user/experts" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="/user/sos" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="/user/relief" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="/user/profile" class="nav-item active"><i data-lucide="user"></i><span>Profile</span></a>
         </nav>
 
         <main class="profile-area">
-            <!-- Statistics Banner: Hard-codes removed, starts at 0 -->
+
             <div class="user-banner">
                 <div class="user-info">
-                    <div class="large-avatar">A</div>
+                    <div class="large-avatar" id="large-avatar">U</div>
                     <div class="user-details">
-                        <h3>Anonymous User #8472</h3>
-                        <p>Member since March 2026</p>
+                        <h3 id="profile-name">Loading...</h3>
+                        <p id="profile-since">Member since...</p>
                     </div>
                 </div>
                 <div class="user-stats">
@@ -61,7 +76,6 @@
             </div>
 
             <div class="profile-grid">
-                <!-- Roadmap Section (5 Tasks) -->
                 <div class="card roadmap-card">
                     <div class="card-header">
                         <h3>Your Healing Roadmap</h3>
@@ -73,73 +87,52 @@
                     <div class="progress-track">
                         <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
                     </div>
-
-                    <div class="task-list">
-                        <div class="task-item">
-                            <div class="task-check"><div class="circle-outline"></div></div>
-                            <div class="task-content">
-                                <h4>Practice daily gratitude</h4>
-                                <p>Write down 3 things you're grateful for each morning</p>
-                            </div>
-                            <span class="badge badge-purple">Daily Practice</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-check"><div class="circle-outline"></div></div>
-                            <div class="task-content">
-                                <h4>Join a support group</h4>
-                                <p>Connect with others who share similar experiences</p>
-                            </div>
-                            <span class="badge badge-purple">Community</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-check"><div class="circle-outline"></div></div>
-                            <div class="task-content">
-                                <h4>Try breathing exercises</h4>
-                                <p>Practice the 4-4-4 breathing technique</p>
-                            </div>
-                            <span class="badge badge-purple">Stress Management</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-check"><div class="circle-outline"></div></div>
-                            <div class="task-content">
-                                <h4>Schedule a session</h4>
-                                <p>Book your first session with a verified expert</p>
-                            </div>
-                            <span class="badge badge-purple">Professional Support</span>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-check"><div class="circle-outline"></div></div>
-                            <div class="task-content">
-                                <h4>Share your success</h4>
-                                <p>Post a success story to inspire others in the community</p>
-                            </div>
-                            <span class="badge badge-purple">Give Back</span>
-                        </div>
-                    </div>
+                    <div class="task-list" id="roadmap-task-list"></div>
                 </div>
 
-                <!-- Independent Dynamic Sidebar Sections -->
                 <div class="right-column">
                     <div class="card side-card">
                         <div class="card-header">
-                            <h3><i data-lucide="bell" class="purple-icon"></i> Upcoming Events</h3>
+                            <h3>
+                                <i data-lucide="calendar" class="purple-icon"></i>
+                                Upcoming Sessions
+                            </h3>
                         </div>
-                        <!-- Emptied: Handled by JS localStorage logic -->
-                        <div id="dynamic-events" class="dynamic-container"></div>
+                        <div id="dynamic-events" class="dynamic-container">
+                            <p class="empty-state">No upcoming sessions</p>
+                        </div>
                     </div>
-                    
+
                     <div class="card side-card">
                         <div class="card-header">
-                            <h3><i data-lucide="award" class="gold-icon"></i> Achievements</h3>
+                            <h3>
+                                <i data-lucide="award" class="gold-icon"></i>
+                                Achievements
+                            </h3>
                         </div>
-                        <!-- Emptied: Handled by JS independent data array -->
                         <div id="dynamic-achievements" class="dynamic-container"></div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    
-    <script src="profile.js"></script>
+
+            <!-- VIDEO MODAL -->
+        <div class="modal-overlay" id="video-modal-overlay"></div>
+        <div class="video-modal" id="video-modal">
+            <div class="video-modal-header">
+                <h3 id="video-modal-title">Session in Progress</h3>
+                <button class="close-btn" id="close-video-modal">✕ End Session</button>
+            </div>
+            <div class="video-modal-body">
+                <iframe id="daily-iframe"
+                    allow="camera; microphone; fullscreen; display-capture"
+                    style="width:100%; height:100%; border:none; border-radius:8px;">
+                </iframe>
+            </div>
+        </div>
+
+    <script src="/user/profile.js"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

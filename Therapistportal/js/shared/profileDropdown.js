@@ -14,7 +14,6 @@ document.getElementById(
 );
 
 // TOGGLE DROPDOWN
-
 profileToggle?.addEventListener(
     "click",
     (event) => {
@@ -57,7 +56,6 @@ window.addEventListener(
 );
 
 // LOGOUT
-
 document.getElementById(
     "logoutBtn"
 )?.addEventListener(
@@ -73,6 +71,6 @@ document.getElementById(
         );
 
         window.location.href =
-        "../../landing-page/login.html";
+        "/login";
     }
 );
