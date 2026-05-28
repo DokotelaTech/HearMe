@@ -1,4 +1,4 @@
-// UI LOGIC (Expand / Collapse composer)
+// UI LOGIC (Expand / Collapse composer) - Kept exactly as you wrote it!
 const collapsed   = document.getElementById('post-collapsed');
 const expanded    = document.getElementById('post-expanded');
 const simpleInput = document.getElementById('post-input-simple');
@@ -74,20 +74,28 @@ function renderPosts(posts) {
     }
 
     posts.forEach(post => {
+        // Create the card container
         const card = document.createElement('div');
-        card.className = 'post-card';
-        card.setAttribute('data-id', post._id);
+        // Ensure this matches the CSS class for the wrapper
+        card.className = 'post-card'; 
         
+        // Setup styling based on Struggle vs Success
         const isSuccess = post.postType === 'success';
         const badgeClass = isSuccess ? 'badge-success' : 'badge-struggle';
         const badgeIcon = isSuccess ? '<i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> ' : '';
         const badgeText = isSuccess ? 'Success' : 'Struggle';
         
+        // Only show the sparkles icon if it's a success post
+        const badgeIcon = isSuccess ? '<i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> ' : '';
+        const badgeText = isSuccess ? 'Success' : 'Struggle';
+        
+        // Calculate interactions
         const likeCount = post.likes ? post.likes.length : 0;
         const commentCount = post.comments ? post.comments.length : 0;
         const isLikedByMe = post.likes && post.likes.includes(currentUserIdentifier);
         const initial = post.authorIdentifier ? post.authorIdentifier.charAt(0).toUpperCase() : 'U';
 
+        // Inject the clean, class-based HTML
         card.innerHTML = `
             <div class="post-header">
                 <div class="post-user-info">
@@ -137,6 +145,7 @@ function renderPosts(posts) {
         postContainer.appendChild(card);
     });
 
+    // Re-initialize Lucide icons for the newly injected HTML
     lucide.createIcons();
 }
 
@@ -225,8 +234,14 @@ postBtn.addEventListener('click', async () => {
     try {
         const response = await fetch('http://localhost:5000/api/posts', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ postType, content: text })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Show the bouncer our ID
+            },
+            body: JSON.stringify({
+                postType: postType,
+                content: text
+            })
         });
 
         if (response.ok) {
