@@ -7,25 +7,35 @@ const { verifyToken } = require('../middleware/authMiddleware');
 
 // =========================================
 // GENERATE PAYFAST SIGNATURE
+// Based on official PayFast documentation
 // =========================================
-function generateSignature(data, passphrase) {
-    let pfOutput = '';
-    for (const key in data) {
-        if (data[key] !== '') {
-            pfOutput += `${key}=${encodeURIComponent(data[key]).replace(/%20/g, '+')}&`;
+function generateSignature(data, passphrase = null) {
+    // Remove signature field if present
+    const pfData = { ...data };
+    delete pfData.signature;
+
+    // Build query string
+    let pfParamString = '';
+    for (const key in pfData) {
+        if (pfData[key] !== '' && pfData[key] !== null && pfData[key] !== undefined) {
+            pfParamString += `${key}=${encodeURIComponent(pfData[key]).replace(/%20/g, '+')}&`;
         }
     }
-    // Remove last &
-    pfOutput = pfOutput.slice(0, -1);
-    if (passphrase) {
-        pfOutput += `&passphrase=${encodeURIComponent(passphrase).replace(/%20/g, '+')}`;
+
+    // Remove trailing &
+    pfParamString = pfParamString.slice(0, -1);
+
+    // Append passphrase if set
+    if (passphrase !== null && passphrase !== '') {
+        pfParamString += `&passphrase=${encodeURIComponent(passphrase).replace(/%20/g, '+')}`;
     }
-    return crypto.createHash('md5').update(pfOutput).digest('hex');
+
+    console.log('PayFast signature string:', pfParamString);
+    return crypto.createHash('md5').update(pfParamString).digest('hex');
 }
 
 // =========================================
 // POST /api/payments/initiate
-// Create payment data and return PayFast URL
 // =========================================
 router.post('/initiate', verifyToken, async (req, res) => {
     try {
@@ -42,7 +52,7 @@ router.post('/initiate', verifyToken, async (req, res) => {
         const userName = user.anonymousName || user.username || 'User';
         const therapistName = `${therapist.firstName} ${therapist.lastName}`;
 
-        // Store pending booking in DB before payment
+        // Save appointment
         const appointment = new Appointment({
             userId: req.user.userId,
             therapistId,
@@ -52,24 +62,23 @@ router.post('/initiate', verifyToken, async (req, res) => {
             time,
             type: type || 'online',
             note,
-            status: 'pending_payment'  // new status
+            status: 'pending_payment'
         });
         await appointment.save();
 
-        // Build PayFast payment data
+        // Build PayFast fields in exact required order
         const pfData = {
-            merchant_id: process.env.PAYFAST_MERCHANT_ID,
-            merchant_key: process.env.PAYFAST_MERCHANT_KEY,
-            return_url: `${process.env.FRONTEND_URL}/payment/success?appointmentId=${appointment._id}`,
-            cancel_url: `${process.env.FRONTEND_URL}/payment/cancel?appointmentId=${appointment._id}`,
-            notify_url: `${process.env.FRONTEND_URL}/api/payments/notify`,
-            name_first: userName,
-            name_last: '',
+            merchant_id:   process.env.PAYFAST_MERCHANT_ID,
+            merchant_key:  process.env.PAYFAST_MERCHANT_KEY,
+            return_url:    `${process.env.FRONTEND_URL}/payment/success?appointmentId=${appointment._id}`,
+            cancel_url:    `${process.env.FRONTEND_URL}/payment/cancel?appointmentId=${appointment._id}`,
+            notify_url:    `${process.env.FRONTEND_URL}/api/payments/notify`,
+            name_first:    (userName.split(' ')[0] || 'User').substring(0, 50),
+            name_last:     (userName.split(' ')[1] || '').substring(0, 100),
             email_address: user.email,
-            m_payment_id: appointment._id.toString(),
-            amount: amount.toFixed(2),
-            item_name: `Therapy Session with ${therapistName}`,
-            item_description: `${type || 'online'} session on ${date} at ${time}`
+            m_payment_id:  appointment._id.toString(),
+            amount:        Number(amount).toFixed(2),
+            item_name:     `Therapy Session with ${therapistName}`.substring(0, 100)
         };
 
         // Generate signature
@@ -89,7 +98,6 @@ router.post('/initiate', verifyToken, async (req, res) => {
 
 // =========================================
 // POST /api/payments/notify
-// PayFast ITN — confirms payment was received
 // =========================================
 router.post('/notify', express.urlencoded({ extended: false }), async (req, res) => {
     try {
@@ -97,19 +105,21 @@ router.post('/notify', express.urlencoded({ extended: false }), async (req, res)
         const appointmentId = pfData.m_payment_id;
         const paymentStatus = pfData.payment_status;
 
+        console.log('PayFast notify:', pfData);
+
         if (paymentStatus === 'COMPLETE') {
             await Appointment.findByIdAndUpdate(
                 appointmentId,
-                { status: 'pending' },  // now visible to therapist
+                { status: 'pending' },
                 { returnDocument: 'after' }
             );
-            console.log(`✅ Payment confirmed for appointment: ${appointmentId}`);
+            console.log(`✅ Payment confirmed: ${appointmentId}`);
         } else {
             await Appointment.findByIdAndUpdate(
                 appointmentId,
                 { status: 'cancelled' }
             );
-            console.log(`❌ Payment failed for appointment: ${appointmentId}`);
+            console.log(`❌ Payment failed: ${appointmentId}`);
         }
 
         res.status(200).send('OK');
@@ -120,8 +130,7 @@ router.post('/notify', express.urlencoded({ extended: false }), async (req, res)
 });
 
 // =========================================
-// GET /api/payments/success/:id
-// Confirm appointment after redirect
+// GET /api/payments/confirm/:id
 // =========================================
 router.get('/confirm/:id', verifyToken, async (req, res) => {
     try {
@@ -130,6 +139,18 @@ router.get('/confirm/:id', verifyToken, async (req, res) => {
             return res.status(404).json({ message: 'Appointment not found' });
         }
         res.status(200).json({ appointment });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// =========================================
+// PATCH /api/payments/cancel/:id
+// =========================================
+router.patch('/cancel/:id', verifyToken, async (req, res) => {
+    try {
+        await Appointment.findByIdAndUpdate(req.params.id, { status: 'cancelled' });
+        res.status(200).json({ message: 'Appointment cancelled' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

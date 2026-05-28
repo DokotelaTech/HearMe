@@ -1,52 +1,100 @@
-const getReports =
-async (req,res) => {
+const Report = require('../database/models/Report');
+const User = require('../database/models/users');
 
-    try{
+// ==========================================
+// CREATE REPORT (therapist submits)
+// ==========================================
+const createReport = async (req, res) => {
+    try {
+        const { category, description } = req.body;
 
-        return res.status(200).json({
+        if (!category || !description) {
+            return res.status(400).json({ message: 'Category and description are required' });
+        }
 
-            reports:[]
+        const therapist = await User.findById(req.user.userId).select('firstName lastName');
+        if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
+
+        const report = new Report({
+            therapistId: req.user.userId,
+            therapistName: `${therapist.firstName} ${therapist.lastName}`,
+            category,
+            description
         });
 
-    }catch(error){
+        await report.save();
 
-        return res.status(500).json({
-            message:error.message
-        });
+        return res.status(201).json({ message: 'Report submitted successfully', report });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
 };
 
-const createReport =
-async (req,res) => {
+// ==========================================
+// GET MY REPORTS (therapist sees own reports)
+// ==========================================
+const getMyReports = async (req, res) => {
+    try {
+        const reports = await Report.find({
+            therapistId: req.user.userId
+        }).sort({ createdAt: -1 });
 
-    try{
+        return res.status(200).json({ reports });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
-        const {
-            category,
-            description
-        } = req.body;
+// ==========================================
+// GET ALL REPORTS (admin only)
+// ==========================================
+const getAllReports = async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Admin access only' });
+        }
 
-        return res.status(201).json({
+        const reports = await Report.find()
+            .sort({ createdAt: -1 });
 
-            message:"Report created",
+        return res.status(200).json({ reports });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
-            report:{
-                category,
-                description
-            }
-        });
+// ==========================================
+// UPDATE REPORT STATUS (admin only)
+// ==========================================
+const updateReportStatus = async (req, res) => {
+    try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Admin access only' });
+        }
 
-    }catch(error){
+        const { status, adminNote } = req.body;
 
-        return res.status(500).json({
-            message:error.message
-        });
+        if (!['pending', 'reviewed', 'resolved'].includes(status)) {
+            return res.status(400).json({ message: 'Invalid status' });
+        }
+
+        const report = await Report.findByIdAndUpdate(
+            req.params.id,
+            { $set: { status, adminNote: adminNote || '' } },
+            { new: true }
+        );
+
+        if (!report) return res.status(404).json({ message: 'Report not found' });
+
+        return res.status(200).json({ message: `Report marked as ${status}`, report });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
 };
 
 module.exports = {
-
-    getReports,
-
-    createReport
+    createReport,
+    getMyReports,
+    getAllReports,
+    updateReportStatus
 };

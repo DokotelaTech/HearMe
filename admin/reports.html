@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Admin Reports</title>
+    <link rel="stylesheet" href="/admin/admins.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .report-filter-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0;
+        }
+        .report-filter-tab {
+            padding: 8px 18px;
+            border: none;
+            background: none;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all 0.15s;
+        }
+        .report-filter-tab:hover { color: #0f172a; }
+        .report-filter-tab.active { color: #c0146c; border-bottom-color: #c0146c; }
+        .badge-count {
+            background: #ef4444;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+            margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">HearMe</div>
+            <nav class="nav-menu">
+                <a href="/admin/dashboard" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </a>
+                <a href="/admin/reports" class="nav-item active">
+                    <i class="fa-solid fa-triangle-exclamation"></i> User Reports
+                    <span class="badge-count" id="sidebar-reports-badge" style="display:none;">0</span>
+                </a>
+                <a href="/admin/profile" class="nav-item">
+                    <i class="fa-solid fa-user"></i> My Profile
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="route-info">/admin/reports</div>
+                <div class="user-profile-container">
+                    <div class="user-profile" id="profileMenuBtn">
+                        <span class="role-badge">Admin</span>
+                        <div class="avatar" id="header-avatar">-</div>
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="/admin/profile" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                        <hr>
+                        <a href="#" class="dropdown-item" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-section active">
+                <div class="dashboard-header">
+                    <h1>User Behavior & Bad Conduct Reports</h1>
+                    <p>Review and act upon incidents reported by therapists regarding clients or technical issues.</p>
+                </div>
+
+                <div class="report-filter-row">
+                    <button class="report-filter-tab active" data-filter="all"      onclick="setReportFilter('all')">All Reports</button>
+                    <button class="report-filter-tab"        data-filter="pending"  onclick="setReportFilter('pending')">Pending</button>
+                    <button class="report-filter-tab"        data-filter="reviewed" onclick="setReportFilter('reviewed')">Reviewed</button>
+                    <button class="report-filter-tab"        data-filter="resolved" onclick="setReportFilter('resolved')">Resolved</button>
+                </div>
+
+                <div class="reports-table-container">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Submitted By</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-table-body">
+                            <tr>
+                                <td colspan="5" class="empty-state">Loading reports...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/adminReport.js"></script>
+    <script>
+        // Auth check
+        if (!localStorage.getItem('adminToken')) {
+            window.location.href = '/admin/login';
+        }
+
+        // Profile dropdown
+        const profileMenuBtn = document.getElementById('profileMenuBtn');
+        const profileDropdown = document.getElementById('profileDropdown');
+        profileMenuBtn.addEventListener('click', () => profileDropdown.classList.toggle('show'));
+        document.addEventListener('click', (e) => {
+            if (!profileMenuBtn.contains(e.target)) profileDropdown.classList.remove('show');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('adminToken');
+            window.location.href = '/admin/login';
+        });
+
+        // Load reports on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAllReports();
+        });
+    </script>
+
+</body>
+</html>

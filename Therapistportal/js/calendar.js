@@ -105,7 +105,6 @@ function renderSchedule(appointmentsList) {
 // =========================================
 async function startSessionAndNotify(appointmentId, userName, userId) {
     try {
-        // Notify user — non-blocking
         fetch(`${apiBaseUrl}/notifications/session-started`, {
             method: 'POST',
             headers: {
@@ -115,7 +114,6 @@ async function startSessionAndNotify(appointmentId, userName, userId) {
             body: JSON.stringify({ userId, appointmentId })
         }).catch(err => console.error('Notification failed:', err));
 
-        // Create/get Daily.co room
         const res = await fetch(`${apiBaseUrl}/appointments/${appointmentId}/join`, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ${authToken}` }
@@ -127,7 +125,6 @@ async function startSessionAndNotify(appointmentId, userName, userId) {
             return;
         }
 
-        // Open video modal
         const modalTitle = document.getElementById('video-modal-title');
         const iframe = document.getElementById('daily-iframe');
         const modal = document.getElementById('video-modal');
@@ -166,9 +163,71 @@ async function loadAvailability() {
         const data = await res.json();
         availability = data.schedule || [];
         renderAvailability();
+        updateNextAvailable(); // ✅ calculate next slot from availability
     } catch (err) {
         console.error('Availability load error:', err);
     }
+}
+
+// =========================================
+// CALCULATE NEXT AVAILABLE FROM SCHEDULE
+// =========================================
+function updateNextAvailable() {
+    const el = document.getElementById('cal-next');
+    if (!el) return;
+
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const now = new Date();
+    const currentDay = now.getDay(); // 0 = Sunday
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+
+    // Search up to 7 days ahead
+    for (let i = 0; i < 7; i++) {
+        const checkDayIndex = (currentDay + i) % 7;
+        const checkDayName = dayNames[checkDayIndex];
+        const slot = availability.find(s => s.day === checkDayName && s.active && s.start);
+
+        if (!slot) continue;
+
+        const [startHour, startMinute] = slot.start.split(':').map(Number);
+        const [endHour, endMinute] = slot.end.split(':').map(Number);
+
+        // If today, check if the slot hasn't ended yet
+        if (i === 0) {
+            const slotEndMinutes = endHour * 60 + endMinute;
+            const nowMinutes = currentHour * 60 + currentMinute;
+
+            if (nowMinutes >= slotEndMinutes) continue; // slot already passed today
+
+            // If we're before or within the slot
+            const displayTime = nowMinutes < startHour * 60 + startMinute
+                ? slot.start  // slot hasn't started yet today
+                : formatTime(currentHour, currentMinute); // we're within the slot now
+
+            el.textContent = i === 0 ? `Today ${formatTime12(slot.start)}` : `${checkDayName} ${formatTime12(slot.start)}`;
+            return;
+        }
+
+        // Future day
+        el.textContent = i === 1
+            ? `Tomorrow ${formatTime12(slot.start)}`
+            : `${checkDayName} ${formatTime12(slot.start)}`;
+        return;
+    }
+
+    el.textContent = 'No availability set';
+}
+
+// =========================================
+// TIME FORMAT HELPERS
+// =========================================
+function formatTime12(time24) {
+    if (!time24) return '';
+    const [hour, minute] = time24.split(':').map(Number);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const h = hour % 12 || 12;
+    return `${h}:${minute.toString().padStart(2, '0')} ${ampm}`;
 }
 
 // =========================================
@@ -188,6 +247,7 @@ async function saveAvailability() {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message);
 
+        updateNextAvailable(); // ✅ refresh after saving
         alert('Availability saved successfully!');
     } catch (err) {
         alert('Failed to save: ' + err.message);
@@ -227,10 +287,12 @@ function renderAvailability() {
 function toggleDay(index) {
     availability[index].active = !availability[index].active;
     renderAvailability();
+    updateNextAvailable();
 }
 
 function updateTime(index, field, value) {
     availability[index][field] = value;
+    updateNextAvailable();
 }
 
 // =========================================
@@ -266,21 +328,12 @@ function updateDashboardStats(approved, pending) {
         return diff >= 0 && diff <= 7;
     }).length;
 
-    const future = approved
-        .map(a => new Date(`${a.date}T${a.time}`))
-        .filter(d => d > now)
-        .sort((a, b) => a - b);
-
-    const nextStr = future.length > 0
-        ? future[0].toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })
-        : '--:-- PM';
-
     const el = id => document.getElementById(id);
     if (el('cal-today')) el('cal-today').textContent = todayCount;
     if (el('cal-week')) el('cal-week').textContent = weekCount;
-    if (el('cal-next')) el('cal-next').textContent = nextStr;
     if (el('cal-pending')) el('cal-pending').textContent = pending.length;
     if (el('overview-sessions-today')) el('overview-sessions-today').textContent = todayCount;
+    // cal-next is handled by updateNextAvailable() from availability data
 }
 
 // =========================================

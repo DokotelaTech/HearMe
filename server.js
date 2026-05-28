@@ -49,6 +49,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const reliefRoutes = require('./routes/reliefRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 
+
 app.use('/api/payments', paymentRoutes);
 app.use('/api/relief', reliefRoutes);
 app.use('/api/admin', adminRoutes);
@@ -139,6 +140,25 @@ app.get('/payment/success', (req, res) => {
 app.get('/payment/cancel', (req, res) => {
     res.sendFile(path.join(__dirname, 'user-profiles', 'payment-cancel.html'));
 });
+
+
+// admin dashboard
+app.get('/admin/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'admins.html'));
+});
+
+app.get('/admin/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'dashboard.html'));
+});
+ 
+app.get('/admin/reports', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'reports.html'));
+});
+ 
+app.get('/admin/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'adminProfile.html'));
+});
+ 
 
 // =========================================
 // MODELS

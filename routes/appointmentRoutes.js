@@ -111,6 +111,35 @@ router.post('/:id/join', verifyToken, async (req, res) => {
     }
 });
 
+
+// PATCH /api/appointments/:id/status
+router.patch('/:id/status', verifyToken, async (req, res) => {
+    try {
+        const { status } = req.body;
+        const validStatuses = ['approved', 'denied', 'cancelled', 'completed'];
+
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ message: 'Invalid status' });
+        }
+
+        const appointment = await Appointment.findById(req.params.id);
+        if (!appointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        if (appointment.therapistId.toString() !== req.user.userId) {
+            return res.status(403).json({ message: 'Unauthorized' });
+        }
+
+        appointment.status = status;
+        await appointment.save();
+
+        res.status(200).json({ message: `Appointment ${status}`, appointment });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // PUT /api/appointments/:id — general update
 router.put('/:id', verifyToken, updateAppointment);
 

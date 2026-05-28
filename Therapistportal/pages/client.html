@@ -16,11 +16,10 @@
                 <span class="badge">Therapist Portal</span>
             </div>
             <nav class="nav-menu">
-
-                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/clients" class="nav-item active"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
                 <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="/therapist/reliefs" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
@@ -38,26 +37,17 @@
                         <i class="fa-regular fa-message"></i>
                         <span class="dot"></span>
                     </div>
-
                     <div class="profile-container">
                         <button id="profileToggle" class="profile-btn">
-                            <div class="avatar" id="nav-avatar">
-                                </div>
-
+                            <div class="avatar" id="nav-avatar"></div>
                             <div class="profile-info">
-                                <span class="profile-name" id="nav-name">
-                                    Loading...
-                                </span>
-                                <span class="profile-role" id="nav-role">
-                                    Therapist
-                                </span>
+                                <span class="profile-name" id="nav-name">Loading...</span>
+                                <span class="profile-role" id="nav-role">Therapist</span>
                             </div>
-
                             <div class="dropdown-arrow">
                                 <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
                             </div>
                         </button>
-
                         <div id="profileDropdown" class="dropdown-menu">
                             <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
                             <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
@@ -70,7 +60,7 @@
                     </div>
                 </div>
             </header>
-            
+
             <div class="content-container">
                 <div class="page-header">
                     <div>
@@ -78,33 +68,39 @@
                         <p>Manage your client sessions and communications</p>
                     </div>
                 </div>
-                
+
                 <div class="stats-row">
-                    <div class="stat-card"><span>Total Clients</span><strong id="stat-total-clients">0</strong></div>
+                    <div class="stat-card"><span>Total Clients</span><strong id="stat-total">0</strong></div>
                     <div class="stat-card"><span>Active</span><strong class="green-text" id="stat-active">0</strong></div>
                     <div class="stat-card"><span>Pending</span><strong class="yellow-text" id="stat-pending">0</strong></div>
-                    <div class="stat-card"><span>New Messages</span><strong class="purple-text" id="stat-new-msgs">0</strong></div>
+                    <div class="stat-card"><span>New Messages</span><strong class="purple-text" id="stat-newmsgs">0</strong></div>
                 </div>
-                
+
                 <div class="filter-bar">
-                    <div class="search-input"><i class="fa-solid fa-search"></i> <input type="text" placeholder="Search clients by ID or issue..."></div>
+                    <div class="search-input">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="client-search" placeholder="Search clients by name or issue...">
+                    </div>
                     <div class="tabs">
-                        <button class="active">All</button><button>Active</button><button>Pending</button><button>Inactive</button>
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="pending">Pending</button>
+                        <button class="filter-btn" data-filter="inactive">Inactive</button>
                     </div>
                 </div>
-                
+
                 <div id="clients-list-container"></div>
             </div>
         </main>
     </div>
 
-<script src="/therapist/js/shared/loadTherapistData.js"></script>
-<script src="/therapist/js/shared/profileDropdown.js"></script>
-<script src="/therapist/js/shared/api.js"></script>
-<script src="/therapist/js/shared/utils.js"></script>
-<script src="/therapist/js/shared/authGuard.js"></script>
-<script src="/therapist/js/shared/sidebar.js"></script>
-<script src="/therapist/js/shared/therapistProfile.js"></script>
-<script src="/therapist/js/client.js"></script>
-    </body>
+    <script src="/therapist/js/shared/loadTherapistData.js"></script>
+    <script src="/therapist/js/shared/profileDropdown.js"></script>
+    <script src="/therapist/js/shared/api.js"></script>
+    <script src="/therapist/js/shared/utils.js"></script>
+    <script src="/therapist/js/shared/authGuard.js"></script>
+    <script src="/therapist/js/shared/sidebar.js"></script>
+    <script src="/therapist/js/shared/therapistProfile.js"></script>
+    <script src="/therapist/js/client.js"></script>
+</body>
 </html>

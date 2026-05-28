@@ -1,20 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Check if we are on the Clients page
+
+    // Clients page
     if (document.getElementById('clients-list-container')) {
-        fetchAndRenderClients();
+        // client.js handles this via its own IIFE
     }
 
-    // Check if we are on the Calendar page
-if (document.getElementById('appointments-list-container')) {
-    fetchAppointments(); 
-}
+    // Calendar page
+    if (document.getElementById('appointments-list-container')) {
+        loadTherapistAppointments(); // ✅ matches calendar.js
+        loadAvailability();          // ✅ matches calendar.js
+    }
 
-    // Check if we are on the Report page
+    // Report page
     if (document.getElementById('report-issue-form')) {
         setupReportFormUI();
     }
 });
+
+// ==========================================
+// REPORT PAGE LOGIC
+// ==========================================
+function setupReportFormUI() {
+    const cards = document.querySelectorAll('.cat-btn');
+    const hiddenInput = document.getElementById('report-category-input');
+
+    if (!cards || !hiddenInput) return;
+
+    cards.forEach(card => {
+        card.addEventListener('click', function () {
+            cards.forEach(c => {
+                c.classList.remove('active');
+                c.style.backgroundColor = 'white';
+                c.style.borderColor = '#e5e7eb';
+            });
+            this.classList.add('active');
+            this.style.backgroundColor = '#eff6ff';
+            this.style.borderColor = '#3b82f6';
+            hiddenInput.value = this.getAttribute('data-type');
+        });
+    });
+
+    document.getElementById('report-issue-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Ready to send report to Database!');
+    });
+}
 
 // ==========================================
 // CLIENTS PAGE LOGIC

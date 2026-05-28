@@ -1,14 +1,23 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-
-const { authMiddleware } = require("../middleware/authMiddleware");
-
+const { verifyToken } = require('../middleware/authMiddleware');
 const {
     createReport,
-    getReports
-} = require("../controllers/reportController");
+    getMyReports,
+    getAllReports,
+    updateReportStatus
+} = require('../controllers/reportController');
 
-router.get("/", authMiddleware, getReports);
-router.post("/", authMiddleware, createReport);
+// Therapist: submit a report
+router.post('/', verifyToken, createReport);
 
-module.exports = router; 
+// Therapist: get their own reports
+router.get('/my', verifyToken, getMyReports);
+
+// Admin: get all reports
+router.get('/all', verifyToken, getAllReports);
+
+// Admin: update report status
+router.patch('/:id/status', verifyToken, updateReportStatus);
+
+module.exports = router;
