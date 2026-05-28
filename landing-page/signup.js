@@ -204,6 +204,7 @@ document.getElementById('signup-form')
 
         if(response.ok){
 <<<<<<< HEAD
+<<<<<<< HEAD
             alert('Account created successfully!');
             window.location.href =
                 '/login';
@@ -216,22 +217,21 @@ document.getElementById('signup-form')
     }
 =======
 
+=======
+>>>>>>> ce02a37 (new features)
             alert('Account created successfully!');
-
             window.location.href =
-                'login.html';
-
+                '/login';
         }else{
-
             alert(data.message);
         }
-
     }catch(err){
-
         console.log(err);
-
         alert('Server error');
     }
+<<<<<<< HEAD
 
 >>>>>>> e9da0a9 (therapists)
+=======
+>>>>>>> ce02a37 (new features)
 });

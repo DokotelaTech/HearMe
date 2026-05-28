@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 (function() {
 
 const clientsContainer = document.getElementById("clients-list-container");
@@ -48,114 +49,77 @@ function renderClients() {
                 </div>
 =======
 // CONTAINER
+=======
+(function() {
+>>>>>>> ce02a37 (new features)
 
-const clientsContainer =
-    document.getElementById(
-        "clients-list-container"
-    );
+const clientsContainer = document.getElementById("clients-list-container");
+if (!clientsContainer) return; // ← now valid, inside a function
 
-// CLIENT STATE
+let pendingAppointments = [];
 
-let clients = [];
-
-// FETCH CLIENTS
-
-async function fetchClients(){
-
-    const response =
-        await apiRequest(
-            "/therapist/clients"
-        );
-
-    if(!response){
-        return;
-    }
-
-    clients = response.clients;
-
+async function fetchClients() {
+    const response = await apiRequest("/appointments/therapist");
+    if (!response) return;
+    pendingAppointments = response.appointments.filter(a => a.status === 'pending');
     renderClients();
 }
 
-// RENDER CLIENTS
-
-function renderClients(){
-
+function renderClients() {
     clientsContainer.innerHTML = "";
 
-    if(clients.length === 0){
-
+    if (pendingAppointments.length === 0) {
         clientsContainer.innerHTML = `
             <div class="empty-state">
-                No clients found.
+                No pending appointment requests.
             </div>
         `;
-
         return;
     }
 
-    clients.forEach(client => {
-
-        const initials =
-            getInitials(
-                client.firstName,
-                client.lastName
-            );
-
+    pendingAppointments.forEach(appointment => {
         clientsContainer.innerHTML += `
-
-            <div class="client-card">
-
+            <div class="client-card" id="appt-${appointment._id}">
                 <div class="c-header">
-
                     <div class="c-avatar">
-                        ${initials}
+                        ${appointment.clientName?.charAt(0) || '?'}
                     </div>
-
+                    
                     <div>
-
-                        <h3>
-                            ${client.firstName}
-                            ${client.lastName}
-                        </h3>
-
-                        <p>
-                            ${client.issue}
-                        </p>
-
+                        <h3>${appointment.clientName || 'Unknown'}</h3>
+                        <p>${appointment.type} — ${appointment.date} at ${appointment.time}</p>
+                        <p>${appointment.notes || 'No notes provided'}</p>
                     </div>
-
                 </div>
-
+                
                 <div class="c-footer">
-
-                    <span>
-                        Sessions:
-                        ${client.sessions}
-                    </span>
-
-                    <button
-                        class="btn-primary"
-                        onclick="openClientMessage(
-                            '${client._id}'
-                        )"
-                    >
-                        Message
+                    <button class="btn-primary" onclick="updateStatus('${appointment._id}', 'confirmed')">
+                        Accept
                     </button>
-
+                    <button class="btn-secondary" onclick="updateStatus('${appointment._id}', 'declined')">
+                        Decline
+                    </button>
                 </div>
+<<<<<<< HEAD
 
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+>>>>>>> ce02a37 (new features)
             </div>
         `;
     });
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 async function updateStatus(appointmentId, status) {
     const response = await apiRequest(
         `/appointments/${appointmentId}/status`,
         'PATCH',
         { status }
+<<<<<<< HEAD
     );
 
     if (!response) return;
@@ -185,13 +149,31 @@ function openClientMessage(clientId){
     localStorage.setItem(
         "activeClientId",
         clientId
+=======
+>>>>>>> ce02a37 (new features)
     );
 
-    window.location.href =
-        "message.html";
+    if (!response) return;
+
+    document.getElementById(`appt-${appointmentId}`)?.remove();
+    pendingAppointments = pendingAppointments.filter(a => a._id !== appointmentId);
+
+    if (pendingAppointments.length === 0) {
+        clientsContainer.innerHTML = `
+            <div class="empty-state">
+                No pending appointment requests.
+            </div>
+        `;
+    }
 }
 
-// INIT
+// expose updateStatus so onclick can reach it
+window.updateStatus = updateStatus;
 
 fetchClients();
+<<<<<<< HEAD
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+
+})();
+>>>>>>> ce02a37 (new features)

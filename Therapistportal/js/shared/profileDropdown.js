@@ -15,9 +15,12 @@ document.getElementById(
 
 // TOGGLE DROPDOWN
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+>>>>>>> ce02a37 (new features)
 profileToggle?.addEventListener(
     "click",
     (event) => {
@@ -61,9 +64,12 @@ window.addEventListener(
 
 // LOGOUT
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+>>>>>>> ce02a37 (new features)
 document.getElementById(
     "logoutBtn"
 )?.addEventListener(
@@ -80,9 +86,13 @@ document.getElementById(
 
         window.location.href =
 <<<<<<< HEAD
+<<<<<<< HEAD
         "/login";
 =======
         "../../landing-page/login.html";
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+        "/login";
+>>>>>>> ce02a37 (new features)
     }
 );

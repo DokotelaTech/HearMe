@@ -257,6 +257,7 @@ body.fade-out {
 
 .status-pill.pending { background: #fff3cd; color: #856404; }
 .status-pill.approved { background: #d4edda; color: #155724; }
+<<<<<<< HEAD
 .status-pill.denied { background: #f8d7da; color: #721c24; }
 =======
 
@@ -298,3 +299,6 @@ body.fade-out {
 .purple-icon { color: var(--primary-purple); }
 .gold-icon { color: #d97706; }
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+.status-pill.denied { background: #f8d7da; color: #721c24; }
+>>>>>>> ce02a37 (new features)

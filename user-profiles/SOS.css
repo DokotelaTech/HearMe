@@ -21,10 +21,15 @@ body {
     background-color: var(--bg-main);
     color: var(--text-dark);
 <<<<<<< HEAD
+<<<<<<< HEAD
     height: 100vh;
     overflow: hidden; /* Lock viewport scroll to feel like a native application interface */
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    height: 100vh;
+    overflow: hidden; /* Lock viewport scroll to feel like a native application interface */
+>>>>>>> ce02a37 (new features)
 }
 
 /* Header */
@@ -39,9 +44,13 @@ body {
     top: 0;
     z-index: 100;
 <<<<<<< HEAD
+<<<<<<< HEAD
     height: 60px;
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    height: 60px;
+>>>>>>> ce02a37 (new features)
 }
 
 .logo h2 {
@@ -59,12 +68,17 @@ body {
 
 .user-badge {
 <<<<<<< HEAD
+<<<<<<< HEAD
     background-color: #f3e5f5; /* Light soft purple background */
     color: var(--primary-purple); /* Bold accent purple text matching your design */
 =======
     background-color: var(--primary-purple);
     color: white;
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    background-color: #f3e5f5; /* Light soft purple background */
+    color: var(--primary-purple); /* Bold accent purple text matching your design */
+>>>>>>> ce02a37 (new features)
     padding: 4px 12px;
     border-radius: 16px;
     font-size: 0.85rem;
@@ -89,6 +103,7 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Layout Frame Setup */
 .app-container {
     display: flex;
@@ -100,6 +115,13 @@ body {
     display: flex;
     min-height: calc(100vh - 60px);
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+/* Layout Frame Setup */
+.app-container {
+    display: flex;
+    height: calc(100vh - 60px);
+    width: 100%;
+>>>>>>> ce02a37 (new features)
 }
 
 /* Sidebar */
@@ -109,9 +131,13 @@ body {
     border-right: 1px solid var(--border-color);
     padding: 24px 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
     flex-shrink: 0;
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    flex-shrink: 0;
+>>>>>>> ce02a37 (new features)
 }
 
 .nav-menu {
@@ -136,6 +162,7 @@ body {
 .nav-item i {
     font-size: 1.1rem;
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 24px;
     text-align: center;
     transition: color 0.2s ease;
@@ -143,14 +170,23 @@ body {
     width: 20px;
     text-align: center;
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    width: 24px;
+    text-align: center;
+    transition: color 0.2s ease;
+>>>>>>> ce02a37 (new features)
 }
 
 .nav-item:hover {
     background-color: #f3f4f6;
 <<<<<<< HEAD
+<<<<<<< HEAD
     color: var(--text-dark);
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    color: var(--text-dark);
+>>>>>>> ce02a37 (new features)
 }
 
 .nav-item.active {
@@ -159,11 +195,15 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 .nav-item.active i {
     color: var(--primary-purple);
 }
 
 /* Main Content (UPDATED TO CENTRALIZE PANELS) */
+<<<<<<< HEAD
 .main-content {
     flex: 1;
     padding: 40px;
@@ -186,20 +226,32 @@ body {
     text-align: left;
 =======
 /* Main Content */
+=======
+>>>>>>> ce02a37 (new features)
 .main-content {
     flex: 1;
     padding: 40px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* Centers content card canvas horizontally */
+    justify-content: center;  /* Centers content card canvas vertically */
+    background-color: #fafafa;
 }
 
 .content-wrapper {
-    max-width: 800px;
-    margin: 0 auto ;
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .page-header {
     margin-bottom: 24px;
+<<<<<<< HEAD
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    text-align: left;
+>>>>>>> ce02a37 (new features)
 }
 
 .page-header h1 {
@@ -207,9 +259,13 @@ body {
     color: var(--text-dark);
     margin-bottom: 4px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     font-weight: 700;
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    font-weight: 700;
+>>>>>>> ce02a37 (new features)
 }
 
 .page-header p {
@@ -254,9 +310,13 @@ body {
     color: white;
     margin-bottom: 40px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.2);
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.2);
+>>>>>>> ce02a37 (new features)
 }
 
 .sos-icon {
@@ -288,6 +348,7 @@ body {
     cursor: pointer;
     margin-bottom: 24px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     transition: all 0.2s ease;
 }
@@ -303,6 +364,15 @@ body {
 .btn-activate-sos:hover {
     transform: scale(1.05);
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+}
+
+.btn-activate-sos:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+>>>>>>> ce02a37 (new features)
 }
 
 .location-info {
@@ -319,10 +389,15 @@ body {
     font-size: 1.25rem;
     margin-bottom: 16px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     color: var(--text-dark);
     font-weight: 600;
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    color: var(--text-dark);
+    font-weight: 600;
+>>>>>>> ce02a37 (new features)
 }
 
 .hotline-card {
@@ -335,19 +410,27 @@ body {
     align-items: center;
     margin-bottom: 16px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
 =======
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+>>>>>>> ce02a37 (new features)
 }
 
 .hotline-info h3 {
     font-size: 1.1rem;
     margin-bottom: 4px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     color: var(--text-dark);
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+    color: var(--text-dark);
+>>>>>>> ce02a37 (new features)
 }
 
 .hotline-info p {
@@ -398,6 +481,9 @@ body {
 .btn-call:hover {
     background-color: #9333ea;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 }
 /* Ensure SVGs inherit colors correctly from the menu layout */
 .nav-item svg {
@@ -531,6 +617,9 @@ body.fade-out {
     border: 0;
     border-top: 1px solid #e5e7eb;
     margin: 6px 0;
+<<<<<<< HEAD
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+>>>>>>> ce02a37 (new features)
 }

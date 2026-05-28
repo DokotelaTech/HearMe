@@ -14,6 +14,7 @@ async function loadTherapistData(){
 
             window.location.href =
 <<<<<<< HEAD
+<<<<<<< HEAD
             "/login";
 
             alert("session expired!")
@@ -21,6 +22,11 @@ async function loadTherapistData(){
             "/old interfaces/login.html";
 
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+            "/login";
+
+            alert("session expired!")
+>>>>>>> ce02a37 (new features)
             return;
         }
 

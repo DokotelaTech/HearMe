@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 // UI LOGIC (Expand / Collapse composer) - Kept exactly as you wrote it!
 =======
 // UI LOGIC (Expand / Collapse composer)
 >>>>>>> ebb70e2 (d)
+=======
+// UI LOGIC (Expand / Collapse composer) - Kept exactly as you wrote it!
+>>>>>>> ce02a37 (new features)
 const collapsed   = document.getElementById('post-collapsed');
 const expanded    = document.getElementById('post-expanded');
 const simpleInput = document.getElementById('post-input-simple');
@@ -57,22 +61,25 @@ document.querySelector('.user-avatar').textContent = currentUserIdentifier ? cur
 =======
 // DATABASE LOGIC (Connecting to Node.js / MongoDB)
 
+// Get the user's token and ID from local storage
 const token = localStorage.getItem('token');
 const currentUserIdentifier = localStorage.getItem('userIdentifier');
 
-if (!token) {
-    alert("You need to be logged in to perform this function");
-    window.location.href = 'login.html';
-}
+// //  If they aren't logged in, kick them back to login
+// if (!token) {
+//     alert("session expired, please log in to access this page")
+//     window.location.href = '/login';
+// }
 
-// Set the avatar letter at the top
-const avatarElement = document.querySelector('.user-avatar');
-if (avatarElement) {
-    avatarElement.textContent = currentUserIdentifier ? currentUserIdentifier.charAt(0).toUpperCase() : 'U';
-}
+// Set the avatar letter at the top right to match their username
+document.querySelector('.user-avatar').textContent = currentUserIdentifier ? currentUserIdentifier.charAt(0).toUpperCase() : 'U';
 
+<<<<<<< HEAD
 // Function to fetch all posts
 >>>>>>> ebb70e2 (d)
+=======
+// Function to fetch all posts from the database when page loads
+>>>>>>> ce02a37 (new features)
 async function fetchPosts() {
     try {
         const response = await fetch('http://localhost:5000/api/posts', {
@@ -102,15 +109,20 @@ function renderPosts(posts) {
 =======
 // Function to turn MongoDB data into HTML cards
 function renderPosts(posts) {
-    postContainer.innerHTML = ''; 
+    postContainer.innerHTML = ''; // Clear loading state
     
     if (posts.length === 0) {
+<<<<<<< HEAD
         postContainer.innerHTML = '<p style="text-align:center; color:#666;">No posts yet. Be the first to share!</p>';
 >>>>>>> ebb70e2 (d)
+=======
+        postContainer.innerHTML = '<p class="empty-state">No posts yet. Be the first to share!</p>';
+>>>>>>> ce02a37 (new features)
         return;
     }
 
     posts.forEach(post => {
+<<<<<<< HEAD
 <<<<<<< HEAD
         // Create the card container
         const card = document.createElement('div');
@@ -195,75 +207,66 @@ document.addEventListener('click', async (e) => {
     if (likeBtn) {
         const postId = likeBtn.getAttribute('data-id');
 =======
+=======
+        // Create the card container
+>>>>>>> ce02a37 (new features)
         const card = document.createElement('div');
-        card.className = 'post-card';
-        card.setAttribute('data-id', post._id);
+        // Ensure this matches the CSS class for the wrapper
+        card.className = 'post-card'; 
         
+        // Setup styling based on Struggle vs Success
         const isSuccess = post.postType === 'success';
-        const badgeColor = isSuccess ? '#e6f7ef' : '#f5e6fb';
-        const badgeTextColor = isSuccess ? '#0d894f' : '#8e24aa';
-        const badgeText = isSuccess ? '✨ Success' : 'Struggle';
+        const badgeClass = isSuccess ? 'badge-success' : 'badge-struggle';
         
+        // Only show the sparkles icon if it's a success post
+        const badgeIcon = isSuccess ? '<i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> ' : '';
+        const badgeText = isSuccess ? 'Success' : 'Struggle';
+        
+        // Calculate interactions
         const likeCount = post.likes ? post.likes.length : 0;
         const commentCount = post.comments ? post.comments.length : 0;
-        
-        const isLikedByMe = post.likes && post.likes.includes(currentUserIdentifier);
-        const heartFill = isLikedByMe ? '#8b5cf6' : 'none';
+        const initial = post.authorIdentifier ? post.authorIdentifier.charAt(0).toUpperCase() : 'U';
 
-        // Check if I am the author of this post
-        const isMyPost = post.authorIdentifier === currentUserIdentifier;
-
+        // Inject the clean, class-based HTML
         card.innerHTML = `
-            <div class="post-header" style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div class="user-avatar" style="width: 40px; height: 40px; background: #c881d2; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                        ${post.authorIdentifier ? post.authorIdentifier.charAt(0).toUpperCase() : 'U'}
-                    </div>
-                    <div>
-                        <div style="font-weight: 600;">${post.authorIdentifier}</div>
-                        <div style="font-size: 0.8rem; color: #666;">${new Date(post.createdAt).toLocaleDateString()}</div>
+            <div class="post-header">
+                <div class="post-user-info">
+                    <div class="post-avatar">${initial}</div>
+                    <div class="post-meta">
+                        <span class="post-username">${post.authorIdentifier}</span>
+                        <span class="post-time">Just now</span>
                     </div>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <div style="background: ${badgeColor}; color: ${badgeTextColor}; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; height: fit-content;">
-                        ${badgeText}
-                    </div>
-                    ${isMyPost ? `<i data-lucide="trash-2" class="delete-post-btn" style="color: #ff4d4d; cursor: pointer; width: 18px;"></i>` : ''}
+                <div class="post-badge ${badgeClass}">
+                    ${badgeIcon}${badgeText}
                 </div>
             </div>
-            <div class="post-content" style="margin-bottom: 15px; line-height: 1.5;">
+
+            <div class="post-content">
                 ${post.content}
             </div>
-            <div class="post-footer" style="display: flex; gap: 20px; color: #666; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 10px;">
-                <div class="like-btn" style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                    <i data-lucide="heart" fill="${heartFill}"></i> <span class="like-count">${likeCount}</span>
-                </div>
-                <div class="toggle-comments-btn" style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                    <i data-lucide="message-square"></i> <span class="comment-count">${commentCount}</span>
-                </div>
-            </div>
 
-            <div class="comment-section" style="display: none;">
-                <div class="comments-list" style="margin-top: 15px;">
-                    ${post.comments ? post.comments.map(c => `
-                        <div class="comment-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid #f0f0f0;">
-                            <span><strong>${c.userIdentifier}</strong>: ${c.text}</span>
-                            ${c.userIdentifier === currentUserIdentifier ? `<i data-lucide="x" class="delete-comment-btn" data-comment-id="${c._id}" style="color: #ff4d4d; cursor: pointer; width: 14px;"></i>` : ''}
-                        </div>
-                    `).join('') : ''}
-                </div>
-                <div class="comment-input-group">
-                    <input type="text" class="comment-input" placeholder="Write a comment...">
-                    <button class="submit-comment-btn">Reply</button>
-                </div>
+            <div class="post-footer">
+                <button class="post-action-btn" onclick="alert('Like route coming next!')">
+                    <i data-lucide="heart"></i> ${likeCount}
+                </button>
+                <button class="post-action-btn">
+                    <i data-lucide="message-square"></i> ${commentCount}
+                </button>
+                <button class="post-action-btn">
+                    <i data-lucide="share-2"></i> Share
+                </button>
             </div>
         `;
+        
         postContainer.appendChild(card);
     });
 
+    // Re-initialize Lucide icons for the newly injected HTML
     lucide.createIcons();
 }
 
+<<<<<<< HEAD
 // INTERACTION LOGIC (Click delegation)
 document.addEventListener('click', async (e) => {
     
@@ -411,6 +414,9 @@ document.addEventListener('click', async (e) => {
 });
 
 // CREATE NEW POST
+=======
+// Function to handle clicking the POST button
+>>>>>>> ce02a37 (new features)
 postBtn.addEventListener('click', async () => {
     const text = textarea.value.trim();
     if (!text) return;
@@ -422,6 +428,9 @@ postBtn.addEventListener('click', async () => {
         const response = await fetch('http://localhost:5000/api/posts', {
             method: 'POST',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}` // Show the bouncer our ID
@@ -430,14 +439,18 @@ postBtn.addEventListener('click', async () => {
                 postType: postType,
                 content: text
             })
+<<<<<<< HEAD
 =======
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify({ postType, content: text })
 >>>>>>> ebb70e2 (d)
+=======
+>>>>>>> ce02a37 (new features)
         });
 
         if (response.ok) {
             closeComposer();
+<<<<<<< HEAD
 <<<<<<< HEAD
             fetchPosts();
         } else {
@@ -452,11 +465,21 @@ postBtn.addEventListener('click', async () => {
     } catch (error) { console.error('Submit post error:', error); }
     finally {
 >>>>>>> ebb70e2 (d)
+=======
+            fetchPosts(); // Refresh the feed immediately to show the new post
+        } else {
+            alert('Failed to post. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error submitting post:', error);
+    } finally {
+>>>>>>> ce02a37 (new features)
         postBtn.textContent = 'Post';
         postBtn.disabled = false;
     }
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 // ========================================
 // REPORT MODAL LOGIC
@@ -585,6 +608,9 @@ document.getElementById('logout-btn')?.addEventListener('click', () => {
 });
 
 // LOAD ON START
+=======
+// Load everything when the page opens!
+>>>>>>> ce02a37 (new features)
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
     fetchPosts();

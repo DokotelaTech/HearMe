@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 // Adding simple interactivity to the SOS and Call buttons
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+>>>>>>> ce02a37 (new features)
 document.addEventListener('DOMContentLoaded', () => {
     
     // SOS Button Logic
@@ -9,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (sosButton) {
         sosButton.addEventListener('click', () => {
+<<<<<<< HEAD
 <<<<<<< HEAD
             alert('SOS Activated! Initiating emergency protocols and fetching location...');
             
@@ -19,6 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Visual feedback
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+            alert('SOS Activated! Initiating emergency protocols and fetching location...');
+            
+            // Visual loading state updates
+>>>>>>> ce02a37 (new features)
             sosButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ACTIVATING...';
             sosButton.style.opacity = '0.8';
             
@@ -35,9 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
     callButtons.forEach(button => {
         button.addEventListener('click', (e) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             // Find the associated phone number in the same card
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+>>>>>>> ce02a37 (new features)
             const card = e.target.closest('.hotline-card');
             const phoneNumberElement = card.querySelector('.phone-number');
             const phoneNumberText = phoneNumberElement.innerText.trim();
@@ -46,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 });
 
 // =========================
@@ -95,6 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+<<<<<<< HEAD
 =======
 >>>>>>> fb42d70 ("user-profiles" "Therapistportal")
+=======
+>>>>>>> ce02a37 (new features)
 });

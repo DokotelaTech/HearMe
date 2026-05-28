@@ -1,20 +1,30 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 // Fixed: Grabbing the element by class to match your polished CSS layout
 localStorage.clear();
 
 const aiChatBox = document.querySelector('.chat-display'); 
+<<<<<<< HEAD
 =======
 const aiChatBox = document.getElementById('aiChatBox');
 >>>>>>> 8bfd832 (project)
+=======
+>>>>>>> ce02a37 (new features)
 const aiUserInput = document.getElementById('aiUserInput');
 const aiSendBtn = document.getElementById('aiSendBtn');
 
 // 1. Add User Message to Screen
 function appendUserMessage(text) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (!aiChatBox) return;
 =======
 >>>>>>> 8bfd832 (project)
+=======
+    if (!aiChatBox) return;
+>>>>>>> ce02a37 (new features)
     const wrapper = document.createElement('div');
     wrapper.className = 'user-message-wrapper';
     wrapper.innerHTML = `<div class="user-bubble">${text}</div>`;
@@ -25,6 +35,7 @@ function appendUserMessage(text) {
 // 2. Add AI Message to Screen
 function appendAIMessage(text) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (!aiChatBox) return;
     const wrapper = document.createElement('div');
     wrapper.className = 'ai-message-wrapper';
@@ -33,6 +44,11 @@ function appendAIMessage(text) {
     wrapper.className = 'ai-message-wrapper';
     // Fixed: Using 'ai-avatar-circle' to match your CSS perfectly
 >>>>>>> 8bfd832 (project)
+=======
+    if (!aiChatBox) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'ai-message-wrapper';
+>>>>>>> ce02a37 (new features)
     wrapper.innerHTML = `
         <div class="ai-avatar-circle">🤖</div>
         <div class="ai-bubble">${text}</div>
@@ -41,15 +57,21 @@ function appendAIMessage(text) {
     aiChatBox.scrollTop = aiChatBox.scrollHeight;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 
 // 3. Connect to your secure Node.js backend
 async function fetchAIResponse(userText) {
     if (!aiChatBox) return;
 
+<<<<<<< HEAD
 =======
 // 3. Connect to your secure Node.js backend
 async function fetchAIResponse(userText) {
 >>>>>>> 8bfd832 (project)
+=======
+>>>>>>> ce02a37 (new features)
     // Show a typing indicator while waiting
     const typingId = 'typing-' + Date.now();
     const typingWrapper = document.createElement('div');
@@ -64,10 +86,13 @@ async function fetchAIResponse(userText) {
 
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // ⚠️ CRITICAL: Retrieve the token saved during login
         // Make sure 'token' matches exactly what you called it when saving it to localStorage!
 >>>>>>> 8bfd832 (project)
+=======
+>>>>>>> ce02a37 (new features)
         const token = localStorage.getItem('token'); 
 
         const response = await fetch('http://localhost:5000/api/chat', {
@@ -75,18 +100,25 @@ async function fetchAIResponse(userText) {
             headers: { 
                 'Content-Type': 'application/json',
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'Authorization': `Bearer ${token}`
 =======
                 'Authorization': `Bearer ${token}` // <--- Sending the token to pass verifyToken
 >>>>>>> 8bfd832 (project)
+=======
+                'Authorization': `Bearer ${token}`
+>>>>>>> ce02a37 (new features)
             },
             body: JSON.stringify({ message: userText })
         });
         
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // If the server throws an error (like 401 Unauthorized)
 >>>>>>> 8bfd832 (project)
+=======
+>>>>>>> ce02a37 (new features)
         if (!response.ok) {
             throw new Error(`Server rejected the request: ${response.status}`);
         }
@@ -98,6 +130,7 @@ async function fetchAIResponse(userText) {
         if (typingElement) typingElement.remove();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Standard response paths (Handling both deep nested text object and flat strings)
         if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
             appendAIMessage(data.candidates[0].content.parts[0].text);
@@ -108,6 +141,14 @@ async function fetchAIResponse(userText) {
         if (data.candidates && data.candidates.length > 0) {
             appendAIMessage(data.candidates[0].content.parts[0].text);
 >>>>>>> 8bfd832 (project)
+=======
+        // Standard response paths (Handling both deep nested text object and flat strings)
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+            appendAIMessage(data.candidates[0].content.parts[0].text);
+        } else if (data.reply) { 
+            // Fallback: in case your backend passes back a clean simplified string property like { reply: "..." }
+            appendAIMessage(data.reply);
+>>>>>>> ce02a37 (new features)
         } else {
             appendAIMessage("I'm having a little trouble connecting, but I'm here for you.");
         }
@@ -136,6 +177,9 @@ aiUserInput.addEventListener('keypress', (e) => {
         aiSendBtn.click();
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ce02a37 (new features)
 });
 document.addEventListener('DOMContentLoaded', () => {
     const trigger = document.getElementById('dropdownTrigger');
@@ -155,6 +199,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+<<<<<<< HEAD
 =======
 >>>>>>> 8bfd832 (project)
+=======
+>>>>>>> ce02a37 (new features)
 });

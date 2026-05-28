@@ -1,9 +1,13 @@
 const cloudinary = require('cloudinary');
 <<<<<<< HEAD
+<<<<<<< HEAD
 const  {CloudinaryStorage}  = require('multer-storage-cloudinary');
 =======
 const  CloudinaryStorage  = require('multer-storage-cloudinary');
 >>>>>>> 98ea0a3 (sprint 2)
+=======
+const  {CloudinaryStorage}  = require('multer-storage-cloudinary');
+>>>>>>> ce02a37 (new features)
 const multer = require('multer');
 
 // =========================================
