@@ -32,16 +32,12 @@
                 </div>
 
                 <div class="input-card">
-
-                    <!-- COLLAPSED STATE (default) -->
                     <div class="post-input-wrapper" id="post-collapsed">
                         <input type="text" id="post-input-simple" placeholder="Share your thoughts anonymously..." readonly>
                         <button class="post-submit-btn" id="open-composer">Post</button>
                     </div>
 
-                    <!-- EXPANDED STATE (shown when clicked) -->
                     <div class="post-composer" id="post-expanded" style="display:none;">
-
                         <div class="post-tabs">
                             <button class="tab-btn active" data-type="struggle">Struggle Post</button>
                             <button class="tab-btn" data-type="success">Success Story</button>
@@ -64,9 +60,7 @@
                                 <button id="post-button" class="post-submit-btn">Post</button>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div id="post-container" class="post-list"></div>
@@ -75,6 +69,62 @@
     </div>
 
     <button class="help-fab"><i data-lucide="help-circle"></i></button>
+
+    <div id="reportModal" class="report-modal-overlay" style="display: none;">
+        <div class="report-modal-box">
+            
+            <div class="report-modal-header">
+                <h3><i data-lucide="alert-triangle"></i> Report Post</h3>
+                <button class="report-modal-close" onclick="closeReportModal()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="report-modal-body">
+                <p class="report-modal-question">Why are you reporting this post?</p>
+                
+                <div class="report-reasons">
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Spam">
+                        <div class="reason-label"><i data-lucide="alert-octagon"></i> Spam or misleading</div>
+                    </label>
+                    
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Harassment">
+                        <div class="reason-label"><i data-lucide="shield-alert"></i> Harassment or bullying</div>
+                    </label>
+                    
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Inappropriate Content">
+                        <div class="reason-label"><i data-lucide="eye-off"></i> Inappropriate or offensive content</div>
+                    </label>
+                    
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Self-Harm">
+                        <div class="reason-label"><i data-lucide="heart-crack"></i> Self-harm or suicide</div>
+                    </label>
+                    
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Other">
+                        <div class="reason-label"><i data-lucide="help-circle"></i> Other (please specify)</div>
+                    </label>
+                </div>
+
+                <div class="report-additional">
+                    <label for="reportCustomReason">Additional details (optional)</label>
+                    <textarea id="reportCustomReason" placeholder="Please provide more context..."></textarea>
+                </div>
+            </div>
+
+            <div class="report-modal-footer">
+                <button class="btn-report-cancel" onclick="closeReportModal()">Cancel</button>
+                <button class="btn-report-submit" onclick="submitReport()">
+                    <i data-lucide="flag"></i> Submit Report
+                </button>
+            </div>
+            
+        </div>
+    </div>
 
     <script src="community-feeds.js"></script>
 </body>

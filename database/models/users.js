@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
 
     // =========================================
     //    ROLE
-    role: {
+    role: { 
         type: String,
         enum: ['user', 'therapist','admin'],
         required: true

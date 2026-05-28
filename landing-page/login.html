@@ -121,7 +121,7 @@
 
                     </label>
 
-                    <a href="#">
+                    <a href="#" id="forgotPasswordLink">
                         Forgot password?
                     </a>
 
@@ -148,6 +148,94 @@
                 </p>
 
             </form>
+
+        </div>
+
+    </div>
+
+    <!-- PASSWORD RESET MODAL -->
+
+    <div class="reset-modal" id="resetModal">
+
+        <div class="reset-content">
+
+            <div class="reset-header">
+
+                <h3>Reset Password</h3>
+
+                <button type="button" id="closeResetModal">
+                    &times;
+                </button>
+
+            </div>
+
+            <p class="reset-copy">
+                Enter your account email to receive a temporary PIN.
+            </p>
+
+            <div class="input-group">
+
+                <i class="fa-regular fa-envelope"></i>
+
+                <input
+                    id="resetEmail"
+                    type="email"
+                    placeholder="Email Address"
+                >
+
+            </div>
+
+            <button type="button" id="sendResetPin">
+                Send Temporary PIN
+            </button>
+
+            <div class="input-group reset-pin-group">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <input
+                    id="resetPin"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="6"
+                    placeholder="Temporary PIN"
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    id="newPassword"
+                    type="password"
+                    placeholder="New Password"
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <input
+                    id="confirmNewPassword"
+                    type="password"
+                    placeholder="Confirm New Password"
+                >
+
+            </div>
+
+            <p
+                id="resetMessage"
+                class="reset-message"
+                aria-live="polite"
+            ></p>
+
+            <button type="button" id="resetPasswordBtn">
+                Reset Password
+            </button>
 
         </div>
 

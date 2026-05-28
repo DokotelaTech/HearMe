@@ -86,7 +86,7 @@ router.post('/deny/:id', verifyToken, adminOnly, async (req, res) => {
     try {
         const therapist = await User.findByIdAndUpdate(
             req.params.id,
-            { $set: { profileStatus: 'incomplete' } }, // ← different status
+            { $set: { profileStatus: 'incomplete' } },
             { returnDocument: 'after' }
         );
 

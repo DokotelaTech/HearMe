@@ -9,7 +9,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const avatarIcon =
         document.querySelector('.avatar-circle i');
 
+    const forgotPasswordLink =
+        document.getElementById('forgotPasswordLink');
+
+    const resetModal =
+        document.getElementById('resetModal');
+
+    const closeResetModal =
+        document.getElementById('closeResetModal');
+
+    const sendResetPin =
+        document.getElementById('sendResetPin');
+
+    const resetPasswordBtn =
+        document.getElementById('resetPasswordBtn');
+
+    const resetMessage =
+        document.getElementById('resetMessage');
+
+    const loginEmail =
+        document.getElementById('email');
+
     let selectedRole = 'user';
+
+    function setResetMessage(message, type = '') {
+        resetMessage.textContent = message;
+        resetMessage.className = `reset-message ${type}`.trim();
+    }
 
     /* =========================
        ROLE SWITCHING
@@ -43,6 +69,205 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
+    });
+
+    /* =========================
+       PASSWORD RESET
+    ========================= */
+
+    forgotPasswordLink.addEventListener('click', (e) => {
+
+        e.preventDefault();
+
+        document.getElementById('resetEmail').value =
+            loginEmail.value.trim();
+
+        setResetMessage('');
+
+        resetModal.style.display = 'flex';
+
+        document.getElementById('resetEmail').focus();
+    });
+
+    closeResetModal.addEventListener('click', () => {
+
+        resetModal.style.display = 'none';
+    });
+
+    resetModal.addEventListener('click', (e) => {
+
+        if(e.target === resetModal){
+
+            resetModal.style.display = 'none';
+        }
+    });
+
+    sendResetPin.addEventListener('click', async () => {
+
+        const email =
+            document.getElementById('resetEmail')
+            .value
+            .trim();
+
+        if(!email){
+
+            setResetMessage(
+                'Enter your account email first.',
+                'error'
+            );
+
+            return;
+        }
+
+        sendResetPin.disabled = true;
+        sendResetPin.textContent = 'Sending...';
+        setResetMessage('');
+
+        try{
+
+            const response = await fetch(
+                'http://localhost:5000/api/auth/request-password-reset',
+                {
+                    method:'POST',
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+
+                    body:JSON.stringify({ email })
+                }
+            );
+
+            const data =
+                await response.json();
+
+            if(response.ok){
+
+                setResetMessage(
+                    data.message,
+                    'success'
+                );
+
+                document.getElementById('resetPin').focus();
+
+            }else{
+
+                setResetMessage(
+                    data.message || 'Could not send temporary PIN.',
+                    'error'
+                );
+            }
+
+        }catch(err){
+
+            console.log(err);
+
+            setResetMessage(
+                'Server connection failed while sending PIN.',
+                'error'
+            );
+
+        }finally{
+
+            sendResetPin.disabled = false;
+            sendResetPin.textContent = 'Send Temporary PIN';
+        }
+    });
+
+    resetPasswordBtn.addEventListener('click', async () => {
+
+        const email =
+            document.getElementById('resetEmail')
+            .value
+            .trim();
+
+        const pin =
+            document.getElementById('resetPin')
+            .value
+            .trim();
+
+        const password =
+            document.getElementById('newPassword')
+            .value;
+
+        const confirmPassword =
+            document.getElementById('confirmNewPassword')
+            .value;
+
+        if(!email || !pin || !password || !confirmPassword){
+
+            setResetMessage(
+                'Complete all password reset fields.',
+                'error'
+            );
+
+            return;
+        }
+
+        resetPasswordBtn.disabled = true;
+        resetPasswordBtn.textContent = 'Resetting...';
+
+        try{
+
+            const response = await fetch(
+                'http://localhost:5000/api/auth/reset-password',
+                {
+                    method:'POST',
+
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+
+                    body:JSON.stringify({
+                        email,
+                        pin,
+                        password,
+                        confirmPassword
+                    })
+                }
+            );
+
+            const data =
+                await response.json();
+
+            if(response.ok){
+
+                setResetMessage(
+                    data.message,
+                    'success'
+                );
+
+                document.getElementById('password').value = '';
+                loginEmail.value = email;
+
+                setTimeout(() => {
+
+                    resetModal.style.display = 'none';
+
+                }, 1600);
+
+            }else{
+
+                setResetMessage(
+                    data.message || 'Could not reset password.',
+                    'error'
+                );
+            }
+
+        }catch(err){
+
+            console.log(err);
+
+            setResetMessage(
+                'Server connection failed while resetting password.',
+                'error'
+            );
+
+        }finally{
+
+            resetPasswordBtn.disabled = false;
+            resetPasswordBtn.textContent = 'Reset Password';
+        }
     });
 
     /* =========================

@@ -4,20 +4,24 @@ const { verifyToken } = require('../middleware/authMiddleware');
 const {
     createReport,
     getMyReports,
+    getReports,
     getAllReports,
     updateReportStatus
 } = require('../controllers/reportController');
 
-// Therapist: submit a report
+// ── User or Therapist: submit a report ──
 router.post('/', verifyToken, createReport);
 
-// Therapist: get their own reports
+// ── Therapist: get their own clinical reports (sidebar) ──
 router.get('/my', verifyToken, getMyReports);
 
-// Admin: get all reports
+// ── Admin: get ALL reports (clinical + moderation) ──
 router.get('/all', verifyToken, getAllReports);
 
-// Admin: update report status
+// ── General: role-based fetch ──
+router.get('/', verifyToken, getReports);
+
+// ── Admin: update status + optional post delete ──
 router.patch('/:id/status', verifyToken, updateReportStatus);
 
 module.exports = router;

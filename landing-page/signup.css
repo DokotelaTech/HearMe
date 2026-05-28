@@ -176,6 +176,49 @@ body{
         0 0 0 4px rgba(168,85,247,0.12);
 }
 
+.verification-row{
+    display:grid;
+    grid-template-columns:1fr 130px;
+    gap:12px;
+    align-items:start;
+    margin-bottom:4px;
+}
+
+.verification-input{
+    margin-bottom:8px;
+}
+
+#sendVerificationCode{
+    min-height:49px;
+    border:none;
+    border-radius:14px;
+    background:#0f172a;
+    color:white;
+    font-size:0.88rem;
+    font-weight:700;
+    cursor:pointer;
+}
+
+#sendVerificationCode:disabled{
+    opacity:0.65;
+    cursor:not-allowed;
+}
+
+.verification-message{
+    min-height:18px;
+    margin:-2px 0 16px;
+    font-size:0.82rem;
+    color:#64748b;
+}
+
+.verification-message.success{
+    color:#15803d;
+}
+
+.verification-message.error{
+    color:#dc2626;
+}
+
 /* DOUBLE INPUT */
 
 .double-input{
@@ -311,6 +354,10 @@ body{
     }
 
     .double-input{
+        grid-template-columns:1fr;
+    }
+
+    .verification-row{
         grid-template-columns:1fr;
     }
 

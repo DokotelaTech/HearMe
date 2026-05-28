@@ -7,6 +7,11 @@ const commentSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
+const reportSchema = new mongoose.Schema({
+    reporterIdentifier: { type: String, required: true },
+    reason: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now }
+});
 
 const postSchema = new mongoose.Schema({
     authorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

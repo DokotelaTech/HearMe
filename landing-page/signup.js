@@ -9,6 +9,20 @@ const therapistFields =
 
 let selectedRole = 'user';
 
+const sendVerificationCodeBtn =
+    document.getElementById('sendVerificationCode');
+
+const verificationMessage =
+    document.getElementById('verificationMessage');
+
+const emailInput =
+    document.getElementById('email');
+
+function setVerificationMessage(message, type = '') {
+    verificationMessage.textContent = message;
+    verificationMessage.className = `verification-message ${type}`.trim();
+}
+
 /* =========================================
    ROLE SWITCHING
 ========================================= */
@@ -76,6 +90,82 @@ window.addEventListener('click', (e) => {
 });
 
 /* =========================================
+   EMAIL VERIFICATION
+========================================= */
+
+sendVerificationCodeBtn.addEventListener('click', async () => {
+
+    const email =
+        emailInput.value.trim();
+
+    if(!email){
+
+        setVerificationMessage(
+            'Enter your email address first.',
+            'error'
+        );
+
+        emailInput.focus();
+
+        return;
+    }
+
+    sendVerificationCodeBtn.disabled = true;
+    sendVerificationCodeBtn.textContent = 'Sending...';
+    setVerificationMessage('');
+
+    try{
+
+        const response = await fetch(
+            'http://localhost:5000/api/auth/send-verification-code',
+            {
+                method:'POST',
+
+                headers:{
+                    'Content-Type':'application/json'
+                },
+
+                body:JSON.stringify({ email })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if(response.ok){
+
+            setVerificationMessage(
+                data.message,
+                'success'
+            );
+
+            document.getElementById('verificationCode').focus();
+
+        }else{
+
+            setVerificationMessage(
+                data.message || 'Could not send verification code.',
+                'error'
+            );
+        }
+
+    }catch(err){
+
+        console.log(err);
+
+        setVerificationMessage(
+            'Server error while sending verification code.',
+            'error'
+        );
+
+    }finally{
+
+        sendVerificationCodeBtn.disabled = false;
+        sendVerificationCodeBtn.textContent = 'Send Code';
+    }
+});
+
+/* =========================================
    SIGNUP
 ========================================= */
 
@@ -135,6 +225,9 @@ document.getElementById('signup-form')
 
         email:
             document.getElementById('email').value.trim(),
+
+        verificationCode:
+            document.getElementById('verificationCode').value.trim(),
 
         password,
 
