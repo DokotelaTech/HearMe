@@ -12,6 +12,7 @@
 
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
+<<<<<<< HEAD
         <div class="user-profile-section">
             </a>
             <div class="user-dropdown-container">
@@ -31,11 +32,18 @@
                     </a>
                 </div>
             </div>
+=======
+        <div class="nav-right">
+            <span class="user-tag">User</span>
+            <div class="user-avatar-small">U</div>
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
         </div>
     </header>
 
     <div class="app-container">
+        <!-- Fixed Sidebar Navigation -->
         <nav class="sidebar">
+<<<<<<< HEAD
             <a href="/user/community" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
             <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
             <a href="/user/chat" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
@@ -47,6 +55,19 @@
 
         <main class="profile-area">
 
+=======
+            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="profile.html" class="nav-item ative"><i data-lucide="user"></i><span>Profile</span></a>
+        </nav>
+
+        <main class="profile-area">
+            <!-- Statistics Banner: Hard-codes removed, starts at 0 -->
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
             <div class="user-banner">
                 <div class="user-info">
                     <div class="large-avatar" id="large-avatar">U</div>
@@ -76,6 +97,10 @@
             </div>
 
             <div class="profile-grid">
+<<<<<<< HEAD
+=======
+                <!-- Roadmap Section (5 Tasks) -->
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
                 <div class="card roadmap-card">
                     <div class="card-header">
                         <h3>Your Healing Roadmap</h3>
@@ -86,13 +111,61 @@
                     </div>
                     <div class="progress-track">
                         <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
+<<<<<<< HEAD
+=======
+                    </div>
+
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Practice daily gratitude</h4>
+                                <p>Write down 3 things you're grateful for each morning</p>
+                            </div>
+                            <span class="badge badge-purple">Daily Practice</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Join a support group</h4>
+                                <p>Connect with others who share similar experiences</p>
+                            </div>
+                            <span class="badge badge-purple">Community</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Try breathing exercises</h4>
+                                <p>Practice the 4-4-4 breathing technique</p>
+                            </div>
+                            <span class="badge badge-purple">Stress Management</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Schedule a session</h4>
+                                <p>Book your first session with a verified expert</p>
+                            </div>
+                            <span class="badge badge-purple">Professional Support</span>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-check"><div class="circle-outline"></div></div>
+                            <div class="task-content">
+                                <h4>Share your success</h4>
+                                <p>Post a success story to inspire others in the community</p>
+                            </div>
+                            <span class="badge badge-purple">Give Back</span>
+                        </div>
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
                     </div>
                     <div class="task-list" id="roadmap-task-list"></div>
                 </div>
 
+                <!-- Independent Dynamic Sidebar Sections -->
                 <div class="right-column">
                     <div class="card side-card">
                         <div class="card-header">
+<<<<<<< HEAD
                             <h3>
                                 <i data-lucide="calendar" class="purple-icon"></i>
                                 Upcoming Sessions
@@ -100,8 +173,14 @@
                         </div>
                         <div id="dynamic-events" class="dynamic-container">
                             <p class="empty-state">No upcoming sessions</p>
+=======
+                            <h3><i data-lucide="bell" class="purple-icon"></i> Upcoming Events</h3>
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
                         </div>
+                        <!-- Emptied: Handled by JS localStorage logic -->
+                        <div id="dynamic-events" class="dynamic-container"></div>
                     </div>
+<<<<<<< HEAD
 
                     <div class="card side-card">
                         <div class="card-header">
@@ -110,12 +189,21 @@
                                 Achievements
                             </h3>
                         </div>
+=======
+                    
+                    <div class="card side-card">
+                        <div class="card-header">
+                            <h3><i data-lucide="award" class="gold-icon"></i> Achievements</h3>
+                        </div>
+                        <!-- Emptied: Handled by JS independent data array -->
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
                         <div id="dynamic-achievements" class="dynamic-container"></div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
+<<<<<<< HEAD
 
             <!-- VIDEO MODAL -->
         <div class="modal-overlay" id="video-modal-overlay"></div>
@@ -134,5 +222,9 @@
 
     <script src="/user/profile.js"></script>
     <script>lucide.createIcons();</script>
+=======
+    
+    <script src="profile.js"></script>
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 </body>
 </html>

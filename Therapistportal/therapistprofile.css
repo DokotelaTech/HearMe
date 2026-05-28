@@ -1,0 +1,109 @@
+:root {
+    --purple: #a855f7;
+    --dark-purple: #7e22ce;
+    --gradient: linear-gradient(135deg, #a855f7, #ec4899);
+    --bg: #f8fafc;
+    --white: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+
+/* Header */
+.header { height: 60px; background: var(--white); display: flex; justify-content: space-between; align-items: center; padding: 0 40px; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 10; }
+.logo { font-weight: 800; color: #3b82f6; font-size: 20px; }
+.portal-badge { background: #3b82f6; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-left: 10px; }
+.user-info { display: flex; align-items: center; gap: 10px; }
+.header-avatar { width: 32px; height: 32px; background: #3b82f6; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+
+/* Layout */
+.container { display: flex; max-width: 1400px; margin: 0 auto; }
+.sidebar { width: 250px; padding: 20px; }
+.sidebar a { display: block; padding: 12px; color: var(--muted); text-decoration: none; font-weight: 500; }
+.overview-box { background: #eff6ff; padding: 15px; border-radius: 12px; margin-top: 20px; }
+.ov-item { display: flex; justify-content: space-between; margin: 10px 0; font-size: 13px; }
+
+/* Profile Area */
+.profile-area { flex: 1; padding: 30px; }
+.hero-card { background: var(--gradient); border-radius: 16px; color: white; padding: 40px; }
+.hero-top { display: flex; gap: 25px; align-items: flex-start; }
+.hero-avatar { width: 120px; height: 120px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; }
+.hero-details h1 { margin: 0; }
+.tags span { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px; margin-right: 5px; }
+.stats-row { margin-top: 15px; display: flex; gap: 20px; font-size: 13px; opacity: 0.9; }
+.status-badge { background: #22c55e; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+
+.hero-bottom { display: flex; justify-content: space-around; background: rgba(0,0,0,0.1); margin-top: 30px; padding: 20px; border-radius: 12px; }
+.metric { text-align: center; }
+.metric strong { display: block; font-size: 20px; }
+.metric span { font-size: 12px; opacity: 0.8; }
+
+/* Tabs */
+.tabs { background: var(--white); margin-top: 20px; border-radius: 12px 12px 0 0; border: 1px solid #e2e8f0; display: flex; }
+.tab-btn { flex: 1; padding: 15px; border: none; background: none; cursor: pointer; color: var(--muted); font-weight: 600; border-bottom: 2px solid transparent; }
+.tab-btn.active { color: var(--purple); border-bottom: 2px solid var(--purple); }
+.tab-content { background: var(--white); padding: 30px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 12px 12px; display: none; }
+.tab-content.active { display: block; }
+
+/* Content Cards */
+.overview-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+.info-card { border: 1px solid #f1f5f9; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+.book-btn { width: 100%; background: var(--gradient); border: none; color: white; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.empty-state { text-align: center; color: var(--muted); padding: 50px; }
+.empty-state i { font-size: 40px; margin-bottom: 10px; }
+.cred-card { border: 1px solid #22c55e33; background: #f0fdf4; padding: 20px; border-radius: 12px; margin-bottom: 15px; }
+.verify-banner { background: #eff6ff; padding: 15px; border-radius: 8px; display: flex; gap: 15px; align-items: center; color: #1e40af; }
+/* Styling for the Add Button */
+.add-cred-btn {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: 2px dashed #cbd5e1;
+    color: var(--muted);
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.add-cred-btn:hover {
+    border-color: var(--purple);
+    color: var(--purple);
+    background-color: #f5f3ff;
+}
+
+/* Individual Credential Card Adjustments */
+.cred-card {
+    position: relative; /* For the remove button */
+    border: 1px solid #22c55e33;
+    background: #f0fdf4;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.remove-cred {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 20px;
+    cursor: pointer;
+    display: none; /* Hidden by default, shows on hover */
+}
+
+.cred-card:hover .remove-cred {
+    display: block;
+}
+
+.remove-cred:hover {
+    color: #ef4444;
+}
+
+.green {
+    color: #22c55e;
+}

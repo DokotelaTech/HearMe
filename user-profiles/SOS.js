@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// Adding simple interactivity to the SOS and Call buttons
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 document.addEventListener('DOMContentLoaded', () => {
     
     // SOS Button Logic
@@ -5,9 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (sosButton) {
         sosButton.addEventListener('click', () => {
+<<<<<<< HEAD
             alert('SOS Activated! Initiating emergency protocols and fetching location...');
             
             // Visual loading state updates
+=======
+            // In a real application, this would trigger an emergency protocol API
+            alert('SOS Activated! Initiating emergency protocols and fetching location...');
+            
+            // Visual feedback
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
             sosButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ACTIVATING...';
             sosButton.style.opacity = '0.8';
             
@@ -23,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     callButtons.forEach(button => {
         button.addEventListener('click', (e) => {
+<<<<<<< HEAD
+=======
+            // Find the associated phone number in the same card
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
             const card = e.target.closest('.hotline-card');
             const phoneNumberElement = card.querySelector('.phone-number');
             const phoneNumberText = phoneNumberElement.innerText.trim();
@@ -30,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Opening dialer for: ${phoneNumberText}`);
         });
     });
+<<<<<<< HEAD
 });
 
 // =========================
@@ -79,4 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 });

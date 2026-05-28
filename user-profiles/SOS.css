@@ -20,8 +20,11 @@
 body {
     background-color: var(--bg-main);
     color: var(--text-dark);
+<<<<<<< HEAD
     height: 100vh;
     overflow: hidden; /* Lock viewport scroll to feel like a native application interface */
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 /* Header */
@@ -35,7 +38,10 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+<<<<<<< HEAD
     height: 60px;
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .logo h2 {
@@ -52,8 +58,13 @@ body {
 }
 
 .user-badge {
+<<<<<<< HEAD
     background-color: #f3e5f5; /* Light soft purple background */
     color: var(--primary-purple); /* Bold accent purple text matching your design */
+=======
+    background-color: var(--primary-purple);
+    color: white;
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
     padding: 4px 12px;
     border-radius: 16px;
     font-size: 0.85rem;
@@ -77,11 +88,18 @@ body {
     font-size: 0.8rem;
 }
 
+<<<<<<< HEAD
 /* Layout Frame Setup */
 .app-container {
     display: flex;
     height: calc(100vh - 60px);
     width: 100%;
+=======
+/* Layout */
+.app-container {
+    display: flex;
+    min-height: calc(100vh - 60px);
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 /* Sidebar */
@@ -90,7 +108,10 @@ body {
     background-color: var(--bg-white);
     border-right: 1px solid var(--border-color);
     padding: 24px 0;
+<<<<<<< HEAD
     flex-shrink: 0;
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .nav-menu {
@@ -114,14 +135,22 @@ body {
 
 .nav-item i {
     font-size: 1.1rem;
+<<<<<<< HEAD
     width: 24px;
     text-align: center;
     transition: color 0.2s ease;
+=======
+    width: 20px;
+    text-align: center;
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .nav-item:hover {
     background-color: #f3f4f6;
+<<<<<<< HEAD
     color: var(--text-dark);
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .nav-item.active {
@@ -129,6 +158,7 @@ body {
     color: var(--primary-purple);
 }
 
+<<<<<<< HEAD
 .nav-item.active i {
     color: var(--primary-purple);
 }
@@ -154,13 +184,32 @@ body {
 .page-header {
     margin-bottom: 24px;
     text-align: left;
+=======
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.content-wrapper {
+    max-width: 800px;
+    margin: 0 auto ;
+}
+
+.page-header {
+    margin-bottom: 24px;
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .page-header h1 {
     font-size: 1.75rem;
     color: var(--text-dark);
     margin-bottom: 4px;
+<<<<<<< HEAD
     font-weight: 700;
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .page-header p {
@@ -204,7 +253,10 @@ body {
     text-align: center;
     color: white;
     margin-bottom: 40px;
+<<<<<<< HEAD
     box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.2);
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .sos-icon {
@@ -235,6 +287,7 @@ body {
     font-size: 1rem;
     cursor: pointer;
     margin-bottom: 24px;
+<<<<<<< HEAD
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     transition: all 0.2s ease;
 }
@@ -242,6 +295,14 @@ body {
 .btn-activate-sos:hover {
     transform: scale(1.03);
     box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+=======
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.btn-activate-sos:hover {
+    transform: scale(1.05);
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .location-info {
@@ -257,8 +318,11 @@ body {
 .section-title {
     font-size: 1.25rem;
     margin-bottom: 16px;
+<<<<<<< HEAD
     color: var(--text-dark);
     font-weight: 600;
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .hotline-card {
@@ -270,13 +334,20 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+<<<<<<< HEAD
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+=======
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .hotline-info h3 {
     font-size: 1.1rem;
     margin-bottom: 4px;
+<<<<<<< HEAD
     color: var(--text-dark);
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
 
 .hotline-info p {
@@ -326,6 +397,7 @@ body {
 
 .btn-call:hover {
     background-color: #9333ea;
+<<<<<<< HEAD
 }
 /* Ensure SVGs inherit colors correctly from the menu layout */
 .nav-item svg {
@@ -459,4 +531,6 @@ body.fade-out {
     border: 0;
     border-top: 1px solid #e5e7eb;
     margin: 6px 0;
+=======
+>>>>>>> fb42d70 ("user-profiles" "Therapistportal")
 }
