@@ -1,87 +1,82 @@
-lucide.createIcons();
-
-// Toggle Join Button State
-function toggleJoin(btn) {
-    if (btn.innerText === "Join Group") {
-        btn.innerText = "Joined";
-        btn.style.background = "#e5e7eb";
-        btn.style.color = "#4b5563";
-    } else {
-        btn.innerText = "Join Group";
-        btn.style.background = "linear-gradient(90deg, #a820c7, #ff1b7e)";
-        btn.style.color = "white";
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    const navItems = document.querySelectorAll('.nav-item');
-
-    // Sidebar active state on scroll/click
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            navItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+    
+    // SOS Button Logic
+    const sosButton = document.getElementById('sosButton');
+    
+    if (sosButton) {
+        sosButton.addEventListener('click', () => {
+            alert('SOS Activated! Initiating emergency protocols and fetching location...');
+            
+            // Visual loading state updates
+            sosButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ACTIVATING...';
+            sosButton.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                sosButton.innerHTML = 'ACTIVATE SOS';
+                sosButton.style.opacity = '1';
+            }, 3000);
         });
-    });
+    }
 
-    // SOS Logic
-    const sos = document.getElementById('sosTrigger');
-    sos.addEventListener('click', () => {
-        const confirmSOS = confirm("Are you sure you want to activate SOS? This will alert emergency services.");
-        if(confirmSOS) {
-            sos.innerText = "ALERTTING...";
-            sos.style.background = "red";
-        }
+    // Call Buttons Logic
+    const callButtons = document.querySelectorAll('.btn-call');
+    
+    callButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const card = e.target.closest('.hotline-card');
+            const phoneNumberElement = card.querySelector('.phone-number');
+            const phoneNumberText = phoneNumberElement.innerText.trim();
+            
+            alert(`Opening dialer for: ${phoneNumberText}`);
+        });
     });
 });
 
 // =========================
-// USER DROPDOWN
+// PAGE TRANSITION SYSTEM
 // =========================
 
-const avatar = document.getElementById("user-avatar-main");
-const dropdown = document.getElementById("user-dropdown");
+// Fade IN when page loads
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.style.opacity = "1";
+});
 
-if (avatar && dropdown) {
+// Handle navigation clicks
+document.querySelectorAll("a.nav-item").forEach(link => {
+    link.addEventListener("click", function (e) {
 
-    avatar.addEventListener("click", () => {
+        const href = this.getAttribute("href");
 
-        if (dropdown.style.display === "block") {
-            dropdown.style.display = "none";
-        } else {
-            dropdown.style.display = "block";
+        // Only apply to internal links
+        if (href && !href.startsWith("#")) {
+            e.preventDefault();
+
+            // fade out current page
+            document.body.classList.add("fade-out");
+
+            // wait for animation then go
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300); // must match CSS duration
         }
-
     });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('dropdownTrigger');
+    const menu = document.getElementById('dropdownMenu');
 
-    document.addEventListener("click", (e) => {
+    if (trigger && menu) {
+        // Toggle menu view when clicking the profile element
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+        });
 
-        if (
-            !avatar.contains(e.target) &&
-            !dropdown.contains(e.target)
-        ) {
-            dropdown.style.display = "none";
-        }
-
-    });
-
-}
-
-// =========================
-// LOGOUT
-// =========================
-
-const logoutBtn = document.getElementById("logout-btn");
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener("click", () => {
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        window.location.href = "../landing-page/login.html";
-
-    });
-
-}
+        // Close menu dynamically if the user clicks anywhere else outside of it
+        document.addEventListener('click', (e) => {
+            if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    }
+});

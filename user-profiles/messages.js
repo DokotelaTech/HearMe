@@ -1,280 +1,328 @@
-const API = 'http://localhost:5000/api';
-
-function timeAgo(dateStr) {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const m    = Math.floor(diff / 60000);
-    if (m < 1)  return 'Just now';
-    if (m < 60) return `${m}m ago`;
-    const h = Math.floor(m / 60);
-    if (h < 24) return `${h}h ago`;
-    return `${Math.floor(h / 24)}d ago`;
-}
-
-function initials(name) {
-    return (name || '?').split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-}
-
-function getToken() { return localStorage.getItem('token'); }
-
-function getMyName() {
-    try {
-        const uRaw = localStorage.getItem('user');
-        const u = JSON.parse(uRaw);
-        const ident = u?.identifier;
-        console.log('[messages.getMyName] localStorage.user=', u);
-        if (ident) return ident.toLowerCase().trim();
-    } catch (e) {
-        console.log('[messages.getMyName] could not parse localStorage.user', e);
-    }
-    const idRaw = localStorage.getItem('userIdentifier');
-    console.log('[messages.getMyName] localStorage.userIdentifier=', idRaw);
-    if (idRaw) return idRaw.toLowerCase().trim();
-    return null;
-}
-
-
-function authHeaders() {
-    return { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}` };
-}
-
-if (!getToken()) window.location.href = '../landing-page/login.html';
-
-let allMessages  = [];
-let threads      = {};
-let activeExpert = null;
-
-const inboxList   = document.getElementById('inboxList');
-const chatPanel   = document.getElementById('chatPanel');
-const searchInput = document.getElementById('inboxSearch');
-
-// ── fetch using dedicated inbox endpoint ──────────────────────
-async function fetchMessages() {
-    const myName = getMyName();
-    inboxList.innerHTML = `<div class="loading-state">Loading messages...</div>`;
-
-    if (!myName) {
-        inboxList.innerHTML = `
-            <div class="inbox-empty">
-                <p style="color:#ef4444;padding:20px;text-align:center;">
-                    Could not identify user. Please log out and log back in.
-                </p>
-            </div>`;
-        return;
-    }
-
-    try {
-        // Use the dedicated inbox route that filters by sender
-        const r = await fetch(`${API}/messages/inbox?sender=${encodeURIComponent(myName)}`,
-            { headers: authHeaders() });
-        if (!r.ok) throw new Error('Server error');
-        allMessages = await r.json();
-        groupAndRender();
-    } catch (err) {
-        console.error(err);
-        inboxList.innerHTML = `
-            <div class="inbox-empty">
-                <p style="color:#ef4444;padding:20px;text-align:center;">
-                    Could not load messages. Is the server running?
-                </p>
-            </div>`;
-    }
-}
-
-function groupAndRender(filter = '') {
-    threads = {};
-    allMessages.forEach(msg => {
-        const key = msg.expert_name || 'Unknown';
-        if (!threads[key]) threads[key] = [];
-        threads[key].push(msg);
-    });
-    Object.values(threads).forEach(t =>
-        t.sort((a, b) => new Date(a.sent_at) - new Date(b.sent_at))
-    );
-    const keys = Object.keys(threads).filter(k =>
-        !filter || k.toLowerCase().includes(filter)
-    );
-    renderInboxList(keys);
-}
-
-function renderInboxList(expertKeys) {
-    if (!expertKeys.length) {
-        inboxList.innerHTML = `
-            <div class="inbox-empty">
-                <i data-lucide="mail-open"></i>
-                <p>No messages yet.<br>Contact an expert to start a conversation.</p>
-            </div>`;
-        lucide.createIcons();
-        return;
-    }
-
-    inboxList.innerHTML = expertKeys.map(expert => {
-        const msgs  = threads[expert];
-        const last  = msgs[msgs.length - 1];
-
-        // last activity = latest reply if any, else message time
-        const lastReply   = last.replies && last.replies.length
-            ? last.replies[last.replies.length - 1]
-            : null;
-        const lastTime    = lastReply ? lastReply.sent_at : last.sent_at;
-        const lastText    = lastReply ? `${lastReply.therapist_name}: ${lastReply.text}` : last.message;
-        const preview     = lastText.length > 45 ? lastText.slice(0, 45) + '...' : lastText;
-        const hasNewReply = lastReply != null;
-        const isActive    = expert === activeExpert;
-
-        return `
-        <div class="inbox-item ${isActive ? 'active' : ''} ${hasNewReply ? 'unread' : ''}"
-             data-expert="${encodeURIComponent(expert)}">
-            <div class="inbox-avatar">${initials(expert)}</div>
-            <div class="inbox-info">
-                <div class="inbox-row">
-                    <span class="inbox-name ${hasNewReply ? 'bold' : ''}">${expert}</span>
-                    <span class="inbox-time">${timeAgo(lastTime)}</span>
-                </div>
-                <div class="inbox-preview ${hasNewReply ? 'bold' : ''}">${preview}</div>
-            </div>
-            ${hasNewReply ? '<span class="unread-dot"></span>' : ''}
-        </div>`;
-    }).join('');
-
-    lucide.createIcons();
-    inboxList.querySelectorAll('.inbox-item').forEach(item => {
-        item.addEventListener('click', () => openThread(decodeURIComponent(item.dataset.expert)));
-    });
-}
-
-function openThread(expertName) {
-    activeExpert = expertName;
-    const msgs   = threads[expertName] || [];
-    groupAndRender(searchInput.value.toLowerCase());
-
-    // Build all bubbles: user messages (right) + therapist replies (left)
-    let bubblesHTML = '';
-    msgs.forEach(msg => {
-        // User's original message — right side (mine)
-        bubblesHTML += `
-            <div class="bubble-wrap mine">
-                <div class="bubble mine">${msg.message}</div>
-                <span class="bubble-time" style="text-align:right;">${timeAgo(msg.sent_at)}</span>
-            </div>`;
-
-        // Therapist replies — left side (theirs)
-        if (msg.replies && msg.replies.length) {
-            msg.replies.forEach(reply => {
-                bubblesHTML += `
-                    <div class="bubble-wrap theirs">
-                        <div class="bubble theirs">${reply.text}</div>
-                        <span class="bubble-time">${reply.therapist_name} · ${timeAgo(reply.sent_at)}</span>
-                    </div>`;
-            });
-        }
-    });
-
-    chatPanel.innerHTML = `
-        <div class="chat-header">
-            <div class="chat-header-avatar">${initials(expertName)}</div>
-            <div class="chat-header-info">
-                <strong>${expertName}</strong>
-                <span>Therapist / Expert</span>
-            </div>
-        </div>
-
-        <div class="chat-body" id="chatBody">
-            <div class="request-badge">
-                <span>Your conversation with ${expertName}</span>
-            </div>
-            ${bubblesHTML}
-        </div>
-
-        <div class="chat-footer">
-            <div class="chat-footer-note">
-                Your therapist will reply within 24 hours.
-            </div>
-            <div class="reply-row">
-                <input type="text" id="replyInput" placeholder="Send a follow-up message..." />
-                <button class="send-btn" id="sendBtn">
-                    <i data-lucide="send"></i> Send
-                </button>
-            </div>
-        </div>
-    `;
-
-    lucide.createIcons();
-
-    const body = document.getElementById('chatBody');
-    body.scrollTop = body.scrollHeight;
-
-    const sendBtn    = document.getElementById('sendBtn');
-    const replyInput = document.getElementById('replyInput');
-
-    const doSend = async () => {
-        const text = replyInput.value.trim();
-        if (!text) return;
-        sendBtn.disabled    = true;
-        replyInput.disabled = true;
-
-        try {
-            const myName = getMyName() || 'User';
-            const r = await fetch(`${API}/messages`, {
-                method:  'POST',
-                headers: authHeaders(),
-                body:    JSON.stringify({ expert_name: expertName, sender_name: myName, message: text })
-            });
-            if (!r.ok) throw new Error();
-
-            const newBubble = document.createElement('div');
-            newBubble.className = 'bubble-wrap mine';
-            newBubble.innerHTML = `
-                <div class="bubble mine">${text}</div>
-                <span class="bubble-time" style="text-align:right;">Just now</span>`;
-            body.appendChild(newBubble);
-            body.scrollTop = body.scrollHeight;
-            replyInput.value = '';
-
-            allMessages.push({
-                expert_name: expertName,
-                sender_name: myName,
-                message:     text,
-                is_read:     false,
-                sent_at:     new Date().toISOString(),
-                replies:     []
-            });
-        } catch {
-            alert('Could not send message. Please try again.');
-        } finally {
-            sendBtn.disabled    = false;
-            replyInput.disabled = false;
-            replyInput.focus();
-        }
-    };
-
-    sendBtn.addEventListener('click', doSend);
-    replyInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSend(); });
-}
-
-searchInput.addEventListener('input', e => groupAndRender(e.target.value.toLowerCase()));
-
-// ── avatar / dropdown ─────────────────────────────────────────
-const avatar   = document.getElementById('user-avatar-main');
-const dropdown = document.getElementById('user-dropdown');
-if (avatar && dropdown) {
-    const name = getMyName();
-    if (name) avatar.textContent = name[0].toUpperCase();
-    avatar.addEventListener('click', () => {
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    });
-    document.addEventListener('click', e => {
-        if (!avatar.contains(e.target) && !dropdown.contains(e.target))
-            dropdown.style.display = 'none';
-    });
-}
-
-document.getElementById('logout-btn')?.addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = '../landing-page/login.html';
-});
+const API_BASE = 'http://localhost:5000/api';
+let inboxData = { conversations: [], unreadTotal: 0 };
+let activeTherapistId = null;
+let markingRead = false;
 
 lucide.createIcons();
-fetchMessages();
 
-// refresh every 30s so new replies appear automatically
-setInterval(fetchMessages, 30000);
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatTime(dateString) {
+    return new Date(dateString).toLocaleString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit'
+    });
+}
+
+function getToken() {
+    const token = authStorage.get('token');
+    const role = authStorage.get('userRole');
+
+    if (!token || role !== 'user') {
+        alert('Please sign in as a User to view messages.');
+        window.location.href = '../landing-page/login.html';
+        return null;
+    }
+
+    return token;
+}
+
+async function parseApiResponse(response) {
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+        throw new Error('Server error. Restart npm start and sign in again.');
+    }
+    return response.json();
+}
+
+function handleAuthError(status, message) {
+    if (status === 401 || message?.toLowerCase().includes('token')) {
+        authStorage.clear();
+        alert(message || 'Session expired. Please sign in again.');
+        window.location.href = '../landing-page/login.html';
+        return true;
+    }
+    return false;
+}
+
+function getConversation(therapistId) {
+    return inboxData.conversations.find(
+        (entry) => entry.therapistId.toString() === therapistId.toString()
+    );
+}
+
+function therapistInitials(name) {
+    return name
+        .split(' ')
+        .map((part) => part[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase() || 'TH';
+}
+
+async function loadInbox() {
+    const token = getToken();
+    if (!token) return;
+
+    const response = await fetch(`${API_BASE}/messages/user-inbox`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (response.status === 404) {
+        throw new Error(
+            'Messages API not found. Stop the server (Ctrl+C), run npm start once, and check the terminal shows "API ready: ... user-inbox".'
+        );
+    }
+
+    const data = await parseApiResponse(response);
+    if (!response.ok) {
+        if (handleAuthError(response.status, data.message)) return;
+        throw new Error(data.message || 'Could not load messages.');
+    }
+
+    inboxData = data;
+    renderInboxList();
+
+    if (inboxData.conversations.length) {
+        const keep =
+            activeTherapistId &&
+            inboxData.conversations.some((c) => c.therapistId.toString() === activeTherapistId);
+        showConversation(keep ? activeTherapistId : inboxData.conversations[0].therapistId.toString(), !keep);
+    } else {
+        showConversation(null, false);
+    }
+}
+
+function renderInboxList() {
+    const inboxList = document.getElementById('inbox-list');
+    if (!inboxList) return;
+
+    if (!inboxData.conversations.length) {
+        inboxList.innerHTML =
+            '<p class="inbox-empty">No messages yet. Contact a therapist from the <a href="experts.html">Experts</a> page.</p>';
+        return;
+    }
+
+    inboxList.innerHTML = inboxData.conversations
+        .map((conversation) => {
+            const therapistId = conversation.therapistId.toString();
+            const preview = conversation.lastMessage?.content?.slice(0, 50) || '';
+            const isActive = activeTherapistId === therapistId;
+            const badge =
+                conversation.unreadCount > 0
+                    ? `<span class="unread-badge">${conversation.unreadCount}</span>`
+                    : '';
+
+            return `
+                <div class="inbox-item ${isActive ? 'active' : ''}" data-therapist-id="${therapistId}">
+                    <div class="chat-avatar">${escapeHtml(therapistInitials(conversation.therapistName))}</div>
+                    <div class="inbox-details">
+                        <div style="display:flex;justify-content:space-between;gap:8px;">
+                            <strong>${escapeHtml(conversation.therapistName)}</strong>
+                            <span class="inbox-time">${formatTime(conversation.lastMessage.createdAt)}</span>
+                        </div>
+                        <p>${escapeHtml(preview)}${preview.length >= 50 ? '...' : ''}</p>
+                    </div>
+                    ${badge}
+                </div>
+            `;
+        })
+        .join('');
+
+    document.querySelectorAll('.inbox-item').forEach((item) => {
+        item.addEventListener('click', () => {
+            showConversation(item.getAttribute('data-therapist-id'), true);
+        });
+    });
+
+    lucide.createIcons();
+}
+
+function renderChat(conversation) {
+    const chatHistory = document.getElementById('chat-history');
+    if (!chatHistory) return;
+
+    chatHistory.innerHTML = conversation.messages
+        .map((msg) => {
+            const isOutgoing = msg.senderRole !== 'therapist';
+            return `
+                <div class="bubble ${isOutgoing ? 'outgoing' : 'incoming'}">
+                    <p>${escapeHtml(msg.content)}</p>
+                    <span class="time">${formatTime(msg.createdAt)}</span>
+                </div>
+            `;
+        })
+        .join('');
+
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+function showConversation(therapistId, markRead) {
+    const chatHistory = document.getElementById('chat-history');
+    const chatName = document.getElementById('chat-therapist-name');
+    const chatMeta = document.getElementById('chat-therapist-meta');
+    const chatAvatar = document.getElementById('chat-avatar');
+    const replyInput = document.getElementById('user-reply-input');
+    const replySend = document.getElementById('user-reply-send');
+
+    if (!therapistId) {
+        activeTherapistId = null;
+        if (replyInput) replyInput.disabled = true;
+        if (replySend) replySend.disabled = true;
+        return;
+    }
+
+    const conversation = getConversation(therapistId);
+    if (!conversation) return;
+
+    activeTherapistId = therapistId;
+
+    document.querySelectorAll('.inbox-item').forEach((item) => {
+        item.classList.toggle('active', item.getAttribute('data-therapist-id') === therapistId);
+    });
+
+    if (chatName) chatName.textContent = conversation.therapistName;
+    if (chatMeta) chatMeta.textContent = 'Your private conversation';
+    if (chatAvatar) chatAvatar.textContent = therapistInitials(conversation.therapistName);
+    if (replyInput) {
+        replyInput.disabled = false;
+        replyInput.value = '';
+    }
+    if (replySend) replySend.disabled = false;
+
+    renderChat(conversation);
+
+    if (markRead) {
+        markConversationRead(therapistId);
+    }
+}
+
+async function markConversationRead(therapistId) {
+    if (markingRead) return;
+
+    const conversation = getConversation(therapistId);
+    if (!conversation || conversation.unreadCount === 0) return;
+
+    const token = getToken();
+    if (!token) return;
+
+    markingRead = true;
+
+    try {
+        const response = await fetch(`${API_BASE}/messages/user-read`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ therapistId })
+        });
+
+        if (!response.ok) return;
+
+        conversation.unreadCount = 0;
+        conversation.messages.forEach((msg) => {
+            if (msg.senderRole === 'therapist') msg.read = true;
+        });
+        inboxData.unreadTotal = inboxData.conversations.reduce(
+            (sum, c) => sum + c.unreadCount,
+            0
+        );
+        renderInboxList();
+    } catch (error) {
+        console.error('Could not mark as read:', error);
+    } finally {
+        markingRead = false;
+    }
+}
+
+async function sendUserMessage() {
+    const token = getToken();
+    const replyInput = document.getElementById('user-reply-input');
+    const replySend = document.getElementById('user-reply-send');
+
+    if (!token || !replyInput) return;
+
+    if (!activeTherapistId) {
+        alert('Select a therapist conversation on the left before sending.');
+        return;
+    }
+
+    const content = replyInput.value.trim();
+    if (!content) {
+        replyInput.focus();
+        return;
+    }
+
+    if (replySend) replySend.disabled = true;
+
+    try {
+        const response = await fetch(`${API_BASE}/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                therapistId: String(activeTherapistId),
+                content
+            })
+        });
+
+        const data = await parseApiResponse(response);
+        if (!response.ok) {
+            if (handleAuthError(response.status, data.message)) return;
+            alert(data.message || 'Could not send message.');
+            return;
+        }
+
+        const conversation = getConversation(activeTherapistId);
+        if (conversation) {
+            conversation.messages.push(data.data);
+            conversation.lastMessage = data.data;
+            renderChat(conversation);
+            renderInboxList();
+        } else {
+            await loadInbox();
+        }
+
+        replyInput.value = '';
+    } catch (error) {
+        console.error(error);
+        alert('Could not connect to the server.');
+    } finally {
+        if (replySend) replySend.disabled = false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const replyInput = document.getElementById('user-reply-input');
+    const replySend = document.getElementById('user-reply-send');
+
+    if (replyInput) {
+        replyInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendUserMessage();
+            }
+        });
+    }
+
+    if (replySend) {
+        replySend.addEventListener('click', sendUserMessage);
+    }
+
+    loadInbox().catch((error) => {
+        console.error(error);
+        const status = document.getElementById('inbox-status');
+        if (status) {
+            status.textContent = error.message || 'Could not load messages.';
+        }
+    });
+});

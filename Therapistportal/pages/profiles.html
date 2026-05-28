@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Therapist Profile</title>
+    <!-- <link rel="stylesheet" href="../css/therapistprofile.css"> -->
+     <link rel="stylesheet" href="/therapist/css/therapistprofile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="topbar-right">
+            
+            <div class="icon-btn">
+                <i class="fa-regular fa-message"></i>
+                <span class="dot"></span>
+            </div>
+
+            <div class="profile-container">
+                <button id="profileToggle" class="profile-btn">
+                    <div class="avatar" id="nav-avatar">--</div>
+                    <div class="profile-info">
+                        <span class="profile-name" id="nav-name">Loading...</span>
+                        <span class="profile-role" id="nav-role">Therapist</span>
+                    </div>
+                    <div class="dropdown-arrow">
+                        <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
+                    </div>
+                </button>
+
+                <div id="profileDropdown" class="dropdown-menu">
+                    <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                    <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                    <hr>
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Sign Out</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="/therapist/reliefs" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+            </nav>
+            <div class="overview-box">
+                <h4>Today's Overview</h4>
+                <div class="ov-item"><span>Active Clients</span> <strong id="sidebar-active-clients">0</strong></div>
+                <div class="ov-item"><span>Sessions Today</span> <strong id="sidebar-sessions-today">0</strong></div>
+                <div class="ov-item"><span>Unread Messages</span> <strong id="sidebar-unread" class="danger-text">0</strong></div>
+            </div>
+        </aside>
+
+        <main class="profile-area">
+            
+            <div class="hero-card">
+                <div class="hero-top">
+                    
+                    <div class="hero-avatar-wrapper">
+                        <div class="hero-avatar" id="hero-main-avatar">--</div>
+                        <div class="avatar-upload-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            <input type="file" id="profile-image-upload" accept="image/*" title="Upload new profile picture">
+                        </div>
+                    </div>
+
+                    <div class="hero-details">
+                        <h1 id="hero-name">Loading Profile...</h1>
+                        <p id="hero-title"></p>
+                        <div class="tags" id="hero-tags"></div>
+                    </div>
+                    <div class="status-badge warning" id="hero-status"><i class="fa-solid fa-triangle-exclamation"></i> Incomplete Profile</div>
+                </div>
+                
+                <div class="hero-bottom">
+                    <div class="metric"><strong id="metric-clients">0</strong><span>Active Clients</span></div>
+                    <div class="metric"><strong id="metric-sessions">0</strong><span>Sessions Completed</span></div>
+                    <div class="metric"><strong id="metric-response-time">&lt; 0 hours</strong><span>Avg Response Time</span></div>
+                    <div class="metric"><strong id="metric-satisfaction">0%</strong><span>Satisfaction Rate</span></div>
+                </div>
+            </div>
+
+            <div class="onboarding-card" id="onboarding-tracker">
+                <h3><i class="fa-solid fa-list-check"></i> Complete Your Profile</h3>
+                <p>Please complete the following steps to submit your profile to the admin for verification.</p>
+                <div class="checklist-grid">
+                    <div class="check-item pending" id="step-bio"><i class="fa-regular fa-circle"></i> Write Bio</div>
+                    <div class="check-item pending" id="step-spec"><i class="fa-regular fa-circle"></i> Add Specializations</div>
+                    <div class="check-item pending" id="step-approach"><i class="fa-regular fa-circle"></i> Treatment Approach</div>
+                    <div class="check-item pending" id="step-session"><i class="fa-regular fa-circle"></i> Session Details</div>
+                    <div class="check-item pending" id="step-cred"><i class="fa-regular fa-circle"></i> Upload Credentials</div>
+                </div>
+                <button id="submit-verification-btn" class="book-btn disabled" disabled>Complete All Steps to Submit</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'Overview')">Overview</button>
+                <button class="tab-btn" onclick="openTab(event, 'Reviews')" id="tab-reviews-btn">Reviews (0)</button>
+                <button class="tab-btn" onclick="openTab(event, 'Credentials')">Credentials</button>
+            </div>
+
+            <div id="Overview" class="tab-content active">
+                <div class="overview-layout">
+                    <div class="left-col">
+                        
+                        <div class="editable-section">
+                            <div class="section-header">
+                                <h3>About Me</h3>
+                                <button class="edit-btn" onclick="toggleEdit('bio')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            </div>
+                            <div id="bio-display" class="text-display"><p class="muted">Please write a brief bio about yourself...</p></div>
+                            <div id="bio-edit" class="edit-form hidden">
+                                <textarea id="bio-input" rows="4" placeholder="Write your bio here..."></textarea>
+                                <button class="save-btn" onclick="saveSection('bio')">Save Bio</button>
+                            </div>
+                        </div>
+                        
+                        <div class="editable-section">
+                            <div class="section-header">
+                                <h3>Specializations</h3>
+                                <button class="edit-btn" onclick="toggleEdit('spec')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            </div>
+                            <div id="spec-display" class="text-display"><p class="muted">List your core specializations...</p></div>
+                            <div id="spec-edit" class="edit-form hidden">
+                                <input type="text" id="spec-input" placeholder="e.g., Anxiety, Depression, Couples Therapy (comma separated)">
+                                <button class="save-btn" onclick="saveSection('spec')">Save Specializations</button>
+                            </div>
+                        </div>
+
+                        <div class="editable-section">
+                            <div class="section-header">
+                                <h3>Treatment Approach</h3>
+                                <button class="edit-btn" onclick="toggleEdit('approach')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            </div>
+                            <div id="approach-display" class="text-display"><p class="muted">Describe your therapeutic approach...</p></div>
+                            <div id="approach-edit" class="edit-form hidden">
+                                <textarea id="approach-input" rows="3" placeholder="e.g., Cognitive Behavioral Therapy (CBT), Mindfulness..."></textarea>
+                                <button class="save-btn" onclick="saveSection('approach')">Save Approach</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="right-col">
+                        <div class="info-card editable-section">
+                            <div class="section-header">
+                                <h4>Session Details</h4>
+                                <button class="edit-btn" onclick="toggleEdit('session')"><i class="fa-solid fa-pen"></i> Edit</button>
+                            </div>
+                            
+                            <div id="session-display" class="text-display">
+                                <p class="muted">Please configure your session pricing and environment.</p>
+                            </div>
+
+                            <div id="session-edit" class="edit-form hidden">
+                                <label>Price per Session (Rands)</label>
+                                <input type="number" id="session-price" placeholder="e.g. 150">
+                                
+                                <label>Session Duration (Minutes)</label>
+                                <input type="number" id="session-time" placeholder="e.g. 50">
+                                
+                                <label>Working Environment</label>
+                                <select id="session-env">
+                                    <option value="Video Call Only">Video Call Only</option>
+                                    <option value="In-Person Only">In-Person Only</option>
+                                    <option value="Video & Phone Calls">Video & Phone Calls</option>
+                                    <option value="Hybrid (In-person & Virtual)">Hybrid (In-person & Virtual)</option>
+                                </select>
+                                
+                                <button class="save-btn" onclick="saveSection('session')">Save Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="Reviews" class="tab-content">
+                <div id="reviews-container">
+                    <div class="empty-state" id="reviews-empty-state">
+                        <i class="fa-regular fa-star"></i>
+                        <p>Reviews will appear here once your profile is verified and active.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="Credentials" class="tab-content">
+                
+                <div class="verify-banner" id="admin-banner">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <div>
+                        <strong>Verification Status</strong>
+                        <p id="verification-message">Your profile is incomplete. Please add your credentials below.</p>
+                    </div>
+                </div>
+
+                <div id="credentials-display" class="mt-20 hidden"></div>
+
+                <div class="info-card mt-20" id="credentials-edit">
+                    <div class="section-header">
+                        <h4>Primary Credential & License</h4>
+                    </div>
+                    <div class="cred-input-grid">
+                        <div>
+                            <label>Qualification / Degree</label>
+                            <input type="text" id="cred-qualification" placeholder="e.g., Master of Social Work">
+                        </div>
+                        <div>
+                            <label>Institution Name</label>
+                            <input type="text" id="cred-institution" placeholder="e.g., University of Johannesburg">
+                        </div>
+                        <div class="full-width">
+                            <label>License Number</label>
+                            <input type="text" id="cred-license" placeholder="e.g., Professional Registration Number">
+                        </div>
+                        <div class="full-width">
+                            <label>Upload Certificate (PDF/Image)</label>
+                            <input type="file" id="cred-file" class="file-input">
+                            <small class="muted" style="font-size: 11px;">*File uploads require backend configuration later.</small>
+                        </div>
+                    </div>
+                    <button class="save-btn mt-10" onclick="saveCredentials()">Save Credentials</button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+
+    
+    <script src="/therapist/js/shared/profileDropdown.js"></script>
+    <script src="/therapist/js/shared/api.js"></script>
+    <script src="/therapist/js/shared/utils.js"></script>
+    <script src="/therapist/js/shared/authGuard.js"></script>
+    <script src="/therapist/js/shared/sidebar.js"></script>
+    <script src="/therapist/js/theProfile.js"></script>
+</body>
+</html>

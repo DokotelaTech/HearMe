@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Experts</title>
+    <!-- <link rel="stylesheet" href="/user/experts.css"> -->
     <link rel="stylesheet" href="experts.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
 </head>
 <body>
 
@@ -17,7 +16,7 @@
         <div class="user-menu-container">
             <div class="user-avatar" id="user-avatar-main">A</div>
             <div class="dropdown-menu" id="user-dropdown">
-                <a href="profile.html">View Profile</a>
+                <a href="/user/profile">View Profile</a>
                 <button id="logout-btn">Logout</button>
             </div>
         </div>
@@ -25,14 +24,14 @@
 
     <div class="app-container">
         <nav class="sidebar">
-            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-            <a href="#" class="nav-item active"><i data-lucide="user-plus"></i><span>Experts</span></a>
-            <a href="messages.html" class="nav-item"><i data-lucide="inbox"></i><span>Messages</span></a>
-            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
+            <a href="/user/community" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="/user/chat" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="/user/experts" class="nav-item active"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="/user/messages" class="nav-item"><i data-lucide="inbox"></i><span>Messages</span></a>
+            <a href="/user/sos" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="/user/relief" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="/user/profile" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
         </nav>
 
         <main class="experts-area">
@@ -45,137 +44,75 @@
                 <div class="search-row">
                     <div class="search-input-wrapper">
                         <i data-lucide="search" class="search-icon"></i>
-                        <input type="text" placeholder="Search by name or specialty...">
+                        <input type="text" id="search-input" placeholder="Search by name or specialty...">
                     </div>
                     <button class="near-me-btn" id="near-me-btn">
                         <i data-lucide="map-pin"></i> Near Me
                     </button>
                 </div>
                 <div class="filter-tags" id="specialty-filters">
-                    <button class="tag active">All Specialties</button>
-                    <button class="tag">Anxiety</button>
-                    <button class="tag">Depression</button>
-                    <button class="tag">Trauma</button>
-                    <button class="tag">PTSD</button>
-                    <button class="tag">Family Therapy</button>
-                    <button class="tag">Addiction</button>
+                    <button class="tag active" data-specialty="all">All Specialties</button>
                 </div>
             </div>
 
-            <div class="alert-banner error" id="location-error">
+            <div class="alert-banner error" id="location-error" style="display:none;">
                 <i data-lucide="map-pin" class="alert-icon"></i>
                 <div class="alert-content">
                     <h4>Location Error</h4>
-                    <p>Location permission denied. Please enable location access.</p>
+                    <p id="location-error-text">Location permission denied. Please enable location access.</p>
                 </div>
             </div>
 
-            <div class="experts-list">
-
-                <div class="expert-card">
-                    <div class="expert-avatar avatar-pink">D</div>
-                    <div class="expert-details">
-                        <div class="expert-header">
-                            <div class="expert-title">
-                                <h3>Dr. Sarah Johnson</h3>
-                                <i data-lucide="check-circle-2" class="verified-icon"></i>
-                            </div>
-                            <div class="expert-location-status">
-                                <span class="distance"><i data-lucide="map-pin"></i> 2.3 mi away</span>
-                                <span class="status-badge available">Available Now</span>
-                            </div>
-                        </div>
-                        <div class="expert-stats">
-                            <span class="rating"><i data-lucide="star" class="star-icon"></i> 4.9 (127 reviews)</span>
-                            <span class="experience">15 years experience</span>
-                        </div>
-                        <div class="specialty-badges">
-                            <span class="badge">Anxiety</span>
-                            <span class="badge">Depression</span>
-                            <span class="badge">Trauma</span>
-                        </div>
-                        <p class="expert-bio">Licensed clinical social worker specializing in anxiety and trauma recovery. 15+ years helping people find their path to healing.</p>
-                        <div class="expert-actions">
-                            <button class="btn btn-primary contact-btn">
-                                <i data-lucide="message-circle"></i> Contact
-                            </button>
-                            <button class="btn btn-outline schedule-btn" onclick="window.location.href='booking.html?expert=Dr. Sarah Johnson'">
-                                <i data-lucide="calendar"></i> Schedule
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="expert-card">
-                    <div class="expert-avatar avatar-purple">M</div>
-                    <div class="expert-details">
-                        <div class="expert-header">
-                            <div class="expert-title">
-                                <h3>Michael Chen, LCSW</h3>
-                                <i data-lucide="check-circle-2" class="verified-icon"></i>
-                            </div>
-                            <div class="expert-location-status">
-                                <span class="distance"><i data-lucide="map-pin"></i> 5.7 mi away</span>
-                            </div>
-                        </div>
-                        <div class="expert-stats">
-                            <span class="rating"><i data-lucide="star" class="star-icon"></i> 4.8 (89 reviews)</span>
-                            <span class="experience">10 years experience</span>
-                        </div>
-                        <div class="specialty-badges">
-                            <span class="badge">PTSD</span>
-                            <span class="badge">Family Therapy</span>
-                            <span class="badge">Addiction</span>
-                        </div>
-                        <p class="expert-bio">Compassionate support for trauma survivors and families. Specializing in EMDR and cognitive behavioral therapy.</p>
-                        <div class="expert-actions">
-                            <button class="btn btn-primary contact-btn">
-                                <i data-lucide="message-circle"></i> Contact
-                            </button>
-                            <button class="btn btn-outline schedule-btn" onclick="window.location.href='booking.html?expert=Michael Chen'">
-                                <i data-lucide="calendar"></i> Schedule
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="experts-list" id="experts-container">
+                <div class="loading-state">Loading verified therapists...</div>
             </div>
         </main>
     </div>
 
-    <!-- ── MODAL OVERLAY ── -->
+    <!-- BOOKING MODAL -->
     <div class="modal-overlay" id="modal-overlay"></div>
-
-    <!-- ── CONTACT FORM MODAL ── -->
-    <div class="contact-modal" id="contact-modal">
+    <div class="contact-modal" id="booking-modal">
         <div class="modal-header">
             <div>
-                <h3>Contact <span id="modal-expert-name"></span></h3>
-                <p>Send a message and they'll get back to you shortly.</p>
+                <h3>Book a Session with <span id="modal-therapist-name"></span></h3>
+                <p>Choose your preferred date and time</p>
             </div>
             <button class="close-btn" id="close-modal-btn">✕</button>
         </div>
+        <form id="booking-form">
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="booking-date" required>
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <input type="time" id="booking-time" required>
+            </div>
 
-        <form id="contact-form">
             <div class="form-group">
-                <label for="contact-name">Your Name</label>
-                <input type="text" id="contact-name" placeholder="Enter your name" required>
+                <label>Session Type</label>
+                <select id="booking-type">
+                    <option value="online">Online</option>
+                    <option value="in-person">In Person</option>
+                </select>
             </div>
+
             <div class="form-group">
-                <label for="contact-message">Message</label>
-                <textarea id="contact-message" placeholder="Describe what you're going through or what kind of help you're looking for..." required></textarea>
+                <label>Note (optional)</label>
+                <textarea id="booking-note" placeholder="What would you like to talk about?"></textarea>
             </div>
-            <button type="submit" class="submit-btn">Send Message</button>
+            <button type="submit" class="submit-btn">Confirm Booking</button>
         </form>
+        <div class="form-success" id="booking-success" style="display:none;">
 
-        <!-- Success state shown after submit -->
-        <div class="form-success" id="form-success">
             <div class="success-icon">✅</div>
-            <h4>Message Sent!</h4>
-            <p>Your message has been delivered. <span id="modal-expert-name-2"></span> will respond within 24 hours.</p>
+            
+            <h4>Appointment Booked!</h4>
+
+            <p>Your session with <span id="success-therapist-name"></span> has been confirmed.</p>
         </div>
     </div>
 
-    <script src="experts.js"></script>
+    <script src="/user/experts.js"></script>
 </body>
 </html>

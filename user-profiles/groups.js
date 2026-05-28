@@ -2,7 +2,7 @@
 lucide.createIcons();
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Handle Category Filters
+    // Handle Category Filters
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Handle Join Group Logic
+    // Handle Join Group Logic
     const joinBtns = document.querySelectorAll('.join-group-btn');
     joinBtns.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -31,76 +31,53 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Joined new group!");
         });
     });
-
-    // 3. Handle View Chat Redirection (Event Delegation)
-    // This watches for any click on the document and checks if it was a ".view-chat-btn"
-    document.addEventListener('click', (e) => {
-        // Find if the click (or the icon clicked) is inside a .view-chat-btn
-        const btn = e.target.closest('.view-chat-btn');
-        
-        if (btn) {
-            // Find the parent card to get the group name (e.g., "Anxiety Warriors")
-            const groupCard = btn.closest('.group-card');
-            if (groupCard) {
-                const groupName = groupCard.querySelector('h3').innerText;
-                
-                // Save the group name so the chat page knows which room to join
-                localStorage.setItem('activeGroup', groupName);
-                
-                // Redirect to the chat page
-                window.location.href = 'group-chat.html';
-            }
-        }
-    });
 });
 
 // =========================
-// USER DROPDOWN
+// PAGE TRANSITION SYSTEM
 // =========================
 
-const avatar = document.getElementById("user-avatar-main");
-const dropdown = document.getElementById("user-dropdown");
+// Fade IN when page loads
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.style.opacity = "1";
+});
 
-if (avatar && dropdown) {
+// Handle navigation clicks
+document.querySelectorAll("a.nav-item").forEach(link => {
+    link.addEventListener("click", function (e) {
 
-    avatar.addEventListener("click", () => {
+        const href = this.getAttribute("href");
 
-        if (dropdown.style.display === "block") {
-            dropdown.style.display = "none";
-        } else {
-            dropdown.style.display = "block";
+        // Only apply to internal links
+        if (href && !href.startsWith("#")) {
+            e.preventDefault();
+
+            // fade out current page
+            document.body.classList.add("fade-out");
+
+            // wait for animation then go
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300); // must match CSS duration
         }
-
     });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('dropdownTrigger');
+    const menu = document.getElementById('dropdownMenu');
 
-    document.addEventListener("click", (e) => {
+    if (trigger && menu) {
+        // Toggle menu view when clicking the profile element
+        trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+        });
 
-        if (
-            !avatar.contains(e.target) &&
-            !dropdown.contains(e.target)
-        ) {
-            dropdown.style.display = "none";
-        }
-
-    });
-
-}
-
-// =========================
-// LOGOUT
-// =========================
-
-const logoutBtn = document.getElementById("logout-btn");
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener("click", () => {
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        window.location.href = "../landing-page/login.html";
-
-    });
-
-}
+        // Close menu dynamically if the user clicks anywhere else outside of it
+        document.addEventListener('click', (e) => {
+            if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    }
+});

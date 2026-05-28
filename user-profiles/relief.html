@@ -1,101 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>HearMe | Stress Relief</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="relief.css">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
+    <!-- NAVBAR -->
     <header class="navbar">
-        <h1 class="logo">HearMe</h1>
-        <div class="user-menu-container">
 
-    <!-- AVATAR -->
-    <div class="user-avatar" id="user-avatar-main">
-        A
-    </div>
+        <div class="navbar-left">
+            <h1 class="logo">HearMe</h1>
+        </div>
 
-    <!-- DROPDOWN -->
-    <div class="dropdown-menu" id="user-dropdown">
+        <div class="navbar-right">
 
-        <a href="profile.html">
-            View Profile
-        </a>
+            <!-- USER SIDE LOGO -->
+        <div class="user-profile-section">
 
-        <button id="logout-btn">
-            Logout
-        </button>
+            <a href="messages.html" class="msg-icon-btn" title="Messages">
+                <i data-lucide="message-square"></i>
+                <span class="msg-badge"></span> </a>
 
-    </div>
+            <div class="user-dropdown-container">
+                <div class="user-profile-trigger" id="dropdownTrigger">
+                    <div class="user-badge">
+                        User
+                    </div>
+                    <div class="user-avatar">
+                        U
+                    </div>
+                </div>
 
-</div>
-    </header>
-
-    <div class="app-container">
-        <nav class="sidebar">
-            <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
-            <a href="messages.html" class="nav-item"><i data-lucide="inbox"></i><span>Messages</span></a>
-            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-            <a href="relief.html" class="nav-item active"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
-        </nav>
-
-        <main class="relief-area">
-            <div class="page-header">
-                <h2 class="page-title">Stress Relief</h2>
-                <p class="page-subtitle">Take a moment to calm your mind and relax</p>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="profile.html" class="dropdown-item">
+                        <i data-lucide="user"></i>
+                        <span>My Profile</span>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="logout.html" class="dropdown-item logout-item">
+                        <i data-lucide="log-out"></i>
+                        <span>Log Out</span>
+                    </a>
+                </div>
             </div>
 
+        </div>
+
+        </div>
+    </header>
+
+    <!-- APP -->
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                HearMe
+            </div>
+
+            <nav class="nav-menu">
+
+                <a href="community-feeds.html" class="nav-item">
+                    <i data-lucide="home"></i>
+                    <span>Feed</span>
+                </a>
+
+                <a href="groups.html" class="nav-item">
+                    <i data-lucide="users"></i>
+                    <span>Groups</span>
+                </a>
+
+                <a href="ai-chat.html" class="nav-item">
+                    <i data-lucide="message-square"></i>
+                    <span>AI Chat</span>
+                </a>
+
+                <a href="experts.html" class="nav-item">
+                    <i data-lucide="user-plus"></i>
+                    <span>Experts</span>
+                </a>
+
+                <a href="SOS.html" class="nav-item">
+                    <i data-lucide="alert-circle"></i>
+                    <span>SOS</span>
+                </a>
+
+                <a href="relief.html" class="nav-item active">
+                    <i data-lucide="heart"></i>
+                    <span>Relief</span>
+                </a>
+
+                <a href="profile.html" class="nav-item">
+                    <i data-lucide="user"></i>
+                    <span>Profile</span>
+                </a>
+
+            </nav>
+        </aside>
+
+        <!-- MAIN -->
+         <div class="main-content">
+        <main class="relief-area">
+
+            <!-- HEADER -->
+            <div class="page-header">
+
+                <div>
+
+                    <h2 class="page-title">
+                        Stress Relief Hub
+                    </h2>
+
+                    <p class="page-subtitle">
+
+                        Discover calming videos,
+                        healing podcasts,
+                        breathing exercises
+                        and mindfulness resources
+
+                    </p>
+
+                </div>
+
+                <!-- Dynamic Stats -->
+                <div class="dynamic-stats">
+
+                    <div class="mini-stat">
+
+                        <strong id="video-count">
+                            0
+                        </strong>
+
+                        <span>Videos</span>
+
+                    </div>
+
+                    <div class="mini-stat">
+
+                        <strong id="podcast-count">
+                            0
+                        </strong>
+
+                        <span>Podcasts</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- EXERCISES -->
             <div class="exercise-grid">
-                <div class="exercise-card" id="breathing">
+
+                <div class="exercise-card">
+
                     <div class="icon-circle bg-blue">
                         <i data-lucide="wind"></i>
                     </div>
+
                     <h3>Breathing Exercise</h3>
-                    <p>Calm your mind with guided breathing</p>
+
+                    <p>
+                        Calm your mind with guided breathing techniques
+                    </p>
+
                 </div>
 
-                <div class="exercise-card" id="meditation">
+                <div class="exercise-card">
+
                     <div class="icon-circle bg-gradient">
                         <i data-lucide="sparkles"></i>
                     </div>
+
                     <h3>5-Minute Meditation</h3>
-                    <p>Quick mindfulness practice</p>
+
+                    <p>
+                        Practice mindfulness and relaxation anywhere
+                    </p>
+
                 </div>
 
-                <div class="exercise-card" id="grounding">
+                <div class="exercise-card">
+
                     <div class="icon-circle bg-green">
                         <i data-lucide="heart"></i>
                     </div>
-                    <h3>5-4-3-2-1 Grounding</h3>
-                    <p>Connect with your senses</p>
+
+                    <h3>Grounding Technique</h3>
+
+                    <p>
+                        Reconnect with your senses during anxiety moments
+                    </p>
+
                 </div>
+
             </div>
 
+            <!-- TIPS -->
             <div class="tips-container">
+
                 <div class="tips-header">
-                    <span class="bulb">💡</span>
-                    <h3>Quick Stress Relief Tips</h3>
+
+                    <span>💡</span>
+
+                    <h3>
+                        Quick Stress Relief Tips
+                    </h3>
+
                 </div>
+
                 <ul class="tips-list">
-                    <li>Take a short walk, even just around the room</li>
-                    <li>Listen to calming music or nature sounds</li>
-                    <li>Practice progressive muscle relaxation</li>
-                    <li>Write down your thoughts in a journal</li>
-                    <li>Call a friend or family member</li>
-                    <li>Do something creative like drawing or coloring</li>
+
+                    <li>Take a short walk outdoors</li>
+
+                    <li>Listen to calming music</li>
+
+                    <li>Practice slow breathing</li>
+
+                    <li>Write your thoughts in a journal</li>
+
+                    <li>Call someone you trust</li>
+
                 </ul>
+
             </div>
+
+            <!-- MEDIA -->
+            <div class="media-wrapper">
+
+                <!-- PODCASTS -->
+                <div class="media-box">
+
+                    <div class="section-header">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-headphones-simple"></i>
+
+                            <h3>
+                                Healing Podcasts
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <p class="media-subtitle">
+
+                        Listen to calming stories
+                        and therapeutic audio
+
+                    </p>
+
+                    <div
+                        id="audio-list"
+                        class="media-grid"
+                    ></div>
+
+                </div>
+
+                <!-- VIDEOS -->
+                <div class="media-box">
+
+                    <div class="section-header">
+
+                        <div class="section-title">
+
+                            <i class="fa-solid fa-play"></i>
+
+                            <h3>
+                                Educational Videos
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <p class="media-subtitle">
+
+                        Watch guided exercises
+                        and stress relief techniques
+
+                    </p>
+
+                    <div
+                        id="video-list"
+                        class="media-grid"
+                    ></div>
+
+                </div>
+
+            </div>
+
         </main>
+         </div>
+
     </div>
 
+    <!-- JS -->
     <script src="relief.js"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

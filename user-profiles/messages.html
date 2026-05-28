@@ -10,67 +10,62 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
-        <div class="user-menu-container">
-            <div class="user-avatar" id="user-avatar-main">A</div>
-            <div class="dropdown-menu" id="user-dropdown">
-                <a href="profile.html">View Profile</a>
-                <button id="logout-btn">Logout</button>
-            </div>
-        </div>
+        <div class="user-avatar">A</div>
     </header>
 
     <div class="app-container">
-
-        <!-- SIDEBAR -->
         <nav class="sidebar">
             <a href="community-feeds.html" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
-            <a href="groups.html"          class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="ai-chat.html"         class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
-            <a href="experts.html"         class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
-            <a href="SOS.html"             class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
-            <a href="relief.html"          class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
-            <a href="messages.html"        class="nav-item active"><i data-lucide="mail"></i><span>Messages</span></a>
-            <a href="profile.html"         class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
+            <a href="groups.html" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="ai-chat.html" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="experts.html" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="messages.html" class="nav-item active"><i data-lucide="mail"></i><span>Messages</span></a>
+            <a href="SOS.html" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="relief.html" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="profile.html" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
         </nav>
 
-        <!-- MAIN AREA -->
-        <main class="messages-main">
-
+        <main class="messages-area">
             <div class="page-header">
                 <h2 class="page-title">My Messages</h2>
-                <p class="page-subtitle">Replies from your therapists and experts</p>
+                <p class="page-subtitle">Conversations with your therapists</p>
             </div>
 
-            <!-- MESSAGES LAYOUT -->
             <div class="messages-layout">
-
-                <!-- LEFT: conversation list -->
-                <div class="inbox-panel">
-                    <div class="inbox-search">
-                        <i data-lucide="search" class="search-icon"></i>
-                        <input type="text" id="inboxSearch" placeholder="Search messages...">
-                    </div>
-                    <div id="inboxList" class="inbox-list">
-                        <!-- filled by JS -->
+                <div class="inbox-sidebar">
+                    <div class="inbox-list" id="inbox-list">
+                        <p class="inbox-empty" id="inbox-status">Loading conversations...</p>
                     </div>
                 </div>
-
-                <!-- RIGHT: open message -->
-                <div class="chat-panel" id="chatPanel">
-                    <div class="empty-state">
-                        <i data-lucide="mail-open" class="empty-icon"></i>
-                        <p>Select a conversation to read it</p>
+                <div class="chat-area">
+                    <div class="chat-header" id="chat-header">
+                        <div class="chat-header-info">
+                            <div class="chat-avatar" id="chat-avatar">--</div>
+                            <div>
+                                <strong id="chat-therapist-name">Select a conversation</strong>
+                                <span class="chat-meta" id="chat-therapist-meta">Therapist replies appear here</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-history" id="chat-history">
+                        <p class="inbox-empty">Select a therapist from the left to view your conversation.</p>
+                    </div>
+                    <div class="chat-footer">
+                        <div class="input-area">
+                            <input type="text" id="user-reply-input" placeholder="Type a message..." disabled>
+                            <button type="button" class="send-btn" id="user-reply-send" disabled>
+                                <i data-lucide="send"></i> Send
+                            </button>
+                        </div>
                     </div>
                 </div>
-
             </div>
-
         </main>
     </div>
 
+    <script src="../auth-storage.js"></script>
     <script src="messages.js"></script>
 </body>
 </html>

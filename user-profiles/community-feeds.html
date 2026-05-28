@@ -4,193 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Community Feed</title>
-
     <link rel="stylesheet" href="community-feeds.css">
-
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for report modal icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-
 <body>
 
-    <!-- NAVBAR -->
     <header class="navbar">
-
         <h1 class="logo">HearMe</h1>
-
-        <!-- USER MENU -->
-        <div class="user-menu-container">
-
-            <!-- AVATAR -->
-            <div class="user-avatar" id="user-avatar-main">
-                A
-            </div>
-
-            <!-- DROPDOWN -->
-            <div class="dropdown-menu" id="user-dropdown">
-
-                <a href="profile.html">
-                    View Profile
-                </a>
-
-                <button id="logout-btn">
-                    Logout
-                </button>
-
-            </div>
-
-        </div>
-
+        <div class="user-avatar">A</div>
     </header>
 
-    <!-- MAIN APP -->
     <div class="app-container">
-
-        <!-- SIDEBAR -->
         <nav class="sidebar">
-
-            <a href="community-feeds.html" class="nav-item active">
-                <i data-lucide="home"></i>
-                <span>Feed</span>
-            </a>
-
-            <a href="groups.html" class="nav-item">
-                <i data-lucide="users"></i>
-                <span>Groups</span>
-            </a>
-
-            <a href="ai-chat.html" class="nav-item">
-                <i data-lucide="message-square"></i>
-                <span>AI Chat</span>
-            </a>
-
-            <a href="experts.html" class="nav-item">
-                <i data-lucide="user-plus"></i>
-                <span>Experts</span>
-            </a>
-
-            <a href="messages.html" class="nav-item">
-                <i data-lucide="inbox">
-                </i><span>Messages</span>
-            </a>
-
-            <a href="sos.html" class="nav-item">
-                <i data-lucide="alert-circle"></i>
-                <span>SOS</span>
-            </a>
-
-            <a href="relief.html" class="nav-item">
-                <i data-lucide="heart"></i>
-                <span>Relief</span>
-            </a>
-
-            <a href="profile.html" class="nav-item">
-                <i data-lucide="user"></i>
-                <span>Profile</span>
-            </a>
-
+            <a href="/user/community" class="nav-item active"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="/user/chat" class="nav-item"><i data-lucide="message-square"></i><span>AI Chat</span></a>
+            <a href="/user/experts" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="/user/sos" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="/user/relief" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="/user/profile" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
         </nav>
 
-        <!-- FEED AREA -->
         <main class="feed-area">
-
             <div class="feed-content">
-
                 <div class="feed-header">
                     <h2 class="page-title">Community Feed</h2>
                 </div>
 
-                <!-- CREATE POST -->
                 <div class="input-card">
 
-                    <!-- COLLAPSED -->
+                    <!-- COLLAPSED STATE (default) -->
                     <div class="post-input-wrapper" id="post-collapsed">
-
-                        <input
-                            type="text"
-                            id="post-input-simple"
-                            placeholder="Share your thoughts anonymously..."
-                            readonly
-                        >
-
-                        <button class="post-submit-btn" id="open-composer">
-                            Post
-                        </button>
-
+                        <input type="text" id="post-input-simple" placeholder="Share your thoughts anonymously..." readonly>
+                        <button class="post-submit-btn" id="open-composer">Post</button>
                     </div>
 
-                    <!-- EXPANDED -->
-                    <div class="post-composer" id="post-expanded">
+                    <!-- EXPANDED STATE (shown when clicked) -->
+                    <div class="post-composer" id="post-expanded" style="display:none;">
 
                         <div class="post-tabs">
-
-                            <button class="tab-btn active" data-type="struggle">
-                                Struggle Post
-                            </button>
-
-                            <button class="tab-btn" data-type="success">
-                                Success Story
-                            </button>
-
+                            <button class="tab-btn active" data-type="struggle">Struggle Post</button>
+                            <button class="tab-btn" data-type="success">Success Story</button>
                         </div>
 
-                        <textarea
-                            id="post-textarea"
+                        <textarea id="post-textarea"
                             class="post-textarea"
-                            placeholder="Share what you're going through... You're not alone."
-                        ></textarea>
+                            placeholder="Share what you're going through... You're not alone."></textarea>
 
                         <div class="post-actions">
-
                             <div class="left-actions">
-
                                 <label class="media-upload">
                                     <i data-lucide="image"></i>
                                     <span>Add image/GIF</span>
                                     <input type="file" hidden>
                                 </label>
-
                             </div>
-
                             <div class="right-actions">
-
-                                <button class="cancel-btn" id="cancel-post">
-                                    Cancel
-                                </button>
-
-                                <button id="post-button" class="post-submit-btn">
-                                    Post
-                                </button>
-
+                                <button class="cancel-btn" id="cancel-post">Cancel</button>
+                                <button id="post-button" class="post-submit-btn">Post</button>
                             </div>
-
                         </div>
 
                     </div>
 
                 </div>
 
-                <!-- POSTS -->
-                <div id="post-container" class="post-list">
-                    <!-- POSTS LOAD HERE -->
-                </div>
-
+                <div id="post-container" class="post-list"></div>
             </div>
-
         </main>
-
     </div>
 
-    <!-- HELP BUTTON -->
-    <button class="help-fab">
-        <i data-lucide="help-circle"></i>
-    </button>
+    <button class="help-fab"><i data-lucide="help-circle"></i></button>
 
-    <!-- JS -->
+    <!-- ========================================
+         REPORT POST MODAL
+         ======================================== -->
+    <div id="reportModal" class="report-modal-overlay" style="display:none;">
+        <div class="report-modal-box">
+            <div class="report-modal-header">
+                <h3><i class="fa-solid fa-flag"></i> Report Post</h3>
+                <button class="report-modal-close" onclick="closeReportModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="report-modal-body">
+                <p class="report-modal-question">Why are you reporting this post?</p>
+
+                <div class="report-reasons">
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Harassment or bullying">
+                        <span class="reason-label">
+                            <i class="fa-solid fa-user-slash"></i> Harassment or bullying
+                        </span>
+                    </label>
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Hate speech">
+                        <span class="reason-label">
+                            <i class="fa-solid fa-ban"></i> Hate speech
+                        </span>
+                    </label>
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Misinformation">
+                        <span class="reason-label">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Misinformation
+                        </span>
+                    </label>
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Spam">
+                        <span class="reason-label">
+                            <i class="fa-solid fa-robot"></i> Spam
+                        </span>
+                    </label>
+                    <label class="report-reason-option">
+                        <input type="radio" name="reportReason" value="Other">
+                        <span class="reason-label">
+                            <i class="fa-solid fa-ellipsis"></i> Other
+                        </span>
+                    </label>
+                </div>
+
+                <div class="report-additional">
+                    <label for="reportCustomReason">Additional details (optional):</label>
+                    <textarea id="reportCustomReason" placeholder="Describe the issue..."></textarea>
+                </div>
+            </div>
+
+            <div class="report-modal-footer">
+                <button class="btn-report-cancel" onclick="closeReportModal()">Cancel</button>
+                <button class="btn-report-submit" onclick="submitReport()">
+                    <i class="fa-solid fa-flag"></i> Submit Report
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- END REPORT MODAL -->
+
     <script src="community-feeds.js"></script>
-
 </body>
 </html>

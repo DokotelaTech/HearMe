@@ -1,81 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>HearMe - Welcome Back</title>
+
     <link rel="stylesheet" href="login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    >
+
 </head>
+
 <body>
+
     <div class="brand-header">
+
         <h1>HearMe</h1>
+
         <p>Your safe space for healing</p>
+
     </div>
 
     <div class="container">
+
         <div class="form-box">
+
             <h2>Welcome Back</h2>
 
-            <!-- Removed action="log.php" as we are using Node.js API -->
+            <p class="subtitle">
+                Continue your healing journey
+            </p>
+
             <form id="login-form">
 
-                <p class="label-text">I am a:</p>
+                <!-- ROLE -->
+
+                <p class="label-text">
+                    Sign in as:
+                </p>
+
                 <div class="role-selector">
-                    <div class="role-option active" data-role="user">
+
+                    <div
+                        class="role-option active"
+                        data-role="user"
+                    >
+
                         <i class="fa-regular fa-user"></i>
+
                         <span>User</span>
+
                     </div>
-                    <div class="role-option" data-role="therapist">
+
+                    <div
+                        class="role-option"
+                        data-role="therapist"
+                    >
+
                         <i class="fa-solid fa-user-doctor"></i>
+
                         <span>Therapist</span>
+
                     </div>
-                    <div class="role-option" data-role="admin">
-                        <i class="fa-solid fa-shield"></i>
-                        <span>Admin</span>
-                    </div>
+
                 </div>
 
-                <div class="anon-toggle">
-                    <input type="checkbox" id="anonymous" checked>
-                    <label for="anonymous">Keep me completely anonymous (recommended)</label>
-                </div>
+                <!-- EMAIL -->
 
-                <!-- ✅ FIXED: ID changed to "identifier" and type to "text" -->
                 <div class="input-group">
-                    <i class="fa-regular fa-user"></i>
-                    <input 
-                        id="identifier" 
-                        name="identifier" 
-                        type="text" 
-                        placeholder="Enter your email or username" 
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="Email Address"
                         required
                     >
+
                 </div>
 
-                <!-- ✅ FIXED: PASSWORD FIELD -->
+                <!-- PASSWORD -->
+
                 <div class="input-group">
+
                     <i class="fa-solid fa-lock"></i>
-                    <input 
-                        id="password" 
-                        name="password" 
-                        type="password" 
-                        placeholder="Enter your password" 
+
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Password"
                         required
                     >
+
                 </div>
 
-                <button type="submit" id="Btn">Sign In</button>
+                <!-- REMEMBER -->
+
+                <div class="extra-options">
+
+                    <label>
+
+                        <input type="checkbox">
+
+                        Remember me
+
+                    </label>
+
+                    <a href="#">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button type="submit" id="Btn">
+
+                    Sign In
+
+                </button>
 
                 <p class="footer-text">
-                    Don't have an account? <a href="SignUp.html">Sign up</a>
+
+                    Don't have an account?
+
+                    <a href="signup.html">
+
+                        Create Account
+
+                    </a>
+
                 </p>
 
             </form>
+
         </div>
+
+    </div>
+
+    <!-- LOADING MODAL -->
+
+    <div class="loading-modal" id="loadingModal">
+
+        <div class="loading-content">
+
+            <div class="avatar-circle">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+            <div class="loader"></div>
+
+            <h3>Loading...</h3>
+
+            <p>Please wait while we prepare your space</p>
+
+        </div>
+
     </div>
 
     <script src="login.js"></script>
+
 </body>
 </html>
