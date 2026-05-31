@@ -29,7 +29,10 @@ body {
   font-family: "Inter", sans-serif;
   background: var(--bg-color);
   color: var(--text-main);
+  margin: 0;
+  padding: 0;
   height: 100vh;
+  width: 100vw;
   overflow: hidden;
   font-size: 16px;
 }
@@ -40,25 +43,27 @@ a {
 }
 
 /* ── Navbar ── */
+/* ── Navbar ── */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 3rem;
+  padding: 1rem 2rem;
   background: var(--sidebar-bg);
   border-bottom: 1px solid var(--border-color);
-  height: 80px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  position: relative;
-  z-index: 10;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: none; /* Removed to match experts */
 }
 
 .logo {
   color: var(--primary-purple);
-  font-size: 1.8rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  text-shadow: 0 0 15px var(--primary-glow);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-shadow: none; /* Removed the glow to match experts */
 }
 
 /* ── User profile section ── */
@@ -156,15 +161,20 @@ a {
 .dropdown-divider { border: none; border-top: 1px solid var(--border-color); margin: 4px 0; }
 
 /* ── Layout ── */
+/* ── Layout ── */
 .app-container {
   display: flex;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 64px);
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--bg-color);
 }
-
+/* ── Sidebar ── */
 /* ── Sidebar ── */
 .sidebar {
   width: 260px;
   min-width: 260px;
+  height: 100%;
   background: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
   padding: 2rem 1.2rem;
@@ -172,6 +182,7 @@ a {
   flex-direction: column;
   gap: 0.5rem;
   overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .sidebar-logo {
@@ -591,6 +602,40 @@ a {
 }
 
 @media (max-width: 480px) {
-  .navbar { padding: 1rem 1.2rem; }
+  .navbar { padding: 0.75rem 1rem; } /* Matches experts mobile padding */
   .relief-area { padding: 1rem; }
+}
+/* Enable smooth transitions for elements across pages */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Define a fade effect */
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
+/* The overlay covering the page */
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Match your site background */
+  z-index: 9999;
+  pointer-events: none;
+  animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
 }

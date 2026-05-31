@@ -57,91 +57,169 @@ body.fade-out {
     opacity: 0;
 }
 
+/* ══════════════════════════════
+   NAVBAR — MATCHES RELIEF PAGE
+══════════════════════════════ */
+
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 1rem 2rem;
     background: #ffffff;
-    z-index: 1000;
+    border-bottom: 1px solid #e2e8f0;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: none;
 }
 
-/* --- User Profile Section --- */
+.logo {
+    color: #8b5cf6;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: normal;
+}
+
+/* ── User Profile Section ── */
 .user-profile-section {
     display: flex;
     align-items: center;
-    gap: 20px;
-    border: 1px solid #e2e8f0;
-    border-radius: 999px;
-    padding: 6px 8px 6px 14px;
-    background: #fff;
+    gap: 1rem;
 }
 
-/* --- Message Icon --- */
+/* ── Message Icon ── */
 .msg-icon-btn {
     position: relative;
-    color: #6b7280;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: color 0.2s ease;
+    color: #64748b;
+    transition: color 0.2s;
     text-decoration: none;
 }
-.msg-icon-btn:hover { color: #a855f7; }
-.msg-icon-btn i { width: 22px; height: 22px; }
+
+.msg-icon-btn:hover {
+    color: #8b5cf6;
+}
+
+.msg-icon-btn svg,
+.msg-icon-btn i {
+    width: 24px;
+    height: 24px;
+}
+
 .msg-badge {
     position: absolute;
-    top: -2px;
-    right: -2px;
+    top: -4px;
+    right: -4px;
     width: 8px;
     height: 8px;
-    background-color: #ef4444;
+    background: #ef4444;
     border-radius: 50%;
 }
 
-/* --- Dropdown --- */
-.user-dropdown-container { position: relative; }
+/* ── Dropdown Container ── */
+.user-dropdown-container {
+    position: relative;
+}
+
 .user-profile-trigger {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
+
+/* User Pill */
+.user-badge {
+    background: linear-gradient(
+        135deg,
+        rgba(139,92,246,0.12),
+        rgba(217,70,239,0.08)
+    );
+    border: 1px solid rgba(139,92,246,0.25);
+    color: #8b5cf6;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+}
+
+/* Avatar */
+.user-avatar,
+.user-avatar-small {
+    background: linear-gradient(135deg, #d946ef, #8b5cf6);
+    color: #ffffff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+}
+
+/* ── Dropdown Menu ── */
 .dropdown-menu {
+    display: none;
     position: absolute;
     top: calc(100% + 12px);
     right: 0;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.05);
-    min-width: 160px;
-    padding: 6px;
-    display: none;
-    z-index: 1000;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    min-width: 180px;
+    padding: 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    z-index: 100;
 }
-.dropdown-menu.show { display: block; }
+
+.dropdown-menu.show,
+.dropdown-menu.open {
+    display: block;
+}
+
 .dropdown-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
-    color: #374151;
-    text-decoration: none;
-    font-size: 14px;
-    border-radius: 8px;
-    transition: background-color 0.2s, color 0.2s;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: #1e293b;
+    transition: background 0.15s;
 }
-.dropdown-item i { width: 16px; height: 16px; }
-.dropdown-item:hover { background-color: #f3f4f6; }
-.dropdown-item.logout-item { color: #dc2626; }
-.dropdown-item.logout-item:hover { background-color: #fef2f2; }
-.dropdown-divider { border: 0; border-top: 1px solid #e5e7eb; margin: 6px 0; }
+
+.dropdown-item:hover {
+    background: #f8fafc;
+    color: #8b5cf6;
+}
+
+.logout-item:hover {
+    background: #fff1f2;
+    color: #ef4444;
+}
+
+.dropdown-divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 4px 0;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.75rem 1rem;
+    }
+
+    .user-badge {
+        display: none;
+    }
+}
 
 /* --- Video Modal --- */
 .video-modal {
@@ -436,4 +514,67 @@ body.fade-out {
     display: flex;
     justify-content: center;
     margin-bottom: 14px;
+}
+/* Enable smooth transitions for elements across pages */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Define a fade effect */
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes fade-in { from { opacity: 0; } }
+/* The overlay covering the page */
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff; /* Match your site background */
+  z-index: 9999;
+  pointer-events: none;
+  animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+/* This ensures all Lucide icons have a visible size */
+i[data-lucide] {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/* Specifically for your sidebar items */
+.nav-item i {
+    margin-right: 12px; /* Adds space between icon and text */
+}
+/* Force all Lucide icons to be visible */
+i[data-lucide] {
+    display: inline-block;
+    width: 20px !important;
+    height: 20px !important;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+/* Specifically for Sidebar items */
+.nav-item i {
+    flex-shrink: 0; /* Prevents the icon from being crushed */
+}
+.profile-area {
+    margin-left: var(--sidebar-width);
+    padding: 100px 40px 40px;
 }

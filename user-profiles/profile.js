@@ -1,3 +1,13 @@
+// Add this at the top of profile.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial scan for icons in the sidebar and navbar
+    lucide.createIcons();
+    
+    // Call your data-fetching functions here
+    // e.g., fetchUserData();
+    // e.g., renderRoadmap();
+});
+
 const API_BASE = 'http://localhost:5000/api';
 const token = localStorage.getItem('token');
 
@@ -575,4 +585,15 @@ document.getElementById('avatar-upload-input')?.addEventListener('change', async
     } finally {
         event.target.value = '';
     }
+});
+// This function will re-scan the page for icons whenever it's called
+function refreshIcons() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+// Run it once when the window is fully loaded
+window.addEventListener('load', () => {
+    refreshIcons();
 });
