@@ -99,6 +99,34 @@
                         <div id="groupMembersList" class="group-members-list"></div>
                     </aside>
                 </div>
+
+                <div class="therapist-group-tools">
+                    <section class="card">
+                        <h3><i class="fa-regular fa-message"></i> Group Chat <span class="therapist-badge">Therapist</span></h3>
+                        <div id="therapistGroupMessages" class="therapist-group-messages">
+                            <p class="inbox-empty">Select a group to open chat.</p>
+                        </div>
+                        <div class="therapist-group-chat-input">
+                            <input id="therapistGroupMessageInput" type="text" placeholder="Message the group..." disabled>
+                            <button id="therapistSendGroupMessage" disabled>Send</button>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <h3><i class="fa-regular fa-calendar-plus"></i> Schedule Group Event</h3>
+                        <form id="groupEventForm" class="group-form">
+                            <label for="eventTitle">Event title</label>
+                            <input id="eventTitle" type="text" placeholder="Guided grounding session" required>
+                            <label for="eventDate">Date</label>
+                            <input id="eventDate" type="date" required>
+                            <label for="eventTime">Time</label>
+                            <input id="eventTime" type="time" required>
+                            <label for="eventNotes">Notes</label>
+                            <textarea id="eventNotes" placeholder="What members should prepare"></textarea>
+                            <button class="btn-primary full-width" type="submit">Schedule Event</button>
+                        </form>
+                    </section>
+                </div>
             </div>
         </main>
     </div>

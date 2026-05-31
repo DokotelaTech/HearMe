@@ -20,7 +20,9 @@ body { margin: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; c
 .profile-area { margin-left: var(--sidebar-width); padding: 40px; }
 .user-banner { background: var(--magenta-gradient); border-radius: 16px; padding: 30px; color: white; margin-bottom: 30px; }
 .user-info { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
-.large-avatar { width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; }
+.avatar-upload-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.large-avatar { width: 70px; height: 70px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; background-size: cover; background-position: center; }
+.avatar-upload-btn { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.45); color: white; border-radius: 999px; padding: 7px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
 .user-stats { display: flex; gap: 15px; }
 .stat-box { background: rgba(255,255,255,0.15); padding: 15px; border-radius: 12px; flex: 1; text-align: center; }
 .stat-num { font-size: 24px; font-weight: bold; display: block; }
@@ -74,6 +76,10 @@ body.fade-out {
     display: flex;
     align-items: center;
     gap: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 6px 8px 6px 14px;
+    background: #fff;
 }
 
 /* --- Message Icon --- */

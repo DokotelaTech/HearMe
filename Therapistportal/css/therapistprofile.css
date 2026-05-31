@@ -60,6 +60,7 @@ body {
     display: flex; align-items: center; justify-content: center;
     border-radius: 50%; background: var(--gradient);
     color: white; font-weight: 700; font-size: 14px;
+    background-size: cover; background-position: center;
 }
 
 .profile-info { display: flex; flex-direction: column; text-align: left; }

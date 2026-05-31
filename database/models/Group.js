@@ -32,6 +32,13 @@ const groupSchema = new mongoose.Schema({
     members: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    }],
+    events: [{
+        title: { type: String, required: true, trim: true, maxlength: 100 },
+        date: { type: String, required: true },
+        time: { type: String, required: true },
+        notes: { type: String, trim: true, maxlength: 300 },
+        createdAt: { type: Date, default: Date.now }
     }]
 }, { timestamps: true });
 

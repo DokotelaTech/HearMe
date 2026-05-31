@@ -193,7 +193,7 @@ function populateProfile(data) {
 
     if (data.sessionPrice && data.sessionDuration) {
         document.getElementById('session-display').innerHTML = `
-            <p><i class="fa-solid fa-dollar-sign" style="color:var(--purple); width:20px;"></i> <strong>$${data.sessionPrice}</strong> per session</p>
+            <p><i class="fa-solid fa-money-bill-wave" style="color: purple;"></i> <strong>R${data.sessionPrice}</strong> per session</p>
             <p><i class="fa-regular fa-clock" style="color:var(--purple); width:20px;"></i> <strong>${data.sessionDuration} minutes</strong></p>
             <p><i class="fa-solid fa-laptop-medical" style="color:var(--purple); width:20px;"></i> ${data.sessionEnvironment || ''}</p>
         `;

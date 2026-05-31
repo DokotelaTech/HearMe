@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe | Community Feed</title>
     <link rel="stylesheet" href="community-feeds.css">
+    <link rel="stylesheet" href="/user/user-shared.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
     <header class="navbar">
         <h1 class="logo">HearMe</h1>
-        <div class="user-avatar">A</div>
+        <div class="user-profile-section">
+            <div class="user-profile-trigger">
+                <div class="user-badge">User</div>
+                <div class="user-avatar">A</div>
+            </div>
+        </div>
     </header>
 
     <div class="app-container">
@@ -49,16 +55,25 @@
 
                         <div class="post-actions">
                             <div class="left-actions">
-                                <label class="media-upload">
+                                <button type="button" class="media-upload" id="open-gif-search">
                                     <i data-lucide="image"></i>
-                                    <span>Add image/GIF</span>
-                                    <input type="file" hidden>
-                                </label>
+                                    <span>Add GIF</span>
+                                </button>
                             </div>
                             <div class="right-actions">
                                 <button class="cancel-btn" id="cancel-post">Cancel</button>
                                 <button id="post-button" class="post-submit-btn">Post</button>
                             </div>
+                        </div>
+
+                        <div class="gif-panel" id="gif-panel" style="display:none;">
+                            <div class="gif-search-row">
+                                <input id="gif-search-input" type="text" placeholder="Search Giphy for a supportive GIF">
+                                <button id="gif-search-btn" type="button">Search</button>
+                                <button id="gif-clear-btn" type="button">Clear</button>
+                            </div>
+                            <div id="selected-gif" class="selected-gif"></div>
+                            <div id="gif-results" class="gif-results"></div>
                         </div>
                     </div>
                 </div>
@@ -127,5 +142,6 @@
     </div>
 
     <script src="community-feeds.js"></script>
+    <script src="/user/user-shared.js"></script>
 </body>
 </html>

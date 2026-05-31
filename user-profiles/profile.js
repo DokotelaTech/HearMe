@@ -47,6 +47,20 @@ function saveFlowerData(data) {
     localStorage.setItem(FLOWER_STORAGE_KEY, JSON.stringify(data));
 }
 
+function setAvatarImage(element, imageUrl, fallback) {
+    if (!element) return;
+
+    if (imageUrl) {
+        element.textContent = '';
+        element.style.backgroundImage = `url(${imageUrl})`;
+        element.style.backgroundSize = 'cover';
+        element.style.backgroundPosition = 'center';
+    } else {
+        element.textContent = fallback;
+        element.style.backgroundImage = '';
+    }
+}
+
 function getFlowerStageIndex(d) {
     if (d.waterStreak >= 7 && d.posts >= 3 && d.sessions >= 1 && d.tasks >= 5 && d.chats >= 5) return 3;
     if (d.posts >= 3 && d.sessions >= 1 && d.tasks >= 5 && d.chats >= 5) return 2;
@@ -229,10 +243,14 @@ async function loadProfile() {
 
         const name = data.identifier || 'Anonymous User';
         document.getElementById('profile-name').textContent = name;
-        document.getElementById('large-avatar').textContent = name.charAt(0).toUpperCase();
+        setAvatarImage(
+            document.getElementById('large-avatar'),
+            data.profileImage,
+            name.charAt(0).toUpperCase()
+        );
 
         const navAvatar = document.querySelector('.user-avatar');
-        if (navAvatar) navAvatar.textContent = name.charAt(0).toUpperCase();
+        setAvatarImage(navAvatar, data.profileImage, name.charAt(0).toUpperCase());
 
         document.getElementById('stat-posts').textContent = data.postCount || 0;
 
@@ -247,6 +265,23 @@ async function loadProfile() {
         console.error('Profile load error:', err);
         document.getElementById('profile-name').textContent = 'Error loading profile';
     }
+}
+
+async function uploadAvatar(file) {
+    const formData = new FormData();
+    formData.append('profileImage', file);
+
+    const response = await fetch(`${API_BASE}/upload/profile-image`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Could not upload avatar.');
+
+    setAvatarImage(document.getElementById('large-avatar'), data.profileImage, 'U');
+    setAvatarImage(document.querySelector('.user-avatar'), data.profileImage, 'U');
 }
 
 // =========================================
@@ -527,4 +562,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Render flower after profile + sessions have loaded so stats are populated
     renderFlowerWidget();
     if (typeof lucide !== 'undefined') lucide.createIcons();
+});
+
+document.getElementById('avatar-upload-input')?.addEventListener('change', async event => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+        await uploadAvatar(file);
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        event.target.value = '';
+    }
 });

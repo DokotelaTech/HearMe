@@ -75,6 +75,27 @@ body {
   box-shadow: 0 4px 12px var(--primary-glow);
 }
 
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 6px 8px 6px 14px;
+  background: #fff;
+}
+
+.user-profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-badge {
+  color: var(--primary-purple);
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+
 /* ── Layout Framework ── */
 .app-container {
   display: flex;
@@ -101,6 +122,7 @@ body {
   font-weight: 500;
   font-size: 1.1rem;
   transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .nav-item i,
@@ -270,6 +292,10 @@ body {
   font-size: 1rem;
   color: var(--text-muted);
   cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
 }
 .media-upload:hover {
   color: var(--primary-purple);
@@ -293,6 +319,94 @@ body {
 .cancel-btn:hover {
   background: #f1f5f9;
   color: var(--text-main);
+}
+
+.gif-panel {
+  margin-top: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fafafa;
+}
+
+.gif-search-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.gif-search-row input {
+  flex: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.gif-search-row button {
+  border: none;
+  border-radius: 10px;
+  padding: 0 14px;
+  background: var(--primary-purple);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#gif-clear-btn {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.gif-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.gif-choice {
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  background: #fff;
+}
+
+.gif-choice:hover {
+  border-color: var(--primary-purple);
+}
+
+.gif-choice img,
+.selected-gif-card img,
+.post-gif {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.selected-gif-card {
+  margin-bottom: 12px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.selected-gif-card span {
+  display: block;
+  padding: 8px 10px;
+  color: var(--primary-purple);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.gif-state {
+  color: var(--text-muted);
+  grid-column: 1 / -1;
+  padding: 12px;
 }
 
 /* ── Post Feed Container & Cards ── */
@@ -324,6 +438,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 16px;
 }
 .post-user-info {
   display: flex;
@@ -343,6 +458,9 @@ body {
   font-weight: 700;
   font-size: 1.2rem;
   box-shadow: 0 4px 10px var(--primary-glow);
+  background-size: cover;
+  background-position: center;
+  flex: 0 0 50px;
 }
 
 .post-meta {
@@ -387,6 +505,44 @@ body {
   padding: 0.5rem 0;
 }
 
+.post-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-delete-btn,
+.comment-delete-btn {
+  border: none;
+  background: #fee2e2;
+  color: #b91c1c;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.post-delete-btn:hover,
+.comment-delete-btn:hover {
+  background: #fecaca;
+  transform: translateY(-1px);
+}
+
+.post-delete-btn svg,
+.comment-delete-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.post-gif {
+  max-height: 420px;
+  border-radius: 16px;
+}
+
 /* ── Post Footer ── */
 .post-footer {
   display: flex;
@@ -413,6 +569,119 @@ body {
 .post-action-btn:hover {
   color: var(--primary-purple);
   transform: scale(1.05);
+}
+
+.comments-section {
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+}
+
+.comments-section.is-closed {
+  display: none;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.comment-bubble {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.comment-bubble.own-comment {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: #fff;
+  border-color: transparent;
+}
+
+.comment-owner {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--primary-purple);
+  margin-bottom: 4px;
+}
+
+.comment-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c084fc, #7c3aed);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex: 0 0 34px;
+  background-size: cover;
+  background-position: center;
+}
+
+.comment-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.comment-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.comment-delete-btn {
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.9);
+  color: #b91c1c;
+  flex: 0 0 28px;
+}
+
+.own-comment .comment-owner,
+.own-comment p {
+  color: #fff;
+}
+
+.comment-bubble p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.comment-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-input-row input {
+  flex: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 11px 14px;
+  outline: none;
+}
+
+.comment-input-row button {
+  border: none;
+  border-radius: 999px;
+  background: var(--primary-purple);
+  color: #fff;
+  font-weight: 800;
+  padding: 0 18px;
+  cursor: pointer;
 }
 
 .post-action-btn svg,

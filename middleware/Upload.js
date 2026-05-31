@@ -1,66 +1,50 @@
-const cloudinary = require('cloudinary');
-const  CloudinaryStorage  = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 
-// =========================================
-//    CLOUDINARY CONFIG
-cloudinary.v2.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME?.trim(),
+    api_key: process.env.CLOUDINARY_API_KEY?.trim(),
+    api_secret: process.env.CLOUDINARY_API_SECRET?.trim()
 });
 
-// =========================================
-//    CLOUDINARY STORAGE CONFIGS
-const profileImageStorage = new CloudinaryStorage({
-    cloudinary: cloudinary,  // pass root object
-    params: {
-        folder: 'hearme/profile-images',
-        allowed_formats: ['jpg', 'jpeg', 'png'],
-        transformation: [{ width: 500, height: 500, crop: 'fill' }]
-    }
-});
+const memoryStorage = multer.memoryStorage();
 
-const credentialStorage = new CloudinaryStorage({
-    cloudinary: cloudinary,  // pass root object
-    params: {
-        folder: 'hearme/credentials',
-        allowed_formats: ['pdf','img'],
-        resource_type: 'raw'
-    }
-});
-
-// =========================================
-//    FILE TYPE FILTERS
 const imageFilter = (req, file, cb) => {
-    const allowed = ['image/jpeg', 'image/png'];
-    if (allowed.includes(file.mimetype)) {
-        cb(null, true);
-    } else {
-        cb(new Error('Only JPG and PNG images are allowed'), false);
-    }
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (allowed.includes(file.mimetype)) return cb(null, true);
+    cb(new Error('Only JPG, PNG and WEBP images are allowed'), false);
 };
 
 const pdfFilter = (req, file, cb) => {
-    if (file.mimetype === 'application/pdf') {
-        cb(null, true);
-    } else {
-        cb(new Error('Only PDF files are allowed'), false);
-    }
+    if (file.mimetype === 'application/pdf') return cb(null, true);
+    cb(new Error('Only PDF files are allowed'), false);
 };
 
-// =========================================
-//    MULTER UPLOAD INSTANCES
 const uploadProfileImage = multer({
-    storage: profileImageStorage,
+    storage: memoryStorage,
     fileFilter: imageFilter,
-    limits: { fileSize: 5 * 1024 * 1024 }   // 5MB max
+    limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 const uploadCredential = multer({
-    storage: credentialStorage,
+    storage: memoryStorage,
     fileFilter: pdfFilter,
-    limits: { fileSize: 10 * 1024 * 1024 }  // 10MB max
+    limits: { fileSize: 10 * 1024 * 1024 }
 });
 
-// module.exports =  {uploadProfileImage, uploadCredential};
+function uploadBufferToCloudinary(buffer, options) {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(options, (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+        });
+
+        stream.end(buffer);
+    });
+}
+
+module.exports = {
+    uploadProfileImage,
+    uploadCredential,
+    uploadBufferToCloudinary
+};

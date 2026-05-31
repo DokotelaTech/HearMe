@@ -2,7 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../database/models/users');
 const { verifyToken } = require('../middleware/authMiddleware');
-// const  {uploadProfileImage, uploadCredential}  = require('../middleware/upload');
+const {
+    uploadProfileImage,
+    uploadCredential,
+    uploadBufferToCloudinary
+} = require('../middleware/Upload');
 
 // =========================================
 //    POST /api/upload/profile-image
@@ -18,15 +22,21 @@ router.post('/profile-image', verifyToken, (req, res, next) => {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
+        const uploadResult = await uploadBufferToCloudinary(req.file.buffer, {
+            folder: 'hearme/profile-images',
+            resource_type: 'image',
+            transformation: [{ width: 500, height: 500, crop: 'fill', gravity: 'face' }]
+        });
+
         const updatedUser = await User.findByIdAndUpdate(
             req.user.userId,
-            { $set: { profileImage: req.file.path } },
+            { $set: { profileImage: uploadResult.secure_url } },
             { returnDocument: 'after' }
         ).select('-password');
 
         res.status(200).json({
             message: 'Profile image uploaded successfully',
-            profileImage: req.file.path,
+            profileImage: uploadResult.secure_url,
             user: updatedUser
         });
     } catch (error) {
@@ -49,15 +59,20 @@ router.post('/credential', verifyToken, (req, res, next) => {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
+        const uploadResult = await uploadBufferToCloudinary(req.file.buffer, {
+            folder: 'hearme/credentials',
+            resource_type: 'raw'
+        });
+
         const updatedUser = await User.findByIdAndUpdate(
             req.user.userId,
-            { $set: { credentialDocument: req.file.path } },
+            { $set: { credentialDocument: uploadResult.secure_url } },
             { returnDocument: 'after' }
         ).select('-password');
 
         res.status(200).json({
             message: 'Credential uploaded successfully',
-            credentialDocument: req.file.path,
+            credentialDocument: uploadResult.secure_url,
             user: updatedUser
         });
     } catch (error) {

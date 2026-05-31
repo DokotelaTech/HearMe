@@ -56,20 +56,27 @@ function updateNavbar(therapist){
 
     // FULL NAME
 
+    const firstName =
+    therapist.firstName || "";
+
+    const lastName =
+    therapist.lastName || "";
+
     const fullName =
-    `${therapist.firstName} ${therapist.lastName}`;
+    `${firstName} ${lastName}`.trim() || "Therapist";
 
     // INITIALS
 
     const initials =
-    `${therapist.firstName[0]}${
-        therapist.lastName[0]
-    }`;
+    `${firstName[0] || "T"}${
+        lastName[0] || ""
+    }`.toUpperCase();
 
     // NAV NAME
 
     const navName =
-    document.getElementById("nav-name");
+    document.getElementById("nav-name") ||
+    document.getElementById("therapistName");
 
     if(navName){
 
@@ -80,24 +87,42 @@ function updateNavbar(therapist){
     // NAV ROLE
 
     const navRole =
-    document.getElementById("nav-role");
+    document.getElementById("nav-role") ||
+    document.getElementById("therapistRole");
 
     if(navRole){
 
         navRole.textContent =
-        therapist.role || "Therapist";
+        therapist.qualification || therapist.role || "Therapist";
     }
 
     // AVATAR
 
-    const navAvatar =
-    document.getElementById("nav-avatar");
+    const avatarElements =
+    document.querySelectorAll(
+        "#nav-avatar, #therapistInitials"
+    );
 
-    if(navAvatar){
+    avatarElements.forEach((avatar) => {
 
-        navAvatar.textContent =
-        initials;
-    }
+        if(therapist.profileImage){
+
+            avatar.textContent = "";
+            avatar.style.backgroundImage =
+            `url(${therapist.profileImage})`;
+            avatar.style.backgroundSize =
+            "cover";
+            avatar.style.backgroundPosition =
+            "center";
+
+        }else{
+
+            avatar.textContent =
+            initials;
+            avatar.style.backgroundImage =
+            "";
+        }
+    });
 }
 
 // RUN

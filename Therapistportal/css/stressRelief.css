@@ -269,6 +269,8 @@ body {
 
     font-weight: 700;
     font-size: 14px;
+    background-size: cover;
+    background-position: center;
 }
 
 .profile-info {

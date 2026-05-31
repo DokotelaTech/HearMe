@@ -63,6 +63,10 @@ app.use('/api/users', userRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/reports', reportRoutes);
 
+app.get('/api/config/giphy', verifyToken, (req, res) => {
+    res.json({ apiKey: process.env.GIPHY_API_KEY?.trim() || '' });
+});
+
 // =========================================
 // STATIC FILES & CLEAN URLs
 // =========================================
@@ -176,8 +180,24 @@ const Post = require('./database/models/Post');
 // =========================================
 app.get('/api/posts', verifyToken, async (req, res) => {
     try {
-        const posts = await Post.find().sort({ createdAt: -1 });
-        res.status(200).json(posts);
+        const posts = await Post.find()
+            .populate('authorId', 'profileImage')
+            .populate('comments.userId', 'profileImage')
+            .sort({ createdAt: -1 })
+            .lean();
+
+        const hydratedPosts = posts.map(post => ({
+            ...post,
+            authorProfileImage: post.authorId?.profileImage || post.authorProfileImage || '',
+            authorId: post.authorId?._id || post.authorId,
+            comments: (post.comments || []).map(comment => ({
+                ...comment,
+                userProfileImage: comment.userId?.profileImage || comment.userProfileImage || '',
+                userId: comment.userId?._id || comment.userId
+            }))
+        }));
+
+        res.status(200).json(hydratedPosts);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error while fetching posts.' });
@@ -186,15 +206,21 @@ app.get('/api/posts', verifyToken, async (req, res) => {
 
 app.post('/api/posts', verifyToken, async (req, res) => {
     try {
-        const { postType, content } = req.body;
+        const { postType, content, gifUrl } = req.body;
+        if (!String(content || '').trim() && !String(gifUrl || '').trim()) {
+            return res.status(400).json({ message: 'Post text or GIF is required' });
+        }
+
         const user = await User.findById(req.user.userId);
         const displayName = user.anonymousName || user.username || user.email;
 
         const newPost = new Post({
             authorId: user._id,
             authorIdentifier: displayName,
+            authorProfileImage: user.profileImage || '',
             postType,
-            content,
+            content: String(content || '').trim(),
+            gifUrl: String(gifUrl || '').trim(),
             likes: [],
             comments: []
         });
@@ -244,7 +270,12 @@ app.post('/api/posts/:id/comment', verifyToken, async (req, res) => {
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
         post.comments = post.comments || [];
-        post.comments.push({ userIdentifier, text });
+        post.comments.push({
+            userId: user._id,
+            userIdentifier,
+            userProfileImage: user.profileImage || '',
+            text
+        });
         await post.save();
 
         res.json({
@@ -262,7 +293,7 @@ app.delete('/api/posts/:id', verifyToken, async (req, res) => {
         const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
-        if (post.authorId.toString() !== req.user.userId) {
+        if (!post.authorId || post.authorId.toString() !== req.user.userId) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
 
@@ -288,7 +319,10 @@ app.delete('/api/posts/:postId/comments/:commentId', verifyToken, async (req, re
         const user = await User.findById(req.user.userId);
         const userIdentifier = user.anonymousName || user.username || user.email;
 
-        if (comment.userIdentifier !== userIdentifier) {
+        const ownsCommentById = comment.userId && comment.userId.toString() === req.user.userId;
+        const ownsCommentByName = comment.userIdentifier === userIdentifier;
+
+        if (!ownsCommentById && !ownsCommentByName) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
 
@@ -311,6 +345,7 @@ app.get('/api/user/profile', verifyToken, async (req, res) => {
 
         res.json({
             identifier: user.anonymousName || user.username || user.email,
+            profileImage: user.profileImage || '',
             createdAt: user.createdAt,
             postCount
         });
