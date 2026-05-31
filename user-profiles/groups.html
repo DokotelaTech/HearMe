@@ -57,64 +57,14 @@
     <div class="app-container">
 
         <!-- SIDEBAR -->
-        <nav class="sidebar">
-
-            <a href="community-feeds.html" class="nav-item">
-
-                <i data-lucide="home"></i>
-
-                <span>Feed</span>
-
-            </a>
-
-            <div class="nav-item active">
-
-                <i data-lucide="users"></i>
-
-                <span>Groups</span>
-
-            </div>
-
-            <a href="ai-chat.html" class="nav-item">
-
-                <i data-lucide="message-square"></i>
-
-                <span>AI Chat</span>
-
-            </a>
-
-            <a href="experts.html" class="nav-item">
-
-                <i data-lucide="user-plus"></i>
-
-                <span>Experts</span>
-
-            </a>
-
-            <a href="sos.html" class="nav-item">
-
-                <i data-lucide="alert-circle"></i>
-
-                <span>SOS</span>
-
-            </a>
-
-            <a href="relief.html" class="nav-item">
-
-                <i data-lucide="heart"></i>
-
-                <span>Relief</span>
-
-            </a>
-
-            <a href="profile.html" class="nav-item">
-
-                <i data-lucide="user"></i>
-
-                <span>Profile</span>
-
-            </a>
-
+                <nav class="sidebar">
+            <a href="/user/community" class="nav-item active"><i data-lucide="home"></i><span>Feed</span></a>
+            <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
+            <a href="/user/chat" class="nav-item"><i data-lucide="message-square"></i><span>Venting-Space</span></a>
+            <a href="/user/experts" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
+            <a href="/user/sos" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
+            <a href="/user/relief" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
+            <a href="/user/profile" class="nav-item"><i data-lucide="user"></i><span>Profile</span></a>
         </nav>
 
         <!-- MAIN -->
@@ -197,6 +147,43 @@
                 <button class="filter-btn">
                     Social Anxiety
                 </button>
+
+            </div>
+
+            <div class="groups-layout">
+
+                <section>
+
+                    <div id="groupsList" class="groups-list">
+                        <p class="empty-state">Loading groups...</p>
+                    </div>
+
+                </section>
+
+                <aside class="group-chat-panel">
+
+                    <div class="chat-panel-header">
+                        <h3 id="activeGroupTitle">Group Chat</h3>
+                        <p id="activeGroupMeta">Join a group to start chatting.</p>
+                    </div>
+
+                    <div id="groupChatMessages" class="group-chat-messages">
+                        <p class="empty-state">No group selected.</p>
+                    </div>
+
+                    <div class="group-chat-input">
+                        <input
+                            id="groupMessageInput"
+                            type="text"
+                            placeholder="Type a message..."
+                            disabled
+                        >
+                        <button id="sendGroupMessage" disabled>
+                            Send
+                        </button>
+                    </div>
+
+                </aside>
 
             </div>
 

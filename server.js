@@ -48,10 +48,12 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const reliefRoutes = require('./routes/reliefRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const groupRoutes = require('./routes/groupRoutes');
 
 
 app.use('/api/payments', paymentRoutes);
 app.use('/api/relief', reliefRoutes);
+app.use('/api/groups', groupRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/auth', authRoutes);
@@ -97,6 +99,9 @@ app.get('/therapist/clients', (req, res) => {
 });
 app.get('/therapist/messages', (req, res) => {
     res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'message.html'));
+});
+app.get('/therapist/groups', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'groups.html'));
 });
 app.get('/therapist/reliefs', (req, res) => {
     res.sendFile(path.join(__dirname, 'Therapistportal', 'pages', 'reliefs.html'));
@@ -347,14 +352,14 @@ app.post('/api/chat', verifyToken, async (req, res) => {
     }
 });
 
-// sends email
-// startReminderJob();
-
 // =========================================
 // CONNECT TO MONGODB & START SERVER
 // =========================================
 mongoose.connect(process.env.MONGODB_URI, { family: 4 })
-    .then(() => console.log('Connected to MongoDB successfully!'))
+    .then(() => {
+        console.log('Connected to MongoDB successfully!');
+        startReminderJob();
+    })
     .catch((err) => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;

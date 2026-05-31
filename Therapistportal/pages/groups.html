@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HearMe - My Clients</title>
+    <title>HearMe - Groups</title>
     <link rel="stylesheet" href="/therapist/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,28 +16,23 @@
                 <span class="badge">Therapist Portal</span>
             </div>
             <nav class="nav-menu">
-                <a href="/therapist/clients" class="nav-item active"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
                 <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="/therapist/groups" class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
+                <a href="/therapist/groups" class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
                 <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
-                <h4>Today's Overview</h4>
-                <div class="ov-line">Active Clients <span id="overview-active-clients">0</span></div>
-                <div class="ov-line">Sessions Today <span id="overview-sessions-today">0</span></div>
-                <div class="ov-line">Unread Messages <span class="red-text" id="overview-unread">0</span></div>
+                <h4>Group Safety</h4>
+                <div class="ov-line">Host access <span>Therapist</span></div>
+                <div class="ov-line">Member removal <span>Enabled</span></div>
             </div>
         </aside>
 
         <main class="main-workspace">
             <header class="topbar">
                 <div class="topbar-right">
-                    <div class="icon-btn">
-                        <i class="fa-regular fa-message"></i>
-                        <span class="dot"></span>
-                    </div>
                     <div class="profile-container">
                         <button id="profileToggle" class="profile-btn">
                             <div class="avatar" id="nav-avatar"></div>
@@ -51,7 +46,6 @@
                         </button>
                         <div id="profileDropdown" class="dropdown-menu">
                             <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
-                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                             <hr>
                             <button id="logoutBtn" class="logout-btn">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -63,45 +57,55 @@
             </header>
 
             <div class="content-container">
-                <div class="page-header">
+                <div class="page-header flex-header">
                     <div>
-                        <h1>My Clients</h1>
-                        <p>Manage your client sessions and communications</p>
+                        <h1>Groups</h1>
+                        <p>Create support groups, guide conversations, and manage members.</p>
                     </div>
                 </div>
 
-                <div class="stats-row">
-                    <div class="stat-card"><span>Total Clients</span><strong id="stat-total">0</strong></div>
-                    <div class="stat-card"><span>Active</span><strong class="green-text" id="stat-active">0</strong></div>
-                    <div class="stat-card"><span>Pending</span><strong class="yellow-text" id="stat-pending">0</strong></div>
-                    <div class="stat-card"><span>New Messages</span><strong class="purple-text" id="stat-newmsgs">0</strong></div>
-                </div>
+                <div class="therapist-groups-layout">
+                    <section class="card">
+                        <h3><i class="fa-solid fa-plus"></i> Create Group</h3>
+                        <form id="createGroupForm" class="group-form">
+                            <label for="groupName">Group name</label>
+                            <input id="groupName" type="text" placeholder="Anxiety Support Circle" required>
 
-                <div class="filter-bar">
-                    <div class="search-input">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="client-search" placeholder="Search clients by name or issue...">
-                    </div>
-                    <div class="tabs">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="active">Active</button>
-                        <button class="filter-btn" data-filter="pending">Pending</button>
-                        <button class="filter-btn" data-filter="inactive">Inactive</button>
-                    </div>
-                </div>
+                            <label for="groupCategory">Category</label>
+                            <input id="groupCategory" type="text" placeholder="Anxiety & Stress" required>
 
-                <div id="clients-list-container"></div>
+                            <label for="groupMeetingTime">Meeting time</label>
+                            <input id="groupMeetingTime" type="text" placeholder="Wednesdays at 18:00">
+
+                            <label for="groupDescription">Description</label>
+                            <textarea id="groupDescription" placeholder="Describe who this group supports and what members can expect." required></textarea>
+
+                            <button class="btn-primary full-width" type="submit">
+                                <i class="fa-solid fa-plus"></i>
+                                Create Group
+                            </button>
+                        </form>
+                    </section>
+
+                    <section>
+                        <div id="therapistGroupsList" class="therapist-groups-list">
+                            <p class="inbox-empty">Loading groups...</p>
+                        </div>
+                    </section>
+
+                    <aside class="card group-members-card">
+                        <h3><i class="fa-solid fa-users"></i> Members</h3>
+                        <p class="muted text-sm" id="selectedGroupLabel">Select one of your groups to manage members.</p>
+                        <div id="groupMembersList" class="group-members-list"></div>
+                    </aside>
+                </div>
             </div>
         </main>
     </div>
 
     <script src="/therapist/js/shared/loadTherapistData.js"></script>
     <script src="/therapist/js/shared/profileDropdown.js"></script>
-    <script src="/therapist/js/shared/api.js"></script>
-    <script src="/therapist/js/shared/utils.js"></script>
     <script src="/therapist/js/shared/authGuard.js"></script>
-    <script src="/therapist/js/shared/sidebar.js"></script>
-    <script src="/therapist/js/shared/therapistProfile.js"></script>
-    <script src="/therapist/js/client.js"></script>
+    <script src="/therapist/js/groups.js"></script>
 </body>
 </html>

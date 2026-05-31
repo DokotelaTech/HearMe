@@ -1,5 +1,5 @@
 // Fixed: Grabbing the element by class to match your polished CSS layout
-localStorage.clear();
+// localStorage.clear();
 
 const aiChatBox = document.querySelector('.chat-display'); 
 const aiUserInput = document.getElementById('aiUserInput');

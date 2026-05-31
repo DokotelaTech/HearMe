@@ -156,6 +156,126 @@ body { background: var(--bg-main); color: var(--text-dark); }
 .attach-icon { color: var(--text-muted); font-size: 1.2rem; cursor: pointer; }
 .send-btn { background: var(--brand-blue); color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; gap: 8px; align-items: center; }
 
+/* ---------------- GROUPS VIEW ---------------- */
+.therapist-groups-layout {
+    display: grid;
+    grid-template-columns: 330px minmax(0, 1fr) 320px;
+    gap: 22px;
+    align-items: start;
+}
+
+.group-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.group-form textarea {
+    min-height: 130px;
+}
+
+.therapist-groups-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.therapist-group-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid transparent;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.therapist-group-card:hover,
+.therapist-group-card.active {
+    border-left-color: var(--primary);
+    box-shadow: 0 10px 24px rgba(15,23,42,0.06);
+}
+
+.therapist-group-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.therapist-group-card p {
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 0 14px;
+    font-size: 0.9rem;
+}
+
+.therapist-group-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+.therapist-group-meta span {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 10px;
+}
+
+.group-members-card {
+    position: sticky;
+    top: 20px;
+}
+
+.group-members-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.group-member-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.group-member-row strong,
+.group-member-row span {
+    display: block;
+}
+
+.group-member-row span {
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    margin-top: 3px;
+}
+
+.group-member-row button {
+    border: none;
+    background: var(--red-bg);
+    color: var(--red-text);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+    .therapist-groups-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .group-members-card {
+        position: static;
+    }
+}
+
 /* ---------------- NOTES & REPORT VIEW ---------------- */
 /* .alert-red { background: var(--red-bg); border: 1px solid #fecaca; padding: 15px 20px; border-radius: 8px; display: flex; gap: 15px; color: var(--red-text); font-size: 0.9rem; border-left: 4px solid #ef4444; }
 .text-sm { font-size: 0.8rem; } .muted { color: var(--text-muted); } .mr-10 { margin-right: 10px; }

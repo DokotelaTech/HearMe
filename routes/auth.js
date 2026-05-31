@@ -381,7 +381,7 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign(
             { userId: user._id, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: '24h' } // Token expires in 24 hours
+            { expiresIn: '7d' } // Token expires in 24 hours
         );
 
         // 5. Respond with token and key user data required by login.js localstorage
@@ -425,7 +425,7 @@ router.post('/admin-login', async (req, res) => {
         const token = jwt.sign(
             { userId: user._id, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: '8h' }
+            { expiresIn: '7d' }
         );
 
         res.status(200).json({

@@ -25,7 +25,7 @@ const credentialStorage = new CloudinaryStorage({
     cloudinary: cloudinary,  // pass root object
     params: {
         folder: 'hearme/credentials',
-        allowed_formats: ['pdf'],
+        allowed_formats: ['pdf','img'],
         resource_type: 'raw'
     }
 });

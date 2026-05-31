@@ -10,11 +10,15 @@ const appointmentSchema = new mongoose.Schema({
     type:          { type: String, enum: ['online', 'in-person'], default: 'online' },
     note:          { type: String },
     
-status: {
-    type: String,
-    enum: ['pending_payment', 'pending', 'approved', 'denied', 'cancelled', 'completed'],
-    default: 'pending_payment'
-},
+    status: {
+        type: String,
+        enum: ['pending_payment', 'pending', 'approved', 'denied', 'cancelled', 'completed'],
+        default: 'pending_payment'
+    },
+    reminder10Sent: {
+        user: { type: Boolean, default: false },
+        therapist: { type: Boolean, default: false }
+    },
     dailyRoomUrl:  { type: String },
     dailyRoomName: { type: String }
 }, { timestamps: true });

@@ -41,85 +41,71 @@ body { margin: 0; font-family: 'Inter', sans-serif; background-color: #f8fafc; c
 .badge-purple { background: #f5f3ff; color: var(--primary-purple); }
 
 .event-box { display: flex; gap: 12px; padding: 12px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 12px; margin-bottom: 10px; }
-.ach-box { display: flex; align-items: center; gap: 12px; padding: 10px; background: #fffbeb; border: 1px solid #fef3c7; border-radius: 12px; margin-bottom: 10px; }
 .purple-icon { color: var(--primary-purple); }
 .gold-icon { color: #d97706; }
+
 /* =========================
    PAGE TRANSITION SYSTEM
 ========================= */
-
 body {
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
-
-/* When page is leaving */
 body.fade-out {
     opacity: 0;
 }
+
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px; /* adjust if your design is taller */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  background: #ffffff;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background: #ffffff;
+    z-index: 1000;
 }
-/* --- User Profile Section Alignment --- */
+
+/* --- User Profile Section --- */
 .user-profile-section {
     display: flex;
     align-items: center;
-    gap: 20px; /* Space between message icon and user avatar combo */
+    gap: 20px;
 }
 
-/* --- Message Icon Styles --- */
+/* --- Message Icon --- */
 .msg-icon-btn {
     position: relative;
-    color: #6b7280; /* Neutral gray, or match your sidebar icon colors */
+    color: #6b7280;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: color 0.2s ease;
     text-decoration: none;
 }
-
-.msg-icon-btn:hover {
-    color: #a855f7; /* Purple accents matching your theme */
-}
-
-.msg-icon-btn i {
-    width: 22px;
-    height: 22px;
-}
-
-/* Optional Notification Dot */
+.msg-icon-btn:hover { color: #a855f7; }
+.msg-icon-btn i { width: 22px; height: 22px; }
 .msg-badge {
     position: absolute;
     top: -2px;
     right: -2px;
     width: 8px;
     height: 8px;
-    background-color: #ef4444; /* Red indicator */
+    background-color: #ef4444;
     border-radius: 50%;
 }
 
-/* --- Dropdown Layout --- */
-.user-dropdown-container {
-    position: relative; /* Keeps the dropdown attached underneath */
-}
-
+/* --- Dropdown --- */
+.user-dropdown-container { position: relative; }
 .user-profile-trigger {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
-
 .dropdown-menu {
     position: absolute;
     top: calc(100% + 12px);
@@ -127,19 +113,13 @@ body.fade-out {
     background-color: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.05);
     min-width: 160px;
     padding: 6px;
-    display: none; /* Hidden by default */
+    display: none;
     z-index: 1000;
 }
-
-/* Toggle Class */
-.dropdown-menu.show {
-    display: block;
-}
-
-/* Items inside the dropdown */
+.dropdown-menu.show { display: block; }
 .dropdown-item {
     display: flex;
     align-items: center;
@@ -151,33 +131,13 @@ body.fade-out {
     border-radius: 8px;
     transition: background-color 0.2s, color 0.2s;
 }
+.dropdown-item i { width: 16px; height: 16px; }
+.dropdown-item:hover { background-color: #f3f4f6; }
+.dropdown-item.logout-item { color: #dc2626; }
+.dropdown-item.logout-item:hover { background-color: #fef2f2; }
+.dropdown-divider { border: 0; border-top: 1px solid #e5e7eb; margin: 6px 0; }
 
-.dropdown-item i {
-    width: 16px;
-    height: 16px;
-}
-
-.dropdown-item:hover {
-    background-color: #f3f4f6;
-}
-
-/* Log Out custom coloring */
-.dropdown-item.logout-item {
-    color: #dc2626;
-}
-
-.dropdown-item.logout-item:hover {
-    background-color: #fef2f2;
-}
-
-.dropdown-divider {
-    border: 0;
-    border-top: 1px solid #e5e7eb;
-    margin: 6px 0;
-}
-
-/* video part for session */
-
+/* --- Video Modal --- */
 .video-modal {
     display: none;
     position: fixed;
@@ -193,9 +153,7 @@ body.fade-out {
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
-
 .video-modal.active { display: flex; flex-direction: column; }
-
 .video-modal-header {
     display: flex;
     justify-content: space-between;
@@ -204,9 +162,7 @@ body.fade-out {
     background: #0f0f23;
     color: white;
 }
-
 .video-modal-header h3 { margin: 0; font-size: 1rem; }
-
 .video-modal-header .close-btn {
     background: #e53935;
     color: white;
@@ -216,9 +172,7 @@ body.fade-out {
     cursor: pointer;
     font-size: 0.85rem;
 }
-
 .video-modal-body { flex: 1; padding: 0; }
-
 .modal-overlay {
     display: none;
     position: fixed;
@@ -226,8 +180,196 @@ body.fade-out {
     background: rgba(0,0,0,0.7);
     z-index: 999;
 }
-
 .modal-overlay.active { display: block; }
+
+/* =========================
+   HEALING FLOWER WIDGET
+========================= */
+
+.flower-card-wrapper {
+    padding: 20px;
+}
+
+.flower-card-wrapper .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.flower-card-wrapper .card-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.flower-stage-badge {
+    background: #f5f3ff;
+    color: #7c3aed;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.flower-stage-label {
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+    margin: 0 0 12px 0;
+}
+
+.flower-svg-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+/* Activity progress bars */
+.flower-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.flower-prog-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flower-prog-label {
+    font-size: 11px;
+    color: #64748b;
+    width: 62px;
+    flex-shrink: 0;
+}
+
+.flower-prog-track {
+    flex: 1;
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.flower-prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.fp-posts    { background: #a855f7; }
+.fp-sessions { background: #0ea5e9; }
+.fp-tasks    { background: #16a34a; }
+.fp-chats    { background: #f59e0b; }
+
+.flower-prog-val {
+    font-size: 10px;
+    color: #94a3b8;
+    width: 26px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Actions row */
+.flower-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flower-water-btn {
+    flex: 1;
+    background: #a855f7;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.flower-water-btn:hover { background: #9333ea; }
+
+.flower-water-btn:disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    cursor: default;
+}
+
+.flower-info-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+}
+
+.flower-info-btn:hover { background: #f1f5f9; color: #1e293b; }
+
+.flower-watered-msg {
+    font-size: 12px;
+    color: #16a34a;
+    text-align: center;
+    margin: 8px 0 0;
+    min-height: 16px;
+}
+
+/* Info panel */
+.flower-info-panel {
+    display: none;
+    margin-top: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.7;
+}
+
+.flower-info-panel.open { display: block; }
+
+.flower-info-panel strong {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* SVG flower transitions */
+#flower-leaves,
+#flower-petals {
+    transition: opacity 0.6s ease;
+}
+
+/* Status pills */
+.status-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+}
+.status-pill.pending  { background: #fff3cd; color: #856404; }
+.status-pill.approved { background: #d4edda; color: #155724; }
+.status-pill.denied   { background: #f8d7da; color: #721c24; }
 
 .join-btn {
     background: #7c3aed;
@@ -239,21 +381,53 @@ body.fade-out {
     font-size: 0.8rem;
     margin-top: 6px;
 }
+.join-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-.join-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
+/* =========================
+   FLOWER WATERING ANIMATION
+========================= */
+.water-drop {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #38bdf8;
+    border-radius: 50% 50% 50% 5px; /* Teardrop shape */
+    transform: rotate(45deg);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
 }
 
-.status-pill {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-left: 8px;
+@keyframes dropAndSplash {
+    0% {
+        top: 10px;
+        opacity: 0;
+        transform: rotate(45deg) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+    }
+    80% {
+        top: 110px; /* Lands right above the soil */
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+    }
+    100% {
+        top: 120px;
+        opacity: 0;
+        transform: rotate(45deg) scale(1.5);
+    }
 }
 
-.status-pill.pending { background: #fff3cd; color: #856404; }
-.status-pill.approved { background: #d4edda; color: #155724; }
-.status-pill.denied { background: #f8d7da; color: #721c24; }
+.animate-drop {
+    animation: dropAndSplash 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Make sure the SVG wrap has relative positioning so the drop can float above it */
+.flower-svg-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+}
