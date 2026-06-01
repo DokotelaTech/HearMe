@@ -1,0 +1,82 @@
+/* mobile-global.css */
+
+.mobile-menu-btn{
+    display:none;
+}
+
+@media (max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .mobile-menu-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:40px;
+        height:40px;
+        border:none;
+        background:none;
+        cursor:pointer;
+        margin-right:-10px; /* pulls logo closer */
+    }
+
+    .logo{
+        margin-left:-10px;
+    }
+
+    .logo h1,
+    .logo h2{
+        margin:0;
+    }
+
+    .sidebar{
+        position:fixed;
+        left:-280px;
+        top:64px;
+        width:260px;
+        height:calc(100vh - 64px);
+        z-index:999;
+        background:white;
+        transition:.3s ease;
+    }
+
+    .sidebar.show{
+        left:0;
+    }
+
+    .main-content{
+        width:100%;
+        margin-left:0;
+    }
+
+    .page-header{
+        flex-direction:column;
+    }
+
+    .dynamic-stats{
+        width:100%;
+        flex-wrap:wrap;
+    }
+
+    .exercise-grid{
+        grid-template-columns:1fr;
+    }
+
+    .media-wrapper{
+        grid-template-columns:1fr;
+    }
+
+    .relief-area{
+        padding:1rem;
+    }
+
+    .page-title{
+        font-size:1.5rem;
+    }
+
+    .navbar{
+        padding:0 1rem;
+    }
+}

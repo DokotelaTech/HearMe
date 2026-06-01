@@ -1520,3 +1520,165 @@ section {
 .small-spacing {
     margin: 3rem 0;
 } */
+
+
+
+/* =========================
+   HEARME LANDING PAGE RESPONSIVE
+   ========================= */
+
+@media (max-width: 1024px) {
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .features {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .features .card {
+        width: 45%;
+    }
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 768px) {
+
+    /* GLOBAL FIX */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* HEADER STACK */
+    header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+        text-align: center;
+    }
+
+    .logo-container {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .logo h1 {
+        font-size: 1.6rem;
+    }
+
+    nav.nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    nav.nav a {
+        font-size: 0.9rem;
+    }
+
+    .get-started {
+        padding: 10px 16px;
+    }
+
+    /* HERO */
+    .hero {
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    /* FEATURES GRID */
+    .features {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .features .card {
+        width: 100%;
+    }
+
+    /* ABOUT */
+    #about {
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* PROBLEM GRID */
+    .problem-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pillars-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* PROFESSIONAL SECTION */
+    .professional-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* PRICING */
+    .pricing-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .card-pri {
+        width: 100%;
+    }
+
+    /* BUTTON GROUP */
+    .decision-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ================= SMALL PHONES ================= */
+@media (max-width: 480px) {
+
+    .hero-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-text p {
+        font-size: 0.9rem;
+    }
+
+    nav.nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logo img {
+        width: 60px;
+    }
+
+    .logo h1 {
+        font-size: 1.4rem;
+    }
+
+    .cta {
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    footer {
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 10px;
+    }
+}
