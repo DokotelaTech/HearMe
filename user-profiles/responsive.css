@@ -90,11 +90,10 @@ img, video, canvas {
         background: none;
         cursor: pointer;
         z-index: 10000;
-        flex-shrink: 0;
     }
 
     /* =========================
-       HEADER FIX (IMPORTANT)
+       HEADER FIX
     ========================= */
 
     header,
@@ -102,29 +101,12 @@ img, video, canvas {
     .topbar,
     .top-header {
         padding: 10px 12px !important;
-        gap: 12px;
-        display: flex !important;
-        align-items: center;
-        justify-content: flex-start;
-        flex-wrap: nowrap !important; /* KEY FIX */
+        flex-wrap: wrap;
+        gap: 10px;
     }
-
-    /* =========================
-       LOGO FIX (SAFE VERSION)
-    ========================= */
 
     .logo {
-        font-size: 18px;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-    }
-
-    /* prevents logo text wrapping weirdly */
-    .logo h1,
-    .logo h2 {
-        margin: 0;
+        margin-left: 0 !important;
         font-size: 18px;
     }
 
@@ -171,7 +153,7 @@ img, video, canvas {
     }
 
     /* =========================
-       CARD FIX (SAFE)
+       CARDS FIX
     ========================= */
 
     .card,
@@ -192,17 +174,13 @@ img, video, canvas {
     p  { font-size: 14px; }
 
     /* =========================
-       INPUT FIX (SAFE VERSION)
+       INPUT FIX
     ========================= */
 
     input,
-    textarea {
-        max-width: 100%;
-    }
-
-    /* buttons should NOT always be 100% (this was breaking layout) */
+    textarea,
     button {
-        max-width: 100%;
+        width: 100% !important;
     }
 
     /* =========================
