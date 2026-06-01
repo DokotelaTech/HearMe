@@ -398,4 +398,4 @@ mongoose.connect(process.env.MONGODB_URI, { family: 4 })
     .catch((err) => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
