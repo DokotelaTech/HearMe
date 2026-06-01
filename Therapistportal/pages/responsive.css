@@ -1,82 +1,257 @@
-/* mobile-global.css */
+/* =========================
+   GLOBAL MOBILE RESET FIX
+========================= */
 
-.mobile-menu-btn{
-    display:none;
+* {
+    box-sizing: border-box;
 }
 
-@media (max-width:768px){
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
-    body{
-        overflow:auto;
+img, video, canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   MOBILE MENU BUTTON
+========================= */
+
+.mobile-menu-btn {
+    display: none;
+}
+
+/* =========================
+   MOBILE RESPONSIVE SYSTEM
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
     }
 
-    .mobile-menu-btn{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        width:40px;
-        height:40px;
-        border:none;
-        background:none;
-        cursor:pointer;
-        margin-right:-10px; /* pulls logo closer */
+    /* =========================
+       UNIVERSAL LAYOUT FIXES
+    ========================= */
+
+    .dashboard-container,
+    .app-layout,
+    .app-container {
+        display: block !important;
     }
 
-    .logo{
-        margin-left:-10px;
+    /* MAIN CONTENT WRAPPERS */
+    .main-content,
+    .main-workspace,
+    .feed-area {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 12px !important;
     }
 
-    .logo h1,
-    .logo h2{
-        margin:0;
+    /* =========================
+       SIDEBAR (ALL VARIANTS)
+    ========================= */
+
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100vh;
+        background: #fff;
+        z-index: 9999;
+        transition: 0.3s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        overflow-y: auto;
+        padding-top: 60px;
     }
 
-    .sidebar{
-        position:fixed;
-        left:-280px;
-        top:64px;
-        width:260px;
-        height:calc(100vh - 64px);
-        z-index:999;
-        background:white;
-        transition:.3s ease;
+    .sidebar.show {
+        left: 0 !important;
     }
 
-    .sidebar.show{
-        left:0;
+    /* =========================
+       MOBILE MENU BUTTON
+    ========================= */
+
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        position: relative;
+        z-index: 10000;
     }
 
-    .main-content{
-        width:100%;
-        margin-left:0;
+    /* =========================
+       HEADER / TOPBAR FIX
+    ========================= */
+
+    header,
+    .navbar,
+    .topbar,
+    .top-header {
+        padding: 10px 12px !important;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
-    .page-header{
-        flex-direction:column;
+    .logo {
+        margin-left: 0 !important;
+        font-size: 18px;
     }
 
-    .dynamic-stats{
-        width:100%;
-        flex-wrap:wrap;
+    /* =========================
+       GRID SYSTEM FIX
+    ========================= */
+
+    .metrics-grid,
+    .report-layout,
+    .problem-grid,
+    .pillars-container,
+    .pricing-container,
+    .exercise-grid,
+    .media-wrapper {
+        grid-template-columns: 1fr !important;
+        display: grid;
+        gap: 12px;
     }
 
-    .exercise-grid{
-        grid-template-columns:1fr;
+    /* Force any 2-col layouts to stack */
+    [style*="grid-template-columns: 2fr 1fr"],
+    [style*="grid-template-columns: repeat(3"],
+    [style*="grid-template-columns: repeat(2"] {
+        grid-template-columns: 1fr !important;
     }
 
-    .media-wrapper{
-        grid-template-columns:1fr;
+    /* =========================
+       CARDS & SECTIONS
+    ========================= */
+
+    .card,
+    .profile-card,
+    .prof-card,
+    .card-pri,
+    .prob-card {
+        width: 100% !important;
+        margin: 0 !important;
     }
 
-    .relief-area{
-        padding:1rem;
+    /* =========================
+       TEXT SCALING
+    ========================= */
+
+    h1 {
+        font-size: 20px !important;
+        line-height: 1.3;
     }
 
-    .page-title{
-        font-size:1.5rem;
+    h2 {
+        font-size: 18px !important;
     }
 
-    .navbar{
-        padding:0 1rem;
+    h3 {
+        font-size: 16px !important;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* =========================
+       FEED INPUT FIX (IMPORTANT)
+    ========================= */
+
+    .post-input-wrapper,
+    .post-composer {
+        width: 100% !important;
+    }
+
+    textarea,
+    input[type="text"] {
+        width: 100% !important;
+    }
+
+    .post-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* =========================
+       TABLE FIX (ADMIN + REPORTS)
+    ========================= */
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    button,
+    .btn,
+    .btn-primary {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    /* =========================
+       NAV ITEMS
+    ========================= */
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-item {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* =========================
+       REPORT MODALS / OVERLAYS
+    ========================= */
+
+    .modal-window,
+    .report-modal-box {
+        width: 95% !important;
+        margin: auto;
+    }
+
+    /* =========================
+       FEED CONTENT FIX
+    ========================= */
+
+    .feed-content {
+        padding: 10px !important;
+    }
+
+    .input-card {
+        width: 100% !important;
+    }
+
+    /* =========================
+       REMOVE BAD OVERFLOWS
+    ========================= */
+
+    * {
+        max-width: 100%;
     }
 }
