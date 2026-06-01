@@ -1,3 +1,5 @@
+const API_BASE = '/api';
+
 /* =========================================
    1. TAB NAVIGATION LOGIC
 ========================================= */
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/users/profile`, {
+        const response = await fetch(`${API_BASE}/users/profile`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${currentToken}`,
@@ -86,7 +88,7 @@ async function uploadProfileImage(file) {
     const formData = new FormData();
     formData.append('profileImage', file);
 
-    const response = await fetch('http://localhost:5000/api/upload/profile-image', {
+    const response = await fetch(`${API_BASE}/upload/profile-image`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -107,7 +109,7 @@ async function uploadCredentialFile(file) {
     const formData = new FormData();
     formData.append('credential', file);
 
-    const response = await fetch('http://localhost:5000/api/upload/credential', {
+    const response = await fetch(`${API_BASE}/upload/credential`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -287,7 +289,7 @@ async function saveSection(section) {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/users/update`, {
+        const response = await fetch(`${API_BASE}/users/update`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -334,7 +336,7 @@ async function saveCredentials() {
         const uploadResult = await uploadCredentialFile(file);
 
         // Step 2: Save all credential fields + document URL to DB
-        const response = await fetch(`http://localhost:5000/api/users/update`, {
+        const response = await fetch(`${API_BASE}/users/update`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -420,7 +422,7 @@ function checkIfAllComplete() {
 
 async function submitToAdmin() {
     try {
-        const response = await fetch(`http://localhost:5000/api/users/update`, {
+        const response = await fetch(`${API_BASE}/users/update`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,

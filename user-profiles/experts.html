@@ -7,12 +7,16 @@
     <!-- <link rel="stylesheet" href="/user/experts.css"> -->
     <link rel="stylesheet" href="experts.css">
     <link rel="stylesheet" href="/user/user-shared.css">
+    <link rel="stylesheet" href="responsive.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header class="navbar">
+        <button id="mobileMenuBtn" class="mobile-menu-btn">
+            <i data-lucide="menu"></i>
+        </button>
         <h1 class="logo">HearMe</h1>
         <div class="user-menu-container">
             <div class="user-avatar" id="user-avatar-main">A</div>
@@ -116,5 +120,6 @@
 
     <script src="/user/experts.js"></script>
     <script src="/user/user-shared.js"></script>
+    <script src="mobileFixes.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 let inboxData = { conversations: [], unreadTotal: 0 };
 let activeClientId = null;
 let markingRead = false;

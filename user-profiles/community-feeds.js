@@ -62,7 +62,7 @@ function renderAvatar(className, imageUrl, fallback) {
 
 async function hydrateUserChrome() {
     try {
-        const response = await fetch('http://localhost:5000/api/user/profile', {
+        const response = await fetch('/api/user/profile', {
             headers: { Authorization: `Bearer ${token}` }
         });
         const data = await response.json();
@@ -109,7 +109,7 @@ tabBtns.forEach(btn => {
 });
 
 async function loadGiphyKey() {
-    const response = await fetch('http://localhost:5000/api/config/giphy', {
+    const response = await fetch('/api/config/giphy', {
         headers: { Authorization: `Bearer ${token}` }
     });
     const data = await response.json();
@@ -178,7 +178,7 @@ gifResults.addEventListener('click', event => {
 
 async function fetchPosts() {
     try {
-        const response = await fetch('http://localhost:5000/api/posts', {
+        const response = await fetch('/api/posts', {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -288,7 +288,7 @@ document.addEventListener('click', async event => {
 
     if (likeBtn) {
         const postId = likeBtn.dataset.id;
-        const res = await fetch(`http://localhost:5000/api/posts/${postId}/like`, {
+        const res = await fetch(`/api/posts/${postId}/like`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` }
         });
@@ -314,7 +314,7 @@ document.addEventListener('click', async event => {
         const text = input.value.trim();
         if (!text) return;
 
-        const res = await fetch(`http://localhost:5000/api/posts/${postId}/comment`, {
+        const res = await fetch(`/api/posts/${postId}/comment`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -333,7 +333,7 @@ document.addEventListener('click', async event => {
         const postId = deletePostBtn.dataset.id;
         if (!confirm('Delete this post?')) return;
 
-        const res = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+        const res = await fetch(`/api/posts/${postId}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         });
@@ -351,7 +351,7 @@ document.addEventListener('click', async event => {
         const { postId, commentId } = deleteCommentBtn.dataset;
         if (!confirm('Delete this comment?')) return;
 
-        const res = await fetch(`http://localhost:5000/api/posts/${postId}/comments/${commentId}`, {
+        const res = await fetch(`/api/posts/${postId}/comments/${commentId}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         });
@@ -378,7 +378,7 @@ postBtn.addEventListener('click', async () => {
     postBtn.disabled = true;
 
     try {
-        const response = await fetch('http://localhost:5000/api/posts', {
+        const response = await fetch('/api/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -426,7 +426,7 @@ async function submitReport() {
         ? `Other: ${customReason}`
         : selectedReason.value;
 
-    const response = await fetch('http://localhost:5000/api/reports', {
+    const response = await fetch('/api/reports', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

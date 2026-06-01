@@ -1,0 +1,278 @@
+/* =========================
+   GLOBAL MOBILE RESET FIX
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+img, video, canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   MOBILE MENU BUTTON (DESKTOP HIDDEN)
+========================= */
+
+.mobile-menu-btn {
+    display: none;
+}
+
+/* =========================
+   MOBILE RESPONSIVE SYSTEM
+========================= */
+
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    /* =========================
+       UNIVERSAL LAYOUT FIXES
+    ========================= */
+
+    .dashboard-container,
+    .app-layout,
+    .app-container {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    /* MAIN CONTENT WRAPPERS */
+    .main-workspace,
+    .main-content,
+    .feed-area {
+        width: 100% !important;
+        margin-left: 0 !important;
+        padding: 16px 12px !important;
+    }
+
+    /* =========================
+       SIDEBAR (OFF-CANVAS FOR MOBILE)
+    ========================= */
+
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: -280px;
+        width: 260px;
+        height: 100vh;
+        background: #ffffff;
+        z-index: 9999;
+        transition: left 0.3s ease;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+        overflow-y: auto;
+        padding-top: 20px;
+    }
+
+    .sidebar.show {
+        left: 0 !important;
+    }
+
+    /* =========================
+       MOBILE MENU BUTTON ACTIVATION
+    ========================= */
+
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    /* =========================
+       HEADER / TOPBAR FIX
+    ========================= */
+
+    header,
+    .navbar,
+    .topbar,
+    .top-header {
+        padding: 10px 12px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .topbar-right {
+        margin-left: auto;
+    }
+
+    .logo {
+        margin-left: 0 !important;
+        font-size: 18px;
+    }
+
+    /* =========================
+       GRID SYSTEM & STRUCTURAL FIX
+    ========================= */
+
+    .metrics-grid,
+    .report-layout,
+    .problem-grid,
+    .pillars-container,
+    .pricing-container,
+    .exercise-grid,
+    .media-wrapper,
+    .category-grid {
+        grid-template-columns: 1fr !important;
+        display: grid !important;
+        gap: 16px !important;
+    }
+
+    /* Force style attributes or specific multi-column grids to drop to a stack */
+    [style*="grid-template-columns: 2fr 1fr"],
+    [style*="grid-template-columns: repeat(3"],
+    [style*="grid-template-columns: repeat(2"],
+    div[style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* =========================
+       CARDS & SECTIONS
+    ========================= */
+
+    .card,
+    .profile-card,
+    .prof-card,
+    .card-pri,
+    .prob-card,
+    .form-card,
+    .reports-sidebar {
+        width: 100% !important;
+        margin: 0 0 16px 0 !important;
+    }
+
+    /* Handle inline styling rules on native cards */
+    div[style*="grid-template-columns"] > .card {
+        width: 100% !important;
+    }
+
+    /* =========================
+       TEXT SCALING
+    ========================= */
+
+    h1 {
+        font-size: 20px !important;
+        line-height: 1.3;
+    }
+
+    h2 {
+        font-size: 18px !important;
+    }
+
+    h3 {
+        font-size: 16px !important;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* =========================
+       FEED INPUTS & ALERTS
+    ========================= */
+
+    .post-input-wrapper,
+    .post-composer,
+    .alert-red {
+        width: 100% !important;
+        flex-direction: column;
+        gap: 8px !important;
+    }
+
+    textarea,
+    input[type="text"] {
+        width: 100% !important;
+    }
+
+    .post-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* =========================
+       TABLE FIXES (SCROLLABLE ON SMALL SCREENS)
+    ========================= */
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* =========================
+       BUTTONS & INTERACTIVE ELEMENTS
+    ========================= */
+
+    /* Action buttons should fill the layout container width */
+    .btn,
+    .btn-primary,
+    .full-width {
+        width: 100% !important;
+        font-size: 14px;
+        display: block;
+        text-align: center;
+    }
+
+    /* Explicitly keep functional sub-selector component buttons sizing natively */
+    .cat-btn {
+        width: 100% !important;
+        padding: 16px !important;
+    }
+
+    /* =========================
+       NAV ITEMS
+    ========================= */
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 0 12px;
+    }
+
+    .nav-item {
+        padding: 12px;
+        font-size: 15px;
+        width: 100%;
+    }
+
+    /* =========================
+       MODALS & OVERLAYS
+    ========================= */
+
+    .modal-window,
+    .report-modal-box {
+        width: 92% !important;
+        margin: auto;
+    }
+
+    /* =========================
+       CLEAN BREAK STYLES
+    ========================= */
+
+    * {
+        max-width: 100%;
+    }
+}

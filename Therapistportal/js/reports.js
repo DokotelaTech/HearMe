@@ -2,7 +2,7 @@
 // THERAPIST REPORT PAGE — report.js
 // =========================================
 
-// const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 
 // =========================================
 // CATEGORY SELECTOR
@@ -117,7 +117,7 @@ async function loadMyReports() {
         }
 
         const categoryIcons = {
-            technical: { icon: 'fa-wrench',           color: '#3b82f6' },
+            technical: { icon: 'fa-wrench',          color: '#3b82f6' },
             client:    { icon: 'fa-user',              color: '#8b5cf6' },
             safety:    { icon: 'fa-shield-halved',     color: '#ef4444' }
         };

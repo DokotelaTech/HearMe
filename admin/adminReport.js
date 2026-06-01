@@ -2,7 +2,7 @@
 // ADMIN REPORTS — admin-reports.js
 // =========================================
 
-const REPORTS_API = 'http://localhost:5000/api';
+const REPORTS_API = '/api';
 
 const statusConfig = {
     pending:  { text: 'Pending',  bg: '#fef3c7', color: '#d97706' },
@@ -171,7 +171,6 @@ function openReportDetail(reportId) {
     modal.innerHTML = `
         <div style="background:white; border-radius:14px; width:100%; max-width:560px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.2);">
 
-            <!-- MODAL HEADER -->
             <div style="background:#0f172a; padding:20px 24px; display:flex; align-items:center; justify-content:space-between;">
                 <div style="display:flex; align-items:center; gap:12px;">
                     <div style="background:${cat.bg}; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center;">
@@ -186,10 +185,8 @@ function openReportDetail(reportId) {
                     style="background:none; border:none; color:#94a3b8; font-size:20px; cursor:pointer; line-height:1;">✕</button>
             </div>
 
-            <!-- MODAL BODY -->
             <div style="padding:24px;">
 
-                <!-- FROM -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                     <div>
                         <p style="margin:0; font-size:11px; color:#94a3b8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Submitted By</p>
@@ -200,13 +197,11 @@ function openReportDetail(reportId) {
                     </span>
                 </div>
 
-                <!-- DESCRIPTION -->
                 <div style="background:#f8fafc; border-radius:8px; padding:16px; margin-bottom:16px;">
                     <p style="margin:0 0 6px 0; font-size:11px; color:#94a3b8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Description</p>
                     <p style="margin:0; font-size:14px; color:#334155; line-height:1.7;">${r.description}</p>
                 </div>
 
-                <!-- ADMIN RESPONSE -->
                 <div style="margin-bottom:16px;">
                     <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">
                         Admin Response <span style="color:#94a3b8; font-weight:400;">(visible to therapist)</span>
@@ -216,7 +211,6 @@ function openReportDetail(reportId) {
                         placeholder="Write a response for the therapist...">${r.adminNote || ''}</textarea>
                 </div>
 
-                <!-- STATUS ACTIONS -->
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
                     ${r.status !== 'reviewed' ? `
                     <button onclick="updateReportFromModal('${r._id}', 'reviewed')"

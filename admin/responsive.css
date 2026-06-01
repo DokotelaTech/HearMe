@@ -1,0 +1,148 @@
+/* =========================
+   HEARME ADMIN MOBILE SYSTEM
+   ========================= */
+
+.mobile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+        background: #f8fafc;
+    }
+
+    /* ================= SIDEBAR ================= */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -270px;
+        width: 260px;
+        height: 100vh;
+        background: #ffffff;
+        z-index: 1000;
+        transition: 0.3s ease;
+        box-shadow: 2px 0 18px rgba(0,0,0,0.08);
+        padding-top: 20px;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    /* overlay (IMPORTANT for UX) */
+    .sidebar::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 260px;
+        width: calc(100vw - 260px);
+        height: 100vh;
+        background: rgba(0,0,0,0.3);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s ease;
+    }
+
+    .sidebar.show::before {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* ================= MOBILE BUTTON ================= */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    /* ================= LOGO ================= */
+    .logo {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 10px 20px 20px;
+    }
+
+    /* REMOVE ALL BAD NEGATIVE MARGINS */
+    .logo,
+    .logo h1,
+    .logo h2 {
+        margin-left: 0 !important;
+    }
+
+    /* ================= MAIN CONTENT ================= */
+    .main-content {
+        width: 100%;
+        margin-left: 0;
+        padding: 0;
+    }
+
+    /* ================= HEADER ================= */
+    .top-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .route-info {
+        font-size: 0.8rem;
+        opacity: 0.7;
+    }
+
+    /* ================= DASHBOARD CARDS ================= */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    /* ================= TABLES (REPORTS) ================= */
+    .reports-table-container {
+        overflow-x: auto;
+    }
+
+    .reports-table {
+        min-width: 600px;
+    }
+
+    /* ================= FILTER ROW ================= */
+    .report-filter-row {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .report-filter-tab {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    /* ================= PROFILE PAGE ================= */
+    .profile-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .profile-card {
+        width: 100%;
+    }
+
+    /* ================= GENERAL ================= */
+    * {
+        max-width: 100%;
+    }
+}

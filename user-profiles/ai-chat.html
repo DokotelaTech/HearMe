@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="ai-chat.css?v=2">
     <link rel="stylesheet" href="/user/user-shared.css">
+    <link rel="stylesheet" href="responsive.css">
 
     <!-- Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -29,7 +30,9 @@
 
     <!-- NAVBAR -->
     <header class="navbar">
-
+        <button id="mobileMenuBtn" class="mobile-menu-btn">
+            <i data-lucide="menu"></i>
+        </button>
         <h1 class="logo">
             HearMe
         </h1>
@@ -157,11 +160,6 @@
     </div>
 
     <!-- HELP BUTTON -->
-    <button class="help-fab">
-
-        <i data-lucide="help-circle"></i>
-
-    </button>
 
     <script src="ai-chat.js"></script>
 
@@ -172,5 +170,6 @@
     </script>
 
     <script src="/user/user-shared.js"></script>
+    <script src="mobileFixes.js"></script>
 </body>
 </html>

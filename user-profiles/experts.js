@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 const token = localStorage.getItem('token');
 
 // App state
@@ -208,7 +208,7 @@ UI.closeModalBtn.addEventListener('click', closeBookingModal);
 UI.modalOverlay.addEventListener('click', closeBookingModal);
 
 // =========================================
-// SUBMIT BOOKING
+// SUBMIT BOOKING (PAYFAST INTEGRATION)
 // =========================================
 UI.bookingForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -217,9 +217,14 @@ UI.bookingForm.addEventListener('submit', async (e) => {
     const time = document.getElementById('booking-time').value;
     const type = document.getElementById('booking-type').value;
     const note = document.getElementById('booking-note').value;
+    const submitBtn = UI.bookingForm.querySelector('.submit-btn');
+
+    submitBtn.textContent = 'Processing...';
+    submitBtn.disabled = true;
 
     try {
-        const res = await fetch(`${API_BASE}/appointments`, {
+        // Initiate payment
+        const res = await fetch(`${API_BASE}/payments/initiate`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -235,18 +240,28 @@ UI.bookingForm.addEventListener('submit', async (e) => {
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.message);
 
-        // Show success
-        UI.bookingForm.style.display = 'none';
-        UI.bookingSuccess.style.display = 'block';
-        UI.successTherapistName.textContent = UI.modalTherapistName.textContent;
+        // Build PayFast form and auto-submit
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = data.paymentUrl;
 
-        setTimeout(closeBookingModal, 3000);
+        Object.entries(data.pfData).forEach(([key, value]) => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = value;
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
 
     } catch (error) {
         alert('Booking failed: ' + error.message);
+        submitBtn.textContent = 'Confirm Booking';
+        submitBtn.disabled = false;
     }
 });
 
@@ -322,62 +337,4 @@ UI.nearMeButton.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
     fetchTherapists();
-});
-
-
-
-
-UI.bookingForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const date = document.getElementById('booking-date').value;
-    const time = document.getElementById('booking-time').value;
-    const type = document.getElementById('booking-type').value;
-    const note = document.getElementById('booking-note').value;
-    const submitBtn = UI.bookingForm.querySelector('.submit-btn');
-
-    submitBtn.textContent = 'Processing...';
-    submitBtn.disabled = true;
-
-    try {
-        // Initiate payment
-        const res = await fetch(`${API_BASE}/payments/initiate`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                therapistId: selectedTherapistId,
-                date,
-                time,
-                type,
-                note
-            })
-        });
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
-
-        // Build PayFast form and auto-submit
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = data.paymentUrl;
-
-        Object.entries(data.pfData).forEach(([key, value]) => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = value;
-            form.appendChild(input);
-        });
-
-        document.body.appendChild(form);
-        form.submit();
-
-    } catch (error) {
-        alert('Booking failed: ' + error.message);
-        submitBtn.textContent = 'Confirm Booking';
-        submitBtn.disabled = false;
-    }
 });
