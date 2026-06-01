@@ -18,7 +18,7 @@
 
     async function hydrateAvatar() {
         try {
-            const response = await fetch('http://localhost:5000/api/user/profile', {
+            const response = await fetch('/api/user/profile', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const data = await response.json();

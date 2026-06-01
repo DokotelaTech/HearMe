@@ -61,6 +61,7 @@ document.querySelectorAll("a.nav-item").forEach(link => {
         }
     });
 });
+
 document.addEventListener('DOMContentLoaded', () => {
     const trigger = document.getElementById('dropdownTrigger');
     const menu = document.getElementById('dropdownMenu');

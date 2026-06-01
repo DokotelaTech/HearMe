@@ -1,4 +1,3 @@
-// Add this at the top of profile.js
 document.addEventListener('DOMContentLoaded', () => {
     // Initial scan for icons in the sidebar and navbar
     lucide.createIcons();
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // e.g., renderRoadmap();
 });
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = '/api';
 const token = localStorage.getItem('token');
 
 if (!token) window.location.href = '/login';
@@ -356,10 +355,10 @@ async function loadUpcomingAppointments() {
             const statusConfig = {
                 pending:   { text: 'Pending Approval', bg: '#fef3c7', color: '#d97706' },
                 approved:  { text: 'Approved',         bg: '#dcfce7', color: '#16a34a' },
-                denied:    { text: 'Denied',            bg: '#fee2e2', color: '#dc2626' },
-                cancelled: { text: 'Cancelled',         bg: '#f1f5f9', color: '#64748b' },
-                canceled:  { text: 'Cancelled',         bg: '#f1f5f9', color: '#64748b' },
-                completed: { text: 'Completed',         bg: '#e0e7ff', color: '#4f46e5' }
+                denied:    { text: 'Denied',           bg: '#fee2e2', color: '#dc2626' },
+                cancelled: { text: 'Cancelled',        bg: '#f1f5f9', color: '#64748b' },
+                canceled:  { text: 'Cancelled',        bg: '#f1f5f9', color: '#64748b' },
+                completed: { text: 'Completed',        bg: '#e0e7ff', color: '#4f46e5' }
             };
             const badge = statusConfig[a.status] || statusConfig.pending;
 
