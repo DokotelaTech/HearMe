@@ -18,6 +18,7 @@ img, video, canvas {
 
 /* =========================
    MOBILE MENU BUTTON
+   Hidden on desktop
 ========================= */
 
 .mobile-menu-btn {
@@ -42,7 +43,8 @@ img, video, canvas {
     .dashboard-container,
     .app-layout,
     .app-container {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
     }
 
     .main-content,
@@ -52,28 +54,55 @@ img, video, canvas {
         width: 100% !important;
         margin-left: 0 !important;
         padding: 12px !important;
+        min-width: 0;
     }
 
     /* =========================
-       SIDEBAR FIX (ALL PAGES)
+       NAVBAR FIX
+       Single row: [menu btn] [logo] [user section]
+       Nothing wraps, nothing overlaps
     ========================= */
 
-    .sidebar {
-        position: fixed !important;
-        top: 0;
-        left: -280px;
-        width: 260px;
-        height: 100vh;
-        background: #fff;
-        z-index: 9999;
-        transition: 0.3s ease;
-        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-        overflow-y: auto;
-        padding-top: 60px;
+    header,
+    .navbar,
+    .topbar,
+    .top-header {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 12px !important;
+        height: 56px !important;
+        gap: 8px !important;
+        width: 100% !important;
+        overflow: hidden !important;
     }
 
-    .sidebar.show {
-        left: 0 !important;
+    /* Logo stays compact, never pushed out */
+    .logo {
+        margin-left: 0 !important;
+        font-size: 20px !important;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* User section stays on the right, never wraps */
+    .user-profile-section,
+    .user-side-logo,
+    .admin-profile {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    /* Hide text label next to avatar */
+    .user-badge,
+    .user-label,
+    .admin-name {
+        display: none !important;
     }
 
     /* =========================
@@ -84,30 +113,74 @@ img, video, canvas {
         display: flex !important;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
         border: none;
         background: none;
         cursor: pointer;
         z-index: 10000;
+        flex-shrink: 0;
+        padding: 0;
+    }
+
+    .mobile-menu-btn svg,
+    .mobile-menu-btn i {
+        width: 22px;
+        height: 22px;
+        pointer-events: none;
     }
 
     /* =========================
-       HEADER FIX
+       SIDEBAR FIX (ALL PAGES)
     ========================= */
 
-    header,
-    .navbar,
-    .topbar,
-    .top-header {
-        padding: 10px 12px !important;
-        flex-wrap: wrap;
-        gap: 10px;
+    .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: -280px !important;
+        width: 240px !important;
+        height: 100vh !important;
+        background: #fff !important;
+        z-index: 9999 !important;
+        transition: left 0.3s ease !important;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.12) !important;
+        overflow-y: auto !important;
+        padding-top: 56px !important;
+        flex-direction: column !important;
     }
 
-    .logo {
-        margin-left: 0 !important;
-        font-size: 18px;
+    .sidebar.show,
+    .sidebar.open {
+        left: 0 !important;
+    }
+
+    /* Nav items always show icon + label when sidebar is open */
+    .sidebar .nav-item {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 12px !important;
+        padding: 12px 16px !important;
+        width: 100% !important;
+        white-space: nowrap;
+    }
+
+    .sidebar .nav-item span {
+        display: inline !important;
+    }
+
+    /* Sidebar overlay backdrop */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 9998;
+    }
+
+    .sidebar-overlay.visible {
+        display: block;
     }
 
     /* =========================
@@ -122,18 +195,18 @@ img, video, canvas {
     .exercise-grid,
     .media-wrapper {
         grid-template-columns: 1fr !important;
-        display: grid;
-        gap: 12px;
+        display: grid !important;
+        gap: 12px !important;
     }
 
     /* =========================
-       GROUPS PAGE FIX (IMPORTANT)
+       GROUPS PAGE FIX
     ========================= */
 
     .groups-layout {
         display: flex !important;
         flex-direction: column !important;
-        gap: 12px;
+        gap: 12px !important;
     }
 
     .groups-list {
@@ -174,13 +247,15 @@ img, video, canvas {
     p  { font-size: 14px; }
 
     /* =========================
-       INPUT FIX
+       INPUT & TEXTAREA ONLY
+       Buttons are NOT forced full-width here —
+       that was breaking tab bars and icon buttons.
     ========================= */
 
-    input,
-    textarea,
-    button {
+    input:not([type="radio"]):not([type="checkbox"]),
+    textarea {
         width: 100% !important;
+        max-width: 100% !important;
     }
 
     /* =========================
@@ -191,5 +266,227 @@ img, video, canvas {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
+    }
+
+    /* =========================
+       POST COMPOSER ACTIONS
+       Stack left/right groups so buttons
+       never overlap each other
+    ========================= */
+
+    .post-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        align-items: stretch !important;
+    }
+
+    .left-actions {
+        display: flex !important;
+        justify-content: flex-start !important;
+    }
+
+    .right-actions {
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 8px !important;
+    }
+
+    /* Collapsed composer: stack input + post button */
+    .post-input-wrapper {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+
+    .post-input-wrapper .post-submit-btn {
+        width: 100% !important;
+    }
+
+    /* Submit button inside right-actions stays auto */
+    .right-actions .post-submit-btn {
+        width: auto !important;
+    }
+
+    /* =========================
+       TAB BARS
+       Tabs wrap cleanly, never overlap
+    ========================= */
+
+    .post-tabs,
+    .tab-bar,
+    .tabs {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .post-tabs .tab-btn,
+    .tab-bar .tab-btn,
+    .tabs .tab-btn {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        width: auto !important;
+    }
+
+    /* =========================
+       GIF PANEL
+    ========================= */
+
+    .gif-search-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .gif-search-row input {
+        flex: 1 !important;
+        min-width: 0 !important;
+    }
+
+    .gif-search-row button {
+        flex: 1 1 auto !important;
+        width: auto !important;
+        padding: 10px 12px !important;
+    }
+
+    .gif-results,
+    #gif-results {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+    }
+
+    /* =========================
+       CHAT PAGE INPUT ROW
+       Input grows, send button stays compact
+    ========================= */
+
+    .input-container {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+
+    .input-container input {
+        flex: 1 !important;
+        min-width: 0 !important;
+        width: auto !important;
+    }
+
+    .input-container button,
+    #aiSendBtn {
+        width: auto !important;
+        flex-shrink: 0 !important;
+        padding: 10px 16px !important;
+        white-space: nowrap !important;
+    }
+
+    /* =========================
+       COMMENT INPUT ROW
+    ========================= */
+
+    .comment-input-row {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+    }
+
+    .comment-input-row input {
+        flex: 1 !important;
+        min-width: 0 !important;
+        width: auto !important;
+    }
+
+    .comment-input-row button {
+        width: auto !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* =========================
+       REPORT MODAL — bottom sheet on mobile
+    ========================= */
+
+    .report-modal-overlay {
+        align-items: flex-end !important;
+        padding: 0 !important;
+    }
+
+    .report-modal-box {
+        max-width: 100% !important;
+        width: 100% !important;
+        border-radius: 16px 16px 0 0 !important;
+        max-height: 88vh !important;
+        overflow-y: auto !important;
+    }
+
+    .report-modal-footer {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 10px !important;
+    }
+
+    .btn-report-cancel,
+    .btn-report-submit {
+        flex: 1 !important;
+        justify-content: center !important;
+        width: auto !important;
+    }
+
+    /* =========================
+       ICON / ACTION BUTTONS
+       These must never go full-width
+    ========================= */
+
+    .help-fab,
+    .post-delete-btn,
+    .comment-delete-btn,
+    .report-modal-close,
+    .mobile-menu-btn,
+    .msg-icon-btn,
+    .cancel-btn,
+    .media-upload,
+    .tab-btn {
+        width: auto !important;
+        min-width: unset !important;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES (≤400px)
+========================= */
+
+@media (max-width: 400px) {
+
+    .logo {
+        font-size: 17px !important;
+    }
+
+    h1 { font-size: 18px !important; }
+    h2 { font-size: 16px !important; }
+
+    .ai-bubble,
+    .user-bubble {
+        font-size: 13px !important;
+        max-width: 92% !important;
+    }
+
+    /* Post tabs stack vertically on tiny screens */
+    .post-tabs {
+        flex-direction: column !important;
+    }
+
+    .post-tabs .tab-btn {
+        width: 100% !important;
+        flex: unset !important;
     }
 }
