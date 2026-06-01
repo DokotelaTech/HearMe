@@ -9,8 +9,6 @@
 html, body {
     max-width: 100%;
     overflow-x: hidden;
-    margin: 0;
-    padding: 0;
 }
 
 img, video, canvas {
@@ -19,46 +17,11 @@ img, video, canvas {
 }
 
 /* =========================
-   MOBILE MENU BUTTON (BASE)
+   MOBILE MENU BUTTON
 ========================= */
 
 .mobile-menu-btn {
     display: none;
-}
-
-/* =========================
-   UNIVERSAL HEADER FIX (IMPORTANT)
-========================= */
-
-.navbar,
-.topbar,
-.top-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 16px;
-    flex-wrap: nowrap;
-    position: relative;
-}
-
-/* LOGO FIX (NO OVERLAP EVER) */
-.logo {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0 !important;
-    flex-shrink: 0;
-    white-space: nowrap;
-}
-
-/* Any logo wrappers */
-.navbar-left,
-.brand-area {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 /* =========================
@@ -73,7 +36,7 @@ img, video, canvas {
     }
 
     /* =========================
-       APP LAYOUT FIX
+       UNIVERSAL LAYOUT FIX
     ========================= */
 
     .dashboard-container,
@@ -85,11 +48,7 @@ img, video, canvas {
     .main-content,
     .main-workspace,
     .feed-area,
-    .content-area,
-    .messages-area,
-    .profile-area,
-    .relief-area,
-    .main-content {
+    .content-area {
         width: 100% !important;
         margin-left: 0 !important;
         padding: 12px !important;
@@ -118,7 +77,7 @@ img, video, canvas {
     }
 
     /* =========================
-       MOBILE MENU BUTTON FIX
+       MOBILE MENU BUTTON
     ========================= */
 
     .mobile-menu-btn {
@@ -130,38 +89,47 @@ img, video, canvas {
         border: none;
         background: none;
         cursor: pointer;
-        flex-shrink: 0;
         z-index: 10000;
+        flex-shrink: 0;
     }
 
     /* =========================
-       HEADER FIX (NO OVERLAP)
+       HEADER FIX (IMPORTANT)
     ========================= */
 
+    header,
     .navbar,
     .topbar,
     .top-header {
         padding: 10px 12px !important;
-        flex-wrap: nowrap;
-        gap: 10px;
-    }
-
-    .logo {
-        font-size: 18px;
-        margin: 0 !important;
-        flex: 1;
-        text-align: left;
-    }
-
-    /* Prevent right-side content from pushing layout */
-    .user-profile-section,
-    .profile-container,
-    .user-avatar {
-        flex-shrink: 0;
+        gap: 12px;
+        display: flex !important;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: nowrap !important; /* KEY FIX */
     }
 
     /* =========================
-       GRID FIX (ALL SECTIONS)
+       LOGO FIX (SAFE VERSION)
+    ========================= */
+
+    .logo {
+        font-size: 18px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    /* prevents logo text wrapping weirdly */
+    .logo h1,
+    .logo h2 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    /* =========================
+       GRID SYSTEM FIX
     ========================= */
 
     .metrics-grid,
@@ -170,15 +138,14 @@ img, video, canvas {
     .pillars-container,
     .pricing-container,
     .exercise-grid,
-    .media-wrapper,
-    .profile-grid {
+    .media-wrapper {
         grid-template-columns: 1fr !important;
         display: grid;
         gap: 12px;
     }
 
     /* =========================
-       GROUPS PAGE FIX
+       GROUPS PAGE FIX (IMPORTANT)
     ========================= */
 
     .groups-layout {
@@ -187,12 +154,13 @@ img, video, canvas {
         gap: 12px;
     }
 
-    .groups-list,
-    .group-chat-panel {
+    .groups-list {
         width: 100% !important;
     }
 
     .group-chat-panel {
+        width: 100% !important;
+        height: auto !important;
         min-height: 300px;
         border-top: 1px solid #eee;
     }
@@ -203,7 +171,7 @@ img, video, canvas {
     }
 
     /* =========================
-       CARDS FIX
+       CARD FIX (SAFE)
     ========================= */
 
     .card,
@@ -224,13 +192,16 @@ img, video, canvas {
     p  { font-size: 14px; }
 
     /* =========================
-       INPUT FIX
+       INPUT FIX (SAFE VERSION)
     ========================= */
 
     input,
-    textarea,
+    textarea {
+        max-width: 100%;
+    }
+
+    /* buttons should NOT always be 100% (this was breaking layout) */
     button {
-        width: 100% !important;
         max-width: 100%;
     }
 
