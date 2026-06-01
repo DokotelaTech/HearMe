@@ -38,20 +38,32 @@ async function loadTherapistAppointments() {
 }
 
 // =========================================
-// RENDER CONFIRMED SESSIONS
+// RENDER CONFIRMED SESSIONS (Filters out sessions > 60 mins old)
 // =========================================
 function renderSchedule(appointmentsList) {
     appointmentsContainer.innerHTML = '';
 
-    if (appointmentsList.length === 0) {
+    // 1. Filter out appointments that started more than 60 minutes ago
+    const activeAndUpcoming = appointmentsList.filter(a => {
+        const sessionDateTime = new Date(`${a.date}T${a.time}`);
+        const now = new Date();
+        const diffMinutes = (sessionDateTime - now) / (1000 * 60);
+        
+        // Keep it ONLY if diffMinutes is greater than or equal to -60
+        return diffMinutes >= -60;
+    });
+
+    // 2. Check if the filtered list is empty
+    if (activeAndUpcoming.length === 0) {
         appointmentsContainer.innerHTML = `
             <div style="padding:30px; text-align:center; color:#64748b; background:#f8fafc; border-radius:8px; border:1px dashed #cbd5e1;">
-                No confirmed sessions scheduled.
+                No upcoming sessions scheduled.
             </div>`;
         return;
     }
 
-    appointmentsContainer.innerHTML = appointmentsList.map(a => {
+    // 3. Map over the filtered list to draw the cards
+    appointmentsContainer.innerHTML = activeAndUpcoming.map(a => {
         const sessionDateTime = new Date(`${a.date}T${a.time}`);
         const now = new Date();
         const diffMinutes = (sessionDateTime - now) / (1000 * 60);
@@ -153,6 +165,16 @@ document.getElementById('close-video-modal')?.addEventListener('click', () => {
 // =========================================
 // LOAD AVAILABILITY FROM DATABASE
 // =========================================
+const defaultAvailability = [
+    { day: 'Monday', active: false, start: '09:00', end: '17:00' },
+    { day: 'Tuesday', active: false, start: '09:00', end: '17:00' },
+    { day: 'Wednesday', active: false, start: '09:00', end: '17:00' },
+    { day: 'Thursday', active: false, start: '09:00', end: '17:00' },
+    { day: 'Friday', active: false, start: '09:00', end: '17:00' },
+    { day: 'Saturday', active: false, start: '09:00', end: '17:00' },
+    { day: 'Sunday', active: false, start: '09:00', end: '17:00' }
+];
+
 let availability = [];
 
 async function loadAvailability() {
@@ -161,9 +183,17 @@ async function loadAvailability() {
             headers: { 'Authorization': `Bearer ${authToken}` }
         });
         const data = await res.json();
-        availability = data.schedule || [];
+        
+        // If the DB has a schedule, use it. Otherwise, use the default 7-day blank slate.
+        if (data.schedule && data.schedule.length > 0) {
+            availability = data.schedule;
+        } else {
+            // Deep copy the default so we don't accidentally mutate the original array
+            availability = JSON.parse(JSON.stringify(defaultAvailability));
+        }
+
         renderAvailability();
-        updateNextAvailable(); // ✅ calculate next slot from availability
+        updateNextAvailable(); 
     } catch (err) {
         console.error('Availability load error:', err);
     }
@@ -255,7 +285,8 @@ async function saveAvailability() {
 }
 
 // =========================================
-// RENDER AVAILABILITY
+// RENDER AVAILABILITY 
+// (Restored! You accidentally deleted this block)
 // =========================================
 function renderAvailability() {
     const container = document.getElementById('availability-list-container');
