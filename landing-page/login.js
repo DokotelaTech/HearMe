@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(
-                'http://localhost:5000/api/auth/request-password-reset',
+                '/api/auth/request-password-reset',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(
-                'http://localhost:5000/api/auth/reset-password',
+                '/api/auth/reset-password',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await fetch(
-                'http://localhost:5000/api/auth/login',
+                '/api/auth/login',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
