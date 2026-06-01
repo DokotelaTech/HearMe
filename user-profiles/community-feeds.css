@@ -1,5 +1,5 @@
 /* ══════════════════════════════
-   THEME VARIABLES (The Original Purple)
+   THEME VARIABLES (The Original Purple + Glow)
 ══════════════════════════════ */
 :root { 
     --primary: #a820c7;
@@ -10,6 +10,11 @@
     --text-main: #1a1a1a;
     --text-muted: #6b7280;
     --border-color: #e5e7eb;
+    
+    /* Added for Enhanced UI Glow Effects */
+    --primary-hover: #8e1ba8; 
+    --primary-glow: rgba(168, 32, 199, 0.25);
+    --primary-glow-strong: rgba(168, 32, 199, 0.4);
     
     --success-bg: #eef8f0;
     --success-text: #10b981;
@@ -96,7 +101,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(168, 32, 199, 0.25);
+    box-shadow: 0 4px 10px var(--primary-glow);
 }
 
 /* ══════════════════════════════
@@ -156,7 +161,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .feed-content {
     width: 100%;
-    max-width: 680px; 
+    max-width: 850px; /* Updated to 850px per new styles */
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -170,88 +176,118 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     color: var(--text-main);
 }
 
-/* COMPOSER CARD */
+/* ── Composer / Input Card (Enhanced) ── */
 .input-card {
-    background-color: var(--surface);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-    overflow: hidden;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1rem; /* Adjusted for better flow */
+    border: 1px solid rgba(168, 32, 199, 0.2);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.02),
+        0 0 20px var(--primary-glow);
 }
 
 .post-input-wrapper {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1.25rem;
+    gap: 16px;
 }
 
 .post-input-wrapper input {
     flex: 1;
-    background-color: var(--bg-color);
-    border: 1px solid transparent;
-    padding: 0.85rem 1.25rem;
-    border-radius: 30px;
-    font-size: 0.95rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    cursor: pointer;
     outline: none;
-    cursor: text;
-    transition: all 0.2s;
+    background: var(--bg-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
-.post-input-wrapper input:hover { border-color: var(--border-color); }
+
+.post-input-wrapper input:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary-glow);
+}
 
 .post-submit-btn {
-    background: linear-gradient(90deg, var(--primary), #d91873);
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
     color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s, transform 0.1s;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px var(--primary-glow);
 }
-.post-submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-/* EXPANDED COMPOSER */
-.post-composer { padding: 1.25rem; }
+.post-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--primary-glow-strong);
+}
+
+/* ── Expanded Composer Styles ── */
+.post-composer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
 .post-tabs {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    background: #f1f5f9;
+    border-radius: 12px;
+    padding: 6px;
+    gap: 6px;
 }
 
 .tab-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--text-muted);
-    background-color: var(--bg-color);
+    cursor: pointer;
     transition: all 0.2s;
 }
-.tab-btn:hover { background-color: #e2e8f0; }
+
 .tab-btn.active {
-    background-color: var(--primary-light);
+    background: #fff;
     color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .post-textarea {
     width: 100%;
-    min-height: 120px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1rem;
-    font-size: 1rem;
-    resize: none;
+    min-height: 140px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    resize: vertical;
     outline: none;
-    margin-bottom: 1rem;
-    transition: border-color 0.2s;
+    font-family: inherit;
+    transition: all 0.2s;
 }
-.post-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(168,32,199,0.08); }
+
+.post-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
 
 .post-actions {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
 }
 
 .left-actions, .right-actions {
@@ -275,12 +311,20 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .media-upload i { width: 18px; height: 18px; }
 
 .cancel-btn {
-    color: var(--text-muted);
+    background: none;
+    border: none;
+    font-size: 1.05rem;
     font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 10px 16px;
+    border-radius: 10px;
+    transition: background 0.2s;
 }
-.cancel-btn:hover { color: var(--text-main); }
+.cancel-btn:hover {
+    background: #f1f5f9;
+    color: var(--text-main);
+}
 
 /* GIF PANEL */
 .gif-panel {
@@ -328,7 +372,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 6px 18px rgba(168,32,199,0.3);
+    box-shadow: 0 6px 18px var(--primary-glow-strong);
     transition: transform 0.2s;
     z-index: 100;
 }
@@ -439,7 +483,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     background-color: var(--bg-color);
     border-top: 1px solid var(--border-color);
 }
-.btn-report-cancel { padding: 0.6rem 1rem; font-weight: 600; color: var(--text-muted); }
+.btn-report-cancel { padding: 0.6rem 1rem; font-weight: 600; color: var(--text-muted); border: none; cursor: pointer;}
 .btn-report-cancel:hover { color: var(--text-main); }
 .btn-report-submit {
     display: flex;
@@ -451,6 +495,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     border-radius: var(--radius-md);
     font-weight: 600;
     transition: opacity 0.2s;
+    border: none;
+    cursor: pointer;
 }
 .btn-report-submit:hover { opacity: 0.9; }
 .btn-report-submit i { width: 16px; height: 16px; }
@@ -469,14 +515,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     .user-badge { display: none; }
     .post-input-wrapper { padding: 1rem; }
 }
-/* Enable smooth transitions for elements across pages */
+
+/* ══════════════════════════════
+   VIEW TRANSITIONS
+══════════════════════════════ */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
 }
 
-/* Define a fade effect */
 ::view-transition-old(root) {
   animation-name: fade-out;
 }
@@ -487,14 +535,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @keyframes fade-out { to { opacity: 0; } }
 @keyframes fade-in { from { opacity: 0; } }
-/* The overlay covering the page */
+
 .page-transition-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #ffffff; /* Match your site background */
+  background-color: var(--surface); 
   z-index: 9999;
   pointer-events: none;
   animation: fadeOut 0.8s forwards;
@@ -502,4 +550,265 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 @keyframes fadeOut {
   to { opacity: 0; visibility: hidden; }
+}
+
+/* ══════════════════════════════
+   POST CARDS & FEED STYLES
+══════════════════════════════ */
+.post-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(168, 32, 199, 0.3); /* Primary color glow */
+}
+
+/* ── Post Header & User Info ── */
+.post-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.post-user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.post-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px var(--primary-glow);
+    flex: 0 0 48px;
+}
+
+.post-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.post-username {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-main);
+}
+
+.post-time {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* ── Badges ── */
+.post-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    margin-top: 4px;
+}
+
+.badge-success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+}
+
+.badge-struggle {
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+/* ── Post Content & Media ── */
+.post-content {
+    font-size: 1.05rem;
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+.post-gif, .post-content img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-top: 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+/* ── Delete Button ── */
+.post-delete-btn {
+    background: var(--error-bg);
+    color: var(--error-text);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+}
+
+.post-delete-btn:hover {
+    background: #fecaca;
+    transform: translateY(-1px);
+}
+
+.post-delete-btn svg, .post-delete-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+/* ── Post Footer / Actions ── */
+.post-footer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.1s;
+    padding: 0.5rem 0;
+}
+
+.post-action-btn:hover {
+    color: var(--primary);
+    transform: scale(1.05);
+}
+
+.post-action-btn svg, .post-action-btn i {
+    width: 20px;
+    height: 20px;
+}
+
+/* ── Comments Section ── */
+.comments-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.comments-section.is-closed {
+    display: none;
+}
+
+.comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.comment-bubble {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.comment-owner {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.comment-body {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    line-height: 1.4;
+    flex: 1;
+}
+
+.comment-topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-delete-btn {
+    background: transparent;
+    color: var(--error-text);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.comment-delete-btn:hover {
+    background: var(--error-bg);
+}
+
+.comment-input-row {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.comment-input-row input {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    padding: 0.75rem 1.25rem;
+    outline: none;
+    background: var(--surface);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+.comment-input-row input:focus {
+    border-color: var(--primary);
+}
+
+.comment-input-row button {
+    border: none;
+    border-radius: 30px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    padding: 0 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.comment-input-row button:hover {
+    opacity: 0.9;
 }
