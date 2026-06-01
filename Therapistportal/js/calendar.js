@@ -1,4 +1,4 @@
-const apiBaseUrl = 'http://localhost:5000/api';
+const apiBaseUrl = '/api';
 const authToken = localStorage.getItem('token');
 const appointmentsContainer = document.getElementById('appointments-list-container');
 
