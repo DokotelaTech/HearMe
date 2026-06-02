@@ -133,41 +133,67 @@ const getReports = async (req, res) => {
 // ==========================================
 const updateReportStatus = async (req, res) => {
     try {
-        if (req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'Admin access only' });
-        }
-
+        const { id } = req.params;
         const { status, adminNote, action } = req.body;
 
-        if (!['pending', 'reviewed', 'resolved', 'dismissed', 'deleted'].includes(status)) {
-            return res.status(400).json({ message: 'Invalid status' });
+        const report = await Report.findById(id).populate('reporterId');
+        if (!report) {
+            return res.status(404).json({ message: 'Report not found' });
         }
 
-        const report = await Report.findById(req.params.id);
-        if (!report) return res.status(404).json({ message: 'Report not found' });
-
-        // If admin chooses to delete the reported post
-        if (action === 'deletePost' && report.postId) {
-            await Post.findByIdAndDelete(report.postId);
+        report.status = status;
+        if (adminNote) report.adminNote = adminNote;
+        if (status === 'resolved' || status === 'dismissed' || status === 'deleted') {
+            report.resolvedAt = new Date();
         }
 
-        const updated = await Report.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: {
-                    status,
-                    adminNote: adminNote || '',
-                    resolvedAt: ['resolved', 'dismissed', 'deleted'].includes(status)
-                        ? new Date()
-                        : undefined
+        let postDeleted = false;
+        let postAuthorEmail = null;
+
+        // If it's a moderation report and the admin chose to delete the post
+        if (report.type === 'moderation' && report.postId && action === 'deletePost') {
+            const post = await Post.findById(report.postId).populate('userId'); // Assuming Post has a userId ref
+            if (post) {
+                if (post.userId && post.userId.email) {
+                    postAuthorEmail = post.userId.email;
                 }
-            },
-            { new: true }
-        );
+                await Post.findByIdAndDelete(report.postId);
+                postDeleted = true;
+                report.status = 'deleted'; // Ensure report status reflects the deletion
+            }
+        }
 
-        return res.status(200).json({ message: `Report marked as ${status}`, report: updated });
+        await report.save();
+
+        // --- SEND NOTIFICATION EMAILS ---
+
+        // 1. Notify the Reporter
+        if (report.reporterId && report.reporterId.email) {
+             try {
+                 await sendReporterEmail(report.reporterId.email, report.status, report.category);
+             } catch (emailError) {
+                 console.error('Failed to send email to reporter:', emailError);
+             }
+        }
+
+        // 2. Notify the Reported User (if applicable)
+        if (postAuthorEmail) {
+            try {
+                await sendReportedUserEmail(postAuthorEmail, report.status, report.postContent);
+            } catch (emailError) {
+                console.error('Failed to send email to reported user:', emailError);
+            }
+        }
+
+        res.status(200).json({ 
+            message: 'Report updated successfully', 
+            report,
+            postDeleted 
+        });
+
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        console.error('Error updating report status:', error);
+        res.status(500).json({ message: 'Error updating report status' });
     }
 };
 
