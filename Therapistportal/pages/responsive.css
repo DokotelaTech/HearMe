@@ -180,15 +180,23 @@ body {
     ================================ */
 
     .sidebar {
-        transform: translateX(-100%) !important;
-        width: 260px !important;
-        padding: 0 !important;
-        z-index: 2000 !important;
+        position: fixed;
+        left: -280px; /* Adjust based on your actual sidebar width */
+        transition: left 0.3s ease;
+        z-index: 1001;
     }
 
-    .sidebar.open,
-    .sidebar.show {
-        transform: translateX(0) !important;
+    /* Target both potential classes used in your script */
+    .sidebar.open, .sidebar.show {
+        left: 0 !important;
+    }
+
+    .sidebar-overlay.active, .sidebar-overlay.visible {
+        display: block !important;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
     }
 
     /* Brand area sits at top of sidebar */
@@ -254,6 +262,10 @@ body {
        It is injected by JS before topbar-right.
     ================================ */
 
+    .topbar .mobile-menu-btn {
+        display: flex !important; /* FIXED: Overrides the hidden state when inside topbar */
+    }
+
     .mobile-menu-btn {
         display: flex !important;
         align-items: center !important;
@@ -275,7 +287,7 @@ body {
     .mobile-menu-btn svg {
         width: 22px !important;
         height: 22px !important;
-        pointer-events: none;
+        pointer-events: none !important; /* FIXED: Stops icons from intercepting touch events */
     }
 
     /* ================================
@@ -717,16 +729,12 @@ body {
     }
 
     .privacy-banner {
-        display: none !important; /* too small to be useful on tiny phones */
+        display: none !important;
     }
 }
 
 /* ================================
    PROFILE PAGE SPECIFIC FIXES
-   Different structure:
-   - .topbar is outside .container
-   - .container has sidebar + .profile-area
-   - No .app-layout wrapper
 ================================ */
 
 @media (max-width: 768px) {
@@ -798,7 +806,6 @@ body {
 
     /* ================================
        PROFILE TABS
-       Must not overlap
     ================================ */
 
     .tabs {
@@ -822,7 +829,6 @@ body {
 
     /* ================================
        OVERVIEW LAYOUT
-       Left col + right col stack
     ================================ */
 
     .overview-layout {
@@ -858,7 +864,6 @@ body {
 
     /* ================================
        SAVE / EDIT BUTTONS
-       Keep auto-width — never full-width
     ================================ */
 
     .edit-btn,
@@ -898,14 +903,10 @@ body {
 
 /* ================================
    STRESS RELIEF PAGE SPECIFIC FIXES
-   .resource-layout sits outside
-   .content-container but inside
-   .main-workspace
 ================================ */
 
 @media (max-width: 768px) {
 
-    /* Resource layout stacks form on top, list below */
     .resource-layout {
         display: flex !important;
         flex-direction: column !important;
@@ -921,7 +922,6 @@ body {
         min-width: 0 !important;
     }
 
-    /* Section headings */
     .section-heading {
         display: flex !important;
         align-items: center !important;
@@ -929,24 +929,20 @@ body {
         flex-wrap: nowrap !important;
     }
 
-    /* Form inputs already full-width from global rules */
     #resourceForm label {
         font-size: 13px !important;
     }
 
-    /* Publish button */
     .resource-form-card .btn-primary {
         width: 100% !important;
     }
 
-    /* Resource cards in the list */
     .resource-card,
     .resource-item {
         width: 100% !important;
         min-width: 0 !important;
     }
 
-    /* Stats row — 2 columns */
     .stats-row {
         grid-template-columns: 1fr 1fr !important;
         gap: 12px !important;
@@ -959,7 +955,6 @@ body {
         padding: 0 10px 16px !important;
     }
 
-    /* Stats — single column on tiny screens */
     .stats-row {
         grid-template-columns: 1fr 1fr !important;
     }
@@ -971,14 +966,10 @@ body {
 
 /* ================================
    REPORT ISSUE PAGE SPECIFIC FIXES
-   Grids use inline style= attributes
-   so need targeted !important overrides
 ================================ */
 
 @media (max-width: 768px) {
 
-    /* Two-column report layout → single column
-       Targets both the CSS class AND the inline style */
     .report-layout,
     div[style*="grid-template-columns: 2fr 1fr"] {
         display: grid !important;
@@ -986,17 +977,14 @@ body {
         gap: 14px !important;
     }
 
-    /* Category grid 3-col → 1-col
-       Targets both the CSS class AND the inline style */
     .category-grid,
     #report-category-selector,
     div[style*="grid-template-columns: repeat(3"] {
         display: grid !important;
-        grid-template-columns: 1fr 1fr !important; /* 2 cols fits nicely on tablet */
+        grid-template-columns: 1fr 1fr !important;
         gap: 10px !important;
     }
 
-    /* Category buttons — comfortable tap targets */
     .cat-btn {
         padding: 16px 10px !important;
         font-size: 13px !important;
@@ -1004,7 +992,6 @@ body {
         width: auto !important;
     }
 
-    /* Alert banner */
     .alert-red {
         font-size: 13px !important;
         padding: 12px !important;
@@ -1012,14 +999,12 @@ body {
         align-items: flex-start !important;
     }
 
-    /* Form card and sidebar card full width */
     .form-card,
     .reports-sidebar {
         width: 100% !important;
         min-width: 0 !important;
     }
 
-    /* Submit button always full width */
     #report-issue-form .btn-primary {
         width: 100% !important;
     }
@@ -1027,7 +1012,6 @@ body {
 
 @media (max-width: 480px) {
 
-    /* Category grid → single column on small phones */
     .category-grid,
     #report-category-selector,
     div[style*="grid-template-columns: repeat(3"] {

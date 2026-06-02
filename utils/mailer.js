@@ -46,6 +46,8 @@ function buildReportEmailTemplate({ title, greeting, message, actionDetails }) {
 }
 
 async function sendReporterEmail(toEmail, status, reportCategory) {
+    if (!toEmail) return; // Guard clause
+
     const statusMessages = {
         'resolved': 'We have reviewed your report and taken the appropriate action. Thank you for helping keep HearMe safe.',
         'dismissed': 'We have reviewed your report. Based on our guidelines, no further action is required at this time.',
@@ -60,34 +62,43 @@ async function sendReporterEmail(toEmail, status, reportCategory) {
         message: message
     });
 
-    await transporter.sendMail({
-        from: `"HearMe Moderation" <${process.env.EMAIL_USER.trim()}>`,
-        to: toEmail,
-        subject: 'Update on Your HearMe Report',
-        html
-    });
+    try {
+        await transporter.sendMail({
+            from: `"HearMe Moderation" <${process.env.EMAIL_USER.trim()}>`,
+            to: toEmail,
+            subject: 'Update on Your HearMe Report',
+            html
+        });
+    } catch (error) {
+        console.error(`Failed to send reporter email to ${toEmail}:`, error.message);
+    }
 }
 
 async function sendReportedUserEmail(toEmail, status, contentSnippet) {
-     if (status !== 'deleted' && status !== 'resolved') return; // Only notify if action was taken
+    if (!toEmail) return; // Guard clause
+    if (status !== 'deleted' && status !== 'resolved') return; // Only notify if action was taken
 
-     const message = status === 'deleted' 
-         ? 'A post you made has been removed from the platform for violating our community guidelines.'
-         : 'Content you posted was reviewed and action was taken following a community report.';
+    const message = status === 'deleted' 
+        ? 'A post you made has been removed from the platform for violating our community guidelines.'
+        : 'Content you posted was reviewed and action was taken following a community report.';
 
-     const html = buildReportEmailTemplate({
-         title: 'Notice Regarding Your Content',
-         greeting: 'Hello,',
-         message: message,
-         actionDetails: `Content referenced: "${contentSnippet || 'Content removed'}"`
-     });
+    const html = buildReportEmailTemplate({
+        title: 'Notice Regarding Your Content',
+        greeting: 'Hello,',
+        message: message,
+        actionDetails: `Content referenced: "${contentSnippet || 'Content removed'}"`
+    });
 
-     await transporter.sendMail({
-         from: `"HearMe Moderation" <${process.env.EMAIL_USER.trim()}>`,
-         to: toEmail,
-         subject: 'Notice from HearMe Moderation',
-         html
-     });
+    try {
+        await transporter.sendMail({
+            from: `"HearMe Moderation" <${process.env.EMAIL_USER.trim()}>`,
+            to: toEmail,
+            subject: 'Notice from HearMe Moderation',
+            html
+        });
+    } catch (error) {
+        console.error(`Failed to send reported user email to ${toEmail}:`, error.message);
+    }
 }
 
 module.exports = { sendReporterEmail, sendReportedUserEmail };
