@@ -127,18 +127,19 @@ async function sendReminderEmail({ to, role, userName, therapistName, date, time
             { label: 'Time', value: sessionTime },
             { label: 'Session type', value: type === 'in-person' ? 'In person' : 'Online' }
         ],
-        actionUrl: isUser ? `${frontendUrl}/user/profile` : `${frontendUrl}/therapist/calendar`,
+        actionUrl: isUser ? `${frontendUrl}/login` : `${frontendUrl}/login`, 
         actionText: isUser ? 'View My Session' : 'Open Calendar',
         accentColor: isUser ? '#9333ea' : '#2563eb'
     });
 
+    // RESTORED: This is the code that actually sends the email!
     await transporter.sendMail({
         from: `"HearMe" <${process.env.EMAIL_USER.trim()}>`,
         to,
         subject,
         html
     });
-}
+} // RESTORED: The closing bracket for the function!
 
 async function checkAndSendReminders() {
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
