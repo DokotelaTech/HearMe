@@ -1039,3 +1039,47 @@ body {
         padding: 14px 10px !important;
     }
 }
+
+/* ===================================================
+   MOBILE MENU BUTTON
+=================================================== */
+
+.mobile-menu-btn{
+    display:none;
+}
+
+@media (max-width:768px){
+
+    .mobile-menu-btn{
+        display:flex !important;
+        align-items:center;
+        justify-content:center;
+        width:42px;
+        height:42px;
+        border:none;
+        background:transparent;
+        cursor:pointer;
+        font-size:24px;
+        color:#7e22ce;
+        z-index:9999;
+    }
+}
+@media (max-width:768px){
+
+    .sidebar{
+        position:fixed !important;
+        top:0;
+        left:-280px;
+        width:280px;
+        height:100vh;
+        background:white;
+        z-index:9998;
+        transition:0.3s ease;
+        overflow-y:auto;
+    }
+
+    .sidebar.active{
+        left:0;
+    }
+
+}
