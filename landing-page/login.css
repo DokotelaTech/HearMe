@@ -21,7 +21,7 @@ html, body {
 /* =========================
    PAGE-LEVEL LOGO (Desktop Only)
 ========================= */
-.pageLogoContainer {
+/* .pageLogoContainer {
     position: absolute;
     top: 40px;
     left: 50px;
@@ -36,7 +36,7 @@ html, body {
     height: 85px; 
     width: auto;
     display: block;
-}
+} */
 
 /* =========================
    LAYOUT
@@ -165,13 +165,13 @@ html, body {
     max-width: 440px;
 }
 
-.logoContainer {
+/* .logoContainer {
     display: flex;
     justify-content: center;
     margin-bottom: 24px;
-}
+} */
 
-.logoBox {
+/* .logoBox {
     width: 70px;
     height: 70px;
     background: white;
@@ -182,7 +182,7 @@ html, body {
     font-size: 34px;
     color: #c026d3; 
     box-shadow: 0 8px 24px rgba(192, 38, 211, 0.15);
-}
+} */
 
 .formHeader {
     text-align: center;
@@ -376,39 +376,37 @@ html, body {
 ========================= */
 @media (max-width: 768px) {
     body {
-        background: #ffffff; /* Make entire background white on mobile */
+        background: #ffffff; 
     }
 
     .mainContainer {
         padding: 0;
         display: block;
     }
-
+/* 
     .pageLogoContainer {
-        display: none; /* Hide top-left custom logo on mobile */
-    }
+        display: none; 
+    } */
 
     .loginCard {
-        flex-direction: column;
+        display: block; /* Changed from flex to block to fix scrolling */
         min-height: 100dvh;
         height: auto;
         border-radius: 0; 
         border: none;
         box-shadow: none;
+        overflow: visible; /* Prevents mobile clipping */
     }
     
     .leftSide {
-        display: none; /* COMPLETELY HIDES THE PURPLE SECTION */
+        display: none; 
     }
 
     .rightSide {
-        flex: 1;
-        padding: 40px 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center; /* Centers the form on the screen */
+        display: block; /* Changed from flex to block for natural scrolling */
         width: 100%;
         min-height: 100dvh;
+        padding: 60px 24px; /* Natural spacing from the top instead of flex centering */
     }
 
     .formWrapper {
@@ -417,7 +415,7 @@ html, body {
     }
 
     .formHeader {
-        text-align: center; /* Ensure header stays centered on mobile */
+        text-align: center; 
     }
 
     .formHeader h2 {
