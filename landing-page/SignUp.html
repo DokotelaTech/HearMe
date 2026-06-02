@@ -1,499 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>HearMe - Join Us</title>
-
     <link rel="stylesheet" href="signup.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    >
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
 
-    <div class="brand-header">
-
+    <!-- <div class="brand-header">
         <h1>HearMe</h1>
-
         <p>Your safe space for healing</p>
-
-    </div>
+    </div> -->
 
     <div class="container">
-
         <div class="form-box">
-
+            
             <h2>Join HearMe</h2>
+            <p class="subtitle">Please complete all information below:</p>
 
             <form id="signup-form">
 
-                <!-- ROLE -->
-
-                <p class="label-text">
-                    I am a:
-                </p>
-
+                <p class="label-text">I am a:</p>
                 <div class="role-selector">
-
-                    <div
-                        class="role-option active"
-                        data-role="user"
-                    >
-
+                    <div class="role-option active" data-role="user">
                         <i class="fa-regular fa-user"></i>
-
                         <span>User</span>
-
                     </div>
-
-                    <div
-                        class="role-option"
-                        data-role="therapist"
-                    >
-
+                    <div class="role-option" data-role="therapist">
                         <i class="fa-solid fa-user-doctor"></i>
-
                         <span>Therapist</span>
-
                     </div>
-
                 </div>
-
-                <!-- USER SECTION -->
 
                 <div id="user-fields">
-
+                    
                     <div class="anon-box">
-
                         <div class="anon-icon">
-
                             <i class="fa-solid fa-user-secret"></i>
-
                         </div>
-
                         <div>
-
                             <h4>Anonymous Protection</h4>
-
-                            <p>
-                                Your identity stays hidden publicly.
-                            </p>
-
+                            <p>Your identity stays hidden publicly.</p>
                         </div>
-
                     </div>
 
-                    <!-- USERNAME -->
-
-                    <div class="input-group">
-
-                        <i class="fa-regular fa-user"></i>
-
-                        <input
-                            type="text"
-                            id="username"
-                            placeholder="Anonymous Username"
-                        >
-
+                    <div class="triple-input">
+                        <div class="input-group">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="username" placeholder="Anonymous Username">
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="text" id="userPhone" placeholder="Phone Number">
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-earth-africa"></i>
+                            <select id="race">
+                                <option value="">Select Race</option>
+                                <option value="African">African</option>
+                                <option value="Coloured">Coloured</option>
+                                <option value="Indian">Indian</option>
+                                <option value="White">White</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- PHONE -->
-
-                    <div class="input-group">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        <input
-                            type="text"
-                            id="userPhone"
-                            placeholder="Phone Number"
-                        >
-
-                    </div>
-
-                    <!-- RACE -->
-
-                    <div class="input-group">
-
-                        <i class="fa-solid fa-earth-africa"></i>
-
-                        <select id="race">
-
-                            <option value="">
-                                Select Race
-                            </option>
-
-                            <option value="African">
-                                African
-                            </option>
-
-                            <option value="Coloured">
-                                Coloured
-                            </option>
-
-                            <option value="Indian">
-                                Indian
-                            </option>
-
-                            <option value="White">
-                                White
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- STRUGGLES -->
-
-                    <p class="label-text">
-                        What are you struggling with?
-                    </p>
-
+                    <p class="label-text">What are you struggling with?</p>
                     <div class="struggles-grid">
-
-                        <label>
-                            <input type="checkbox" value="Anxiety">
-                            Anxiety
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="Depression">
-                            Depression
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="Stress">
-                            Stress
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="Trauma">
-                            Trauma
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="Loneliness">
-                            Loneliness
-                        </label>
-
-                        <label>
-                            <input type="checkbox" value="Relationships">
-                            Relationships
-                        </label>
-
+                        <label><input type="checkbox" value="Anxiety"> Anxiety</label>
+                        <label><input type="checkbox" value="Depression"> Depression</label>
+                        <label><input type="checkbox" value="Stress"> Stress</label>
+                        <label><input type="checkbox" value="Trauma"> Trauma</label>
+                        <label><input type="checkbox" value="Loneliness"> Loneliness</label>
+                        <label><input type="checkbox" value="Relationships"> Relationships</label>
                     </div>
 
                 </div>
 
-                <!-- THERAPIST SECTION -->
-
-                <div
-                    id="therapist-fields"
-                    style="display:none;"
-                >
-
-                    <!-- FULL WIDTH -->
-
-                    <div class="input-group">
-
-                        <i class="fa-regular fa-user"></i>
-
-                        <input
-                            type="text"
-                            id="firstName"
-                            placeholder="First Name"
-                        >
-
+                <div id="therapist-fields" style="display:none;">
+                    
+                    <div class="triple-input">
+                        <div class="input-group">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="firstName" placeholder="First Name">
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="lastName" placeholder="Last Name">
+                        </div>
+                        <div class="input-group">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="text" id="phone" placeholder="Phone Number">
+                        </div>
                     </div>
-
-                    <div class="input-group">
-
-                        <i class="fa-regular fa-user"></i>
-
-                        <input
-                            type="text"
-                            id="lastName"
-                            placeholder="Last Name"
-                        >
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        <input
-                            type="text"
-                            id="phone"
-                            placeholder="Phone Number"
-                        >
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <i class="fa-solid fa-location-dot"></i>
-
-                        <input
-                            type="text"
-                            id="location"
-                            placeholder="Location"
-                        >
-
-                    </div>
-
-                    <!-- HALF WIDTH -->
 
                     <div class="double-input">
-
                         <div class="input-group">
-
+                            <i class="fa-solid fa-location-dot"></i>
+                            <input type="text" id="location" placeholder="Location">
+                        </div>
+                        <div class="input-group">
                             <i class="fa-solid fa-graduation-cap"></i>
-
-                            <input
-                                type="text"
-                                id="qualification"
-                                placeholder="Qualification"
-                            >
-
+                            <input type="text" id="qualification" placeholder="Qualification">
                         </div>
-
-                        <div class="input-group">
-
-                            <i class="fa-solid fa-id-card"></i>
-
-                            <input
-                                type="text"
-                                id="licenseNumber"
-                                placeholder="License Number"
-                            >
-
-                        </div>
-
                     </div>
 
                     <div class="double-input">
-
                         <div class="input-group">
-
+                            <i class="fa-solid fa-id-card"></i>
+                            <input type="text" id="licenseNumber" placeholder="License Number">
+                        </div>
+                        <div class="input-group">
                             <i class="fa-solid fa-building"></i>
-
-                            <input
-                                type="text"
-                                id="institutionName"
-                                placeholder="Institution Name"
-                            >
-
+                            <input type="text" id="institutionName" placeholder="Institution Name">
                         </div>
+                    </div>
 
-                        <div class="input-group">
-
-                            <i class="fa-solid fa-brain"></i>
-
-                            <input
-                                type="text"
-                                id="specialization"
-                                placeholder="Specialization"
-                            >
-
-                        </div>
-
+                    <div class="input-group">
+                        <i class="fa-solid fa-brain"></i>
+                        <input type="text" id="specialization" placeholder="Specialization">
                     </div>
 
                 </div>
-
-                <!-- EMAIL -->
 
                 <div class="input-group">
-
                     <i class="fa-regular fa-envelope"></i>
-
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Email Address"
-                        required
-                    >
-
+                    <input id="email" type="email" placeholder="Email Address" required>
                 </div>
 
                 <div class="verification-row">
-
                     <div class="input-group verification-input">
-
                         <i class="fa-solid fa-shield-halved"></i>
-
-                        <input
-                            id="verificationCode"
-                            type="text"
-                            inputmode="numeric"
-                            maxlength="6"
-                            placeholder="Email Verification Code"
-                            required
-                        >
-
+                        <input id="verificationCode" type="text" inputmode="numeric" maxlength="6" placeholder="Email Verification Code" required>
                     </div>
-
-                    <button
-                        type="button"
-                        id="sendVerificationCode"
-                    >
-                        Send Code
-                    </button>
-
+                    <button type="button" id="sendVerificationCode">Send Code</button>
                 </div>
+                <p id="verificationMessage" class="verification-message" aria-live="polite"></p>
 
-                <p
-                    id="verificationMessage"
-                    class="verification-message"
-                    aria-live="polite"
-                ></p>
-
-                <!-- PASSWORD -->
-
-                <div class="input-group">
-
-                    <i class="fa-solid fa-lock"></i>
-
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        required
-                    >
-
+                <div class="double-input">
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input id="password" type="password" placeholder="Password" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+                    </div>
                 </div>
-
-                <!-- CONFIRM PASSWORD -->
-
-                <div class="input-group">
-
-                    <i class="fa-solid fa-lock"></i>
-
-                    <input
-                        id="confirmPassword"
-                        type="password"
-                        placeholder="Confirm Password"
-                        required
-                    >
-
-                </div>
-
-                <!-- TERMS -->
 
                 <div class="terms-box">
-
-                    <input
-                        type="checkbox"
-                        id="terms"
-                        required
-                    >
-
+                    <input type="checkbox" id="terms" required>
                     <label for="terms">
-
-                        I accept the
-
-                        <span id="openTerms">
-                            Terms & Conditions
-                        </span>
-
+                        I accept the <span id="openTerms">Terms & Conditions</span>
                     </label>
-
                 </div>
 
-                <!-- BUTTON -->
-
-                <button type="submit" id="Btn">
-
-                    Create Account
-
-                </button>
+                <div class="submit-container">
+                    <button type="submit" id="Btn">Create Account</button>
+                </div>
 
                 <p class="footer-text">
-
-                    Already have an account?
-
-                    <a href="login.html">
-                        Sign in
-                    </a>
-
+                    Already have an account? <a href="/login">Sign in</a>
                 </p>
 
             </form>
-
         </div>
-
     </div>
 
-    <!-- TERMS MODAL -->
-
     <div class="modal" id="termsModal">
-
         <div class="modal-content">
-
             <div class="modal-header">
-
-                <h3>
-                    HearMe Terms & Conditions
-                </h3>
-
-                <span id="closeModal">
-                    &times;
-                </span>
-
+                <h3>HearMe Terms & Conditions</h3>
+                <span id="closeModal">&times;</span>
             </div>
-
             <div class="modal-body">
-
-                <p>
-                    HearMe provides emotional support
-                    and community interaction.
-                </p>
-
-                <p>
-                    Your information remains private
-                    and anonymous publicly.
-                </p>
-
-                <p>
-                    Therapists are responsible for
-                    maintaining professional conduct.
-                </p>
-
-                <p>
-                    HearMe is not an emergency
-                    medical service.
-                </p>
-
-                <p>
-                    By using HearMe you agree to our
-                    privacy and safety policies.
-                </p>
-
+                <p>HearMe provides emotional support and community interaction.</p>
+                <p>Your information remains private and anonymous publicly.</p>
+                <p>Therapists are responsible for maintaining professional conduct.</p>
+                <p>HearMe is not an emergency medical service.</p>
+                <p>By using HearMe you agree to our privacy and safety policies.</p>
             </div>
-
         </div>
-
     </div>
 
     <script src="signup.js"></script>
