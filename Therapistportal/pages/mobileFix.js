@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (topbar && sidebar) {
 
         if (!menuBtn) {
-            // CASE C / D: No button at all — create one
+            // CASE C / D: No button at all — create one using safe FontAwesome class
             menuBtn = document.createElement("button");
             menuBtn.id        = "mobileMenuBtn";
             menuBtn.className = "mobile-menu-btn";
@@ -31,10 +31,19 @@ document.addEventListener("DOMContentLoaded", () => {
             // CASE B: Button is inside sidebar/brand-area — move clone to topbar
             const clone = menuBtn.cloneNode(true);
             clone.id    = "mobileMenuBtn";
+            
+            // Ensure original button doesn't conflict
             menuBtn.id  = "mobileMenuBtnHidden";
             menuBtn.style.display = "none";
+            
             topbar.insertBefore(clone, topbar.firstChild);
             menuBtn = clone;
+
+            // CRITICAL FIX: If lucide script is available globally, force it to parse 
+            // the freshly inserted clone inside the topbar instantly.
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
         // CASE A: Already in topbar — nothing to do
     }
@@ -151,5 +160,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (bestMatch) bestMatch.classList.add("active");
     }
-
 });
