@@ -12,7 +12,6 @@
     --border: #e2e8f0;
 }
 
-/* RESET */
 * {
     box-sizing: border-box;
 }
@@ -25,7 +24,7 @@ body {
 }
 
 /* ================================
-   MAIN LAYOUT (ALL PAGES)
+   MAIN LAYOUT
 ================================ */
 
 .app-layout {
@@ -34,7 +33,7 @@ body {
 }
 
 /* ================================
-   SIDEBAR (UNIFIED)
+   SIDEBAR
 ================================ */
 
 .sidebar {
@@ -48,6 +47,7 @@ body {
     height: 100vh;
     overflow-y: auto;
     transition: transform 0.3s ease;
+    z-index: 2000;
 }
 
 .nav-menu {
@@ -64,6 +64,7 @@ body {
     display: flex;
     gap: 10px;
     align-items: center;
+    white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -90,7 +91,7 @@ body {
 }
 
 /* ================================
-   TOPBAR (FIXED ACROSS ALL PAGES)
+   TOPBAR
 ================================ */
 
 .topbar {
@@ -106,7 +107,10 @@ body {
     z-index: 1000;
 }
 
-/* PROFILE */
+/* ================================
+   PROFILE BUTTON
+================================ */
+
 .profile-container {
     position: relative;
 }
@@ -123,51 +127,915 @@ body {
 }
 
 /* ================================
-   MOBILE FIX (CRITICAL)
+   MOBILE MENU BUTTON
+   Hidden on desktop
 ================================ */
 
-@media (max-width: 768px) {
-
-    .sidebar {
-        transform: translateX(-100%);
-        position: fixed;
-        z-index: 2000;
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .main-workspace {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .mobile-menu-btn {
-        display: flex !important;
-        position: absolute;
-        left: 15px;
-        top: 15px;
-        z-index: 3000;
-        background: none;
-        border: none;
-        font-size: 20px;
-    }
-
-    .topbar {
-        justify-content: space-between;
-    }
+.mobile-menu-btn {
+    display: none;
 }
 
-/* OVERLAY (optional for mobile sidebar) */
+/* ================================
+   SIDEBAR OVERLAY
+================================ */
+
 .sidebar-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     z-index: 1500;
 }
 
-.sidebar-overlay.active {
+.sidebar-overlay.active,
+.sidebar-overlay.visible {
     display: block;
+}
+
+/* ================================
+   MOBILE  ≤ 768px
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Prevent horizontal scroll */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    /* ================================
+       APP LAYOUT
+    ================================ */
+
+    .app-layout {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    /* ================================
+       SIDEBAR
+       Slides in from left.
+       Hidden by default, shown with .open or .show
+    ================================ */
+
+    .sidebar {
+        transform: translateX(-100%) !important;
+        width: 260px !important;
+        padding: 0 !important;
+        z-index: 2000 !important;
+    }
+
+    .sidebar.open,
+    .sidebar.show {
+        transform: translateX(0) !important;
+    }
+
+    /* Brand area sits at top of sidebar */
+    .brand-area {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 16px 20px !important;
+        border-bottom: 1px solid var(--border) !important;
+        position: sticky !important;
+        top: 0 !important;
+        background: var(--white) !important;
+        z-index: 1 !important;
+    }
+
+    /* Hide the menu btn that lives inside brand-area —
+       we show it in the topbar instead */
+    .brand-area .mobile-menu-btn {
+        display: none !important;
+    }
+
+    .nav-menu {
+        padding: 12px !important;
+    }
+
+    .overview-box {
+        margin: 12px !important;
+    }
+
+    /* ================================
+       MAIN WORKSPACE
+    ================================ */
+
+    .main-workspace {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* ================================
+       TOPBAR
+       Row: [☰ menu btn] ......... [profile]
+       One clean line, no wrap
+    ================================ */
+
+    .topbar {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 14px !important;
+        height: 56px !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        gap: 10px !important;
+    }
+
+    /* ================================
+       MOBILE MENU BUTTON
+       Show it on the LEFT of the topbar.
+       It is injected by JS before topbar-right.
+    ================================ */
+
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        border: none !important;
+        background: none !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        z-index: 1100 !important;
+        color: var(--text) !important;
+        order: -1 !important;
+    }
+
+    .mobile-menu-btn i,
+    .mobile-menu-btn svg {
+        width: 22px !important;
+        height: 22px !important;
+        pointer-events: none;
+    }
+
+    /* ================================
+       TOPBAR RIGHT
+       Stays on the right, avatar only
+    ================================ */
+
+    .topbar-right {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        flex-shrink: 0 !important;
+        margin-left: auto !important;
+    }
+
+    /* Hide text info, keep avatar */
+    .profile-info,
+    .dropdown-arrow {
+        display: none !important;
+    }
+
+    .profile-btn {
+        padding: 6px !important;
+        border-radius: 50% !important;
+        border: none !important;
+        gap: 0 !important;
+    }
+
+    /* ================================
+       CONTENT
+    ================================ */
+
+    .content-container {
+        padding: 14px !important;
+        max-width: 100% !important;
+    }
+
+    .page-header {
+        margin-bottom: 16px !important;
+    }
+
+    .page-header h1 {
+        font-size: 20px !important;
+    }
+
+    .page-header p {
+        font-size: 13px !important;
+    }
+
+    /* ================================
+       STATS ROW — 2 columns on tablet
+    ================================ */
+
+    .stats-row {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* ================================
+       FILTER BAR & TABS
+    ================================ */
+
+    .filter-bar {
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .search-input {
+        width: 100% !important;
+    }
+
+    .tabs {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+
+    .tabs button,
+    .filter-btn {
+        flex: 1 1 auto !important;
+        width: auto !important;
+        min-width: 0 !important;
+        padding: 9px 12px !important;
+        font-size: 13px !important;
+        white-space: nowrap !important;
+    }
+
+    /* ================================
+       CLIENT CARDS
+    ================================ */
+
+    .client-card {
+        padding: 16px !important;
+    }
+
+    .c-tags {
+        flex-wrap: wrap !important;
+    }
+
+    .c-footer {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .actions {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .actions button {
+        width: 100% !important;
+    }
+
+    /* ================================
+       CARDS
+    ================================ */
+
+    .card {
+        width: 100% !important;
+        margin-bottom: 14px !important;
+    }
+
+    /* ================================
+       GRIDS — single column
+    ================================ */
+
+    .report-layout,
+    .calendar-layout,
+    .grid-2,
+    .category-grid,
+    .therapist-groups-layout {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    /* Inline style overrides */
+    [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .group-members-card {
+        position: static !important;
+    }
+
+    /* ================================
+       MESSAGES
+    ================================ */
+
+    .messages-layout {
+        flex-direction: column !important;
+        height: auto !important;
+    }
+
+    .inbox-sidebar {
+        width: 100% !important;
+        height: 200px !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border) !important;
+    }
+
+    .chat-area {
+        min-height: 360px !important;
+    }
+
+    .bubble {
+        max-width: 88% !important;
+    }
+
+    /* Chat input stays on one row */
+    .input-area {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+    }
+
+    .input-area input {
+        flex: 1 !important;
+        min-width: 0 !important;
+        width: auto !important;
+    }
+
+    .send-btn {
+        width: auto !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+    }
+
+    /* ================================
+       INPUTS — full width, NOT buttons
+    ================================ */
+
+    input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]),
+    textarea,
+    select {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* ================================
+       TABLES
+    ================================ */
+
+    table {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+
+    /* ================================
+       BUTTONS THAT MUST STAY AUTO-WIDTH
+    ================================ */
+
+    .mobile-menu-btn,
+    .profile-btn,
+    .btn-outline,
+    .btn-blue,
+    .btn-gray,
+    .btn-light-blue,
+    .send-btn,
+    .tabs button,
+    .filter-btn,
+    .cat-btn,
+    .logout-btn {
+        width: auto !important;
+        min-width: unset !important;
+    }
+
+    /* Full-width only for explicit full-width buttons */
+    .btn-primary.full-width,
+    .full-width {
+        width: 100% !important;
+    }
+}
+
+/* ================================
+   VERY SMALL PHONES  ≤ 480px
+================================ */
+
+@media (max-width: 480px) {
+
+    .content-container {
+        padding: 10px !important;
+    }
+
+    /* Stats go single column */
+    .stats-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .bubble {
+        max-width: 95% !important;
+    }
+
+    .inbox-sidebar {
+        height: 170px !important;
+    }
+}
+
+/* ================================
+   CALENDAR PAGE SPECIFIC FIXES
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Two-column calendar layout stacks */
+    .calendar-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+    }
+
+    .cal-left,
+    .cal-right {
+        width: 100% !important;
+    }
+
+    /* Appointment items */
+    .appt-item {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    .time {
+        width: auto !important;
+        font-size: 1rem !important;
+    }
+
+    /* Availability edit button */
+    .btn-light-blue.full-width {
+        width: 100% !important;
+        margin-top: 12px !important;
+    }
+
+    /* ================================
+       VIDEO MODAL — full screen on mobile
+    ================================ */
+
+    #video-modal {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100% !important;
+        top: 0 !important;
+        left: 0 !important;
+        transform: none !important;
+        border-radius: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Tighten appointment cards */
+    .appt-item {
+        padding: 12px !important;
+    }
+
+    .details p {
+        font-size: 0.8rem !important;
+    }
+}
+
+/* ================================
+   MESSAGES PAGE SPECIFIC FIXES
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Messages layout stacks inbox on top, chat below */
+    .messages-layout {
+        flex-direction: column !important;
+        height: auto !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+    }
+
+    /* Inbox becomes a fixed-height scrollable strip */
+    .inbox-sidebar {
+        width: 100% !important;
+        height: 220px !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border) !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Search bar inside inbox */
+    .inbox-sidebar .search-input {
+        margin: 10px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .inbox-sidebar .search-input input {
+        width: 100% !important;
+    }
+
+    /* Chat area fills remaining height */
+    .chat-area {
+        min-height: 400px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .chat-history {
+        flex: 1 !important;
+        padding: 14px !important;
+    }
+
+    .bubble {
+        max-width: 88% !important;
+    }
+
+    /* Footer: privacy banner + input row */
+    .chat-footer {
+        padding: 10px 14px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .privacy-banner {
+        font-size: 0.7rem !important;
+        margin-bottom: 10px !important;
+        padding: 6px 10px !important;
+    }
+
+    /* Input row stays on one line — attach icon, input, send btn */
+    .input-area {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .attach-icon {
+        flex-shrink: 0 !important;
+        font-size: 1rem !important;
+    }
+
+    .input-area input {
+        flex: 1 !important;
+        min-width: 0 !important;
+        width: auto !important;
+    }
+
+    .send-btn {
+        width: auto !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        padding: 10px 14px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .inbox-sidebar {
+        height: 190px !important;
+    }
+
+    .chat-area {
+        min-height: 340px !important;
+    }
+
+    .bubble {
+        max-width: 94% !important;
+        font-size: 0.85rem !important;
+    }
+
+    /* Hide "Send" text, keep icon only */
+    .send-btn span {
+        display: none !important;
+    }
+
+    .send-btn {
+        padding: 10px 12px !important;
+    }
+
+    .privacy-banner {
+        display: none !important; /* too small to be useful on tiny phones */
+    }
+}
+
+/* ================================
+   PROFILE PAGE SPECIFIC FIXES
+   Different structure:
+   - .topbar is outside .container
+   - .container has sidebar + .profile-area
+   - No .app-layout wrapper
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Container stacks sidebar below topbar */
+    .container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Sidebar on profile page — same slide-in behaviour */
+    .container .sidebar {
+        width: 240px !important;
+        padding: 16px 12px !important;
+    }
+
+    /* Profile area takes full width */
+    .profile-area {
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 14px !important;
+    }
+
+    /* ================================
+       HERO CARD
+    ================================ */
+
+    .hero-card {
+        padding: 16px !important;
+    }
+
+    .hero-top {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .hero-details h1 {
+        font-size: 1.3rem !important;
+    }
+
+    .status-badge {
+        margin-left: 0 !important;
+        align-self: flex-start !important;
+    }
+
+    /* Hero metrics row — 2 columns */
+    .hero-bottom {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+        margin-top: 16px !important;
+    }
+
+    /* ================================
+       ONBOARDING CARD
+    ================================ */
+
+    .onboarding-card {
+        padding: 16px !important;
+    }
+
+    .checklist-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    /* ================================
+       PROFILE TABS
+       Must not overlap
+    ================================ */
+
+    .tabs {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    .tabs .tab-btn {
+        flex: 1 1 auto !important;
+        width: auto !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 9px 10px !important;
+        font-size: 13px !important;
+    }
+
+    /* ================================
+       OVERVIEW LAYOUT
+       Left col + right col stack
+    ================================ */
+
+    .overview-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+    }
+
+    .left-col,
+    .right-col {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Editable sections */
+    .editable-section {
+        padding: 14px !important;
+    }
+
+    .section-header {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    /* ================================
+       CREDENTIALS GRID
+    ================================ */
+
+    .cred-input-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* ================================
+       SAVE / EDIT BUTTONS
+       Keep auto-width — never full-width
+    ================================ */
+
+    .edit-btn,
+    .save-btn,
+    .book-btn,
+    .tab-btn {
+        width: auto !important;
+        min-width: unset !important;
+    }
+
+    /* Submit verification button IS full width */
+    #submit-verification-btn {
+        width: 100% !important;
+        margin-top: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .hero-bottom {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .hero-details h1 {
+        font-size: 1.1rem !important;
+    }
+
+    .tabs .tab-btn {
+        font-size: 12px !important;
+        padding: 8px 8px !important;
+    }
+
+    .profile-area {
+        padding: 10px !important;
+    }
+}
+
+/* ================================
+   STRESS RELIEF PAGE SPECIFIC FIXES
+   .resource-layout sits outside
+   .content-container but inside
+   .main-workspace
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Resource layout stacks form on top, list below */
+    .resource-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        padding: 0 14px 20px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .resource-form-card,
+    .resource-list-card {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Section headings */
+    .section-heading {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        flex-wrap: nowrap !important;
+    }
+
+    /* Form inputs already full-width from global rules */
+    #resourceForm label {
+        font-size: 13px !important;
+    }
+
+    /* Publish button */
+    .resource-form-card .btn-primary {
+        width: 100% !important;
+    }
+
+    /* Resource cards in the list */
+    .resource-card,
+    .resource-item {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Stats row — 2 columns */
+    .stats-row {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .resource-layout {
+        padding: 0 10px 16px !important;
+    }
+
+    /* Stats — single column on tiny screens */
+    .stats-row {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .section-heading h3 {
+        font-size: 15px !important;
+    }
+}
+
+/* ================================
+   REPORT ISSUE PAGE SPECIFIC FIXES
+   Grids use inline style= attributes
+   so need targeted !important overrides
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Two-column report layout → single column
+       Targets both the CSS class AND the inline style */
+    .report-layout,
+    div[style*="grid-template-columns: 2fr 1fr"] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    /* Category grid 3-col → 1-col
+       Targets both the CSS class AND the inline style */
+    .category-grid,
+    #report-category-selector,
+    div[style*="grid-template-columns: repeat(3"] {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* 2 cols fits nicely on tablet */
+        gap: 10px !important;
+    }
+
+    /* Category buttons — comfortable tap targets */
+    .cat-btn {
+        padding: 16px 10px !important;
+        font-size: 13px !important;
+        min-height: 70px !important;
+        width: auto !important;
+    }
+
+    /* Alert banner */
+    .alert-red {
+        font-size: 13px !important;
+        padding: 12px !important;
+        flex-wrap: nowrap !important;
+        align-items: flex-start !important;
+    }
+
+    /* Form card and sidebar card full width */
+    .form-card,
+    .reports-sidebar {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Submit button always full width */
+    #report-issue-form .btn-primary {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Category grid → single column on small phones */
+    .category-grid,
+    #report-category-selector,
+    div[style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .cat-btn {
+        min-height: 60px !important;
+        padding: 14px 10px !important;
+    }
 }
