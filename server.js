@@ -88,7 +88,7 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'landing-page', 'login.html'));
 });
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, 'landing-page', 'signup.html'));
+    res.sendFile(path.join(__dirname, 'landing-page', 'SignUp.html'));
 });
 
 // Therapist routes
