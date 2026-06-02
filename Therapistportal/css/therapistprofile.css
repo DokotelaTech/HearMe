@@ -331,3 +331,77 @@ body {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* =====================================
+   PROFILE PAGE LAYOUT FIX
+===================================== */
+
+.profile-area{
+    flex:1;
+    min-width:0;
+    overflow:hidden;
+}
+
+.hero-card{
+    width:100%;
+    overflow:hidden;
+}
+
+.tab-content{
+    overflow:hidden;
+}
+
+.overview-layout{
+    min-width:0;
+}
+
+.overview-layout > *{
+    min-width:0;
+}
+
+/* Prevent navbar overlap */
+
+body{
+    overflow-x:hidden;
+}
+
+.container{
+    min-height:calc(100vh - 75px);
+}
+
+/* Sidebar desktop stability */
+
+.sidebar{
+    flex-shrink:0;
+}
+
+/* Images */
+
+img{
+    max-width:100%;
+    height:auto;
+}
+.mobile-menu-btn{
+    display:none;
+}
+
+@media(max-width:768px){
+
+    .mobile-menu-btn{
+        display:flex !important;
+
+        align-items:center;
+        justify-content:center;
+
+        width:40px;
+        height:40px;
+
+        border:none;
+        background:none;
+
+        cursor:pointer;
+
+        z-index:3001;
+    }
+
+}
