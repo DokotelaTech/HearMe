@@ -1,20 +1,9 @@
-// mobileFixes.js
-// Handles all page structures:
-//   A) User pages      — menu btn already in .navbar/.topbar
-//   B) Therapist pages — menu btn inside .brand-area (sidebar)
-//   C) Messages page   — menu btn missing entirely
-//   D) Profile page    — topbar outside .container, sidebar inside .container
-
 document.addEventListener("DOMContentLoaded", () => {
 
+    const menuBtn = document.getElementById("mobileMenuBtn");
     const sidebar = document.querySelector(".sidebar");
-    const topbar  = document.querySelector(".topbar, .navbar, header");
-    let   menuBtn = document.getElementById("mobileMenuBtn");
 
-    // ================================
-    // 1. ENSURE MENU BUTTON EXISTS
-    //    AND IS IN THE TOPBAR
-    // ================================
+    if(menuBtn && sidebar){
 
     if (topbar && sidebar) {
 
@@ -101,63 +90,16 @@ document.addEventListener("DOMContentLoaded", () => {
             link.addEventListener("click", closeSidebar);
         });
 
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeSidebar();
-        });
-    }
+        document.addEventListener("click", (e) => {
 
-    // ================================
-    // 5. ACTIVE NAV ITEM
-    // ================================
-
-    const navItems = document.querySelectorAll(
-        ".sidebar .nav-item, .nav-menu .nav-item"
-    );
-
-    if (navItems.length > 0) {
-
-        const currentPath = window.location.pathname
-            .toLowerCase()
-            .replace(/\/$/, "");
-
-        let bestMatch       = null;
-        let bestMatchLength = 0;
-
-        navItems.forEach((item) => {
-            item.classList.remove("active");
-
-            const href = (item.getAttribute("href") || "")
-                .toLowerCase()
-                .replace(/\/$/, "");
-
-            if (!href || href === "#") return;
-
-            if (
-                currentPath === href ||
-                currentPath.startsWith(href + "/") ||
-                currentPath.endsWith(href)
-            ) {
-                if (href.length > bestMatchLength) {
-                    bestMatch       = item;
-                    bestMatchLength = href.length;
-                }
+            if(
+                !sidebar.contains(e.target) &&
+                !menuBtn.contains(e.target)
+            ){
+                sidebar.classList.remove("active");
             }
+
         });
 
-        // Fallback: match by last URL segment
-        if (!bestMatch) {
-            const pageName = currentPath.split("/").pop();
-            if (pageName) {
-                navItems.forEach((item) => {
-                    const href = (item.getAttribute("href") || "").toLowerCase();
-                    if (href.includes(pageName) && href.length > bestMatchLength) {
-                        bestMatch       = item;
-                        bestMatchLength = href.length;
-                    }
-                });
-            }
-        }
-
-        if (bestMatch) bestMatch.classList.add("active");
     }
-});
+}});

@@ -741,3 +741,183 @@ body.fade-out {
     border-top: 1px solid #e5e7eb;
     margin: 6px 0;
 }
+
+/* =====================================================
+   MOBILE RESPONSIVE FIXES
+===================================================== */
+
+.mobile-menu-btn{
+    display:none;
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:var(--primary);
+}
+
+/* Tablet */
+@media (max-width: 992px){
+
+    .content-area{
+        padding:20px;
+    }
+
+    .groups-layout{
+        grid-template-columns:1fr;
+    }
+
+    .group-chat-panel{
+        position:static;
+        margin-top:20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px){
+
+    /* NAVBAR */
+
+    .navbar{
+        padding:0 15px;
+        height:60px;
+    }
+
+    .logo{
+        font-size:20px;
+    }
+
+    .mobile-menu-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:40px;
+        height:40px;
+        font-size:24px;
+        z-index:2001;
+    }
+
+    .user-badge{
+        display:none;
+    }
+
+    /* APP */
+
+    .app-container{
+        margin-top:60px;
+    }
+
+    .content-area{
+        margin-left:0;
+        padding:15px;
+        width:100%;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar{
+        position:fixed;
+        top:60px;
+        left:-260px;
+        width:250px;
+        height:calc(100vh - 60px);
+        z-index:2000;
+        transition:left .3s ease;
+        display:flex !important;
+        background:white;
+    }
+
+    .sidebar.active{
+        left:0;
+    }
+
+    /* AI BANNER */
+
+    .ai-banner{
+        flex-direction:column;
+        padding:18px;
+    }
+
+    .ai-tags{
+        flex-wrap:wrap;
+    }
+
+    /* FILTERS */
+
+    .filter-bar{
+        overflow-x:auto;
+        scrollbar-width:none;
+    }
+
+    .filter-bar::-webkit-scrollbar{
+        display:none;
+    }
+
+    /* GROUP CARD */
+
+    .group-card{
+        padding:16px;
+    }
+
+    .group-title-row{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+    .group-meta{
+        flex-direction:column;
+        gap:6px;
+    }
+
+    .group-actions{
+        flex-direction:column;
+    }
+
+    .view-chat-btn,
+    .join-group-btn,
+    .joined-status{
+        width:100%;
+        justify-content:center;
+    }
+
+    /* CHAT */
+
+    .group-chat-messages{
+        height:300px;
+    }
+
+    .group-chat-input{
+        flex-direction:column;
+    }
+
+    .group-chat-input button{
+        width:100%;
+        height:45px;
+    }
+
+    /* DROPDOWN */
+
+    .dropdown-menu{
+        right:-10px;
+        width:180px;
+    }
+}
+
+/* Very Small Phones */
+@media (max-width:480px){
+
+    .header-section h2{
+        font-size:24px;
+    }
+
+    .ai-text h3{
+        font-size:18px;
+    }
+
+    .group-card{
+        padding:14px;
+    }
+
+    .group-chat-messages{
+        height:250px;
+    }
+}
