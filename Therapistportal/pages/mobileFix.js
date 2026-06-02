@@ -67,20 +67,25 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.classList.remove("active", "visible");
         document.body.style.overflow = "";
     }
-
+    
     // ================================
     // 4. EVENTS
     // ================================
 
-    if (menuBtn && sidebar) {
-
-        menuBtn.addEventListener("click", (e) => {
+    // Use Event Delegation: Listen to the entire document body for the click
+    document.body.addEventListener("click", (e) => {
+        // Find if the clicked element (or its icon nested inside) is your mobile menu button
+        const targetButton = e.target.closest("#mobileMenuBtn");
+        
+        if (targetButton && sidebar) {
             e.stopPropagation();
-            const isOpen = sidebar.classList.contains("open") ||
-                           sidebar.classList.contains("show");
+            const isOpen = sidebar.classList.contains("open") || sidebar.classList.contains("show");
             isOpen ? closeSidebar() : openSidebar();
-        });
+        }
+    });
 
+    // Keep your standard overlay and close conditions below intact
+    if (sidebar && overlay) {
         overlay.addEventListener("click", closeSidebar);
 
         sidebar.querySelectorAll(".nav-item").forEach((link) => {

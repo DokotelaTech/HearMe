@@ -259,6 +259,9 @@ function formatTime12(time24) {
     const h = hour % 12 || 12;
     return `${h}:${minute.toString().padStart(2, '0')} ${ampm}`;
 }
+function formatTime(hour, minute) {
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+}
 
 // =========================================
 // SAVE AVAILABILITY TO DATABASE
