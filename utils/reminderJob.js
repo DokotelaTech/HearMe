@@ -104,7 +104,7 @@ function buildEmailTemplate({
 async function sendReminderEmail({ to, role, userName, therapistName, date, time, type }) {
     const sessionDate = formatSessionDate(date);
     const sessionTime = formatSessionTime(time);
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5000';
+    const frontendUrl = process.env.FRONTEND_URL || 'https://hearme-i94l.onrender.com';
 
     const isUser = role === 'user';
     const subject = isUser
@@ -158,7 +158,8 @@ async function checkAndSendReminders() {
         });
 
         for (const appointment of appointments) {
-            const sessionDateTime = new Date(`${appointment.date}T${appointment.time}`);
+    
+            const sessionDateTime = new Date(`${appointment.date}T${appointment.time}:00+02:00`);
             const diffMinutes = (sessionDateTime - now) / (1000 * 60);
 
             if (diffMinutes > REMINDER_WINDOW_MINUTES || diffMinutes <= 0) {
