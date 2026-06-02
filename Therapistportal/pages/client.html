@@ -8,7 +8,40 @@
     <link rel="stylesheet" href="responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+<!-- Add this right before </body> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById("mobileMenuBtn");
+            const sidebar = document.querySelector(".sidebar");
+
+            if (menuBtn && sidebar) {
+                menuBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle("open");
+                    sidebar.classList.toggle("show");
+                    
+                    // Create overlay if it doesn't exist yet
+                    let overlay = document.querySelector(".sidebar-overlay");
+                    if (!overlay) {
+                        overlay = document.createElement("div");
+                        overlay.className = "sidebar-overlay";
+                        document.body.appendChild(overlay);
+                        
+                        overlay.addEventListener("click", () => {
+                            sidebar.classList.remove("open", "show");
+                            overlay.remove();
+                        });
+                    } else {
+                        overlay.remove();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
 <body>
     <div class="app-layout">
         <aside class="sidebar">
@@ -38,7 +71,6 @@
         <main class="main-workspace">
             <header class="topbar">
                 <div class="topbar-right">
-
                     <div class="profile-container">
                         <button id="profileToggle" class="profile-btn">
                             <div class="avatar" id="nav-avatar"></div>
@@ -105,9 +137,8 @@
     <script src="/therapist/js/shared/therapistProfile.js"></script>
     <script src="/therapist/js/client.js"></script>
     <script>
-
+        // This will now work perfectly since the script tag is added above
         lucide.createIcons();
-
     </script>
 </body>
 </html>

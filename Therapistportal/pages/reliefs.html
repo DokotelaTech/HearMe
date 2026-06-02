@@ -8,12 +8,45 @@
 
     <link rel="stylesheet" href="/therapist/css/stressRelief.css">
     <link rel="stylesheet" href="responsive.css">
-    <!-- <link rel="stylesheet" href="../css/style.css"> -->
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+<!-- Add this right before </body> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById("mobileMenuBtn");
+            const sidebar = document.querySelector(".sidebar");
+
+            if (menuBtn && sidebar) {
+                menuBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle("open");
+                    sidebar.classList.toggle("show");
+                    
+                    // Create overlay if it doesn't exist yet
+                    let overlay = document.querySelector(".sidebar-overlay");
+                    if (!overlay) {
+                        overlay = document.createElement("div");
+                        overlay.className = "sidebar-overlay";
+                        document.body.appendChild(overlay);
+                        
+                        overlay.addEventListener("click", () => {
+                            sidebar.classList.remove("open", "show");
+                            overlay.remove();
+                        });
+                    } else {
+                        overlay.remove();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
 
 <body>
 
@@ -23,26 +56,42 @@
         <aside class="sidebar">
 
             <div class="brand-area">
-                <button id="mobileMenuBtn" class="mobile-menu-btn">
-                    <i data-lucide="menu"></i>
-                </button>
                 <span class="logo">HearMe</span>
-                <!-- <span class="badge">Therapist Portal</span> -->
             </div>
 
             <nav class="nav-menu">
-                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
-                <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
-                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="/therapist/groups" class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
-                <a href="/therapist/reliefs" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
-                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+                <a href="/therapist/clients" class="nav-item">
+                    <i class="fa-solid fa-user-group"></i>
+                    My Clients
+                </a>
 
+                <a href="/therapist/calendar" class="nav-item">
+                    <i class="fa-regular fa-calendar"></i>
+                    Calendar
+                </a>
+
+                <a href="/therapist/messages" class="nav-item">
+                    <i class="fa-regular fa-message"></i>
+                    Messages
+                </a>
+
+                <a href="/therapist/groups" class="nav-item">
+                    <i class="fa-solid fa-people-group"></i>
+                    Groups
+                </a>
+
+                <a href="/therapist/reliefs" class="nav-item active">
+                    <i class="fa-solid fa-heart"></i>
+                    Stress Relief Uploads
+                </a>
+
+                <a href="/therapist/report" class="nav-item">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Report Issue
+                </a>
             </nav>
 
-            <!-- DYNAMIC OVERVIEW -->
             <div class="overview-box">
-
                 <h4>Today's Overview</h4>
 
                 <div class="ov-line">
@@ -59,7 +108,6 @@
                     Unread Messages
                     <span class="red-text" id="unreadMessagesCount">0</span>
                 </div>
-
             </div>
 
         </aside>
@@ -68,78 +116,67 @@
         <main class="main-workspace">
 
             <!-- TOPBAR -->
-           <header class="topbar">
+            <header class="topbar">
 
-    <div class="topbar-right">
+                <!-- mobileFixes.js will inject the hamburger button here -->
 
-        <div class="profile-container">
+                <div class="topbar-right">
 
-            <button class="profile-btn" id="profileBtn">
+                    <div class="profile-container">
 
-                <div class="avatar" id="therapistInitials">
-                    
-                </div>
+                        <button class="profile-btn" id="profileBtn">
 
-                <div class="profile-info">
-                    <span class="profile-name" id="therapistName">
-                        
-                    </span>
+                            <div class="avatar" id="therapistInitials"></div>
 
-                    <span class="profile-role" id="therapistRole">
+                            <div class="profile-info">
+                                <span class="profile-name" id="therapistName"></span>
+                                <span class="profile-role" id="therapistRole"></span>
+                            </div>
 
-                    </span>
-                </div>
+                            <i class="fa-solid fa-chevron-down"></i>
 
-                <i class="fa-solid fa-chevron-down"></i>
+                        </button>
 
-            </button>
+                        <div id="profileDropdown" class="dropdown-menu">
 
-            <div id="profileDropdown" class="dropdown-menu">
+                            <a href="/therapist/profile">
+                                <i class="fa-regular fa-user"></i>
+                                <span>My Profile</span>
+                            </a>
 
-                <a href="/therapist/profile">
-                    <i class="fa-regular fa-user"></i>
-                    <span>My Profile</span>
-                </a>
+                            <a href="#">
+                                <i class="fa-solid fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
 
-                <a href="#">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Settings</span>
-                </a>
+                            <hr>
 
-                <hr>
+                            <button id="logoutBtn" class="logout-btn">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                <span>Sign Out</span>
+                            </button>
 
-                <button id="logoutBtn" class="logout-btn">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <span>Sign Out</span>
-                </button>
+                        </div>
 
-            </div>
-
-        </div>
-
-    </div>
-
-</header>
-
-            <!-- CONTENT -->
-            <div class="content-container">
-
-                <!-- PAGE HEADER -->
-                <div class="page-header">
-
-                    <div>
-                        <h1>Stress Relief Resources</h1>
-
-                        <p>
-                            Upload calming resources, meditation videos,
-                            motivational podcasts, and healing content
-                            for your users.
-                        </p>
                     </div>
 
                 </div>
 
-                <!-- DYNAMIC STATS -->
+            </header>
+
+            <!-- CONTENT -->
+            <div class="content-container">
+
+                <div class="page-header">
+                    <div>
+                        <h1>Stress Relief Resources</h1>
+                        <p>
+                            Upload calming resources, meditation videos,
+                            motivational podcasts, and healing content for your users.
+                        </p>
+                    </div>
+                </div>
+
                 <div class="stats-row">
 
                     <div class="stat-card">
@@ -159,18 +196,10 @@
 
                     <div class="stat-card">
                         <span>Most Popular Category</span>
-                        <strong class="yellow-text" id="popularCategory">
-                            None
-                        </strong>
+                        <strong class="yellow-text" id="popularCategory">None</strong>
                     </div>
 
                 </div>
-
-                <!-- RELIEF -->
-
-
-                <!-- TIPS -->
-
 
                 <ul id="tipsList"></ul>
 
@@ -179,80 +208,70 @@
             <!-- RESOURCE AREA -->
             <div class="resource-layout">
 
-                <!-- LEFT -->
                 <div class="resource-form-card">
 
                     <div class="section-heading">
-
                         <i class="fa-solid fa-cloud-arrow-up"></i>
-
                         <h3>Upload New Resource</h3>
-
                     </div>
 
                     <form id="resourceForm">
 
                         <label>Resource Title</label>
-
-                        <input type="text" id="resourceTitle" placeholder="Enter resource title" required>
+                        <input
+                            type="text"
+                            id="resourceTitle"
+                            placeholder="Enter resource title"
+                            required
+                        >
 
                         <label>Description</label>
-
-                        <textarea id="resourceDescription" placeholder="Describe how this resource helps users..."
-                            required></textarea>
+                        <textarea
+                            id="resourceDescription"
+                            placeholder="Describe how this resource helps users..."
+                            required
+                        ></textarea>
 
                         <label>Online Resource Link</label>
-
-                        <input type="url" id="resourceLink"
-                            placeholder="Paste YouTube, Spotify, article, or podcast link" required>
+                        <input
+                            type="url"
+                            id="resourceLink"
+                            placeholder="Paste YouTube, Spotify, article, or podcast link"
+                            required
+                        >
 
                         <label>Category</label>
-
                         <select id="resourceCategory">
-
-                            <option value="Video">
-                                Educational Video
-                            </option>
-
-                            <option value="Podcast">
-                                Podcast / Audio
-                            </option>
-
-                            <option value="Meditation">
-                                Meditation
-                            </option>
-
-                            <option value="Motivation">
-                                Motivation
-                            </option>
-
+                            <option value="Video">Educational Video</option>
+                            <option value="Podcast">Podcast / Audio</option>
+                            <option value="Meditation">Meditation</option>
+                            <option value="Motivation">Motivation</option>
                         </select>
 
                         <label>Thumbnail Image URL</label>
+                        <input
+                            type="url"
+                            id="resourceImage"
+                            placeholder="Paste image URL"
+                        >
 
-                        <input type="url" id="resourceImage" placeholder="Paste image URL">
-
-                        <button type="submit" class="btn-primary full-width mt-20">
-
+                        <button
+                            type="submit"
+                            class="btn-primary full-width mt-20"
+                        >
                             <i class="fa-solid fa-plus"></i>
-
                             Publish Resource
-
                         </button>
 
                     </form>
 
                 </div>
 
-                <!-- RIGHT -->
                 <div class="resource-list-card">
 
                     <div class="section-heading">
-
                         <i class="fa-solid fa-photo-film"></i>
-
                         <h3>Published Resources</h3>
-
                     </div>
 
                     <div id="resourcesContainer"></div>
@@ -261,26 +280,29 @@
 
             </div>
 
-    </div>
-
-    </main>
+        </main>
 
     </div>
 
+    <!-- Shared Scripts -->
     <script src="/therapist/js/shared/loadTherapistData.js"></script>
     <script src="/therapist/js/shared/profileDropdown.js"></script>
     <script src="/therapist/js/shared/api.js"></script>
     <script src="/therapist/js/shared/utils.js"></script>
     <script src="/therapist/js/shared/authGuard.js"></script>
     <script src="/therapist/js/shared/sidebar.js"></script>
+
+    <!-- Page Script -->
     <script src="/therapist/js/stressRelief.js"></script>
-    <script src="mobileFixes.js" defer></script>
+
+    <!-- Mobile Fixes -->
+    <script src="/therapist/js/shared/mobileFixes.js" defer></script>
+
     <script>
-
-        lucide.createIcons();
-
+        if (typeof lucide !== "undefined") {
+            lucide.createIcons();
+        }
     </script>
 
 </body>
-
 </html>

@@ -1,25 +1,14 @@
-// mobileFixes.js
-// Handles all page structures:
-//   A) User pages      — menu btn already in .navbar/.topbar
-//   B) Therapist pages — menu btn inside .brand-area (sidebar)
-//   C) Messages page   — menu btn missing entirely
-//   D) Profile page    — topbar outside .container, sidebar inside .container
-
 document.addEventListener("DOMContentLoaded", () => {
 
+    const menuBtn = document.getElementById("mobileMenuBtn");
     const sidebar = document.querySelector(".sidebar");
-    const topbar  = document.querySelector(".topbar, .navbar, header");
-    let   menuBtn = document.getElementById("mobileMenuBtn");
 
-    // ================================
-    // 1. ENSURE MENU BUTTON EXISTS
-    //    AND IS IN THE TOPBAR
-    // ================================
+    if(menuBtn && sidebar){
 
     if (topbar && sidebar) {
 
         if (!menuBtn) {
-            // CASE C / D: No button at all — create one
+            // CASE C / D: No button at all — create one using safe FontAwesome class
             menuBtn = document.createElement("button");
             menuBtn.id        = "mobileMenuBtn";
             menuBtn.className = "mobile-menu-btn";
@@ -31,10 +20,19 @@ document.addEventListener("DOMContentLoaded", () => {
             // CASE B: Button is inside sidebar/brand-area — move clone to topbar
             const clone = menuBtn.cloneNode(true);
             clone.id    = "mobileMenuBtn";
+            
+            // Ensure original button doesn't conflict
             menuBtn.id  = "mobileMenuBtnHidden";
             menuBtn.style.display = "none";
+            
             topbar.insertBefore(clone, topbar.firstChild);
             menuBtn = clone;
+
+            // CRITICAL FIX: If lucide script is available globally, force it to parse 
+            // the freshly inserted clone inside the topbar instantly.
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
         // CASE A: Already in topbar — nothing to do
     }
@@ -67,84 +65,41 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.classList.remove("active", "visible");
         document.body.style.overflow = "";
     }
-
+    
     // ================================
     // 4. EVENTS
     // ================================
 
-    if (menuBtn && sidebar) {
-
-        menuBtn.addEventListener("click", (e) => {
+    // Use Event Delegation: Listen to the entire document body for the click
+    document.body.addEventListener("click", (e) => {
+        // Find if the clicked element (or its icon nested inside) is your mobile menu button
+        const targetButton = e.target.closest("#mobileMenuBtn");
+        
+        if (targetButton && sidebar) {
             e.stopPropagation();
-            const isOpen = sidebar.classList.contains("open") ||
-                           sidebar.classList.contains("show");
+            const isOpen = sidebar.classList.contains("open") || sidebar.classList.contains("show");
             isOpen ? closeSidebar() : openSidebar();
-        });
+        }
+    });
 
+    // Keep your standard overlay and close conditions below intact
+    if (sidebar && overlay) {
         overlay.addEventListener("click", closeSidebar);
 
         sidebar.querySelectorAll(".nav-item").forEach((link) => {
             link.addEventListener("click", closeSidebar);
         });
 
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeSidebar();
-        });
-    }
+        document.addEventListener("click", (e) => {
 
-    // ================================
-    // 5. ACTIVE NAV ITEM
-    // ================================
-
-    const navItems = document.querySelectorAll(
-        ".sidebar .nav-item, .nav-menu .nav-item"
-    );
-
-    if (navItems.length > 0) {
-
-        const currentPath = window.location.pathname
-            .toLowerCase()
-            .replace(/\/$/, "");
-
-        let bestMatch       = null;
-        let bestMatchLength = 0;
-
-        navItems.forEach((item) => {
-            item.classList.remove("active");
-
-            const href = (item.getAttribute("href") || "")
-                .toLowerCase()
-                .replace(/\/$/, "");
-
-            if (!href || href === "#") return;
-
-            if (
-                currentPath === href ||
-                currentPath.startsWith(href + "/") ||
-                currentPath.endsWith(href)
-            ) {
-                if (href.length > bestMatchLength) {
-                    bestMatch       = item;
-                    bestMatchLength = href.length;
-                }
+            if(
+                !sidebar.contains(e.target) &&
+                !menuBtn.contains(e.target)
+            ){
+                sidebar.classList.remove("active");
             }
+
         });
 
-        // Fallback: match by last URL segment
-        if (!bestMatch) {
-            const pageName = currentPath.split("/").pop();
-            if (pageName) {
-                navItems.forEach((item) => {
-                    const href = (item.getAttribute("href") || "").toLowerCase();
-                    if (href.includes(pageName) && href.length > bestMatchLength) {
-                        bestMatch       = item;
-                        bestMatchLength = href.length;
-                    }
-                });
-            }
-        }
-
-        if (bestMatch) bestMatch.classList.add("active");
     }
-
-});
+}});

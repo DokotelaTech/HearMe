@@ -8,10 +8,43 @@
     <link rel="stylesheet" href="responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Added missing Lucide Icons Engine script -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+<!-- Add this right before </body> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById("mobileMenuBtn");
+            const sidebar = document.querySelector(".sidebar");
+
+            if (menuBtn && sidebar) {
+                menuBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle("open");
+                    sidebar.classList.toggle("show");
+                    
+                    // Create overlay if it doesn't exist yet
+                    let overlay = document.querySelector(".sidebar-overlay");
+                    if (!overlay) {
+                        overlay = document.createElement("div");
+                        overlay.className = "sidebar-overlay";
+                        document.body.appendChild(overlay);
+                        
+                        overlay.addEventListener("click", () => {
+                            sidebar.classList.remove("open", "show");
+                            overlay.remove();
+                        });
+                    } else {
+                        overlay.remove();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
 
 <body>
-
     <div class="app-layout">
         <aside class="sidebar">
             <div class="brand-area">
@@ -22,14 +55,12 @@
                 <span class="badge">Therapist Portal</span>
             </div>
             <nav class="nav-menu">
-                
                 <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
                 <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
                 <a href="/therapist/groups" class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
-                <a href="/therapist/reliefs" class="nav-item "><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
-                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
-
+                <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
+                <a href="/therapist/report" class="nav-item active"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
                 <h4>Today's Overview</h4>
@@ -42,23 +73,13 @@
         <main class="main-workspace">
             <header class="topbar">
                 <div class="topbar-right">
-                
-
                     <div class="profile-container">
                         <button id="profileToggle" class="profile-btn">
-                            
-                            <div class="avatar" id="nav-avatar">
-                                </div>
-
+                            <div class="avatar" id="nav-avatar"></div>
                             <div class="profile-info">
-                                <span class="profile-name" id="nav-name">
-                                    Loading...
-                                </span>
-                                <span class="profile-role" id="nav-role">
-                                    Therapist
-                                </span>
+                                <span class="profile-name" id="nav-name">Loading...</span>
+                                <span class="profile-role" id="nav-role">Therapist</span>
                             </div>
-
                             <div class="dropdown-arrow">
                                 <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
                             </div>
@@ -116,27 +137,28 @@
                     
                     <div class="card reports-sidebar" style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px;">
                         <h3>Your Recent Reports</h3>
-                        <div id="recent-reports-container" style="margin-top: 15px;">
-                            </div>
+                        <div id="recent-reports-container" style="margin-top: 15px;"></div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-
+    <!-- Core App Shared Scripts -->
     <script src="/therapist/js/shared/loadTherapistData.js"></script>
     <script src="/therapist/js/shared/profileDropdown.js"></script>
     <script src="/therapist/js/shared/api.js"></script>
     <script src="/therapist/js/shared/utils.js"></script>
     <script src="/therapist/js/shared/authGuard.js"></script>
     <script src="/therapist/js/shared/sidebar.js"></script>
+    
+    <!-- Functional Page Component Script -->
     <script src="/therapist/js/reports.js"></script>
-    <script src="mobileFixes.js" defer></script>
+    
+    <!-- Unified Path Fallback Routing Engine -->
+    <script src="/therapist/js/shared/mobileFixes.js" defer></script>
     <script>
-
         lucide.createIcons();
-
     </script>
 </body>
 </html>
