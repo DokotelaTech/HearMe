@@ -15,7 +15,7 @@ app.use('/therapist', express.static(path.join(__dirname, 'Therapistportal')));
 
 // =========================================
 // VERIFY TOKEN MIDDLEWARE
-// =========================================
+
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization');
 
@@ -69,7 +69,7 @@ app.get('/api/config/giphy', verifyToken, (req, res) => {
 
 // =========================================
 // STATIC FILES & CLEAN URLs
-// =========================================
+
 app.use(express.static(path.join(__dirname, 'landing-page')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 app.use('/user', express.static(path.join(__dirname, 'user-profiles')));

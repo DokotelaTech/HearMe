@@ -1,265 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>HearMe - Welcome Back</title>
-
     <link rel="stylesheet" href="login.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    >
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
 
-    <div class="brand-header">
-
-        <h1>HearMe</h1>
-
-        <p>Your safe space for healing</p>
-
+    <!-- Logo moved outside the card to the top-left of the screen -->
+    <div class="pageLogoContainer">
+        <!-- <img src="hearme-logo.png" alt="HearMe Logo" class="pageLogo"> -->
     </div>
 
-    <div class="container">
+    <div class="mainContainer">
+        <div class="loginCard">
+            
+            <!-- Left Side: HearMe Gradient with Abstract Shapes -->
+            <div class="leftSide">
+                
+                <!-- Decorative Elements -->
+                <div class="decorDots decorDotsTop"></div>
+                <div class="decorDots decorDotsBottom"></div>
+                <div class="decorPill decorPillOne"></div>
+                <div class="decorPill decorPillTwo"></div>
+                <div class="decorCircleRing"></div>
+                <div class="decorCircleSolid"></div>
+                <div class="decorCross decorCrossOne"><i class="fa-solid fa-plus"></i></div>
+                <div class="decorCross decorCrossTwo"><i class="fa-solid fa-plus"></i></div>
 
-        <div class="form-box">
+                <!-- Left Content -->
+                <div class="leftContent">
+                    <h1>Your safe<br>space starts<br>here</h1>
+                    <p>Log in to continue your healing journey, connect anonymously, and find the support you deserve.</p>
+                </div>
+            </div>
 
-            <h2>Welcome Back</h2>
-
-            <p class="subtitle">
-                Continue your healing journey
-            </p>
-
-            <form id="login-form">
-
-                <!-- ROLE -->
-
-                <p class="label-text">
-                    Sign in as:
-                </p>
-
-                <div class="role-selector">
-
-                    <div
-                        class="role-option active"
-                        data-role="user"
-                    >
-
-                        <i class="fa-regular fa-user"></i>
-
-                        <span>User</span>
-
+            <!-- Right Side: Clean Form Area with HearMe Text -->
+            <div class="rightSide">
+                
+                <div class="formWrapper">
+                    
+                    <div class="logoContainer">
+                        <div class="logoBox">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
                     </div>
 
-                    <div
-                        class="role-option"
-                        data-role="therapist"
-                    >
-
-                        <i class="fa-solid fa-user-doctor"></i>
-
-                        <span>Therapist</span>
-
+                    <div class="formHeader">
+                        <span class="brandText">HearMe</span>
+                        <h2>Hello! Welcome back</h2>
                     </div>
 
+                    <form id="loginForm">
+                        
+                        <div class="inputContainer">
+                            <label>Email Address</label>
+                            <div class="inputWrapper">
+                                <i class="fa-regular fa-envelope"></i>
+                                <input id="email" type="email" placeholder="Enter your email address" required>
+                            </div>
+                        </div>
+
+                        <div class="inputContainer">
+                            <label>Password</label>
+                            <div class="inputWrapper">
+                                <i class="fa-solid fa-lock"></i>
+                                <input id="password" type="password" placeholder="••••••••••••" required>
+                            </div>
+                        </div>
+
+                        <div class="actionRow">
+                            <label class="rememberMe">
+                                <input type="checkbox"> Remember me
+                            </label>
+                            <a href="#" class="resetLink">Reset Password!</a>
+                        </div>
+
+                        <button type="submit" class="submitBtn">Login</button>
+
+                        <div class="divider">
+                            <span>or</span>
+                        </div>
+
+                        <div class="socialLoginContainer">
+                            <button type="button" class="socialBtn">
+                                <i class="fa-brands fa-google" style="color: #ea4335;"></i>
+                            </button>
+                            <button type="button" class="socialBtn">
+                                <i class="fa-brands fa-facebook-f" style="color: #1877f2;"></i>
+                            </button>
+                            <button type="button" class="socialBtn">
+                                <i class="fa-brands fa-apple" style="color: #000000;"></i>
+                            </button>
+                        </div>
+
+                        <p class="footerText">
+                            Don't have an account? <a href="/signup">Create Account</a>
+                        </p>
+
+                    </form>
                 </div>
-
-                <!-- EMAIL -->
-
-                <div class="input-group">
-
-                    <i class="fa-regular fa-envelope"></i>
-
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Email Address"
-                        required
-                    >
-
-                </div>
-
-                <!-- PASSWORD -->
-
-                <div class="input-group">
-
-                    <i class="fa-solid fa-lock"></i>
-
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        required
-                    >
-
-                </div>
-
-                <!-- REMEMBER -->
-
-                <div class="extra-options">
-
-                    <label>
-
-                        <input type="checkbox">
-
-                        Remember me
-
-                    </label>
-
-                    <a href="#" id="forgotPasswordLink">
-                        Forgot password?
-                    </a>
-
-                </div>
-
-                <!-- BUTTON -->
-
-                <button type="submit" id="Btn">
-
-                    Sign In
-
-                </button>
-
-                <p class="footer-text">
-
-                    Don't have an account?
-
-                    <a href="/signup">Create Account</a>
-
-                </p>
-
-            </form>
-
+            </div>
+            
         </div>
-
     </div>
-
-    <!-- PASSWORD RESET MODAL -->
-
-    <div class="reset-modal" id="resetModal">
-
-        <div class="reset-content">
-
-            <div class="reset-header">
-
-                <h3>Reset Password</h3>
-
-                <button type="button" id="closeResetModal">
-                    &times;
-                </button>
-
-            </div>
-
-            <p class="reset-copy">
-                Enter your account email to receive a temporary PIN.
-            </p>
-
-            <div class="input-group">
-
-                <i class="fa-regular fa-envelope"></i>
-
-                <input
-                    id="resetEmail"
-                    type="email"
-                    placeholder="Email Address"
-                >
-
-            </div>
-
-            <button type="button" id="sendResetPin">
-                Send Temporary PIN
-            </button>
-
-            <div class="input-group reset-pin-group">
-
-                <i class="fa-solid fa-shield-halved"></i>
-
-                <input
-                    id="resetPin"
-                    type="text"
-                    inputmode="numeric"
-                    maxlength="6"
-                    placeholder="Temporary PIN"
-                >
-
-            </div>
-
-            <div class="input-group">
-
-                <i class="fa-solid fa-lock"></i>
-
-                <input
-                    id="newPassword"
-                    type="password"
-                    placeholder="New Password"
-                >
-
-            </div>
-
-            <div class="input-group">
-
-                <i class="fa-solid fa-lock"></i>
-
-                <input
-                    id="confirmNewPassword"
-                    type="password"
-                    placeholder="Confirm New Password"
-                >
-
-            </div>
-
-            <p
-                id="resetMessage"
-                class="reset-message"
-                aria-live="polite"
-            ></p>
-
-            <button type="button" id="resetPasswordBtn">
-                Reset Password
-            </button>
-
-        </div>
-
-    </div>
-
-    <!-- LOADING MODAL -->
-
-    <div class="loading-modal" id="loadingModal">
-
-        <div class="loading-content">
-
-            <div class="avatar-circle">
-
-                <i class="fa-solid fa-user"></i>
-
-            </div>
-
-            <div class="loader"></div>
-
-            <h3>Loading...</h3>
-
-            <p>Please wait while we prepare your space</p>
-
-        </div>
-
-    </div>
-
-    <script src="login.js"></script>
 
 </body>
 </html>
