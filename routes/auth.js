@@ -30,15 +30,12 @@ const passwordResetPins = new Map();
 const CODE_EXPIRY_MS = 10 * 60 * 1000;
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: process.env.EMAIL_HOST || 'smtp-relay.brevo.com',
     port: 587,
-    secure: false, // use STARTTLS, not SSL
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER?.trim(),
         pass: process.env.EMAIL_PASS?.trim()
-    },
-    tls: {
-        rejectUnauthorized: false
     }
 });
 
