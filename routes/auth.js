@@ -30,10 +30,15 @@ const passwordResetPins = new Map();
 const CODE_EXPIRY_MS = 10 * 60 * 1000;
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // use STARTTLS, not SSL
     auth: {
         user: process.env.EMAIL_USER?.trim(),
         pass: process.env.EMAIL_PASS?.trim()
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
