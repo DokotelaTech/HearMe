@@ -179,18 +179,6 @@ app.get('/admin/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'adminProfile.html'));
 });
  
-// Google Auth Routes
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-    res.redirect('/user/community'); // Or wherever they should go after login
-});
-
-// Facebook Auth Routes
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-    res.redirect('/user/community');
-});
-
 
 // =========================================
 // MODELS
