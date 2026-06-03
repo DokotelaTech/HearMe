@@ -4,184 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Therapist Profile</title>
-    <link rel="stylesheet" href="/therapist/css/therapistprofile.css?v=2">
+    <link rel="stylesheet" href="/therapist/css/therapistprofile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         /* =============================================
-           MOBILE TOPBAR — hamburger + profile aligned
+           REVIEWS TAB — scoped styles only
         ============================================= */
-        .mobile-topbar {
-            display: none;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            width: 100%;
-            height: 60px;
-            background: #fff;
-            border-bottom: 1px solid #e2e8f0;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            box-sizing: border-box;
-        }
-        .mobile-topbar .m-left {
+
+        .reviews-summary {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 24px;
+            background: #faf5ff;
+            border: 1px solid #f3e8ff;
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
-        .hamburger-btn {
-            width: 40px; height: 40px;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            gap: 5px;
-            background: none; border: none; cursor: pointer;
-            z-index: 3000;
+        .reviews-avg { text-align: center; min-width: 80px; }
+        .reviews-avg .big-num {
+            font-size: 48px;
+            font-weight: 700;
+            color: #7c3aed;
+            line-height: 1;
         }
-        .hamburger-btn span {
-            display: block;
-            width: 22px; height: 2px;
-            background: #374151;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-        .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger-btn.open span:nth-child(2) { opacity: 0; }
-        .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .reviews-avg .star-row { font-size: 18px; margin: 4px 0; }
+        .reviews-avg .total-count { font-size: 12px; color: #94a3b8; }
 
-        .mobile-brand {
-            font-size: 18px;
-            font-weight: 800;
-            color: #a855f7;
-            letter-spacing: -0.5px;
+        .reviews-bars { flex: 1; min-width: 200px; }
+        .rating-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
         }
-        .mobile-avatar-btn {
-            width: 36px; height: 36px;
+        .rating-bar-row .bar-label { font-size: 12px; color: #64748b; min-width: 32px; }
+        .rating-bar-track {
+            flex: 1;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .rating-bar-fill {
+            height: 100%;
+            background: #f59e0b;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+        .rating-bar-row .bar-count { font-size: 12px; color: #94a3b8; min-width: 20px; text-align: right; }
+
+        .review-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            transition: box-shadow 0.15s;
+        }
+        .review-card:hover { box-shadow: 0 4px 16px rgba(124,58,237,0.07); }
+        .review-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .reviewer-info { display: flex; align-items: center; gap: 10px; }
+        .reviewer-avatar {
+            width: 38px; height: 38px;
             border-radius: 50%;
             background: linear-gradient(135deg, #a855f7, #ec4899);
             display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 700; font-size: 13px;
-            border: none; cursor: pointer;
+            color: #fff; font-weight: 700; font-size: 14px;
+            flex-shrink: 0;
         }
+        .reviewer-name { font-size: 14px; font-weight: 600; color: #1e293b; }
+        .reviewer-date { font-size: 12px; color: #94a3b8; }
+        .review-stars { color: #f59e0b; font-size: 15px; letter-spacing: 1px; }
+        .review-text { font-size: 14px; color: #374151; line-height: 1.65; margin-top: 6px; }
 
-        /* Sidebar overlay */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-            z-index: 1999;
+        .review-skeleton {
+            background: #f1f5f9;
+            border-radius: 14px;
+            height: 90px;
+            margin-bottom: 14px;
+            animation: reviewPulse 1.5s ease infinite;
         }
-        .sidebar-overlay.show { display: block; }
+        @keyframes reviewPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-        /* =============================================
-           DESKTOP TOPBAR (hide on mobile)
-        ============================================= */
-        .topbar { display: flex; }
+        /* Credential document link */
+        .cred-doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 12px;
+            padding: 8px 14px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.12s;
+        }
+        .cred-doc-link:hover { background: #dbeafe; }
 
+        /* Mobile tweaks for reviews */
         @media (max-width: 768px) {
-            /* Show mobile bar, hide desktop bar */
-            .topbar { display: none !important; }
-            .mobile-topbar { display: flex; }
-
-            /* Sidebar off-canvas */
-            .container {
-                display: block !important;
-                padding: 0 !important;
-            }
-            .sidebar {
-                position: fixed !important;
-                top: 60px !important;
-                left: -280px !important;
-                width: 260px !important;
-                height: calc(100vh - 60px) !important;
-                z-index: 2500 !important;
-                background: #fff !important;
-                box-shadow: 4px 0 20px rgba(0,0,0,0.12) !important;
-                transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important;
-                overflow-y: auto !important;
-                padding: 20px 16px !important;
-                box-sizing: border-box !important;
-            }
-            .sidebar.open { left: 0 !important; }
-
-            /* Main content full width */
-            .profile-area {
-                width: 100% !important;
-                padding: 16px !important;
-                box-sizing: border-box !important;
-            }
-
-            /* Hero card mobile */
-            .hero-card { padding: 20px 16px !important; border-radius: 16px !important; }
-            .hero-top {
-                flex-direction: column !important;
-                align-items: center !important;
-                text-align: center !important;
-                gap: 12px !important;
-            }
-            .hero-avatar-wrapper { width: 90px !important; height: 90px !important; }
-            .hero-avatar { font-size: 28px !important; }
-            .hero-details h1 { font-size: 20px !important; margin: 0 0 4px !important; }
-            .hero-details p { font-size: 13px !important; margin: 0 0 8px !important; }
-            .tags span { font-size: 11px !important; padding: 4px 10px !important; }
-            .status-badge {
-                margin: 0 auto !important;
-                font-size: 11px !important;
-                padding: 5px 12px !important;
-            }
-
-            /* Metrics row — 2x2 grid */
-            .hero-bottom {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 12px !important;
-                margin-top: 20px !important;
-                padding: 16px !important;
-                border-radius: 10px !important;
-            }
-            .metric strong { font-size: 20px !important; }
-            .metric span { font-size: 11px !important; }
-
-            /* Onboarding card */
-            .onboarding-card { padding: 16px !important; }
-            .checklist-grid {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
-            }
-
-            /* Tabs */
-            .tabs { border-radius: 10px 10px 0 0 !important; }
-            .tab-btn { padding: 14px 8px !important; font-size: 13px !important; }
-
-            /* Tab content */
-            .tab-content { padding: 20px 14px !important; }
-
-            /* Overview layout — single column */
-            .overview-layout {
-                grid-template-columns: 1fr !important;
-                gap: 20px !important;
-            }
-
-            /* Credentials grid */
-            .cred-input-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .cred-input-grid .full-width { grid-column: 1 !important; }
-
-            /* Info cards */
-            .info-card { padding: 16px !important; }
-
-            /* Sidebar nav links bigger touch targets */
-            .sidebar a, .nav-item {
-                padding: 14px 12px !important;
-                font-size: 15px !important;
-            }
-        }
-
-        /* Very small screens */
-        @media (max-width: 380px) {
-            .tab-btn { font-size: 11px !important; padding: 12px 4px !important; }
-            .hero-details h1 { font-size: 18px !important; }
+            .reviews-summary { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .reviews-avg { display: flex; align-items: center; gap: 16px; text-align: left; }
+            .reviews-avg .big-num { font-size: 36px; }
+            .review-card { padding: 14px 16px; }
+            .review-card-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -369,12 +308,19 @@
                 </div>
             </div>
 
+            <!-- ── REVIEWS TAB ── -->
             <div id="Reviews" class="tab-content">
-                <div id="reviews-container">
-                    <div class="empty-state" id="reviews-empty-state">
-                        <i class="fa-regular fa-star"></i>
-                        <p>Reviews will appear here once your profile is verified and active.</p>
+                <div class="reviews-summary" id="reviews-summary" style="display:none;">
+                    <div class="reviews-avg">
+                        <div class="big-num" id="avg-rating">0.0</div>
+                        <div class="star-row" id="avg-stars">★★★★★</div>
+                        <div class="total-count" id="total-count">0 reviews</div>
                     </div>
+                    <div class="reviews-bars" id="rating-bars"></div>
+                </div>
+                <div id="reviews-container">
+                    <div class="review-skeleton"></div>
+                    <div class="review-skeleton" style="height:70px;opacity:0.6;"></div>
                 </div>
             </div>
 
@@ -406,8 +352,8 @@
                         </div>
                         <div class="full-width">
                             <label>Upload Certificate (PDF/Image)</label>
-                            <input type="file" id="cred-file" class="file-input">
-                            <small class="muted" style="font-size: 11px;">*File uploads require backend configuration later.</small>
+                            <input type="file" id="cred-file" class="file-input" accept=".pdf,image/*">
+                            <small class="muted" style="font-size: 11px;">Accepted: PDF, JPG, PNG. Max 5 MB.</small>
                         </div>
                     </div>
                     <button class="save-btn mt-10" onclick="saveCredentials()">Save Credentials</button>
@@ -453,7 +399,6 @@
 
         sidebarOverlay.addEventListener('click', closeSidebar);
 
-        // Close sidebar when a nav link is tapped on mobile
         sidebar.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 if (window.innerWidth <= 768) closeSidebar();
@@ -464,9 +409,7 @@
         const syncMobileAvatar = () => {
             const navAvatar = document.getElementById('nav-avatar');
             if (navAvatar && mobileAvatarBtn) {
-                // Sync text content
                 mobileAvatarBtn.textContent = navAvatar.textContent || '--';
-                // Sync background image if set
                 if (navAvatar.style.backgroundImage) {
                     mobileAvatarBtn.style.backgroundImage = navAvatar.style.backgroundImage;
                     mobileAvatarBtn.style.backgroundSize = 'cover';
@@ -476,7 +419,6 @@
             }
         };
 
-        // Watch for changes to nav-avatar (set by JS after data loads)
         const avatarObserver = new MutationObserver(syncMobileAvatar);
         const navAvatar = document.getElementById('nav-avatar');
         if (navAvatar) {
