@@ -93,8 +93,6 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'landing-page', 'SignUp.html'));
 });
 
-const path = require('path');
-
 // Serve your static HTML files
 app.get('/privacy', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'privacy.html'));
