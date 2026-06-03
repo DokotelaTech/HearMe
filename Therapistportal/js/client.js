@@ -5,6 +5,15 @@ if (!clientsContainer) return;
 
 let allAppointments = [];
 
+function escapeHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // =========================================
 // FETCH ALL APPOINTMENTS
 // =========================================
@@ -91,13 +100,17 @@ function renderClients(filter = 'all') {
     if (filter === 'all') {
         // Group by status first, then newest first within each group
         filtered.sort((a, b) => {
+            if (a.isEmergency !== b.isEmergency) return a.isEmergency ? -1 : 1;
             const statusDiff = (statusOrder[a.status] ?? 99) - (statusOrder[b.status] ?? 99);
             if (statusDiff !== 0) return statusDiff;
             return new Date(b.createdAt) - new Date(a.createdAt);
         });
     } else {
         // Just newest first within filter
-        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        filtered.sort((a, b) => {
+            if (a.isEmergency !== b.isEmergency) return a.isEmergency ? -1 : 1;
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        });
     }
 
     clientsContainer.innerHTML = '';
@@ -114,6 +127,7 @@ function renderClients(filter = 'all') {
 
     filtered.forEach(a => {
         const name = a.userName || a.clientName || 'Unknown Client';
+        const safeName = escapeHtml(name);
         const initial = name.charAt(0).toUpperCase();
 
         const statusConfig = {
@@ -136,12 +150,15 @@ function renderClients(filter = 'all') {
             hour: '2-digit', minute: '2-digit', hour12: true
         });
 
+        const emergencyStyle = a.isEmergency
+            ? 'border:2px solid #ef4444; background:#fff1f2; box-shadow:0 0 0 3px rgba(239,68,68,0.18), 0 0 24px rgba(239,68,68,0.35); animation:emergencyFlicker 1s infinite;'
+            : 'background:white; border:1px solid #e2e8f0; box-shadow:0 1px 3px rgba(0,0,0,0.05);';
+
         const actionButtons = a.status === 'pending' ? `
             <div style="display:flex; gap:10px; margin-top:16px; padding-top:16px; border-top:1px solid #f1f5f9;">
                 <button onclick="updateStatus('${a._id}', 'approved')"
-                    style="flex:1; background:#16a34a; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.875rem; display:flex; align-items:center; justify-content:center; gap:8px;"
-                    onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#16a34a'">
-                    <i class="fa-solid fa-check"></i> Accept Session
+                    style="flex:1; background:${a.isEmergency ? '#dc2626' : '#16a34a'}; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:700; font-size:0.875rem; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fa-solid ${a.isEmergency ? 'fa-phone-volume' : 'fa-check'}"></i> ${a.isEmergency ? 'Accept & Start Emergency Call' : 'Accept Session'}
                 </button>
                 <button onclick="updateStatus('${a._id}', 'denied')"
                     style="flex:1; background:white; color:#dc2626; border:1.5px solid #fecaca; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.875rem; display:flex; align-items:center; justify-content:center; gap:8px;"
@@ -152,9 +169,7 @@ function renderClients(filter = 'all') {
 
         clientsContainer.innerHTML += `
             <div id="appt-${a._id}"
-                style="background:white; border:1px solid #e2e8f0; border-radius:12px; padding:20px; margin-bottom:16px; box-shadow:0 1px 3px rgba(0,0,0,0.05); transition:box-shadow 0.2s;"
-                onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.08)'"
-                onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.05)'">
+                style="${emergencyStyle} border-radius:12px; padding:20px; margin-bottom:16px; transition:box-shadow 0.2s;">
 
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
                     <div style="display:flex; align-items:flex-start; gap:14px; flex:1;">
@@ -162,7 +177,11 @@ function renderClients(filter = 'all') {
                             ${initial}
                         </div>
                         <div style="flex:1;">
-                            <h3 style="margin:0 0 4px; font-size:1rem; color:#0f172a; font-weight:600;">${name}</h3>
+                            ${a.isEmergency ? `
+                                <div style="display:inline-flex; align-items:center; gap:6px; background:#dc2626; color:white; padding:4px 10px; border-radius:999px; font-size:0.75rem; font-weight:800; margin-bottom:8px; letter-spacing:0;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> EMERGENCY SOS
+                                </div>` : ''}
+                            <h3 style="margin:0 0 4px; font-size:1rem; color:#0f172a; font-weight:600;">${safeName}</h3>
                             <div style="display:flex; flex-wrap:wrap; gap:12px; color:#64748b; font-size:0.825rem; margin-bottom:6px;">
                                 <span><i class="fa-regular fa-calendar" style="margin-right:4px;"></i>${formattedDate}</span>
                                 <span><i class="fa-regular fa-clock" style="margin-right:4px;"></i>${formattedTime}</span>
@@ -173,7 +192,7 @@ function renderClients(filter = 'all') {
                             </div>
                             ${a.note ? `
                                 <div style="background:#f8fafc; border-left:3px solid #cbd5e1; padding:8px 12px; border-radius:0 6px 6px 0; font-size:0.825rem; color:#475569; font-style:italic;">
-                                    "${a.note}"
+                                    "${escapeHtml(a.note)}"
                                 </div>` : ''}
                         </div>
                     </div>
@@ -210,9 +229,15 @@ async function updateStatus(appointmentId, status) {
 
     // Update local state
     const appt = allAppointments.find(a => a._id === appointmentId);
-    if (appt) appt.status = status;
+    if (appt) Object.assign(appt, response.appointment || { status });
 
     updateStats();
+
+    if (status === 'approved' && (response.appointment?.isEmergency || appt?.isEmergency)) {
+        await startEmergencyCall(appointmentId, appt?.clientName || appt?.userName || 'Client', appt?.userId);
+        fetchClients();
+        return;
+    }
 
     // Animate out then re-render
     if (card) {
@@ -226,7 +251,47 @@ async function updateStatus(appointmentId, status) {
     }
 }
 
+async function startEmergencyCall(appointmentId, clientName, userId) {
+    try {
+        if (userId) {
+            fetch('/api/notifications/session-started', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userId, appointmentId })
+            }).catch(err => console.error('Notification failed:', err));
+        }
+
+        const res = await fetch(`/api/appointments/${appointmentId}/join`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Failed to start emergency call');
+
+        const title = document.getElementById('video-modal-title');
+        const iframe = document.getElementById('daily-iframe');
+        const modal = document.getElementById('video-modal');
+        const overlay = document.getElementById('video-modal-overlay');
+
+        if (title) title.textContent = `Emergency SOS with ${clientName}`;
+        if (iframe) iframe.src = data.url;
+        if (modal) modal.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+    } catch (error) {
+        alert(error.message || 'Emergency accepted, but the call could not start.');
+    }
+}
+
 window.updateStatus = updateStatus;
+document.getElementById('close-video-modal')?.addEventListener('click', () => {
+    const iframe = document.getElementById('daily-iframe');
+    if (iframe) iframe.src = '';
+    document.getElementById('video-modal')?.classList.remove('active');
+    document.getElementById('video-modal-overlay')?.classList.remove('active');
+});
 fetchClients();
 
 })();

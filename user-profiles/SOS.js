@@ -4,17 +4,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const sosButton = document.getElementById('sosButton');
     
     if (sosButton) {
-        sosButton.addEventListener('click', () => {
-            alert('SOS Activated! Initiating emergency protocols and fetching location...');
-            
-            // Visual loading state updates
+        sosButton.addEventListener('click', async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please log in before activating SOS.');
+                window.location.href = '/login';
+                return;
+            }
+
+            sosButton.disabled = true;
             sosButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ACTIVATING...';
             sosButton.style.opacity = '0.8';
-            
-            setTimeout(() => {
+
+            try {
+                const response = await fetch('/api/appointments/emergency', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        note: 'Emergency SOS request from client. Immediate online support needed.'
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || 'Failed to activate SOS');
+
+                sosButton.innerHTML = '<i class="fa-solid fa-circle-check"></i> SOS SENT';
+                sosButton.style.opacity = '1';
+                alert(`SOS sent to ${data.count || 'available'} therapist(s). Please keep this page open and check your sessions.`);
+            } catch (error) {
+                alert(error.message || 'SOS activation failed. Please call emergency services immediately.');
+                sosButton.disabled = false;
                 sosButton.innerHTML = 'ACTIVATE SOS';
                 sosButton.style.opacity = '1';
-            }, 3000);
+            }
         });
     }
 

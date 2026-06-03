@@ -1,6 +1,7 @@
 const Report = require('../database/models/Report');
 const User = require('../database/models/users');
 const Post = require('../database/models/Post');
+const { sendReporterEmail, sendReportedUserEmail } = require('../utils/mailer');
 
 // ==========================================
 // CREATE REPORT
@@ -53,6 +54,7 @@ const createReport = async (req, res) => {
             const report = new Report({
                 type,
                 reporterId: req.user.userId,
+                reporterName: user.anonymousName || user.username || user.email,
                 postId,
                 postContent: post.content,
                 postAuthor: post.authorIdentifier || 'Unknown',
@@ -99,6 +101,7 @@ const getAllReports = async (req, res) => {
         }
 
         const reports = await Report.find()
+            .populate('reporterId', 'firstName lastName username anonymousName email role')
             .sort({ createdAt: -1 });
 
         return res.status(200).json({ reports });
@@ -120,7 +123,9 @@ const getReports = async (req, res) => {
             return res.status(403).json({ message: 'Unauthorized' });
         }
 
-        const reports = await Report.find(query).sort({ createdAt: -1 });
+        const reports = await Report.find(query)
+            .populate('reporterId', 'firstName lastName username anonymousName email role')
+            .sort({ createdAt: -1 });
         return res.status(200).json({ reports });
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -133,6 +138,10 @@ const getReports = async (req, res) => {
 // ==========================================
 const updateReportStatus = async (req, res) => {
     try {
+        if (req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Admin access only' });
+        }
+
         const { id } = req.params;
         const { status, adminNote, action } = req.body;
 
@@ -170,7 +179,7 @@ const updateReportStatus = async (req, res) => {
         // 1. Notify the Reporter
         if (report.reporterId && report.reporterId.email) {
              try {
-                 await sendReporterEmail(report.reporterId.email, report.status, report.category);
+                 await sendReporterEmail(report.reporterId.email, report.status, report.category, report.adminNote);
              } catch (emailError) {
                  console.error('Failed to send email to reporter:', emailError);
              }

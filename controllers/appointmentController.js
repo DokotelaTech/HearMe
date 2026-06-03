@@ -97,11 +97,22 @@ const updateAppointmentStatus = async (req, res) => {
 
         const appointment = await Appointment.findOneAndUpdate(
             { _id: req.params.id, therapistId: req.user.userId },
-            { $set: { status } },
+            { $set: { status, ...(status === 'approved' ? { emergencyAcceptedAt: new Date() } : {}) } },
             { new: true }
         );
 
         if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+
+        if (appointment.isEmergency && status === 'approved' && appointment.emergencyGroupId) {
+            await Appointment.updateMany(
+                {
+                    _id: { $ne: appointment._id },
+                    emergencyGroupId: appointment.emergencyGroupId,
+                    status: 'pending'
+                },
+                { $set: { status: 'cancelled' } }
+            );
+        }
 
         return res.status(200).json({ message: `Appointment ${status}`, appointment });
     } catch (error) {

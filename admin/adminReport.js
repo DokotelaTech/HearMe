@@ -7,7 +7,9 @@ const REPORTS_API = '/api';
 const statusConfig = {
     pending:  { text: 'Pending',  bg: '#fef3c7', color: '#d97706' },
     reviewed: { text: 'Reviewed', bg: '#e0f2fe', color: '#0284c7' },
-    resolved: { text: 'Resolved', bg: '#dcfce7', color: '#16a34a' }
+    resolved: { text: 'Resolved', bg: '#dcfce7', color: '#16a34a' },
+    dismissed: { text: 'Dismissed', bg: '#f1f5f9', color: '#64748b' },
+    deleted: { text: 'Deleted', bg: '#fee2e2', color: '#dc2626' }
 };
 
 const categoryConfig = {
@@ -18,6 +20,16 @@ const categoryConfig = {
 
 let allReports = [];
 let activeFilter = 'all';
+
+function getReporterName(report) {
+    if (report.reporterName) return report.reporterName;
+    if (report.therapistName) return report.therapistName;
+    if (report.reporterId && typeof report.reporterId === 'object') {
+        const fullName = `${report.reporterId.firstName || ''} ${report.reporterId.lastName || ''}`.trim();
+        return fullName || report.reporterId.username || report.reporterId.anonymousName || report.reporterId.email;
+    }
+    return 'Reporter';
+}
 
 // =========================================
 // LOAD ALL REPORTS
@@ -119,8 +131,8 @@ function renderReportsTable() {
                         </div>` : ''}
                 </td>
                 <td>
-                    <p style="margin:0; font-weight:600; font-size:13px; color:#0f172a;">${r.therapistName}</p>
-                    <p style="margin:0; font-size:11px; color:#94a3b8;">Therapist</p>
+                    <p style="margin:0; font-weight:600; font-size:13px; color:#0f172a;">${getReporterName(r)}</p>
+                    <p style="margin:0; font-size:11px; color:#94a3b8;">${r.type === 'moderation' ? 'User' : 'Therapist'}</p>
                 </td>
                 <td style="font-size:13px; color:#64748b; white-space:nowrap;">${date}</td>
                 <td>
@@ -190,7 +202,7 @@ function openReportDetail(reportId) {
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                     <div>
                         <p style="margin:0; font-size:11px; color:#94a3b8; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Submitted By</p>
-                        <p style="margin:4px 0 0 0; font-weight:700; color:#0f172a;">${r.therapistName}</p>
+                        <p style="margin:4px 0 0 0; font-weight:700; color:#0f172a;">${getReporterName(r)}</p>
                     </div>
                     <span style="background:${stat.bg}; color:${stat.color}; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:700;">
                         ${stat.text}

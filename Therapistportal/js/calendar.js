@@ -70,11 +70,11 @@ function renderSchedule(appointmentsList) {
 
         let actionHtml = '';
 
-        if (a.type === 'online' && diffMinutes <= 10 && diffMinutes >= -60) {
+        if (a.type === 'online' && (a.isEmergency || (diffMinutes <= 10 && diffMinutes >= -60))) {
             actionHtml = `
                 <button onclick="startSessionAndNotify('${a._id}', '${a.userName || a.clientName}', '${a.userId}')"
-                    style="background:#0ea5e9; color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:600; display:flex; align-items:center; gap:8px;">
-                    <i class="fa-solid fa-video"></i> Start Call
+                    style="background:${a.isEmergency ? '#dc2626' : '#0ea5e9'}; color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:700; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid ${a.isEmergency ? 'fa-phone-volume' : 'fa-video'}"></i> ${a.isEmergency ? 'Start Emergency Call' : 'Start Call'}
                 </button>`;
         } else if (a.type === 'online' && diffMinutes > 10) {
             actionHtml = `
@@ -89,8 +89,12 @@ function renderSchedule(appointmentsList) {
         }
 
         return `
-            <div id="appointment-${a._id}" style="border:1px solid #e2e8f0; border-left:4px solid #0ea5e9; border-radius:8px; padding:16px; margin-bottom:16px; background:#fff; display:flex; justify-content:space-between; align-items:center; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div id="appointment-${a._id}" style="border:${a.isEmergency ? '2px solid #ef4444' : '1px solid #e2e8f0'}; border-left:4px solid ${a.isEmergency ? '#dc2626' : '#0ea5e9'}; border-radius:8px; padding:16px; margin-bottom:16px; background:${a.isEmergency ? '#fff1f2' : '#fff'}; display:flex; justify-content:space-between; align-items:center; box-shadow:${a.isEmergency ? '0 0 0 3px rgba(239,68,68,0.18), 0 0 24px rgba(239,68,68,0.35)' : '0 1px 3px rgba(0,0,0,0.05)'}; animation:${a.isEmergency ? 'emergencyFlicker 1s infinite' : 'none'};">
                 <div style="display:flex; flex-direction:column; gap:4px;">
+                    ${a.isEmergency ? `
+                        <div style="display:inline-flex; align-items:center; gap:6px; align-self:flex-start; background:#dc2626; color:white; padding:4px 10px; border-radius:999px; font-size:0.75rem; font-weight:800; margin-bottom:4px; letter-spacing:0;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> EMERGENCY SOS
+                        </div>` : ''}
                     <h3 style="margin:0; font-size:1.05rem; color:#0f172a; font-weight:600;">
                         ${a.userName || a.clientName || 'Unknown User'}
                     </h3>

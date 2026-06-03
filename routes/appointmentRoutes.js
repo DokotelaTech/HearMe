@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../database/models/Appointment');
+const User = require('../database/models/users');
 const { verifyToken } = require('../middleware/authMiddleware');
+const { sendEmergencyTherapistEmail } = require('../utils/mailer');
+const crypto = require('crypto');
 
 const {
     getAppointments,
@@ -53,6 +56,61 @@ router.get('/', verifyToken, getAppointments);
 // POST /api/appointments — user books appointment
 router.post('/', verifyToken, createAppointment);
 
+// POST /api/appointments/emergency - user triggers SOS booking for therapists
+router.post('/emergency', verifyToken, async (req, res) => {
+    try {
+        const client = await User.findById(req.user.userId).select('username anonymousName email role');
+        if (!client) return res.status(404).json({ message: 'User not found' });
+        if (client.role !== 'user') return res.status(403).json({ message: 'Only clients can activate SOS bookings' });
+
+        const therapists = await User.find({
+            role: 'therapist',
+            accountStatus: { $ne: 'suspended' }
+        }).select('firstName lastName email');
+
+        if (!therapists.length) {
+            return res.status(404).json({ message: 'No therapists are available for emergency SOS right now' });
+        }
+
+        const now = new Date();
+        const date = now.toISOString().split('T')[0];
+        const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        const emergencyGroupId = crypto.randomUUID();
+        const clientName = client.anonymousName || client.username || client.email || 'Anonymous client';
+        const note = (req.body && req.body.note) || 'Emergency SOS request. Please accept only if you can start the call immediately.';
+
+        const appointments = await Appointment.insertMany(therapists.map(therapist => ({
+            userId: client._id,
+            therapistId: therapist._id,
+            therapistName: `${therapist.firstName || ''} ${therapist.lastName || ''}`.trim() || therapist.email,
+            clientName,
+            date,
+            time,
+            type: 'online',
+            note,
+            status: 'pending',
+            isEmergency: true,
+            emergencyGroupId
+        })));
+
+        await Promise.allSettled(appointments.map(appointment => {
+            const therapist = therapists.find(t => t._id.toString() === appointment.therapistId.toString());
+            return sendEmergencyTherapistEmail(therapist?.email, {
+                clientName,
+                appointmentId: appointment._id
+            });
+        }));
+
+        res.status(201).json({
+            message: 'Emergency SOS sent to available therapists',
+            emergencyGroupId,
+            count: appointments.length
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // =========================================
 // DYNAMIC ROUTES (/:id last)
 // =========================================
@@ -87,7 +145,7 @@ router.post('/:id/join', verifyToken, async (req, res) => {
         const sessionDateTime = new Date(`${appointment.date}T${appointment.time}`);
         const diffMinutes = (sessionDateTime - new Date()) / (1000 * 60);
 
-        if (diffMinutes > 10) {
+        if (!appointment.isEmergency && diffMinutes > 10) {
             return res.status(400).json({
                 message: `Session starts in ${Math.round(diffMinutes)} minutes. You can join 10 minutes before.`
             });

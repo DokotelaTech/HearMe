@@ -52,6 +52,10 @@ const reportSchema = new mongoose.Schema({
         ref: 'User', 
         required: true 
     },
+    reporterName: {
+        type: String,
+        trim: true
+    },
     
     // 2. Report Classification
     type: { 

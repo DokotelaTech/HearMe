@@ -9,6 +9,9 @@ const appointmentSchema = new mongoose.Schema({
     time:          { type: String, required: true },
     type:          { type: String, enum: ['online', 'in-person'], default: 'online' },
     note:          { type: String },
+    isEmergency:   { type: Boolean, default: false },
+    emergencyGroupId: { type: String, index: true },
+    emergencyAcceptedAt: { type: Date },
     
     status: {
         type: String,
