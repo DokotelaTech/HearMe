@@ -1,10 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initial scan for icons in the sidebar and navbar
     lucide.createIcons();
-    
-    // Call your data-fetching functions here
-    // e.g., fetchUserData();
-    // e.g., renderRoadmap();
 });
 
 const API_BASE = '/api';
@@ -13,7 +8,7 @@ const token = localStorage.getItem('token');
 if (!token) window.location.href = '/login';
 
 // =========================================
-// HEALING ROADMAP DATA (Starts completely empty)
+// HEALING ROADMAP DATA
 // =========================================
 let roadmapTasks = [
     { id: 1, title: "Practice daily gratitude", desc: "Write down 3 things you're grateful for each morning", tag: "Daily Practice", completed: false },
@@ -26,8 +21,6 @@ let roadmapTasks = [
 // =========================================
 // HEALING FLOWER & GAMIFICATION
 // =========================================
-
-// Generate a UNIQUE key per user so accounts don't share the same flower data
 const FLOWER_STORAGE_KEY = `hearme_flower_${token ? token.substring(token.length - 15) : 'default'}`;
 
 const flowerStages = [
@@ -41,15 +34,12 @@ function loadFlowerData() {
     try {
         const raw = localStorage.getItem(FLOWER_STORAGE_KEY);
         return raw ? JSON.parse(raw) : {
-            posts: 0,
-            sessions: 0,
-            tasks: 0,
-            chats: 0,
-            waterStreak: 0,
-            lastWatered: null,
-            pendingReward: false // Tracks if AI chat happened off-page
+            posts: 0, sessions: 0, tasks: 0, chats: 0,
+            waterStreak: 0, lastWatered: null, pendingReward: false
         };
-    } catch { return { posts: 0, sessions: 0, tasks: 0, chats: 0, waterStreak: 0, lastWatered: null, pendingReward: false }; }
+    } catch {
+        return { posts: 0, sessions: 0, tasks: 0, chats: 0, waterStreak: 0, lastWatered: null, pendingReward: false };
+    }
 }
 
 function saveFlowerData(data) {
@@ -58,7 +48,6 @@ function saveFlowerData(data) {
 
 function setAvatarImage(element, imageUrl, fallback) {
     if (!element) return;
-
     if (imageUrl) {
         element.textContent = '';
         element.style.backgroundImage = `url(${imageUrl})`;
@@ -85,50 +74,34 @@ function renderFlowerSVG(stage) {
     if (!petals) return;
 
     if (stage === 0) {
-        seed.style.opacity   = '0.9';
-        leaves.style.opacity = '0';
-        petals.style.opacity = '0';
+        seed.style.opacity = '0.9'; leaves.style.opacity = '0'; petals.style.opacity = '0';
         center.setAttribute('fill', '#fbbf24');
     } else if (stage === 1) {
-        seed.style.opacity   = '0';
-        leaves.style.opacity = '1';
-        petals.style.opacity = '0';
+        seed.style.opacity = '0'; leaves.style.opacity = '1'; petals.style.opacity = '0';
         center.setAttribute('fill', '#fbbf24');
     } else if (stage === 2) {
-        seed.style.opacity   = '0';
-        leaves.style.opacity = '1';
-        petals.style.opacity = '0.55';
+        seed.style.opacity = '0'; leaves.style.opacity = '1'; petals.style.opacity = '0.55';
         center.setAttribute('fill', '#fbbf24');
     } else {
-        seed.style.opacity   = '0';
-        leaves.style.opacity = '1';
-        petals.style.opacity = '1';
+        seed.style.opacity = '0'; leaves.style.opacity = '1'; petals.style.opacity = '1';
         center.setAttribute('fill', '#f59e0b');
     }
 }
 
-// 💧 DYNAMIC WATER DROPLET GENERATOR
 function createWaterDrop(delay = 0) {
     const wrap = document.querySelector('.flower-svg-wrap');
     if (!wrap) return;
-
     setTimeout(() => {
         const drop = document.createElement('div');
         drop.className = 'water-drop animate-drop';
-        
-        // Randomize the drop horizontally so it looks like a shower
-        const offset = (Math.random() - 0.5) * 30; // Between -15px and +15px
+        const offset = (Math.random() - 0.5) * 30;
         drop.style.left = `calc(50% + ${offset}px)`;
-        
         wrap.appendChild(drop);
-
-        // Remove from DOM after animation completes (1s)
         setTimeout(() => drop.remove(), 1000);
     }, delay);
 }
 
 function triggerRewardShower() {
-    // Drop 3 droplets in a sequence
     createWaterDrop(0);
     createWaterDrop(300);
     createWaterDrop(600);
@@ -138,59 +111,43 @@ function renderFlowerWidget() {
     const d = loadFlowerData();
     let progressMade = false;
 
-    // 1. Check for Posts Progress
     const domPosts = parseInt(document.getElementById('stat-posts')?.textContent) || 0;
     if (domPosts > d.posts) progressMade = true;
     d.posts = Math.max(d.posts, domPosts);
 
-    // 2. Check for Sessions Progress
     const domSessions = parseInt(document.getElementById('stat-sessions')?.textContent) || 0;
     if (domSessions > d.sessions) progressMade = true;
     d.sessions = Math.max(d.sessions, domSessions);
 
-    // 3. Check for Tasks Progress
     const currentTasks = roadmapTasks.filter(t => t.completed).length;
     if (currentTasks > d.tasks) progressMade = true;
     d.tasks = Math.max(d.tasks, currentTasks);
 
-    // 4. Check for off-page AI chat progress
-    if (d.pendingReward) {
-        progressMade = true;
-        d.pendingReward = false; // Reset it
-    }
-
-    // 🔥 IF THEY PROGRESSED SINCE LAST VISIT, REWARD THEM!
-    if (progressMade) {
-        triggerRewardShower();
-    }
+    if (d.pendingReward) { progressMade = true; d.pendingReward = false; }
+    if (progressMade) triggerRewardShower();
 
     const stage = getFlowerStageIndex(d);
-
     document.getElementById('stage-badge').textContent = flowerStages[stage].name;
     document.getElementById('stage-label').textContent = flowerStages[stage].label;
     renderFlowerSVG(stage);
 
-    // Progress bars
     const clamp = (v, max) => Math.min(100, Math.round((v / max) * 100));
     document.getElementById('fp-posts').style.width    = clamp(d.posts, 3) + '%';
     document.getElementById('fp-sessions').style.width = clamp(d.sessions, 1) + '%';
     document.getElementById('fp-tasks').style.width    = clamp(d.tasks, 5) + '%';
     document.getElementById('fp-chats').style.width    = clamp(d.chats, 5) + '%';
-
     document.getElementById('fv-posts').textContent    = d.posts    + '/3';
     document.getElementById('fv-sessions').textContent = d.sessions + '/1';
     document.getElementById('fv-tasks').textContent    = d.tasks    + '/5';
     document.getElementById('fv-chats').textContent    = d.chats    + '/5';
 
-    // Water button state
     const today = new Date().toDateString();
     const alreadyWatered = d.lastWatered === today;
     const btn = document.getElementById('flower-water-btn');
     if (btn) {
-        btn.disabled   = alreadyWatered;
+        btn.disabled = alreadyWatered;
         btn.textContent = alreadyWatered ? 'Watered today' : 'Water today';
     }
-
     if (alreadyWatered) {
         const msg = document.getElementById('flower-watered-msg');
         if (msg) msg.textContent = `${d.waterStreak} day streak — come back tomorrow!`;
@@ -204,16 +161,11 @@ function flowerWaterToday() {
     const today = new Date().toDateString();
     if (d.lastWatered === today) return;
 
-    // Trigger one single drop immediately for the manual watering
     createWaterDrop(0);
-
-    // Delay updating the UI text/state until the drop visually hits the soil (800ms)
     setTimeout(() => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
-        const wasYesterday = d.lastWatered === yesterday.toDateString();
-
-        d.waterStreak = wasYesterday ? d.waterStreak + 1 : 1;
+        d.waterStreak = d.lastWatered === yesterday.toDateString() ? d.waterStreak + 1 : 1;
         d.lastWatered = today;
         saveFlowerData(d);
 
@@ -224,19 +176,153 @@ function flowerWaterToday() {
         if (msg) msg.textContent = `${d.waterStreak} day streak — come back tomorrow!`;
 
         renderFlowerWidget();
-    }, 800); 
+    }, 800);
 }
 
 function flowerToggleInfo() {
     document.getElementById('flower-info-panel')?.classList.toggle('open');
 }
 
-// NOTE: Call this inside your AI Chat Javascript file whenever they send a message
 function flowerIncrementChat() {
     const d = loadFlowerData();
     d.chats = (d.chats || 0) + 1;
-    d.pendingReward = true; // Flags it so they see drops when they return to profile
+    d.pendingReward = true;
     saveFlowerData(d);
+}
+
+// =========================================
+// SESSION REVIEW MODAL
+// =========================================
+
+// State tracked per session
+let _reviewAppointmentId   = null;
+let _reviewTherapistName   = '';
+let _reviewSelectedRating  = 0;
+
+const RATING_LABELS = ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'];
+
+/**
+ * Opens the review modal after a session ends.
+ * @param {string} appointmentId  - MongoDB _id of the appointment
+ * @param {string} therapistName  - Display name shown in the modal
+ */
+function openReviewModal(appointmentId, therapistName) {
+    _reviewAppointmentId  = appointmentId;
+    _reviewTherapistName  = therapistName || 'your therapist';
+    _reviewSelectedRating = 0;
+
+    // Reset UI
+    document.getElementById('review-therapist-name').textContent = _reviewTherapistName;
+    document.getElementById('review-textarea').value = '';
+    document.getElementById('review-char-count').textContent = '0';
+    document.getElementById('review-rating-label').textContent = 'Tap a star to rate';
+    document.getElementById('review-rating-label').classList.remove('rated');
+    document.getElementById('review-submit-btn').disabled = true;
+    document.getElementById('review-modal-inner')?.classList.remove('submitted');
+    _setStarHighlight(0);
+
+    // Show
+    document.getElementById('review-modal-overlay').classList.add('active');
+    document.getElementById('review-modal').classList.add('active');
+}
+
+function closeReviewModal() {
+    document.getElementById('review-modal-overlay').classList.remove('active');
+    document.getElementById('review-modal').classList.remove('active');
+}
+
+/** Highlights stars up to `value` */
+function _setStarHighlight(value) {
+    document.querySelectorAll('.star-btn').forEach(btn => {
+        const v = parseInt(btn.dataset.value);
+        btn.classList.toggle('selected', v <= value);
+        btn.classList.remove('hovered');
+    });
+}
+
+/** Wires up all review modal interactivity — called once on DOMContentLoaded */
+function initReviewModal() {
+    const stars        = document.querySelectorAll('.star-btn');
+    const textarea     = document.getElementById('review-textarea');
+    const charCount    = document.getElementById('review-char-count');
+    const ratingLabel  = document.getElementById('review-rating-label');
+    const submitBtn    = document.getElementById('review-submit-btn');
+    const skipBtn      = document.getElementById('review-skip-btn');
+    const closeBtn     = document.getElementById('review-close-btn');
+    const overlay      = document.getElementById('review-modal-overlay');
+
+    if (!stars.length) return; // Guard: modal not in DOM
+
+    // ── Star hover ──
+    stars.forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            const v = parseInt(btn.dataset.value);
+            stars.forEach(s => s.classList.toggle('hovered', parseInt(s.dataset.value) <= v));
+        });
+        btn.addEventListener('mouseleave', () => {
+            stars.forEach(s => s.classList.remove('hovered'));
+        });
+
+        // ── Star click ──
+        btn.addEventListener('click', () => {
+            _reviewSelectedRating = parseInt(btn.dataset.value);
+            _setStarHighlight(_reviewSelectedRating);
+            ratingLabel.textContent = RATING_LABELS[_reviewSelectedRating];
+            ratingLabel.classList.add('rated');
+            submitBtn.disabled = false;
+        });
+    });
+
+    // ── Textarea char counter ──
+    textarea.addEventListener('input', () => {
+        charCount.textContent = textarea.value.length;
+    });
+
+    // ── Close / Skip ──
+    closeBtn.addEventListener('click',  closeReviewModal);
+    skipBtn.addEventListener('click',   closeReviewModal);
+    overlay.addEventListener('click',   closeReviewModal);
+
+    // ── Submit ──
+    submitBtn.addEventListener('click', async () => {
+        if (!_reviewSelectedRating || !_reviewAppointmentId) return;
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('submitting');
+        submitBtn.textContent = 'Submitting…';
+
+        try {
+            const res = await fetch(`${API_BASE}/appointments/${_reviewAppointmentId}/review`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    rating: _reviewSelectedRating,
+                    review: document.getElementById('review-textarea').value.trim()
+                })
+            });
+
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.message || 'Failed to submit review');
+            }
+
+            // Success feedback before closing
+            submitBtn.textContent = '✓ Submitted!';
+            submitBtn.style.background = 'linear-gradient(135deg, #34c77b 0%, #16a34a 100%)';
+
+            setTimeout(closeReviewModal, 1200);
+
+        } catch (err) {
+            console.error('Review submit error:', err);
+            submitBtn.textContent = 'Submit Review';
+            submitBtn.classList.remove('submitting');
+            submitBtn.disabled = false;
+            alert(err.message || 'Could not submit review. Please try again.');
+        }
+    });
 }
 
 // =========================================
@@ -252,11 +338,7 @@ async function loadProfile() {
 
         const name = data.identifier || 'Anonymous User';
         document.getElementById('profile-name').textContent = name;
-        setAvatarImage(
-            document.getElementById('large-avatar'),
-            data.profileImage,
-            name.charAt(0).toUpperCase()
-        );
+        setAvatarImage(document.getElementById('large-avatar'), data.profileImage, name.charAt(0).toUpperCase());
 
         const navAvatar = document.querySelector('.user-avatar');
         setAvatarImage(navAvatar, data.profileImage, name.charAt(0).toUpperCase());
@@ -267,8 +349,8 @@ async function loadProfile() {
             const date = new Date(data.createdAt);
             document.getElementById('profile-since').textContent =
                 `Member since ${date.toLocaleString('default', { month: 'long', year: 'numeric' })}`;
-            const days = Math.floor((Date.now() - date) / (1000 * 60 * 60 * 24));
-            document.getElementById('stat-days').textContent = days;
+            document.getElementById('stat-days').textContent =
+                Math.floor((Date.now() - date) / (1000 * 60 * 60 * 24));
         }
     } catch (err) {
         console.error('Profile load error:', err);
@@ -279,16 +361,13 @@ async function loadProfile() {
 async function uploadAvatar(file) {
     const formData = new FormData();
     formData.append('profileImage', file);
-
     const response = await fetch(`${API_BASE}/upload/profile-image`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData
     });
-
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Could not upload avatar.');
-
     setAvatarImage(document.getElementById('large-avatar'), data.profileImage, 'U');
     setAvatarImage(document.querySelector('.user-avatar'), data.profileImage, 'U');
 }
@@ -309,22 +388,17 @@ async function loadUpcomingAppointments() {
         const data = await res.json();
         let appointments = data.appointments || [];
 
-        // ==========================================
-        // SMART FILTER: Remove old/canceled sessions
-        // ==========================================
         const now = new Date();
         appointments = appointments.filter(a => {
-            const sessionStart = new Date(`${a.date}T${a.time}`);
-            const sessionEnd = new Date(sessionStart.getTime() + 60 * 60 * 1000); 
-            const updatedAt = new Date(a.updatedAt || sessionStart);
-            
+            const sessionStart   = new Date(`${a.date}T${a.time}`);
+            const sessionEnd     = new Date(sessionStart.getTime() + 60 * 60 * 1000);
+            const updatedAt      = new Date(a.updatedAt || sessionStart);
             const minutesSinceUpdate = (now - updatedAt) / (1000 * 60);
-            const minutesSinceEnd = (now - sessionEnd) / (1000 * 60);
+            const minutesSinceEnd    = (now - sessionEnd)   / (1000 * 60);
 
-            if (a.status === 'canceled' || a.status === 'cancelled' || a.status === 'denied') return minutesSinceUpdate <= 10; 
+            if (['canceled','cancelled','denied'].includes(a.status)) return minutesSinceUpdate <= 10;
             if (a.status === 'completed') return minutesSinceUpdate <= 10;
-            if (minutesSinceEnd > 10) return false; 
-
+            if (minutesSinceEnd > 10) return false;
             return true;
         });
 
@@ -343,7 +417,7 @@ async function loadUpcomingAppointments() {
 
         container.innerHTML = appointments.map(a => {
             const sessionDateTime = new Date(`${a.date}T${a.time}`);
-            const diffMinutes = (sessionDateTime - now) / (1000 * 60);
+            const diffMinutes     = (sessionDateTime - now) / (1000 * 60);
 
             let dateStr;
             if (sessionDateTime.toDateString() === now.toDateString()) {
@@ -360,14 +434,13 @@ async function loadUpcomingAppointments() {
                 canceled:  { text: 'Cancelled',        bg: '#f1f5f9', color: '#64748b' },
                 completed: { text: 'Completed',        bg: '#e0e7ff', color: '#4f46e5' }
             };
-            const badge = statusConfig[a.status] || statusConfig.pending;
-
+            const badge    = statusConfig[a.status] || statusConfig.pending;
             const typeBadge = a.type === 'in-person'
                 ? { text: 'In-Person', bg: '#dcfce7', color: '#16a34a' }
                 : { text: 'Online',    bg: '#e0f2fe', color: '#0284c7' };
 
-            const canJoin = a.status === 'approved' && a.type === 'online' && diffMinutes <= 10 && diffMinutes >= -60;
-            const isCancelled = ['cancelled', 'canceled', 'denied'].includes(a.status);
+            const canJoin    = a.status === 'approved' && a.type === 'online' && diffMinutes <= 10 && diffMinutes >= -60;
+            const isCancelled = ['cancelled','canceled','denied'].includes(a.status);
             const cardOpacity = isCancelled ? 'opacity: 0.6;' : '';
 
             return `
@@ -451,9 +524,14 @@ async function joinSession(appointmentId, therapistName) {
         const data = await res.json();
         if (!res.ok) { alert(data.message); return; }
 
+        // Store therapist name on the modal so "End Session" can pass it to the review
+        const videoModal = document.getElementById('video-modal');
+        videoModal.dataset.appointmentId  = appointmentId;
+        videoModal.dataset.therapistName  = therapistName || 'your therapist';
+
         document.getElementById('video-modal-title').textContent = `Session with ${therapistName}`;
         document.getElementById('daily-iframe').src = data.url;
-        document.getElementById('video-modal').classList.add('active');
+        videoModal.classList.add('active');
         document.getElementById('video-modal-overlay').classList.add('active');
     } catch (err) {
         alert('Failed to join session. Please try again.');
@@ -462,12 +540,22 @@ async function joinSession(appointmentId, therapistName) {
 }
 
 // =========================================
-// CLOSE VIDEO MODAL
+// CLOSE VIDEO MODAL → trigger review
 // =========================================
 document.getElementById('close-video-modal')?.addEventListener('click', () => {
+    const videoModal     = document.getElementById('video-modal');
+    const appointmentId  = videoModal.dataset.appointmentId;
+    const therapistName  = videoModal.dataset.therapistName || 'your therapist';
+
+    // Tear down video call
     document.getElementById('daily-iframe').src = '';
-    document.getElementById('video-modal').classList.remove('active');
+    videoModal.classList.remove('active');
     document.getElementById('video-modal-overlay').classList.remove('active');
+
+    // Small delay so video modal fully disappears before review modal appears
+    if (appointmentId) {
+        setTimeout(() => openReviewModal(appointmentId, therapistName), 350);
+    }
 });
 
 // =========================================
@@ -516,7 +604,6 @@ function attachRoadmapListeners() {
             if (task) {
                 task.completed = !task.completed;
                 renderRoadmap();
-                // Manually trigger shower because tasks update locally without a page reload
                 if (task.completed) triggerRewardShower();
                 renderFlowerWidget();
             }
@@ -566,9 +653,9 @@ document.querySelectorAll('a.nav-item').forEach(link => {
 // =========================================
 document.addEventListener('DOMContentLoaded', async () => {
     initDropdown();
+    initReviewModal();         // ← wire up review modal events
     renderRoadmap();
     await Promise.all([loadProfile(), loadUpcomingAppointments()]);
-    // Render flower after profile + sessions have loaded so stats are populated
     renderFlowerWidget();
     if (typeof lucide !== 'undefined') lucide.createIcons();
 });
@@ -576,7 +663,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 document.getElementById('avatar-upload-input')?.addEventListener('change', async event => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     try {
         await uploadAvatar(file);
     } catch (error) {
@@ -585,14 +671,11 @@ document.getElementById('avatar-upload-input')?.addEventListener('change', async
         event.target.value = '';
     }
 });
-// This function will re-scan the page for icons whenever it's called
+
 function refreshIcons() {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// Run it once when the window is fully loaded
 window.addEventListener('load', () => {
     refreshIcons();
 });
