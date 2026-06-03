@@ -7,13 +7,20 @@ const User    = require('../database/models/users');
 const { recordAuditLog } = require('../utils/auditLogger');
 
 /* =========================================================================
-   BREVO EMAIL SETUP  (uses HTTPS — works on Render free tier)
-========================================================================= */
-const { BrevoClient } = require('@getbrevo/brevo');
-
-const brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
+   BREVO EMAIL SETUP  (v5 SDK — CommonJS interop)
+=========================================================================*/
+let _brevo = null;
+async function getBrevoClient() {
+    if (_brevo) return _brevo;
+    // v5 is ESM-only; dynamically import so CommonJS projects work
+    const mod = await import('@getbrevo/brevo');
+    const BrevoClient = mod.BrevoClient || mod.default?.BrevoClient;
+    _brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
+    return _brevo;
+}
 
 async function sendEmail({ to, subject, html }) {
+    const brevo = await getBrevoClient();
     await brevo.transactionalEmails.sendTransacEmail({
         sender:      { email: process.env.EMAIL_USER || 'noreply@hearme.app', name: 'HearMe' },
         to:          [{ email: to }],
@@ -21,7 +28,6 @@ async function sendEmail({ to, subject, html }) {
         htmlContent: html,
     });
 }
-
 /* =========================================================================
    HELPERS
 ========================================================================= */
@@ -292,22 +298,22 @@ router.post('/signup', async (req, res) => {
 
         const newUser = new User({
             role,
-            email:         normalizedEmail,
+            email:          normalizedEmail,
             password,
             termsAccepted,
-            username:       role === 'user'      ? username        : undefined,
-            anonymousName:  role === 'user'      ? anonymousName   : undefined,
-            userPhone:      role === 'user'      ? userPhone       : undefined,
-            race:           role === 'user'      ? race            : undefined,
-            struggles:      role === 'user'      ? struggles       : [],
-            firstName:      role === 'therapist' ? firstName       : undefined,
-            lastName:       role === 'therapist' ? lastName        : undefined,
-            phone:          role === 'therapist' ? phone           : undefined,
-            qualification:  role === 'therapist' ? qualification   : undefined,
-            licenseNumber:  role === 'therapist' ? licenseNumber   : undefined,
-            institutionName:role === 'therapist' ? institutionName : undefined,
-            specialization: role === 'therapist' ? specialization  : undefined,
-            location:       role === 'therapist' ? location        : undefined
+            username:        role === 'user'      ? username        : undefined,
+            anonymousName:   role === 'user'      ? anonymousName   : undefined,
+            userPhone:       role === 'user'      ? userPhone       : undefined,
+            race:            role === 'user'      ? race            : undefined,
+            struggles:       role === 'user'      ? struggles       : [],
+            firstName:       role === 'therapist' ? firstName       : undefined,
+            lastName:        role === 'therapist' ? lastName        : undefined,
+            phone:           role === 'therapist' ? phone           : undefined,
+            qualification:   role === 'therapist' ? qualification   : undefined,
+            licenseNumber:   role === 'therapist' ? licenseNumber   : undefined,
+            institutionName: role === 'therapist' ? institutionName : undefined,
+            specialization:  role === 'therapist' ? specialization  : undefined,
+            location:        role === 'therapist' ? location        : undefined
         });
 
         await newUser.save();
