@@ -9,186 +9,118 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        html, body { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; }
-        .mobile-topbar { display: none; position: sticky; top: 0; z-index: 3000; height: 60px; background: #ffffff; border-bottom: 1px solid #e2e8f0; align-items: center; justify-content: space-between; padding: 0 16px; box-sizing: border-box; width: 100%; }
-        .mobile-topbar .m-left { display: flex; align-items: center; gap: 12px; }
-        .hamburger-btn { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 0; flex-shrink: 0; }
-        .hamburger-btn span { display: block; width: 22px; height: 2px; background: #374151; border-radius: 2px; transition: all 0.3s ease; }
-        .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        .mobile-brand { font-size: 20px; font-weight: 800; color: #2563eb; letter-spacing: -0.5px; line-height: 1; }
-        .mobile-profile-pill { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 30px; padding: 5px 10px 5px 5px; cursor: pointer; position: relative; }
-        .mobile-profile-pill .m-avatar { width: 32px; height: 32px; border-radius: 50%; background: #0ea5e9; color: white; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; flex-shrink: 0; }
-        .mobile-profile-pill .m-name { font-size: 13px; font-weight: 600; color: #111827; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mobile-profile-pill .m-chevron { font-size: 10px; color: #9ca3af; transition: transform 0.2s; }
-        .mobile-profile-pill .dropdown-menu { top: 44px; right: 0; min-width: 180px; }
-        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 2499; }
-        .sidebar-overlay.show { display: block; }
+        :root { --primary: #0d9488; --primary-light: #ccfbf1; --secondary: #2563eb; }
+        html, body { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        
+        /* Modal Styles */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 5000; align-items: center; justify-content: center; padding: 16px; }
+        .modal-overlay.show { display: flex; }
+        .modal-content { background: #fff; padding: 24px; border-radius: 16px; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .close-modal { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 24px; cursor: pointer; color: #6b7280; }
+        
+        /* Layout Improvements */
+        .btn-action { background: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: background 0.2s; }
+        .btn-action:hover { background: #0f766e; }
+        .mobile-topbar { display: none; position: sticky; top: 0; z-index: 3000; height: 60px; background: #ffffff; border-bottom: 1px solid #e2e8f0; align-items: center; justify-content: space-between; padding: 0 16px; width: 100%; box-sizing: border-box; }
+        
+        /* Mobile Specifics */
         @media (max-width: 768px) {
             .mobile-topbar { display: flex; }
             .topbar { display: none !important; }
-            .app-layout { display: block !important; height: auto !important; }
-            .sidebar { position: fixed !important; top: 60px !important; left: -280px !important; width: 260px !important; height: calc(100vh - 60px) !important; z-index: 2500 !important; background: #fff !important; box-shadow: 4px 0 20px rgba(0,0,0,0.12) !important; transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important; overflow-y: auto !important; padding: 20px 16px !important; box-sizing: border-box !important; }
+            .app-layout { display: block !important; }
+            .sidebar { position: fixed !important; top: 60px !important; left: -280px !important; width: 260px !important; height: calc(100vh - 60px) !important; z-index: 2500 !important; background: #fff !important; transition: left 0.3s ease; }
             .sidebar.show { left: 0 !important; }
-            .brand-area { position: static !important; background: transparent !important; box-shadow: none !important; padding: 0 0 20px 0 !important; border-bottom: 1px solid #e2e8f0; margin-bottom: 10px; }
-            .mobile-menu-btn { display: none !important; }
-            .main-workspace { width: 100% !important; margin-left: 0 !important; }
-            .content-container { padding: 16px !important; }
-            .therapist-groups-layout { grid-template-columns: 1fr !important; }
-            .group-members-card { position: static !important; }
+            .main-workspace { margin-left: 0 !important; width: 100% !important; }
+            .therapist-group-tools { grid-template-columns: 1fr !important; }
+            .btn-action { width: 100%; margin-bottom: 10px; }
         }
+
+        /* Chat Window Space */
+        #therapistGroupMessages { height: 450px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 8px; padding: 15px; background: #f9fafb; }
     </style>
 </head>
 <body>
 
     <header class="mobile-topbar">
-        <div class="m-left">
-            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
-            <span class="mobile-brand">HearMe</span>
-        </div>
-        <div class="mobile-profile-pill" id="mobileProfilePill">
-            <div class="m-avatar" id="mobile-nav-avatar">--</div>
-            <span class="m-name" id="mobile-nav-name">Loading...</span>
-            <i class="fa-solid fa-chevron-down m-chevron" id="mobileDropdownIcon"></i>
-            <div id="mobileProfileDropdown" class="dropdown-menu">
-                <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
-                <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-                <hr>
-                <button id="mobileLogoutBtn" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign Out</span></button>
-            </div>
-        </div>
+        <button class="hamburger-btn" id="hamburgerBtn"><i class="fa-solid fa-bars"></i></button>
+        <span class="mobile-brand">HearMe</span>
     </header>
+    
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="app-layout">
         <aside class="sidebar" id="sidebar">
-            <div class="brand-area">
-                <button id="mobileMenuBtn" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
-                <span class="logo">HearMe</span>
-                <span class="badge">Therapist Portal</span>
-            </div>
+            <div class="brand-area"><span class="logo">HearMe</span></div>
             <nav class="nav-menu">
-                <a href="/therapist/clients"  class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
-                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="/therapist/groups"   class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
-                <a href="/therapist/reliefs"  class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
-                <a href="/therapist/report"   class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+                <a href="/therapist/groups" class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
             </nav>
-            <div class="overview-box">
-                <h4>Group Safety</h4>
-                <div class="ov-line">Host access <span>Therapist</span></div>
-                <div class="ov-line">Member removal <span>Enabled</span></div>
-            </div>
         </aside>
 
         <main class="main-workspace">
-            <header class="topbar">
-                <div class="topbar-right">
-                    <div class="profile-container">
-                        <button id="profileToggle" class="profile-btn">
-                            <div class="avatar" id="nav-avatar"></div>
-                            <div class="profile-info">
-                                <span class="profile-name" id="nav-name">Loading...</span>
-                                <span class="profile-role" id="nav-role">Therapist</span>
-                            </div>
-                            <div class="dropdown-arrow"><i class="fa-solid fa-chevron-down" id="dropdownIcon"></i></div>
-                        </button>
-                        <div id="profileDropdown" class="dropdown-menu">
-                            <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
-                            <hr>
-                            <button id="logoutBtn" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign Out</span></button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
             <div class="content-container">
-                <div class="page-header flex-header">
-                    <div>
-                        <h1>Groups</h1>
-                        <p>Create support groups, guide conversations, and manage members.</p>
+                <div class="page-header">
+                    <h1>Groups</h1>
+                    <div class="actions">
+                        <button class="btn-action" onclick="document.getElementById('createModal').classList.add('show')">Create Group</button>
+                        <button class="btn-action" style="background: var(--secondary);" onclick="document.getElementById('eventModal').classList.add('show')">Schedule Event</button>
                     </div>
                 </div>
+
+                <div id="createModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <button class="close-modal" onclick="this.parentElement.parentElement.classList.remove('show')">&times;</button>
+                        <h3>Create New Group</h3>
+                        <form id="createGroupForm" class="group-form">
+                            <input type="text" placeholder="Group Name" required style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                            <textarea placeholder="Description" style="width: 100%; margin-bottom: 10px; padding: 10px;"></textarea>
+                            <button type="submit" class="btn-action">Create</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="eventModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <button class="close-modal" onclick="this.parentElement.parentElement.classList.remove('show')">&times;</button>
+                        <h3>Schedule Group Event</h3>
+                        <form id="groupEventForm" class="group-form">
+                            <input type="text" placeholder="Event Title" required style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                            <input type="date" style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                            <button type="submit" class="btn-action">Schedule</button>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="therapist-groups-layout">
                     <section class="card">
-                        <h3><i class="fa-solid fa-plus"></i> Create Group</h3>
-                        <form id="createGroupForm" class="group-form">
-                            <label for="groupName">Group name</label>
-                            <input id="groupName" type="text" placeholder="Anxiety Support Circle" required>
-                            <label for="groupCategory">Category</label>
-                            <input id="groupCategory" type="text" placeholder="Anxiety & Stress" required>
-                            <label for="groupMeetingTime">Meeting time</label>
-                            <input id="groupMeetingTime" type="text" placeholder="Wednesdays at 18:00">
-                            <label for="groupDescription">Description</label>
-                            <textarea id="groupDescription" placeholder="Describe who this group supports and what members can expect." required></textarea>
-                            <button class="btn-primary full-width" type="submit"><i class="fa-solid fa-plus"></i> Create Group</button>
-                        </form>
+                        <h3>Your Groups</h3>
+                        <div id="therapistGroupsList"></div>
                     </section>
-                    <section>
-                        <div id="therapistGroupsList" class="therapist-groups-list">
-                            <p class="inbox-empty">Loading groups...</p>
-                        </div>
-                    </section>
-                    <aside class="card group-members-card">
-                        <h3><i class="fa-solid fa-users"></i> Members</h3>
-                        <p class="muted text-sm" id="selectedGroupLabel">Select one of your groups to manage members.</p>
-                        <div id="groupMembersList" class="group-members-list"></div>
+                    <aside class="card">
+                        <h3>Members</h3>
+                        <div id="groupMembersList"></div>
                     </aside>
                 </div>
-                <div class="therapist-group-tools">
-                    <section class="card">
-                        <h3><i class="fa-regular fa-message"></i> Group Chat <span class="therapist-badge">Therapist</span></h3>
-                        <div id="therapistGroupMessages" class="therapist-group-messages"><p class="inbox-empty">Select a group to open chat.</p></div>
-                        <div class="therapist-group-chat-input">
-                            <input id="therapistGroupMessageInput" type="text" placeholder="Message the group..." disabled>
-                            <button id="therapistSendGroupMessage" disabled>Send</button>
-                        </div>
-                    </section>
-                    <section class="card">
-                        <h3><i class="fa-regular fa-calendar-plus"></i> Schedule Group Event</h3>
-                        <form id="groupEventForm" class="group-form">
-                            <label for="eventTitle">Event title</label>
-                            <input id="eventTitle" type="text" placeholder="Guided grounding session" required>
-                            <label for="eventDate">Date</label>
-                            <input id="eventDate" type="date" required>
-                            <label for="eventTime">Time</label>
-                            <input id="eventTime" type="time" required>
-                            <label for="eventNotes">Notes</label>
-                            <textarea id="eventNotes" placeholder="What members should prepare"></textarea>
-                            <button class="btn-primary full-width" type="submit">Schedule Event</button>
-                        </form>
-                    </section>
-                </div>
+
+                <section class="card">
+                    <h3>Group Chat <span class="therapist-badge">Therapist</span></h3>
+                    <div id="therapistGroupMessages"></div>
+                    <div class="therapist-group-chat-input">
+                        <input id="therapistGroupMessageInput" type="text" placeholder="Message the group...">
+                        <button id="therapistSendGroupMessage">Send</button>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
 
-    <script src="/therapist/js/shared/loadTherapistData.js"></script>
-    <script src="/therapist/js/shared/profileDropdown.js"></script>
-    <script src="/therapist/js/shared/api.js"></script>
-    <script src="/therapist/js/shared/utils.js"></script>
-    <script src="/therapist/js/shared/authGuard.js"></script>
-    <script src="/therapist/js/groups.js"></script>
-    <script>lucide.createIcons();</script>
     <script>
-    (function(){
-        var hb=document.getElementById("hamburgerBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay"),pp=document.getElementById("mobileProfilePill"),dd=document.getElementById("mobileProfileDropdown"),di=document.getElementById("mobileDropdownIcon"),ml=document.getElementById("mobileLogoutBtn");
-        function open(){sb.classList.add("show");ov.classList.add("show");hb.classList.add("open");document.body.style.overflow="hidden";}
-        function close(){sb.classList.remove("show");ov.classList.remove("show");hb.classList.remove("open");document.body.style.overflow="";}
-        hb.addEventListener("click",function(e){e.stopPropagation();sb.classList.contains("show")?close():open();});
-        ov.addEventListener("click",close);
-        sb.querySelectorAll("a.nav-item").forEach(function(l){l.addEventListener("click",function(){if(window.innerWidth<=768)close();});});
-        pp.addEventListener("click",function(e){e.stopPropagation();var o=dd.classList.contains("show-dropdown");dd.classList.toggle("show-dropdown",!o);di.style.transform=o?"":"rotate(180deg)";});
-        document.addEventListener("click",function(){dd.classList.remove("show-dropdown");di.style.transform="";});
-        if(ml){ml.addEventListener("click",function(){var d=document.getElementById("logoutBtn");if(d)d.click();else{localStorage.clear();window.location.href="/login";}});}
-        function sync(){var da=document.getElementById("nav-avatar"),dn=document.getElementById("nav-name"),ma=document.getElementById("mobile-nav-avatar"),mn=document.getElementById("mobile-nav-name");if(da&&ma){ma.textContent=da.textContent||"--";if(da.style.backgroundImage){ma.style.backgroundImage=da.style.backgroundImage;ma.style.backgroundSize="cover";ma.style.backgroundPosition="center";ma.textContent="";}}if(dn&&mn)mn.textContent=dn.textContent||"Therapist";}
-        var si=setInterval(function(){var n=document.getElementById("nav-name");if(n&&n.textContent&&n.textContent!=="Loading..."){sync();clearInterval(si);}},300);
-        var obs=new MutationObserver(sync);["nav-avatar","nav-name"].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el,{childList:true,subtree:true,attributes:true,characterData:true});});
-    })();
+        // Hamburger & Modal Toggle Logic
+        document.getElementById('hamburgerBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('show');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+        });
     </script>
 </body>
 </html>

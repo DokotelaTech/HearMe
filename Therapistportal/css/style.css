@@ -2464,3 +2464,52 @@ textarea::placeholder {
     min-height: 500px;
   }
 }
+
+
+/* Modal Styles */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 5000; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal-content { background: #fff; padding: 24px; border-radius: 12px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+.btn-trigger { background: #2563eb; color: white; padding: 10px 16px; border-radius: 8px; border: none; cursor: pointer; margin-bottom: 15px; }
+.close-modal { float: right; cursor: pointer; font-size: 20px; border: none; background: none; }
+
+/* Modal responsiveness */
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 95%; /* Wider on small phones */
+    max-width: 500px;
+    max-height: 85vh; /* Prevents overflow off-screen */
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Ensure forms inside modals are mobile-friendly */
+.modal-content .group-form input, 
+.modal-content .group-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box; /* Important for padding */
+}
+
+/* Chat container adjustment */
+#therapistGroupMessages {
+    height: 35vh; /* Dynamic height based on viewport */
+    overflow-y: auto;
+    background: #f9fafb;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Button layout for mobile */
+.page-header.flex-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.btn-trigger {
+    width: 100%; /* Full width buttons on mobile */
+    font-size: 14px;
+}
