@@ -272,6 +272,7 @@ async function updateStatus(appointmentId, status) {
     }
 }
 
+
 // =========================================
 // START EMERGENCY CALL + SEND BREVO EMAILS
 // =========================================
@@ -311,6 +312,7 @@ async function startEmergencyCall(appointmentId, clientName, userId) {
         alert(error.message || 'Emergency accepted, but the call could not start.');
     }
 }
+
 
 // =========================================
 // CLOSE VIDEO MODAL
