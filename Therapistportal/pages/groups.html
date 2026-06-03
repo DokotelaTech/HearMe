@@ -4,24 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Groups</title>
-    <!-- Assuming your existing styles are linked here -->
+    
     <link rel="stylesheet" href="/therapist/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* Modal Styles */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 5000; align-items: center; justify-content: center; }
-        .modal-overlay.show { display: flex; }
-        .modal-content { background: #fff; padding: 24px; border-radius: 12px; width: 400px; }
-        
-        /* Layout Fixes */
-        .groups-main-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
-        .btn-trigger { background: #2563eb; color: white; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; }
+        :root {
+            --primary: #0d9488;
+            --primary-light: #ccfbf1;
+            --secondary: #2563eb;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --bg-input: #f9fafb;
+            --border-color: #d1d5db;
+        }
+
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* ----- Main Layout Grid ----- */
+        .groups-main-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 2fr; 
+            gap: 24px; 
+            margin-top: 24px; 
+        }
+
+        /* ----- Header Buttons ----- */
+        .header-actions { display: flex; gap: 12px; }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover { background: #0f766e; }
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-secondary:hover { background: #1d4ed8; }
+        .full-width { width: 100%; justify-content: center; margin-top: 8px; padding: 12px; font-size: 16px; }
+
+        /* ----- Modal Overlay & Animations ----- */
+        .modal-overlay { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(17, 24, 39, 0.6); 
+            backdrop-filter: blur(4px);
+            z-index: 5000; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show { 
+            display: flex; 
+            opacity: 1;
+        }
+
+        /* ----- Clean, Large Modal UI ----- */
+        .modal-content { 
+            background: #ffffff; 
+            padding: 32px; 
+            border-radius: 16px; 
+            width: 100%;
+            max-width: 600px; /* Made the modal wider and bigger */
+            max-height: 90vh; 
+            overflow-y: auto; 
+            position: relative; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-content h3 {
+            margin: 0 0 24px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Modal Close Button */
+        .close-modal { 
+            position: absolute; 
+            top: 24px; 
+            right: 24px; 
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f3f4f6; 
+            border: none; 
+            font-size: 20px; 
+            cursor: pointer; 
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .close-modal:hover { background: #e5e7eb; color: var(--text-main); }
+
+        /* ----- Premium Form Inputs ----- */
+        .group-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 14px;
+        }
+        .group-form input, .group-form textarea {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-input);
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+        }
+        .group-form input::placeholder, .group-form textarea::placeholder {
+            color: #9ca3af;
+        }
+        .group-form input:focus, .group-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+        .group-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Split inputs side-by-side for Date/Time */
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        .form-row > div {
+            flex: 1;
+        }
+
+        /* Mobile tweaks for main grid */
+        @media (max-width: 768px) {
+            .groups-main-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 24px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div class="app-layout">
-        <!-- Sidebar restored to match image_92922f.png -->
         <aside class="sidebar">
             <div class="brand-area">
                 <span class="logo">HearMe</span>
@@ -35,74 +199,145 @@
                 <a href="#" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
-            <div class="overview-box">
-                <h4>Today's Overview</h4>
-                <div class="ov-line">Active Clients <span>0</span></div>
-                <div class="ov-line">Sessions Today <span>0</span></div>
-                <div class="ov-line">Unread Messages <span>0</span></div>
-            </div>
         </aside>
 
         <main class="main-workspace">
+            
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <span class="logo">HearMe</span>
+                </div>
+                <div class="topbar-right">
+                    <div class="profile-container">
+                        <button class="profile-btn" id="profileBtn">
+                            <div class="avatar" id="therapistInitials"></div>
+                            <div class="profile-info">
+                                <span class="profile-name" id="therapistName"></span>
+                                <span class="profile-role" id="therapistRole"></span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div id="profileDropdown" class="dropdown-menu">
+                            <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                            <hr>
+                            <button id="logoutBtn" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign Out</span></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
             <div class="content-container">
-                <div class="page-header">
-                    <h1>Groups</h1>
+                <div class="page-header flex-header" style="display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <button class="btn-trigger" onclick="document.getElementById('createModal').classList.add('show')">Create Group</button>
-                        <button class="btn-trigger" onclick="document.getElementById('eventModal').classList.add('show')">Schedule Event</button>
+                        <h1>Groups</h1>
+                        <p style="color: var(--text-muted); margin-top: 4px;">Create support groups, guide conversations, and manage members.</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn-primary" onclick="document.getElementById('createModal').classList.add('show')">
+                            <i class="fa-solid fa-plus"></i> Create Group
+                        </button>
+                        <button class="btn-secondary" onclick="document.getElementById('eventModal').classList.add('show')">
+                            <i class="fa-regular fa-calendar-plus"></i> Schedule Event
+                        </button>
                     </div>
                 </div>
 
-                <!-- Reorganized Grid: Groups on Left, Chat on Right -->
                 <div class="groups-main-grid">
                     <section class="card">
-                        <h3>Your Groups</h3>
-                        <div id="therapistGroupsList"></div>
+                        <h3><i class="fa-solid fa-users"></i> Your Groups</h3>
+                        <div id="therapistGroupsList" class="therapist-groups-list">
+                            <p class="inbox-empty" style="color: var(--text-muted);">Loading groups...</p>
+                        </div>
                     </section>
                     
-                    <section class="card">
-                        <h3>Group Chat <span class="therapist-badge">Therapist</span></h3>
-                        <div id="therapistGroupMessages"></div>
+                    <section class="card" style="display: flex; flex-direction: column;">
+                        <h3><i class="fa-regular fa-message"></i> Group Chat <span class="therapist-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 8px;">Therapist</span></h3>
+                        
+                        <div id="therapistGroupMessages" style="flex: 1; min-height: 500px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 16px; overflow-y: auto;">
+                            <p class="inbox-empty" style="color: var(--text-muted); text-align: center; margin-top: 20px;">Select a group to open chat.</p>
+                        </div>
+                        
+                        <div class="therapist-group-chat-input" style="display: flex; gap: 10px;">
+                            <input id="therapistGroupMessageInput" type="text" placeholder="Message the group..." disabled style="flex: 1; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;">
+                            <button id="therapistSendGroupMessage" disabled class="btn-primary">Send</button>
+                        </div>
                     </section>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Modals with original form inputs -->
-    <div id="createModal" class="modal-overlay" onclick="this.classList.remove('show')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3>Create Group</h3>
-            <form id="createGroupForm">
-                <label>Group name</label>
-                <input type="text" placeholder="Anxiety Support Circle" required>
-                <label>Category</label>
-                <input type="text" placeholder="Anxiety & Stress" required>
-                <label>Meeting time</label>
-                <input type="text" placeholder="Wednesdays at 18:00">
-                <label>Description</label>
-                <textarea placeholder="Describe who this group supports"></textarea>
-                <button type="submit">Create Group</button>
+    <div id="createModal" class="modal-overlay" onclick="if(event.target === this) this.classList.remove('show')">
+        <div class="modal-content">
+            <button class="close-modal" onclick="document.getElementById('createModal').classList.remove('show')"><i class="fa-solid fa-xmark"></i></button>
+            <h3>Create New Group</h3>
+            <form id="createGroupForm" class="group-form">
+                
+                <label for="groupName">Group name</label>
+                <input id="groupName" type="text" placeholder="e.g. Anxiety Support Circle" required>
+                
+                <label for="groupCategory">Category</label>
+                <input id="groupCategory" type="text" placeholder="e.g. Anxiety & Stress" required>
+                
+                <label for="groupMeetingTime">Meeting time</label>
+                <input id="groupMeetingTime" type="text" placeholder="e.g. Wednesdays at 18:00">
+                
+                <label for="groupDescription">Description</label>
+                <textarea id="groupDescription" placeholder="Describe who this group supports and what members can expect." required></textarea>
+                
+                <button type="submit" class="btn-primary full-width">
+                    <i class="fa-solid fa-check"></i> Create Group
+                </button>
             </form>
         </div>
     </div>
 
-    <div id="eventModal" class="modal-overlay" onclick="this.classList.remove('show')">
-        <div class="modal-content" onclick="event.stopPropagation()">
+    <div id="eventModal" class="modal-overlay" onclick="if(event.target === this) this.classList.remove('show')">
+        <div class="modal-content">
+            <button class="close-modal" onclick="document.getElementById('eventModal').classList.remove('show')"><i class="fa-solid fa-xmark"></i></button>
             <h3>Schedule Group Event</h3>
-            <form id="groupEventForm">
-                <label>Event title</label>
-                <input type="text" placeholder="Guided grounding session" required>
-                <label>Date</label>
-                <input type="date" required>
-                <label>Time</label>
-                <input type="time" required>
-                <label>Notes</label>
-                <textarea placeholder="What members should prepare"></textarea>
-                <button type="submit">Schedule Event</button>
+            <form id="groupEventForm" class="group-form">
+                
+                <label for="eventTitle">Event title</label>
+                <input id="eventTitle" type="text" placeholder="e.g. Guided grounding session" required>
+                
+                <div class="form-row">
+                    <div>
+                        <label for="eventDate">Date</label>
+                        <input id="eventDate" type="date" required>
+                    </div>
+                    <div>
+                        <label for="eventTime">Time</label>
+                        <input id="eventTime" type="time" required>
+                    </div>
+                </div>
+                
+                <label for="eventNotes">Notes</label>
+                <textarea id="eventNotes" placeholder="What members should prepare or know beforehand"></textarea>
+                
+                <button type="submit" class="btn-secondary full-width">
+                    <i class="fa-regular fa-calendar-check"></i> Schedule Event
+                </button>
             </form>
         </div>
     </div>
 
+        <!-- Shared Scripts -->
+    <script src="/therapist/js/shared/loadTherapistData.js"></script>
+    <script src="/therapist/js/shared/profileDropdown.js"></script>
+    <script src="/therapist/js/shared/api.js"></script>
+    <script src="/therapist/js/shared/utils.js"></script>
+    <script src="/therapist/js/shared/authGuard.js"></script>
+    <script src="/therapist/js/shared/sidebar.js"></script>
+
+    <!-- Page Script -->
+    <script src="/therapist/js/stressRelief.js"></script>
+
+    <!-- Mobile Fixes -->
+    <script src="/therapist/js/shared/mobileFixes.js" defer></script>
 </body>
 </html>
