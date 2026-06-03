@@ -1,6 +1,6 @@
 (() => {
     // =========================================
-    // THERAPIST REPORT PAGE — report.js
+    // THERAPIST REPORT PAGE — reports.js
     // =========================================
 
     const API_BASE = '/api';
@@ -8,23 +8,21 @@
     // =========================================
     // CATEGORY SELECTOR
     // =========================================
-    const categoryBtns = document.querySelectorAll('.cat-btn');
+    const categoryBtns  = document.querySelectorAll('.cat-btn');
     const categoryInput = document.getElementById('report-category-input');
 
     categoryBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active from all
             categoryBtns.forEach(b => {
-                b.style.border = '1px solid #e5e7eb';
+                b.style.border     = '1px solid #e5e7eb';
                 b.style.background = 'white';
-                b.style.color = 'inherit';
+                b.style.color      = 'inherit';
                 b.classList.remove('active');
             });
 
-            // Activate clicked
-            btn.style.border = '1px solid #3b82f6';
+            btn.style.border     = '1px solid #3b82f6';
             btn.style.background = '#eff6ff';
-            btn.style.color = '#1d4ed8';
+            btn.style.color      = '#1d4ed8';
             btn.classList.add('active');
 
             if (categoryInput) {
@@ -41,9 +39,9 @@
     form?.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const category = categoryInput ? categoryInput.value : '';
+        const category    = categoryInput ? categoryInput.value : 'technical';
         const description = document.getElementById('report-description-input').value.trim();
-        const submitBtn = form.querySelector('button[type="submit"]');
+        const submitBtn   = form.querySelector('button[type="submit"]');
 
         if (!description) {
             showToast('Please provide a description.', 'error');
@@ -51,19 +49,20 @@
         }
 
         if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled   = true;
+            submitBtn.innerHTML  = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting...';
         }
 
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${API_BASE}/reports`, {
-                method: 'POST',
+            const res   = await fetch(`${API_BASE}/reports`, {
+                method:  'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type':  'application/json'
                 },
-                body: JSON.stringify({ category, description })
+                // ✅ type:'clinical' tells the backend this is a therapist report to admin
+                body: JSON.stringify({ category, description, type: 'clinical' })
             });
 
             const data = await res.json();
@@ -72,22 +71,20 @@
             showToast('Report submitted successfully!', 'success');
             form.reset();
 
-            // Reset category selector back to default
+            // Reset category selector back to first button (Technical)
             categoryBtns.forEach(b => {
-                b.style.border = '1px solid #e5e7eb';
+                b.style.border     = '1px solid #e5e7eb';
                 b.style.background = 'white';
-                b.style.color = 'inherit';
+                b.style.color      = 'inherit';
                 b.classList.remove('active');
             });
             const firstBtn = categoryBtns[0];
             if (firstBtn) {
-                firstBtn.style.border = '1px solid #3b82f6';
+                firstBtn.style.border     = '1px solid #3b82f6';
                 firstBtn.style.background = '#eff6ff';
-                firstBtn.style.color = '#1d4ed8';
+                firstBtn.style.color      = '#1d4ed8';
                 firstBtn.classList.add('active');
-                if (categoryInput) {
-                    categoryInput.value = firstBtn.getAttribute('data-type');
-                }
+                if (categoryInput) categoryInput.value = firstBtn.getAttribute('data-type');
             }
 
             // Reload recent reports sidebar
@@ -98,7 +95,7 @@
             console.error(err);
         } finally {
             if (submitBtn) {
-                submitBtn.disabled = false;
+                submitBtn.disabled  = false;
                 submitBtn.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Submit Report to Admin';
             }
         }
@@ -113,11 +110,11 @@
 
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${API_BASE}/reports/my`, {
+            const res   = await fetch(`${API_BASE}/reports/my`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            const data = await res.json();
+            const data    = await res.json();
             const reports = data.reports || [];
 
             if (reports.length === 0) {
@@ -126,9 +123,9 @@
             }
 
             const categoryIcons = {
-                technical: { icon: 'fa-wrench',          color: '#3b82f6' },
-                client:    { icon: 'fa-user',            color: '#8b5cf6' },
-                safety:    { icon: 'fa-shield-halved',   color: '#ef4444' }
+                technical: { icon: 'fa-wrench',        color: '#3b82f6' },
+                client:    { icon: 'fa-user',           color: '#8b5cf6' },
+                safety:    { icon: 'fa-shield-halved',  color: '#ef4444' }
             };
 
             const statusConfig = {
@@ -138,8 +135,8 @@
             };
 
             container.innerHTML = reports.map(r => {
-                const cat = categoryIcons[r.category] || categoryIcons.technical;
-                const stat = statusConfig[r.status] || statusConfig.pending;
+                const cat  = categoryIcons[r.category] || categoryIcons.technical;
+                const stat = statusConfig[r.status]    || statusConfig.pending;
                 const date = new Date(r.createdAt).toLocaleDateString('en-US', {
                     month: 'short', day: 'numeric', year: 'numeric'
                 });
@@ -182,7 +179,7 @@
         const existing = document.getElementById('report-toast');
         if (existing) existing.remove();
 
-        const bg = type === 'success' ? '#16a34a' : '#dc2626';
+        const bg   = type === 'success' ? '#16a34a' : '#dc2626';
         const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-xmark';
 
         const toast = document.createElement('div');
@@ -205,8 +202,6 @@
     // =========================================
     // INIT
     // =========================================
-    document.addEventListener('DOMContentLoaded', () => {
-        loadMyReports();
-    });
+    loadMyReports();
 
 })();
