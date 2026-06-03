@@ -180,29 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================
-       RECAPTCHA TOKEN GENERATION
-    ========================= */
-    async function getRecaptchaToken() {
-        try {
-            // Check if reCAPTCHA is loaded
-            if (typeof grecaptcha === 'undefined') {
-                console.warn('reCAPTCHA not loaded');
-                return null;
-            }
-
-            // Get the reCAPTCHA token
-            const token = await grecaptcha.execute(
-                'YOUR_RECAPTCHA_SITE_KEY', // Replace with your site key
-                { action: 'login' }
-            );
-            return token;
-        } catch (error) {
-            console.error('Error getting reCAPTCHA token:', error);
-            return null;
-        }
-    }
-
-    /* =========================
        LOGIN FORM SUBMIT
     ========================= */
     // FIX: was 'login-form', corrected to match HTML id="loginForm"
@@ -213,13 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const email    = loginEmail.value.trim();
         const password = document.getElementById('password').value.trim();
 
-        // Get reCAPTCHA token
-        const recaptchaToken = await getRecaptchaToken();
-        if (!recaptchaToken) {
-            alert('CAPTCHA verification failed. Please try again.');
-            return;
-        }
-
         try {
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
@@ -227,8 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ 
                     role: selectedRole, 
                     email, 
-                    password,
-                    recaptchaToken 
+                    password
                 })
             });
 

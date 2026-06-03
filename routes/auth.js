@@ -5,7 +5,6 @@ const crypto = require('crypto');
 const dns = require('dns').promises;
 const nodemailer = require('nodemailer');
 const User = require('../database/models/users'); // Path to your users model
-const { verifyCaptcha } = require('../utils/captchaVerification'); // Import CAPTCHA verification
 
 // Helper function to validate password strength
 function validatePasswordStrength(password) {
@@ -298,19 +297,9 @@ router.post('/signup', async (req, res) => {
             role, email, password, username, anonymousName, 
             userPhone, race, struggles, firstName, lastName, 
             phone, qualification, licenseNumber, institutionName, 
-            specialization, location, termsAccepted, verificationCode, recaptchaToken
+            specialization, location, termsAccepted, verificationCode
         } = req.body;
         const normalizedEmail = normalizeEmail(email);
-
-        // Verify CAPTCHA token
-        if (recaptchaToken) {
-            const captchaResult = await verifyCaptcha(recaptchaToken);
-            if (!captchaResult.success) {
-                return res.status(400).json({ 
-                    message: 'CAPTCHA verification failed. Please try again.' 
-                });
-            }
-        }
 
         if (!isValidEmail(normalizedEmail)) {
             return res.status(400).json({ message: 'Please enter a valid email address.' });
@@ -389,34 +378,30 @@ router.post('/signup', async (req, res) => {
 ========================================================================= */
 router.post('/login', async (req, res) => {
     try {
-        const { role, email, password, recaptchaToken } = req.body;
+        const { role, email, password } = req.body;
+        const normalizedEmail = normalizeEmail(email);
 
-        // Verify CAPTCHA token
-        if (recaptchaToken) {
-            const captchaResult = await verifyCaptcha(recaptchaToken);
-            if (!captchaResult.success) {
-                return res.status(400).json({ 
-                    message: 'CAPTCHA verification failed. Please try again.' 
-                });
-            }
+        if (!['user', 'therapist'].includes(role)) {
+            return res.status(400).json({
+                message: 'Please select a valid account type.'
+            });
         }
 
-        // 1. Find user by email
-        const user = await User.findOne({ email });
+        if (!isValidEmail(normalizedEmail)) {
+            return res.status(400).json({
+                message: 'Please enter a valid email address.'
+            });
+        }
+
+        // 1. Find user by email and selected account type
+        const user = await User.findOne({ email: normalizedEmail, role });
         if (!user) {
             return res.status(400).json({ 
                 message: 'Invalid login credentials.' 
             });
         }
 
-        // 2. Verify selected portal role matches database profile role
-        if (user.role !== role) {
-            return res.status(400).json({ 
-                message: 'Invalid login credentials for this role.' 
-            });
-        }
-
-        // 3. Compare hashed password using the schema method we added
+        // 2. Compare hashed password using the schema method we added
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(400).json({ 
@@ -424,14 +409,14 @@ router.post('/login', async (req, res) => {
             });
         }
 
-        // 4. Generate JWT Token
+        // 3. Generate JWT Token
         const token = jwt.sign(
             { userId: user._id, role: user.role },
             process.env.JWT_SECRET,
             { expiresIn: '7d' } // Token expires in 24 hours
         );
 
-        // 5. Respond with token and key user data required by login.js localstorage
+        // 4. Respond with token and key user data required by login.js localstorage
         res.status(200).json({
             message: 'Login successful',
             token,

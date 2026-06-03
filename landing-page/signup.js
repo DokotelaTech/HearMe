@@ -146,28 +146,6 @@ passwordInput.addEventListener('input', () => {
 });
 
 /* =========================================
-   RECAPTCHA TOKEN GENERATION
-========================================= */
-
-async function getRecaptchaToken() {
-    try {
-        if (typeof grecaptcha === 'undefined') {
-            console.warn('reCAPTCHA not loaded');
-            return null;
-        }
-
-        const token = await grecaptcha.execute(
-            'YOUR_RECAPTCHA_SITE_KEY', // Replace with your site key
-            { action: 'signup' }
-        );
-        return token;
-    } catch (error) {
-        console.error('Error getting reCAPTCHA token:', error);
-        return null;
-    }
-}
-
-/* =========================================
    ROLE SWITCHING
 ========================================= */
 
@@ -356,14 +334,6 @@ document.getElementById('signup-form')
         return;
     }
 
-    /* GET RECAPTCHA TOKEN */
-
-    const recaptchaToken = await getRecaptchaToken();
-    if (!recaptchaToken) {
-        alert('CAPTCHA verification failed. Please try again.');
-        return;
-    }
-
     /* RANDOM ANONYMOUS NAME */
 
     const randomNum =
@@ -397,8 +367,6 @@ document.getElementById('signup-form')
         confirmPassword,
 
         termsAccepted,
-
-        recaptchaToken,
 
         /* USER */
 
