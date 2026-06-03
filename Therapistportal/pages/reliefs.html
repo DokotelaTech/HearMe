@@ -3,50 +3,68 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HearMe - Therapist Portal</title>
 
     <link rel="stylesheet" href="/therapist/css/stressRelief.css">
     <link rel="stylesheet" href="responsive.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<!-- Add this right before </body> -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuBtn = document.getElementById("mobileMenuBtn");
-            const sidebar = document.querySelector(".sidebar");
 
-            if (menuBtn && sidebar) {
-                menuBtn.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    sidebar.classList.toggle("open");
-                    sidebar.classList.toggle("show");
-                    
-                    // Create overlay if it doesn't exist yet
-                    let overlay = document.querySelector(".sidebar-overlay");
-                    if (!overlay) {
-                        overlay = document.createElement("div");
-                        overlay.className = "sidebar-overlay";
-                        document.body.appendChild(overlay);
-                        
-                        overlay.addEventListener("click", () => {
-                            sidebar.classList.remove("open", "show");
-                            overlay.remove();
-                        });
-                    } else {
-                        overlay.remove();
-                    }
-                });
+    <style>
+        /* ── Topbar layout: logo left, profile right ── */
+        .topbar {
+            justify-content: space-between !important;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-left .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary, #2563eb);
+        }
+
+        /* Hamburger — hidden on desktop, shown on mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #0f172a;
+            cursor: pointer;
+            padding: 6px;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
-        });
-    </script>
-</body>
-</html>
+
+            /* Hide the sidebar brand since logo lives in topbar on mobile */
+            .brand-area {
+                display: none;
+            }
+
+            /* Sidebar overlay */
+            .sidebar-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(15, 23, 42, 0.35);
+                z-index: 2400;
+            }
+        }
+    </style>
+</head>
 
 <body>
 
@@ -118,8 +136,15 @@
             <!-- TOPBAR -->
             <header class="topbar">
 
-                <!-- mobileFixes.js will inject the hamburger button here -->
+                <!-- Left: hamburger + logo -->
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <span class="logo">HearMe</span>
+                </div>
 
+                <!-- Right: profile -->
                 <div class="topbar-right">
 
                     <div class="profile-container">
@@ -299,6 +324,34 @@
     <script src="/therapist/js/shared/mobileFixes.js" defer></script>
 
     <script>
+        // Hamburger toggle
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById("mobileMenuBtn");
+            const sidebar = document.querySelector(".sidebar");
+
+            if (menuBtn && sidebar) {
+                menuBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.toggle("open");
+                    sidebar.classList.toggle("show");
+
+                    let overlay = document.querySelector(".sidebar-overlay");
+                    if (!overlay) {
+                        overlay = document.createElement("div");
+                        overlay.className = "sidebar-overlay";
+                        document.body.appendChild(overlay);
+
+                        overlay.addEventListener("click", () => {
+                            sidebar.classList.remove("open", "show");
+                            overlay.remove();
+                        });
+                    } else {
+                        overlay.remove();
+                    }
+                });
+            }
+        });
+
         if (typeof lucide !== "undefined") {
             lucide.createIcons();
         }

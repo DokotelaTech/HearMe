@@ -405,3 +405,43 @@ img{
     }
 
 }
+
+/* Topbar layout fix */
+.topbar {
+    justify-content: space-between; /* override flex-end */
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-left .logo {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 6px;
+}
+
+/* Show hamburger only on mobile */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .brand-area {
+        display: none;
+    }
+}
