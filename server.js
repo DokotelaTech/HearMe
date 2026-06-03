@@ -410,21 +410,6 @@ app.post('/api/chat', verifyToken, async (req, res) => {
     }
 });
 
-/*
-const FacebookStrategy = require('passport-facebook').Strategy;
-
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://hearme-i94l.onrender.com/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'emails']
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    // Here you will add the logic to find or create the user in your MongoDB
-    return cb(null, profile);
-  }
-));
-*/
 
 // =========================================
 // CONNECT TO MONGODB & START SERVER
