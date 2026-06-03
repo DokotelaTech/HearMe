@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require("crypto");
 const app = express();
-const { startReminderJob } = require('./utils/reminderJob');
 
 app.use(cors());
 app.use(express.json());
