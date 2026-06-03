@@ -2,50 +2,249 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HearMe - Calendar & Scheduling</title>
     <link rel="stylesheet" href="/therapist/css/style.css">
-    <link rel="stylesheet" href="responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<!-- Add this right before </body> -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuBtn = document.getElementById("mobileMenuBtn");
-            const sidebar = document.querySelector(".sidebar");
 
-            if (menuBtn && sidebar) {
-                menuBtn.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    sidebar.classList.toggle("open");
-                    sidebar.classList.toggle("show");
-                    
-                    // Create overlay if it doesn't exist yet
-                    let overlay = document.querySelector(".sidebar-overlay");
-                    if (!overlay) {
-                        overlay = document.createElement("div");
-                        overlay.className = "sidebar-overlay";
-                        document.body.appendChild(overlay);
-                        
-                        overlay.addEventListener("click", () => {
-                            sidebar.classList.remove("open", "show");
-                            overlay.remove();
-                        });
-                    } else {
-                        overlay.remove();
-                    }
-                });
+    <style>
+        /* ══════════════════════════════════════════
+           PREVENT ZOOM — all pages
+        ══════════════════════════════════════════ */
+        html, body {
+            touch-action: pan-x pan-y;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ══════════════════════════════════════════
+           MOBILE TOPBAR  (visible ≤ 768px only)
+        ══════════════════════════════════════════ */
+        .mobile-topbar {
+            display: none;
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+            height: 60px;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .mobile-topbar .m-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Hamburger button */
+        .hamburger-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #374151;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: #2563eb;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        /* Mobile profile pill (right side) */
+        .mobile-profile-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 30px;
+            padding: 5px 10px 5px 5px;
+            cursor: pointer;
+            position: relative;
+        }
+        .mobile-profile-pill .m-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #0ea5e9;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .mobile-profile-pill .m-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #111827;
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .mobile-profile-pill .m-chevron {
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+        /* Mobile dropdown — reuse existing .dropdown-menu styles */
+        .mobile-profile-pill .dropdown-menu {
+            top: 44px;
+            right: 0;
+            min-width: 180px;
+        }
+
+        /* Sidebar overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 2499;
+        }
+        .sidebar-overlay.show { display: block; }
+
+        /* ══════════════════════════════════════════
+           DESKTOP TOPBAR — hide on mobile
+        ══════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .mobile-topbar { display: flex; }
+
+            /* Hide desktop topbar */
+            .topbar { display: none !important; }
+
+            /* Sidebar: off-canvas */
+            .app-layout { display: block !important; height: auto !important; }
+
+            .sidebar {
+                position: fixed !important;
+                top: 60px !important;
+                left: -280px !important;
+                width: 260px !important;
+                height: calc(100vh - 60px) !important;
+                z-index: 2500 !important;
+                background: #fff !important;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.12) !important;
+                transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important;
+                overflow-y: auto !important;
+                padding: 20px 16px !important;
+                box-sizing: border-box !important;
+                /* Override any brand-area fixed positioning */
             }
-        });
-    </script>
-</body>
-</html>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar">
-            <div class="brand-area">
+            .sidebar.show { left: 0 !important; }
 
+            /* Brand area inside sidebar — reset fixed positioning */
+            .brand-area {
+                position: static !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                padding: 0 0 20px 0 !important;
+                border-bottom: 1px solid #e2e8f0;
+                margin-bottom: 10px;
+            }
+
+            /* Hide the old hamburger inside sidebar on mobile */
+            .mobile-menu-btn { display: none !important; }
+
+            .badge { display: inline !important; }
+
+            /* Main workspace full width */
+            .main-workspace {
+                width: 100% !important;
+                margin-left: 0 !important;
+            }
+
+            /* Content padding */
+            .content-container { padding: 16px !important; }
+
+            /* Stats: 2 columns */
+            .stats-row { grid-template-columns: repeat(2, 1fr) !important; }
+
+            /* Calendar single col */
+            .calendar-layout { grid-template-columns: 1fr !important; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr !important; }
+            .mobile-brand { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ══════════════════════════════════════════
+         MOBILE TOPBAR (shown on mobile only)
+    ══════════════════════════════════════════ -->
+    <header class="mobile-topbar">
+        <div class="m-left">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-brand">HearMe</span>
+        </div>
+
+        <!-- Mobile profile pill with dropdown -->
+        <div class="mobile-profile-pill" id="mobileProfilePill">
+            <div class="m-avatar" id="mobile-nav-avatar">--</div>
+            <span class="m-name" id="mobile-nav-name">Loading...</span>
+            <i class="fa-solid fa-chevron-down m-chevron" id="mobileDropdownIcon"></i>
+
+            <div id="mobileProfileDropdown" class="dropdown-menu">
+                <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                <hr>
+                <button id="mobileLogoutBtn" class="logout-btn">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ══════════════════════════════════════════
+         APP LAYOUT
+    ══════════════════════════════════════════ -->
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand-area">
+                <!-- old hamburger hidden on mobile via CSS; kept for desktop -->
                 <button id="mobileMenuBtn" class="mobile-menu-btn">
                     <i class="fa-solid fa-bars"></i>
                 </button>
@@ -53,12 +252,12 @@
                 <span class="badge">Therapist Portal</span>
             </div>
             <nav class="nav-menu">
-                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/clients"  class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item active"><i class="fa-regular fa-calendar"></i> Calendar</a>
                 <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="/therapist/groups" class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
-                <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
-                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+                <a href="/therapist/groups"   class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
+                <a href="/therapist/reliefs"  class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
+                <a href="/therapist/report"   class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
                 <h4>Today's Overview</h4>
@@ -68,12 +267,15 @@
             </div>
         </aside>
 
+        <!-- MAIN WORKSPACE -->
         <main class="main-workspace">
+
+            <!-- DESKTOP TOPBAR (hidden on mobile) -->
             <header class="topbar">
                 <div class="topbar-right">
                     <div class="profile-container">
                         <button id="profileToggle" class="profile-btn">
-                            <div class="avatar" id="nav-avatar">SJ</div>
+                            <div class="avatar" id="nav-avatar">--</div>
                             <div class="profile-info">
                                 <span class="profile-name" id="nav-name">Loading...</span>
                                 <span class="profile-role" id="nav-role">Therapist</span>
@@ -83,14 +285,8 @@
                             </div>
                         </button>
                         <div id="profileDropdown" class="dropdown-menu">
-                            <a href="/therapist/profile">
-                                <i class="fa-regular fa-user"></i>
-                                <span>My Profile</span>
-                            </a>
-                            <a href="#">
-                                <i class="fa-solid fa-gear"></i>
-                                <span>Settings</span>
-                            </a>
+                            <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                             <hr>
                             <button id="logoutBtn" class="logout-btn">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -101,6 +297,7 @@
                 </div>
             </header>
 
+            <!-- PAGE CONTENT -->
             <div class="content-container">
                 <div class="page-header flex-header">
                     <div>
@@ -121,16 +318,15 @@
                         <div class="card">
                             <h3><i class="fa-regular fa-calendar"></i> Upcoming Sessions</h3>
                             <div id="appointments-list-container">
-                                <p class="muted text-sm" style="padding:20px; text-align:center;">Loading schedule...</p>
+                                <p class="muted text-sm" style="padding:20px;text-align:center;">Loading schedule...</p>
                             </div>
                         </div>
                     </div>
-
                     <div class="cal-right">
                         <div class="card">
                             <h3>Weekly Availability</h3>
                             <div id="availability-list-container">
-                                <p class="muted text-sm" style="padding:10px 0; text-align:center;">Loading availability...</p>
+                                <p class="muted text-sm" style="padding:10px 0;text-align:center;">Loading availability...</p>
                             </div>
                             <button class="btn-light-blue full-width mt-10" id="btn-edit-availability">
                                 Edit Availability
@@ -143,27 +339,25 @@
     </div>
 
     <!-- VIDEO MODAL OVERLAY -->
-    <div id="video-modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999;"></div>
+    <div id="video-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:999;"></div>
 
     <!-- VIDEO MODAL -->
-    <div id="video-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:900px; height:600px; background:#1a1a2e; border-radius:16px; z-index:1000; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); flex-direction:column;">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:#0f0f23; color:white;">
-            <h3 id="video-modal-title" style="margin:0; font-size:1rem;">Session in Progress</h3>
-            <button id="close-video-modal" style="background:#e53935; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer; font-size:0.85rem;">
+    <div id="video-modal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:90%;max-width:900px;height:600px;background:#1a1a2e;border-radius:16px;z-index:1000;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);flex-direction:column;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:#0f0f23;color:white;">
+            <h3 id="video-modal-title" style="margin:0;font-size:1rem;">Session in Progress</h3>
+            <button id="close-video-modal" style="background:#e53935;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:0.85rem;">
                 <i class="fa-solid fa-xmark"></i> End Session
             </button>
         </div>
-        <iframe id="daily-iframe"
-            allow="camera; microphone; fullscreen; display-capture"
-            style="width:100%; height:100%; border:none; flex:1;">
-        </iframe>
+        <iframe id="daily-iframe" allow="camera; microphone; fullscreen; display-capture" style="width:100%;height:100%;border:none;flex:1;"></iframe>
     </div>
 
     <style>
-        #video-modal.active { display: flex !important; }
-        #video-modal-overlay.active { display: block !important; }
+        #video-modal.active { display:flex !important; }
+        #video-modal-overlay.active { display:block !important; }
     </style>
 
+    <!-- Scripts -->
     <script src="/therapist/js/shared/api.js"></script>
     <script src="/therapist/js/shared/authGuard.js"></script>
     <script src="/therapist/js/shared/utils.js"></script>
@@ -172,8 +366,110 @@
     <script src="/therapist/js/shared/profileDropdown.js"></script>
     <script src="/therapist/js/calendar.js"></script>
     <script src="/therapist/js/portal.js"></script>
-    <script src="mobileFix.js"></script>
-
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+    /* ══════════════════════════════════════════
+       MOBILE SIDEBAR & DROPDOWN LOGIC
+    ══════════════════════════════════════════ */
+    (function () {
+        const hamburgerBtn    = document.getElementById('hamburgerBtn');
+        const sidebar         = document.getElementById('sidebar');
+        const overlay         = document.getElementById('sidebarOverlay');
+        const mobileProfilePill = document.getElementById('mobileProfilePill');
+        const mobileDropdown  = document.getElementById('mobileProfileDropdown');
+        const mobileDropIcon  = document.getElementById('mobileDropdownIcon');
+        const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+
+        // — Sidebar open/close —
+        function openSidebar() {
+            sidebar.classList.add('show');
+            overlay.classList.add('show');
+            hamburgerBtn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            hamburgerBtn.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            sidebar.classList.contains('show') ? closeSidebar() : openSidebar();
+        });
+        overlay.addEventListener('click', closeSidebar);
+
+        // Close sidebar on nav link tap (mobile)
+        sidebar.querySelectorAll('a.nav-item').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) closeSidebar();
+            });
+        });
+
+        // — Mobile profile dropdown —
+        mobileProfilePill.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = mobileDropdown.classList.contains('show-dropdown');
+            mobileDropdown.classList.toggle('show-dropdown', !isOpen);
+            mobileDropIcon.style.transform = isOpen ? '' : 'rotate(180deg)';
+        });
+
+        document.addEventListener('click', function() {
+            mobileDropdown.classList.remove('show-dropdown');
+            mobileDropIcon.style.transform = '';
+        });
+
+        // Sync logout button with the desktop one
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.addEventListener('click', function() {
+                const desktopLogout = document.getElementById('logoutBtn');
+                if (desktopLogout) desktopLogout.click();
+                else {
+                    localStorage.clear();
+                    window.location.href = '/login';
+                }
+            });
+        }
+
+        // — Sync mobile avatar/name with desktop nav (set by loadTherapistData.js) —
+        function syncMobileNav() {
+            const desktopAvatar = document.getElementById('nav-avatar');
+            const desktopName   = document.getElementById('nav-name');
+            const mobileAvatar  = document.getElementById('mobile-nav-avatar');
+            const mobileName    = document.getElementById('mobile-nav-name');
+
+            if (desktopAvatar && mobileAvatar) {
+                mobileAvatar.textContent = desktopAvatar.textContent || '--';
+                if (desktopAvatar.style.backgroundImage) {
+                    mobileAvatar.style.backgroundImage = desktopAvatar.style.backgroundImage;
+                    mobileAvatar.style.backgroundSize  = 'cover';
+                    mobileAvatar.style.backgroundPosition = 'center';
+                    mobileAvatar.textContent = '';
+                }
+            }
+            if (desktopName && mobileName) {
+                mobileName.textContent = desktopName.textContent || 'Therapist';
+            }
+        }
+
+        // Poll until desktop elements are populated
+        const syncInterval = setInterval(function() {
+            const name = document.getElementById('nav-name');
+            if (name && name.textContent && name.textContent !== 'Loading...') {
+                syncMobileNav();
+                clearInterval(syncInterval);
+            }
+        }, 300);
+
+        // Also observe direct mutations
+        const observer = new MutationObserver(syncMobileNav);
+        ['nav-avatar','nav-name'].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el, { childList: true, subtree: true, attributes: true, characterData: true });
+        });
+    })();
+    </script>
 </body>
 </html>
