@@ -21,7 +21,32 @@ function displayName(user) {
     const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
     if (fullName) return fullName;
 
-    return user.anonymousName || user.username || user.email;
+    return user.anonymousName || user.username || user.email || 'Member';
+}
+
+function serializeGroup(group, viewerId) {
+    const therapist = group.therapistId;
+    const therapistId = therapist?._id || therapist;
+    const members = group.members || [];
+    const memberCount = members.length;
+    const isMember = members.some(memberId => memberId.toString() === viewerId);
+    const isOwner = therapistId?.toString() === viewerId;
+
+    return {
+        id: group._id,
+        _id: group._id,
+        name: group.name,
+        category: group.category,
+        description: group.description,
+        meetingTime: group.meetingTime,
+        members,
+        memberCount,
+        therapistId,
+        therapistName: displayName(therapist),
+        events: group.events || [],
+        isMember,
+        isOwner
+    };
 }
 
 async function findGroupForParticipant(groupId, userId) {
@@ -43,23 +68,7 @@ router.get('/', verifyToken, async (req, res) => {
             .populate('therapistId', 'firstName lastName email')
             .sort({ createdAt: -1 });
 
-        const data = groups.map(group => {
-            const isMember = group.members.some(memberId => memberId.toString() === req.user.userId);
-            const isOwner = group.therapistId._id.toString() === req.user.userId;
-
-            return {
-                id: group._id,
-                name: group.name,
-                category: group.category,
-                description: group.description,
-                meetingTime: group.meetingTime,
-                memberCount: group.members.length,
-                therapistName: displayName(group.therapistId),
-                events: group.events || [],
-                isMember,
-                isOwner
-            };
-        });
+        const data = groups.map(group => serializeGroup(group, req.user.userId));
 
         res.status(200).json({ groups: data });
     } catch (error) {
@@ -69,8 +78,10 @@ router.get('/', verifyToken, async (req, res) => {
 
 router.get('/mine', verifyToken, ensureRole('therapist'), async (req, res) => {
     try {
-        const groups = await Group.find({ therapistId: req.user.userId }).sort({ createdAt: -1 });
-        res.status(200).json({ groups });
+        const groups = await Group.find({ therapistId: req.user.userId })
+            .populate('therapistId', 'firstName lastName email')
+            .sort({ createdAt: -1 });
+        res.status(200).json({ groups: groups.map(group => serializeGroup(group, req.user.userId)) });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -89,7 +100,10 @@ router.post('/', verifyToken, ensureRole('therapist'), async (req, res) => {
         });
 
         await group.save();
-        res.status(201).json({ message: 'Group created successfully.', group });
+        res.status(201).json({
+            message: 'Group created successfully.',
+            group: serializeGroup(group, req.user.userId)
+        });
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: error.message });

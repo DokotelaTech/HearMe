@@ -8,6 +8,22 @@ function token() {
     return localStorage.getItem('token');
 }
 
+function getStoredUser() {
+    try {
+        return JSON.parse(localStorage.getItem('user') || '{}');
+    } catch {
+        return {};
+    }
+}
+
+function getCurrentUserId() {
+    if (currentUserId) return currentUserId;
+
+    const user = getStoredUser();
+    currentUserId = String(user.id || user._id || user.userId || localStorage.getItem('userId') || '');
+    return currentUserId;
+}
+
 function requireUserSession() {
     if (!token() || localStorage.getItem('role') !== 'user') {
         alert('Please sign in as a user to view groups.');
@@ -15,6 +31,7 @@ function requireUserSession() {
         return false;
     }
 
+    getCurrentUserId();
     return true;
 }
 
@@ -46,19 +63,29 @@ function escapeHtml(value) {
         .replace(/'/g, '&#39;');
 }
 
-/* =========================================
-   RENDER ALL AVAILABLE GROUPS
-========================================= */
-function renderGroupsGrid() {
+function groupId(group) {
+    return String(group.id || group._id);
+}
+
+function formatTime(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleTimeString(undefined, {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function renderGroupsGrid(sourceGroups = groups) {
     const list = document.getElementById('groupsList');
 
-    if (!groups.length) {
+    if (!sourceGroups.length) {
         list.innerHTML = '<p class="empty-state">No groups available yet. Check back soon!</p>';
         return;
     }
 
-    list.innerHTML = groups.map(group => {
-        const isMember = joinedGroups.some(g => g.id === group.id);
+    list.innerHTML = sourceGroups.map(group => {
+        const id = groupId(group);
+        const isMember = group.isMember || joinedGroups.some(joined => groupId(joined) === id);
 
         return `
             <article class="group-card">
@@ -68,12 +95,11 @@ function renderGroupsGrid() {
                 </div>
 
                 <h3 class="group-title">${escapeHtml(group.name)}</h3>
-
                 <p class="group-description">${escapeHtml(group.description)}</p>
 
                 <div class="group-meta">
                     <span><i data-lucide="user-round"></i> ${escapeHtml(group.therapistName)}</span>
-                    <span><i data-lucide="users"></i> ${group.memberCount} members</span>
+                    <span><i data-lucide="users"></i> ${group.memberCount || 0} members</span>
                 </div>
 
                 <div class="group-meeting-time">
@@ -86,10 +112,10 @@ function renderGroupsGrid() {
                         ? `<button class="btn-joined" disabled>
                             <i data-lucide="check"></i> Joined
                         </button>
-                        <button class="btn-chat" data-chat="${group.id}">
+                        <button class="btn-chat" data-chat="${id}">
                             <i data-lucide="message-circle"></i> Open Chat
                         </button>`
-                        : `<button class="btn-join" data-join="${group.id}">
+                        : `<button class="btn-join" data-join="${id}">
                             <i data-lucide="plus"></i> Join Group
                         </button>`
                     }
@@ -98,76 +124,36 @@ function renderGroupsGrid() {
         `;
     }).join('');
 
-    // Add event listeners
-    document.querySelectorAll('.btn-join').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const groupId = btn.dataset.join;
-            joinGroup(groupId);
-        });
-    });
-
-    document.querySelectorAll('.btn-chat').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const groupId = btn.dataset.chat;
-            openGroupChat(groupId);
-        });
-    });
-
     lucide.createIcons();
 }
 
-/* =========================================
-   LOAD ALL GROUPS
-========================================= */
 async function loadGroups() {
-    if (!requireUserSession()) return;
-
     const list = document.getElementById('groupsList');
 
     try {
         const data = await apiRequest('/groups');
         groups = data.groups || [];
-
-        // Get user's joined groups
-        const userData = JSON.parse(localStorage.getItem('user') || '{}');
-        currentUserId = userData.id || userData.userId;
-
-        joinedGroups = groups.filter(g => g.isMember);
-
+        joinedGroups = groups.filter(group => group.isMember);
         renderGroupsGrid();
     } catch (error) {
         list.innerHTML = `<p class="empty-state error">${escapeHtml(error.message)}</p>`;
     }
 }
 
-/* =========================================
-   JOIN GROUP
-========================================= */
-async function joinGroup(groupId) {
-    try {
-        await apiRequest(`/groups/${groupId}/join`, 'POST');
+async function joinGroup(groupIdToJoin) {
+    await apiRequest(`/groups/${groupIdToJoin}/join`, 'POST');
 
-        // Update local state
-        const group = groups.find(g => g.id === groupId);
-        if (group && !joinedGroups.some(g => g.id === groupId)) {
-            joinedGroups.push(group);
-            group.isMember = true;
-            group.memberCount++;
-        }
-
-        renderGroupsGrid();
-
-        // Show confirmation
-        alert('Successfully joined the group! Opening chat...');
-        setTimeout(() => openGroupChat(groupId), 500);
-    } catch (error) {
-        alert(`Failed to join group: ${error.message}`);
+    const group = groups.find(item => groupId(item) === groupIdToJoin);
+    if (group && !joinedGroups.some(joined => groupId(joined) === groupIdToJoin)) {
+        group.isMember = true;
+        group.memberCount = (group.memberCount || 0) + 1;
+        joinedGroups.push(group);
     }
+
+    renderGroupsGrid();
+    await openGroupChat(groupIdToJoin);
 }
 
-/* =========================================
-   RENDER GROUP MESSAGES (WhatsApp style)
-========================================= */
 function renderMessages(messages) {
     const chat = document.getElementById('groupChatMessages');
 
@@ -176,25 +162,20 @@ function renderMessages(messages) {
         return;
     }
 
-    const userId = localStorage.getItem('userId');
-    const userName = localStorage.getItem('userIdentifier') || 'You';
+    const userId = getCurrentUserId();
 
     chat.innerHTML = messages.map(message => {
-        const isUserMessage = message.senderId?.toString() === userId || 
-                            message.senderRole === 'user';
-        const messageClass = isUserMessage ? 'user-message' : 'other-message';
-        const displayName = isUserMessage ? 'You' : escapeHtml(message.senderName || 'Member');
-        const timeString = new Date(message.createdAt).toLocaleTimeString(undefined, {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
+        const senderId = message.senderId?._id || message.senderId;
+        const isOwnMessage = senderId?.toString() === userId;
+        const messageClass = isOwnMessage ? 'user-message' : 'other-message';
+        const displayName = isOwnMessage ? 'You' : escapeHtml(message.senderName || 'Member');
 
         return `
             <div class="message-group ${messageClass}">
-                ${!isUserMessage ? `<div class="message-sender">${displayName}</div>` : ''}
+                ${!isOwnMessage ? `<div class="message-sender">${displayName}</div>` : ''}
                 <div class="message-content">
                     <p class="message-text">${escapeHtml(message.message)}</p>
-                    <span class="message-time">${timeString}</span>
+                    <span class="message-time">${formatTime(message.createdAt)}</span>
                 </div>
             </div>
         `;
@@ -203,113 +184,56 @@ function renderMessages(messages) {
     chat.scrollTop = chat.scrollHeight;
 }
 
-/* =========================================
-   OPEN GROUP CHAT
-========================================= */
-async function openGroupChat(groupId) {
-    const group = groups.find(item => item.id === groupId);
+async function openGroupChat(groupIdToOpen) {
+    const group = groups.find(item => groupId(item) === groupIdToOpen);
     if (!group) return;
 
-    activeGroupId = groupId;
-    
-    // Update chat header
+    activeGroupId = groupIdToOpen;
+
     const header = document.getElementById('activeGroupTitle');
     const meta = document.getElementById('activeGroupMeta');
     const input = document.getElementById('groupMessageInput');
     const sendBtn = document.getElementById('sendGroupMessage');
 
     if (header) header.textContent = group.name;
-    if (meta) meta.textContent = `${group.category} • ${group.memberCount} members • Hosted by ${group.therapistName}`;
-
-    // Enable input
+    if (meta) {
+        meta.textContent = `${group.category} - ${group.memberCount || 0} members - Hosted by ${group.therapistName}`;
+    }
     if (input) input.disabled = false;
     if (sendBtn) sendBtn.disabled = false;
 
-    try {
-        const data = await apiRequest(`/groups/${groupId}/messages`);
-        renderMessages(data.messages || []);
-    } catch (error) {
-        console.error('Error loading group messages:', error);
-    }
+    const data = await apiRequest(`/groups/${groupIdToOpen}/messages`);
+    renderMessages(data.messages || []);
 }
 
-/* =========================================
-   SEND GROUP MESSAGE
-========================================= */
 async function sendMessage() {
     const input = document.getElementById('groupMessageInput');
     const message = input.value.trim();
 
     if (!activeGroupId || !message) return;
 
-    try {
-        await apiRequest(`/groups/${activeGroupId}/messages`, 'POST', { message });
-        input.value = '';
-        await openGroupChat(activeGroupId);
-    } catch (error) {
-        alert(`Failed to send message: ${error.message}`);
-    }
+    await apiRequest(`/groups/${activeGroupId}/messages`, 'POST', { message });
+    input.value = '';
+    await openGroupChat(activeGroupId);
 }
 
-/* =========================================
-   EVENT LISTENERS
-========================================= */
-document.addEventListener('DOMContentLoaded', () => {
-    const sendBtn = document.getElementById('sendGroupMessage');
-    const input = document.getElementById('groupMessageInput');
-
-    if (sendBtn) {
-        sendBtn.addEventListener('click', sendMessage);
-    }
-
-    if (input) {
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
-    }
-
-    // Load groups on page load
-    loadGroups();
-
-    lucide.createIcons();
-});
-
-/* =========================================
-   FILTER GROUPS BY CATEGORY
-========================================= */
-document.addEventListener('DOMContentLoaded', () => {
+function bindFilters() {
     const filterBtns = document.querySelectorAll('.filter-btn');
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
+            filterBtns.forEach(button => button.classList.remove('active'));
             btn.classList.add('active');
 
-            const category = btn.textContent;
+            const category = btn.textContent.trim();
+            const filtered = category === 'All Groups'
+                ? groups
+                : groups.filter(group => group.category === category);
 
-            if (category === 'All Groups') {
-                renderGroupsGrid();
-            } else {
-                const filtered = groups.filter(g => g.category === category);
-                const list = document.getElementById('groupsList');
-                
-                if (!filtered.length) {
-                    list.innerHTML = `<p class="empty-state">No groups found in ${category}</p>`;
-                    return;
-                }
-
-                // Re-render with filtered groups temporarily
-                const originalGroups = groups;
-                groups = filtered;
-                renderGroupsGrid();
-                groups = originalGroups;
-            }
+            renderGroupsGrid(filtered);
         });
     });
-});
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
@@ -317,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!requireUserSession()) return;
 
     loadGroups();
+    bindFilters();
 
     document.getElementById('groupsList').addEventListener('click', async (event) => {
         const joinId = event.target.closest('[data-join]')?.dataset.join;
@@ -335,7 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('groupMessageInput').addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
             sendMessage().catch(error => alert(error.message));
         }
     });

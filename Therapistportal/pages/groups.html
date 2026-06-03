@@ -139,6 +139,29 @@
         .group-form textarea { min-height: 120px; resize: vertical; }
         .form-row { display: flex; gap: 16px; }
         .form-row > div { flex: 1; }
+        .members-panel { margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+        .members-panel h3 { margin: 0 0 8px 0; font-size: 18px; color: var(--text-main); }
+        .members-panel p { margin: 0 0 12px 0; color: var(--text-muted); font-size: 13px; }
+        .group-member-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .group-member-row strong { display: block; color: var(--text-main); font-size: 14px; }
+        .group-member-row span { display: block; color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+        .group-member-row button {
+            border: none;
+            border-radius: 8px;
+            background: #fee2e2;
+            color: #b91c1c;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 8px 12px;
+        }
+        .group-member-row button:hover { background: #fecaca; }
 
         @media (max-width: 900px) {
             .groups-main-grid { grid-template-columns: 1fr; }
@@ -207,6 +230,14 @@
                         <h3 style="margin: 0 0 16px 0;"><i class="fa-solid fa-users"></i> Your Groups</h3>
                         <div id="therapistGroupsList" class="therapist-groups-list">
                             <p class="inbox-empty" style="color: var(--text-muted);">Loading groups...</p>
+                        </div>
+
+                        <div class="members-panel">
+                            <h3><i class="fa-solid fa-user-minus"></i> Members</h3>
+                            <p id="selectedGroupLabel">Select a group to manage members.</p>
+                            <div id="groupMembersList">
+                                <p class="inbox-empty" style="color: var(--text-muted);">No group selected.</p>
+                            </div>
                         </div>
                     </section>
                     
@@ -280,5 +311,6 @@
         </div>
     </div>
 
+    <script src="/therapist/js/groups.js"></script>
 </body>
 </html>
