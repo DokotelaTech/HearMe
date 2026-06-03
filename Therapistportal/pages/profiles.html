@@ -5,11 +5,207 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HearMe - Therapist Profile</title>
     <link rel="stylesheet" href="/therapist/css/therapistprofile.css?v=2">
-    <link rel="stylesheet" href="responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* =============================================
+           MOBILE TOPBAR — hamburger + profile aligned
+        ============================================= */
+        .mobile-topbar {
+            display: none;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            width: 100%;
+            height: 60px;
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            box-sizing: border-box;
+        }
+        .mobile-topbar .m-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hamburger-btn {
+            width: 40px; height: 40px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            gap: 5px;
+            background: none; border: none; cursor: pointer;
+            z-index: 3000;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 22px; height: 2px;
+            background: #374151;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+        .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-brand {
+            font-size: 18px;
+            font-weight: 800;
+            color: #a855f7;
+            letter-spacing: -0.5px;
+        }
+        .mobile-avatar-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 700; font-size: 13px;
+            border: none; cursor: pointer;
+        }
+
+        /* Sidebar overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 1999;
+        }
+        .sidebar-overlay.show { display: block; }
+
+        /* =============================================
+           DESKTOP TOPBAR (hide on mobile)
+        ============================================= */
+        .topbar { display: flex; }
+
+        @media (max-width: 768px) {
+            /* Show mobile bar, hide desktop bar */
+            .topbar { display: none !important; }
+            .mobile-topbar { display: flex; }
+
+            /* Sidebar off-canvas */
+            .container {
+                display: block !important;
+                padding: 0 !important;
+            }
+            .sidebar {
+                position: fixed !important;
+                top: 60px !important;
+                left: -280px !important;
+                width: 260px !important;
+                height: calc(100vh - 60px) !important;
+                z-index: 2500 !important;
+                background: #fff !important;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.12) !important;
+                transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important;
+                overflow-y: auto !important;
+                padding: 20px 16px !important;
+                box-sizing: border-box !important;
+            }
+            .sidebar.open { left: 0 !important; }
+
+            /* Main content full width */
+            .profile-area {
+                width: 100% !important;
+                padding: 16px !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Hero card mobile */
+            .hero-card { padding: 20px 16px !important; border-radius: 16px !important; }
+            .hero-top {
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                gap: 12px !important;
+            }
+            .hero-avatar-wrapper { width: 90px !important; height: 90px !important; }
+            .hero-avatar { font-size: 28px !important; }
+            .hero-details h1 { font-size: 20px !important; margin: 0 0 4px !important; }
+            .hero-details p { font-size: 13px !important; margin: 0 0 8px !important; }
+            .tags span { font-size: 11px !important; padding: 4px 10px !important; }
+            .status-badge {
+                margin: 0 auto !important;
+                font-size: 11px !important;
+                padding: 5px 12px !important;
+            }
+
+            /* Metrics row — 2x2 grid */
+            .hero-bottom {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+                margin-top: 20px !important;
+                padding: 16px !important;
+                border-radius: 10px !important;
+            }
+            .metric strong { font-size: 20px !important; }
+            .metric span { font-size: 11px !important; }
+
+            /* Onboarding card */
+            .onboarding-card { padding: 16px !important; }
+            .checklist-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            /* Tabs */
+            .tabs { border-radius: 10px 10px 0 0 !important; }
+            .tab-btn { padding: 14px 8px !important; font-size: 13px !important; }
+
+            /* Tab content */
+            .tab-content { padding: 20px 14px !important; }
+
+            /* Overview layout — single column */
+            .overview-layout {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            /* Credentials grid */
+            .cred-input-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .cred-input-grid .full-width { grid-column: 1 !important; }
+
+            /* Info cards */
+            .info-card { padding: 16px !important; }
+
+            /* Sidebar nav links bigger touch targets */
+            .sidebar a, .nav-item {
+                padding: 14px 12px !important;
+                font-size: 15px !important;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 380px) {
+            .tab-btn { font-size: 11px !important; padding: 12px 4px !important; }
+            .hero-details h1 { font-size: 18px !important; }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- ================================
+         MOBILE TOPBAR (shown on mobile)
+    ================================= -->
+    <header class="mobile-topbar">
+        <div class="m-left">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-brand">HearMe</span>
+        </div>
+        <button class="mobile-avatar-btn" id="mobileAvatarBtn">--</button>
+    </header>
+
+    <!-- Sidebar overlay (darkens background when sidebar is open) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ================================
+         DESKTOP TOPBAR (hidden on mobile)
+    ================================= -->
     <header class="topbar">
         <div class="topbar-right">
             <div class="profile-container">
@@ -23,7 +219,6 @@
                         <i class="fa-solid fa-chevron-down" id="dropdownIcon"></i>
                     </div>
                 </button>
-
                 <div id="profileDropdown" class="dropdown-menu">
                     <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
                     <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
@@ -38,14 +233,15 @@
     </header>
 
     <div class="container">
-        
-        <aside class="sidebar">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
             <nav class="nav-menu">
                 <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
                 <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
                 <a href="/therapist/groups" class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
-                <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i>Stress Relief Uploads</a>
+                <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
@@ -56,8 +252,9 @@
             </div>
         </aside>
 
+        <!-- MAIN PROFILE AREA -->
         <main class="profile-area">
-            
+
             <div class="hero-card">
                 <div class="hero-top">
                     <div class="hero-avatar-wrapper">
@@ -67,15 +264,16 @@
                             <input type="file" id="profile-image-upload" accept="image/*" title="Upload new profile picture">
                         </div>
                     </div>
-
                     <div class="hero-details">
                         <h1 id="hero-name">Loading Profile...</h1>
                         <p id="hero-title"></p>
                         <div class="tags" id="hero-tags"></div>
                     </div>
-                    <div class="status-badge warning" id="hero-status"><i class="fa-solid fa-triangle-exclamation"></i> Incomplete Profile</div>
+                    <div class="status-badge warning" id="hero-status">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Incomplete Profile
+                    </div>
                 </div>
-                
+
                 <div class="hero-bottom">
                     <div class="metric"><strong id="metric-clients">0</strong><span>Active Clients</span></div>
                     <div class="metric"><strong id="metric-sessions">0</strong><span>Sessions Completed</span></div>
@@ -106,7 +304,6 @@
             <div id="Overview" class="tab-content active">
                 <div class="overview-layout">
                     <div class="left-col">
-                        
                         <div class="editable-section">
                             <div class="section-header">
                                 <h3>About Me</h3>
@@ -118,7 +315,7 @@
                                 <button class="save-btn" onclick="saveSection('bio')">Save Bio</button>
                             </div>
                         </div>
-                        
+
                         <div class="editable-section">
                             <div class="section-header">
                                 <h3>Specializations</h3>
@@ -142,27 +339,22 @@
                                 <button class="save-btn" onclick="saveSection('approach')">Save Approach</button>
                             </div>
                         </div>
-
                     </div>
-                    
+
                     <div class="right-col">
                         <div class="info-card editable-section">
                             <div class="section-header">
                                 <h4>Session Details</h4>
                                 <button class="edit-btn" onclick="toggleEdit('session')"><i class="fa-solid fa-pen"></i> Edit</button>
                             </div>
-                            
                             <div id="session-display" class="text-display">
                                 <p class="muted">Please configure your session pricing and environment.</p>
                             </div>
-
                             <div id="session-edit" class="edit-form hidden">
                                 <label>Price per Session (Rands)</label>
                                 <input type="number" id="session-price" placeholder="e.g. 150">
-                                
                                 <label>Session Duration (Minutes)</label>
                                 <input type="number" id="session-time" placeholder="e.g. 50">
-                                
                                 <label>Working Environment</label>
                                 <select id="session-env">
                                     <option value="Video Call Only">Video Call Only</option>
@@ -170,14 +362,13 @@
                                     <option value="Video & Phone Calls">Video & Phone Calls</option>
                                     <option value="Hybrid (In-person & Virtual)">Hybrid (In-person & Virtual)</option>
                                 </select>
-                                
                                 <button class="save-btn" onclick="saveSection('session')">Save Details</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div id="Reviews" class="tab-content">
                 <div id="reviews-container">
                     <div class="empty-state" id="reviews-empty-state">
@@ -188,7 +379,6 @@
             </div>
 
             <div id="Credentials" class="tab-content">
-                
                 <div class="verify-banner" id="admin-banner">
                     <i class="fa-solid fa-file-shield"></i>
                     <div>
@@ -196,9 +386,7 @@
                         <p id="verification-message">Your profile is incomplete. Please add your credentials below.</p>
                     </div>
                 </div>
-
                 <div id="credentials-display" class="mt-20 hidden"></div>
-
                 <div class="info-card mt-20" id="credentials-edit">
                     <div class="section-header">
                         <h4>Primary Credential & License</h4>
@@ -224,8 +412,8 @@
                     </div>
                     <button class="save-btn mt-10" onclick="saveCredentials()">Save Credentials</button>
                 </div>
-
             </div>
+
         </main>
     </div>
 
@@ -235,7 +423,65 @@
     <script src="/therapist/js/shared/authGuard.js"></script>
     <script src="/therapist/js/shared/sidebar.js"></script>
     <script src="/therapist/js/theProfile.js"></script>
-    
-    <script src="mobileFixes.js" defer></script>
+
+    <script>
+        /* =============================================
+           MOBILE SIDEBAR TOGGLE
+        ============================================= */
+        const hamburgerBtn   = document.getElementById('hamburgerBtn');
+        const sidebar        = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const mobileAvatarBtn = document.getElementById('mobileAvatarBtn');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('show');
+            hamburgerBtn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('show');
+            hamburgerBtn.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        // Close sidebar when a nav link is tapped on mobile
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) closeSidebar();
+            });
+        });
+
+        // Sync mobile avatar initial with desktop
+        const syncMobileAvatar = () => {
+            const navAvatar = document.getElementById('nav-avatar');
+            if (navAvatar && mobileAvatarBtn) {
+                // Sync text content
+                mobileAvatarBtn.textContent = navAvatar.textContent || '--';
+                // Sync background image if set
+                if (navAvatar.style.backgroundImage) {
+                    mobileAvatarBtn.style.backgroundImage = navAvatar.style.backgroundImage;
+                    mobileAvatarBtn.style.backgroundSize = 'cover';
+                    mobileAvatarBtn.style.backgroundPosition = 'center';
+                    mobileAvatarBtn.textContent = '';
+                }
+            }
+        };
+
+        // Watch for changes to nav-avatar (set by JS after data loads)
+        const avatarObserver = new MutationObserver(syncMobileAvatar);
+        const navAvatar = document.getElementById('nav-avatar');
+        if (navAvatar) {
+            avatarObserver.observe(navAvatar, { childList: true, attributes: true, attributeFilter: ['style'] });
+        }
+    </script>
 </body>
 </html>
