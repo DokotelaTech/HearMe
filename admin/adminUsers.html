@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Admin Users</title>
+    <link rel="stylesheet" href="/admin/admins.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <button id="mobileMenuBtn" class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+            <div class="logo">HearMe</div>
+            <nav class="nav-menu">
+                <a href="/admin/dashboard" class="nav-item">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </a>
+                <a href="/admin/users" class="nav-item active">
+                    <i class="fa-solid fa-users-gear"></i> Users
+                </a>
+                <a href="/admin/reports" class="nav-item">
+                    <i class="fa-solid fa-triangle-exclamation"></i> User Reports
+                </a>
+                <a href="/admin/profile" class="nav-item">
+                    <i class="fa-solid fa-user"></i> My Profile
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="route-info">/admin/users</div>
+                <div class="user-profile-container">
+                    <div class="user-profile" id="profileMenuBtn">
+                        <span class="role-badge">Admin</span>
+                        <div class="avatar" id="header-avatar">-</div>
+                        <i class="fa-solid fa-chevron-down profile-arrow"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <a href="/admin/profile" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                        <hr>
+                        <a href="#" class="dropdown-item" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-section active">
+                <div class="dashboard-header user-admin-header">
+                    <div>
+                        <h1>User Management</h1>
+                        <p>View every account in the app and manage access by role, status, or credentials.</p>
+                    </div>
+                    <button type="button" class="btn btn-refresh" id="refreshUsersBtn">
+                        <i class="fa-solid fa-rotate-right"></i> Refresh
+                    </button>
+                </div>
+
+                <div class="user-toolbar">
+                    <div class="user-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input id="userSearchInput" type="search" placeholder="Search by name, email, role, or status">
+                    </div>
+                    <select id="roleFilter" class="user-filter">
+                        <option value="">All roles</option>
+                        <option value="user">Users</option>
+                        <option value="therapist">Therapists</option>
+                        <option value="admin">Admins</option>
+                    </select>
+                    <select id="statusFilter" class="user-filter">
+                        <option value="">All statuses</option>
+                        <option value="active">Active</option>
+                        <option value="suspended">Suspended</option>
+                    </select>
+                </div>
+
+                <div class="users-table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Account</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Credentials</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="6" class="empty-state">Loading users from database...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/adminUsers.js"></script>
+    <script src="mobileFixes.js"></script>
+</body>
+</html>

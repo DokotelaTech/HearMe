@@ -66,6 +66,18 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    accountStatus: {
+        type: String,
+        enum: ['active', 'suspended'],
+        default: 'active'
+    },
+    suspendedAt: {
+        type: Date
+    },
+    suspendedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 
 }, {

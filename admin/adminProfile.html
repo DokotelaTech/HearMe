@@ -20,6 +20,9 @@
                 <a href="/admin/dashboard" class="nav-item">
                     <i class="fa-solid fa-chart-pie"></i> Dashboard
                 </a>
+                <a href="/admin/users" class="nav-item">
+                    <i class="fa-solid fa-users-gear"></i> Users
+                </a>
                 <a href="/admin/reports" class="nav-item">
                     <i class="fa-solid fa-triangle-exclamation"></i> User Reports
                 </a>
@@ -150,75 +153,60 @@
             alert('Password change coming soon.');
         }
 
-        // --- NEW: Fetch and Render Audit Logs ---
-        // --- FETCH REAL DATA FROM YOUR BACKEND ---
-async function fetchAuditLogs() {
-    const container = document.getElementById('audit-logs-container');
+        async function fetchAuditLogs() {
+            const container = document.getElementById('audit-logs-container');
 
-    try {
-        // 1. Get the auth token from local storage
-        const token = localStorage.getItem('adminToken');
+            try {
+                const token = localStorage.getItem('adminToken');
+                const response = await fetch('/api/admin/audit-logs', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-        // 2. Make the request to YOUR real backend API
-        // IMPORTANT: Change '/api/admin/audit-logs' to your actual backend URL route
-        const response = await fetch('/api/admin/audit-logs', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                const logs = await response.json();
+                if (!response.ok) {
+                    throw new Error(logs.message || `Server error: ${response.status}`);
+                }
+
+                if (!logs || logs.length === 0) {
+                    container.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="empty-state">No audit logs found in the database.</td>
+                        </tr>`;
+                    return;
+                }
+
+                container.innerHTML = logs.map(log => `
+                    <tr>
+                        <td>${escapeHtml(log.timestamp)}</td>
+                        <td><strong>${escapeHtml(log.action)}</strong></td>
+                        <td style="font-family: monospace;">${escapeHtml(log.ip)}</td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error fetching real logs:', error);
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="empty-state" style="color:#dc3545;">
+                            ${escapeHtml(error.message || 'Connection failed. Could not reach the backend database.')}
+                        </td>
+                    </tr>`;
             }
-        });
-        
-        // 3. Check if the request was successful
-        if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
         }
 
-        // 4. Parse the real data from your database
-        const logs = await response.json();
-
-        // Clear the "Syncing..." message
-        container.innerHTML = '';
-
-        // 5. Handle the case where the database is empty
-        if (!logs || logs.length === 0) {
-            container.innerHTML = `
-                <tr>
-                    <td colspan="3" style="text-align: center; padding: 20px; color: #666;">
-                        No audit logs found in the database.
-                    </td>
-                </tr>`;
-            return;
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
         }
 
-        // 6. Loop through your real database records and render them
-        logs.forEach(log => {
-            const row = document.createElement('tr');
-            
-            // NOTE: Ensure 'log.timestamp', 'log.action', and 'log.ip' 
-            // exactly match the column/property names in your database response!
-            row.innerHTML = `
-                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;">${log.timestamp}</td>
-                <td style="padding: 12px 15px; border-bottom: 1px solid #eee;"><strong>${log.action}</strong></td>
-                <td style="padding: 12px 15px; border-bottom: 1px solid #eee; font-family: monospace;">${log.ip}</td>
-            `;
-            
-            container.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error('Error fetching real logs:', error);
-        container.innerHTML = `
-            <tr>
-                <td colspan="3" style="text-align: center; color: #dc3545; padding: 20px;">
-                    Connection failed. Could not reach the backend database.
-                </td>
-            </tr>`;
-    }
-}
-
-// Run the fetch when the page loads
-document.addEventListener('DOMContentLoaded', fetchAuditLogs);
         document.addEventListener('DOMContentLoaded', fetchAuditLogs);
     </script>
 

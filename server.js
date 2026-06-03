@@ -84,6 +84,9 @@ app.get('/admin/login', (req, res) => {
 app.get('/admin/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'admins.html'));
 });
+app.get('/admin/users', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin', 'adminUsers.html'));
+});
 
 // Auth routes
 app.get('/login', (req, res) => {

@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const dns = require('dns').promises;
 const nodemailer = require('nodemailer');
 const User = require('../database/models/users'); // Path to your users model
+const { recordAuditLog } = require('../utils/auditLogger');
 
 // Helper function to validate password strength
 function validatePasswordStrength(password) {
@@ -396,14 +397,36 @@ router.post('/login', async (req, res) => {
         // 1. Find user by email and selected account type
         const user = await User.findOne({ email: normalizedEmail, role });
         if (!user) {
+            await recordAuditLog(req, {
+                action: 'Failed login attempt',
+                targetEmail: normalizedEmail,
+                metadata: { role }
+            });
             return res.status(400).json({ 
                 message: 'Invalid login credentials.' 
+            });
+        }
+
+        if (user.accountStatus === 'suspended') {
+            await recordAuditLog(req, {
+                actor: user,
+                action: 'Blocked login for suspended account',
+                targetUser: user
+            });
+            return res.status(403).json({
+                message: 'This account has been suspended. Please contact support.'
             });
         }
 
         // 2. Compare hashed password using the schema method we added
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
+            await recordAuditLog(req, {
+                actor: user,
+                action: 'Failed login attempt',
+                targetUser: user,
+                metadata: { role }
+            });
             return res.status(400).json({ 
                 message: 'Invalid login credentials.' 
             });
@@ -427,6 +450,12 @@ router.post('/login', async (req, res) => {
             }
         });
 
+        await recordAuditLog(req, {
+            actor: user,
+            action: 'Successful login',
+            targetUser: user
+        });
+
     } catch (error) {
         console.error('Login Route Error:', error);
         res.status(500).json({ 
@@ -439,17 +468,36 @@ router.post('/login', async (req, res) => {
 // POST /api/auth/admin-login
 router.post('/admin-login', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { password } = req.body;
+        const email = normalizeEmail(req.body.email);
 
         // Find user with admin role
         const user = await User.findOne({ email, role: 'admin' });
         if (!user) {
+            await recordAuditLog(req, {
+                action: 'Failed admin login attempt',
+                targetEmail: email
+            });
             return res.status(401).json({ message: 'Invalid email or password' });
+        }
+
+        if (user.accountStatus === 'suspended') {
+            await recordAuditLog(req, {
+                actor: user,
+                action: 'Blocked admin login for suspended account',
+                targetUser: user
+            });
+            return res.status(403).json({ message: 'This admin account has been suspended' });
         }
 
         // Compare password
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
+            await recordAuditLog(req, {
+                actor: user,
+                action: 'Failed admin login attempt',
+                targetUser: user
+            });
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
@@ -463,6 +511,12 @@ router.post('/admin-login', async (req, res) => {
         res.status(200).json({
             message: 'Login successful',
             token
+        });
+
+        await recordAuditLog(req, {
+            actor: user,
+            action: 'Successful admin login',
+            targetUser: user
         });
 
     } catch (error) {

@@ -389,6 +389,174 @@ body {
 .btn-approve:hover { background-color: #059669; }
 .btn-deny { background-color: var(--danger-light); color: var(--danger); border: 1px solid #fca5a5; }
 .btn-deny:hover { background-color: #fee2e2; }
+.btn-refresh { background-color: #ffffff; color: #334155; border: 1px solid var(--border-color); }
+.btn-refresh:hover { background-color: #f8fafc; }
+
+/* =========================================
+   USER MANAGEMENT
+========================================= */
+.user-admin-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.user-toolbar {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) 180px 180px;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.user-search {
+    height: 44px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+}
+
+.user-search i { color: var(--text-muted); font-size: 14px; }
+.user-search input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--text-main);
+    background: transparent;
+}
+
+.user-filter {
+    height: 44px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--text-main);
+    font-size: 14px;
+    padding: 0 12px;
+    outline: none;
+}
+
+.users-table-container {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.users-table th,
+.users-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.users-table th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.users-table tbody tr:last-child td { border-bottom: none; }
+.users-table tbody tr:hover { background-color: #fafbfc; }
+
+.account-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.account-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb 0%, #a855f7 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.account-name { font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+.account-email { color: var(--text-muted); font-size: 12px; }
+
+.role-chip,
+.status-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.role-user { color: #1d4ed8; background-color: #eff6ff; }
+.role-therapist { color: #047857; background-color: #ecfdf5; }
+.role-admin { color: #7e22ce; background-color: #faf5ff; }
+.role-unknown { color: #475569; background-color: #f1f5f9; }
+
+.status-active { color: #047857; background-color: #ecfdf5; }
+.status-suspended { color: #b91c1c; background-color: #fef2f2; }
+
+.credential-cell { color: #334155; line-height: 1.45; }
+.muted-cell { color: var(--text-muted); font-size: 12px; }
+.error-state { color: var(--danger); }
+
+.table-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-table {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.btn-suspend {
+    color: #92400e;
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+.btn-suspend:hover { background: #fef3c7; }
+
+.btn-delete {
+    color: var(--danger);
+    background: var(--danger-light);
+    border-color: #fecaca;
+}
+
+.btn-delete:hover { background: #fee2e2; }
 
 /* =========================================
    REPORTS TABLE
