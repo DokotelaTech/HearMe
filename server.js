@@ -410,6 +410,7 @@ app.post('/api/chat', verifyToken, async (req, res) => {
     }
 });
 
+/*
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new FacebookStrategy({
@@ -423,7 +424,7 @@ passport.use(new FacebookStrategy({
     return cb(null, profile);
   }
 ));
-
+*/
 
 // =========================================
 // CONNECT TO MONGODB & START SERVER
