@@ -3,24 +3,24 @@
 ================================ */
 
 :root {
-    --purple: #a855f7;
-    --dark-purple: #7e22ce;
-    --bg: #f8fafc;
-    --white: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --border: #e2e8f0;
+  --purple: #a855f7;
+  --dark-purple: #7e22ce;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    overflow-x: hidden;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  overflow-x: hidden;
 }
 
 /* ================================
@@ -28,8 +28,8 @@ body {
 ================================ */
 
 .app-layout {
-    display: flex;
-    min-height: 100vh;
+  display: flex;
+  min-height: 100vh;
 }
 
 /* ================================
@@ -37,45 +37,45 @@ body {
 ================================ */
 
 .sidebar {
-    width: 260px;
-    background: var(--white);
-    border-right: 1px solid var(--border);
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    overflow-y: auto;
-    transition: transform 0.3s ease;
-    z-index: 2000;
+  width: 260px;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  z-index: 2000;
 }
 
 .nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .nav-item {
-    padding: 12px 14px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--muted);
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    white-space: nowrap;
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .nav-item:hover {
-    background: #f1f5f9;
-    color: var(--purple);
+  background: #f1f5f9;
+  color: var(--purple);
 }
 
 .nav-item.active {
-    background: #f3e8ff;
-    color: var(--purple);
-    font-weight: 600;
+  background: #f3e8ff;
+  color: var(--purple);
+  font-weight: 600;
 }
 
 /* ================================
@@ -83,11 +83,11 @@ body {
 ================================ */
 
 .main-workspace {
-    margin-left: 260px;
-    width: calc(100% - 260px);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ================================
@@ -95,16 +95,16 @@ body {
 ================================ */
 
 .topbar {
-    height: 70px;
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+  height: 70px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 /* ================================
@@ -112,18 +112,18 @@ body {
 ================================ */
 
 .profile-container {
-    position: relative;
+  position: relative;
 }
 
 .profile-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: transparent;
-    border: 1px solid var(--border);
-    padding: 8px 12px;
-    border-radius: 30px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 30px;
+  cursor: pointer;
 }
 
 /* ================================
@@ -132,7 +132,7 @@ body {
 ================================ */
 
 .mobile-menu-btn {
-    display: none;
+  display: none;
 }
 
 /* ================================
@@ -140,16 +140,16 @@ body {
 ================================ */
 
 .sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1500;
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
 }
 
 .sidebar-overlay.active,
 .sidebar-overlay.visible {
-    display: block;
+  display: block;
 }
 
 /* ================================
@@ -157,376 +157,378 @@ body {
 ================================ */
 
 @media (max-width: 768px) {
+  /* Prevent horizontal scroll */
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
 
-    /* Prevent horizontal scroll */
-    html, body {
-        overflow-x: hidden;
-        max-width: 100%;
-    }
-
-    /* ================================
+  /* ================================
        APP LAYOUT
     ================================ */
 
-    .app-layout {
-        display: flex !important;
-        flex-direction: column !important;
-    }
+  .app-layout {
+    display: flex !important;
+    flex-direction: column !important;
+  }
 
-    /* ================================
+  /* ================================
        SIDEBAR
        Slides in from left.
        Hidden by default, shown with .open or .show
     ================================ */
 
-    .sidebar {
-        position: fixed;
-        left: -280px; /* Adjust based on your actual sidebar width */
-        transition: left 0.3s ease;
-        z-index: 1001;
-    }
+  .sidebar {
+    position: fixed;
+    left: -280px; /* Adjust based on your actual sidebar width */
+    transition: left 0.3s ease;
+    z-index: 1001;
+  }
 
-    /* Target both potential classes used in your script */
-    .sidebar.open, .sidebar.show {
-        left: 0 !important;
-    }
+  /* Target both potential classes used in your script */
+  .sidebar.open,
+  .sidebar.show {
+    left: 0 !important;
+  }
 
-    .sidebar-overlay.active, .sidebar-overlay.visible {
-        display: block !important;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
+  .sidebar-overlay.active,
+  .sidebar-overlay.visible {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
 
-    /* Brand area sits at top of sidebar */
-    .brand-area {
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        padding: 16px 20px !important;
-        border-bottom: 1px solid var(--border) !important;
-        position: sticky !important;
-        top: 0 !important;
-        background: var(--white) !important;
-        z-index: 1 !important;
-    }
+  /* Brand area sits at top of sidebar */
+  .brand-area {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid var(--border) !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: var(--white) !important;
+    z-index: 1 !important;
+  }
 
-    /* Hide the menu btn that lives inside brand-area —
+  /* Hide the menu btn that lives inside brand-area —
        we show it in the topbar instead */
-    .brand-area .mobile-menu-btn {
-        display: none !important;
-    }
+  .brand-area .mobile-menu-btn {
+    display: none !important;
+  }
 
-    .nav-menu {
-        padding: 12px !important;
-    }
+  .nav-menu {
+    padding: 12px !important;
+  }
 
-    .overview-box {
-        margin: 12px !important;
-    }
+  .overview-box {
+    margin: 12px !important;
+  }
 
-    /* ================================
+  /* ================================
        MAIN WORKSPACE
     ================================ */
 
-    .main-workspace {
-        margin-left: 0 !important;
-        width: 100% !important;
-        min-width: 0 !important;
-    }
+  .main-workspace {
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    /* ================================
+  /* ================================
        TOPBAR
        Row: [☰ menu btn] ......... [profile]
        One clean line, no wrap
     ================================ */
 
-    .topbar {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 0 14px !important;
-        height: 56px !important;
-        position: sticky !important;
-        top: 0 !important;
-        z-index: 1000 !important;
-        gap: 10px !important;
-    }
+  .topbar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 14px !important;
+    height: 56px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    gap: 10px !important;
+  }
 
-    /* ================================
+  /* ================================
        MOBILE MENU BUTTON
        Show it on the LEFT of the topbar.
        It is injected by JS before topbar-right.
     ================================ */
 
-    .topbar .mobile-menu-btn {
-        display: flex !important; /* FIXED: Overrides the hidden state when inside topbar */
-    }
+  .topbar .mobile-menu-btn {
+    display: flex !important; /* FIXED: Overrides the hidden state when inside topbar */
+  }
 
-    .mobile-menu-btn {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-        border: none !important;
-        background: none !important;
-        cursor: pointer !important;
-        flex-shrink: 0 !important;
-        padding: 0 !important;
-        z-index: 1100 !important;
-        color: var(--text) !important;
-        order: -1 !important;
-    }
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border: none !important;
+    background: none !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    z-index: 1100 !important;
+    color: var(--text) !important;
+    order: -1 !important;
+  }
 
-    .mobile-menu-btn i,
-    .mobile-menu-btn svg {
-        width: 22px !important;
-        height: 22px !important;
-        pointer-events: none !important; /* FIXED: Stops icons from intercepting touch events */
-    }
+  .mobile-menu-btn i,
+  .mobile-menu-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+    pointer-events: none !important; /* FIXED: Stops icons from intercepting touch events */
+  }
 
-    /* ================================
+  /* ================================
        TOPBAR RIGHT
        Stays on the right, avatar only
     ================================ */
 
-    .topbar-right {
-        display: flex !important;
-        align-items: center !important;
-        gap: 10px !important;
-        flex-shrink: 0 !important;
-        margin-left: auto !important;
-    }
+  .topbar-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+  }
 
-    /* Hide text info, keep avatar */
-    .profile-info,
-    .dropdown-arrow {
-        display: none !important;
-    }
+  /* Hide text info, keep avatar */
+  .profile-info,
+  .dropdown-arrow {
+    display: none !important;
+  }
 
-    .profile-btn {
-        padding: 6px !important;
-        border-radius: 50% !important;
-        border: none !important;
-        gap: 0 !important;
-    }
+  .profile-btn {
+    padding: 6px !important;
+    border-radius: 50% !important;
+    border: none !important;
+    gap: 0 !important;
+  }
 
-    /* ================================
+  /* ================================
        CONTENT
     ================================ */
 
-    .content-container {
-        padding: 14px !important;
-        max-width: 100% !important;
-    }
+  .content-container {
+    padding: 14px !important;
+    max-width: 100% !important;
+  }
 
-    .page-header {
-        margin-bottom: 16px !important;
-    }
+  .page-header {
+    margin-bottom: 16px !important;
+  }
 
-    .page-header h1 {
-        font-size: 20px !important;
-    }
+  .page-header h1 {
+    font-size: 20px !important;
+  }
 
-    .page-header p {
-        font-size: 13px !important;
-    }
+  .page-header p {
+    font-size: 13px !important;
+  }
 
-    /* ================================
+  /* ================================
        STATS ROW — 2 columns on tablet
     ================================ */
 
-    .stats-row {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 12px !important;
-        margin-bottom: 20px !important;
-    }
+  .stats-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 20px !important;
+  }
 
-    /* ================================
+  /* ================================
        FILTER BAR & TABS
     ================================ */
 
-    .filter-bar {
-        flex-direction: column !important;
-        gap: 10px !important;
-        margin-bottom: 16px !important;
-    }
+  .filter-bar {
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
 
-    .search-input {
-        width: 100% !important;
-    }
+  .search-input {
+    width: 100% !important;
+  }
 
-    .tabs {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        gap: 6px !important;
-        width: 100% !important;
-    }
+  .tabs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
 
-    .tabs button,
-    .filter-btn {
-        flex: 1 1 auto !important;
-        width: auto !important;
-        min-width: 0 !important;
-        padding: 9px 12px !important;
-        font-size: 13px !important;
-        white-space: nowrap !important;
-    }
+  .tabs button,
+  .filter-btn {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 9px 12px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+  }
 
-    /* ================================
+  /* ================================
        CLIENT CARDS
     ================================ */
 
-    .client-card {
-        padding: 16px !important;
-    }
+  .client-card {
+    padding: 16px !important;
+  }
 
-    .c-tags {
-        flex-wrap: wrap !important;
-    }
+  .c-tags {
+    flex-wrap: wrap !important;
+  }
 
-    .c-footer {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 12px !important;
-    }
+  .c-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
 
-    .actions {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 8px !important;
-    }
+  .actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
 
-    .actions button {
-        width: 100% !important;
-    }
+  .actions button {
+    width: 100% !important;
+  }
 
-    /* ================================
+  /* ================================
        CARDS
     ================================ */
 
-    .card {
-        width: 100% !important;
-        margin-bottom: 14px !important;
-    }
+  .card {
+    width: 100% !important;
+    margin-bottom: 14px !important;
+  }
 
-    /* ================================
+  /* ================================
        GRIDS — single column
     ================================ */
 
-    .report-layout,
-    .calendar-layout,
-    .grid-2,
-    .category-grid,
-    .therapist-groups-layout {
-        grid-template-columns: 1fr !important;
-        gap: 14px !important;
-    }
+  .report-layout,
+  .calendar-layout,
+  .grid-2,
+  .category-grid,
+  .therapist-groups-layout {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
 
-    /* Inline style overrides */
-    [style*="grid-template-columns"] {
-        grid-template-columns: 1fr !important;
-    }
+  /* Inline style overrides */
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
 
-    .group-members-card {
-        position: static !important;
-    }
+  .group-members-card {
+    position: static !important;
+  }
 
-    /* ================================
+  /* ================================
        MESSAGES
     ================================ */
 
-    .messages-layout {
-        flex-direction: column !important;
-        height: auto !important;
-    }
+  .messages-layout {
+    flex-direction: column !important;
+    height: auto !important;
+  }
 
-    .inbox-sidebar {
-        width: 100% !important;
-        height: 200px !important;
-        border-right: none !important;
-        border-bottom: 1px solid var(--border) !important;
-    }
+  .inbox-sidebar {
+    width: 100% !important;
+    height: 200px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
 
-    .chat-area {
-        min-height: 360px !important;
-    }
+  .chat-area {
+    min-height: 360px !important;
+  }
 
-    .bubble {
-        max-width: 88% !important;
-    }
+  .bubble {
+    max-width: 88% !important;
+  }
 
-    /* Chat input stays on one row */
-    .input-area {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        gap: 8px !important;
-    }
+  /* Chat input stays on one row */
+  .input-area {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+  }
 
-    .input-area input {
-        flex: 1 !important;
-        min-width: 0 !important;
-        width: auto !important;
-    }
+  .input-area input {
+    flex: 1 !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
 
-    .send-btn {
-        width: auto !important;
-        flex-shrink: 0 !important;
-        white-space: nowrap !important;
-    }
+  .send-btn {
+    width: auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+  }
 
-    /* ================================
+  /* ================================
        INPUTS — full width, NOT buttons
     ================================ */
 
-    input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]),
-    textarea,
-    select {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
+  input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]),
+  textarea,
+  select {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 
-    /* ================================
+  /* ================================
        TABLES
     ================================ */
 
-    table {
-        display: block !important;
-        overflow-x: auto !important;
-        white-space: nowrap !important;
-    }
+  table {
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
 
-    /* ================================
+  /* ================================
        BUTTONS THAT MUST STAY AUTO-WIDTH
     ================================ */
 
-    .mobile-menu-btn,
-    .profile-btn,
-    .btn-outline,
-    .btn-blue,
-    .btn-gray,
-    .btn-light-blue,
-    .send-btn,
-    .tabs button,
-    .filter-btn,
-    .cat-btn,
-    .logout-btn {
-        width: auto !important;
-        min-width: unset !important;
-    }
+  .mobile-menu-btn,
+  .profile-btn,
+  .btn-outline,
+  .btn-blue,
+  .btn-gray,
+  .btn-light-blue,
+  .send-btn,
+  .tabs button,
+  .filter-btn,
+  .cat-btn,
+  .logout-btn {
+    width: auto !important;
+    min-width: unset !important;
+  }
 
-    /* Full-width only for explicit full-width buttons */
-    .btn-primary.full-width,
-    .full-width {
-        width: 100% !important;
-    }
+  /* Full-width only for explicit full-width buttons */
+  .btn-primary.full-width,
+  .full-width {
+    width: 100% !important;
+  }
 }
 
 /* ================================
@@ -534,23 +536,84 @@ body {
 ================================ */
 
 @media (max-width: 480px) {
+  .content-container {
+    padding: 10px !important;
+  }
 
-    .content-container {
-        padding: 10px !important;
-    }
+  /* Stats go single column */
+  .stats-row {
+    grid-template-columns: 1fr !important;
+  }
 
-    /* Stats go single column */
-    .stats-row {
-        grid-template-columns: 1fr !important;
-    }
+  .bubble {
+    max-width: 95% !important;
+  }
 
-    .bubble {
-        max-width: 95% !important;
-    }
+  .inbox-sidebar {
+    height: 170px !important;
+  }
+}
 
-    .inbox-sidebar {
-        height: 170px !important;
-    }
+/* ════════════════════════════════════════
+   EXTRA SMALL PHONES (≤ 360px)
+════════════════════════════════════════ */
+
+@media (max-width: 360px) {
+  html,
+  body {
+    font-size: 13px !important;
+  }
+
+  .topbar {
+    height: 50px !important;
+    padding: 0 8px !important;
+  }
+
+  .mobile-menu-btn {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .mobile-menu-btn i,
+  .mobile-menu-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .sidebar {
+    left: -200px !important;
+    width: 200px !important;
+  }
+
+  .content-container {
+    padding: 8px !important;
+  }
+
+  .page-header h1 {
+    font-size: 16px !important;
+  }
+
+  .page-header p {
+    font-size: 11px !important;
+  }
+
+  .card {
+    padding: 10px !important;
+  }
+
+  button,
+  .btn-primary,
+  .btn-outline {
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+  }
 }
 
 /* ================================
@@ -558,61 +621,59 @@ body {
 ================================ */
 
 @media (max-width: 768px) {
+  /* Two-column calendar layout stacks */
+  .calendar-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
 
-    /* Two-column calendar layout stacks */
-    .calendar-layout {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 14px !important;
-    }
+  .cal-left,
+  .cal-right {
+    width: 100% !important;
+  }
 
-    .cal-left,
-    .cal-right {
-        width: 100% !important;
-    }
+  /* Appointment items */
+  .appt-item {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
 
-    /* Appointment items */
-    .appt-item {
-        flex-direction: column !important;
-        gap: 10px !important;
-    }
+  .time {
+    width: auto !important;
+    font-size: 1rem !important;
+  }
 
-    .time {
-        width: auto !important;
-        font-size: 1rem !important;
-    }
+  /* Availability edit button */
+  .btn-light-blue.full-width {
+    width: 100% !important;
+    margin-top: 12px !important;
+  }
 
-    /* Availability edit button */
-    .btn-light-blue.full-width {
-        width: 100% !important;
-        margin-top: 12px !important;
-    }
-
-    /* ================================
+  /* ================================
        VIDEO MODAL — full screen on mobile
     ================================ */
 
-    #video-modal {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: 100% !important;
-        top: 0 !important;
-        left: 0 !important;
-        transform: none !important;
-        border-radius: 0 !important;
-    }
+  #video-modal {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    border-radius: 0 !important;
+  }
 }
 
 @media (max-width: 480px) {
+  /* Tighten appointment cards */
+  .appt-item {
+    padding: 12px !important;
+  }
 
-    /* Tighten appointment cards */
-    .appt-item {
-        padding: 12px !important;
-    }
-
-    .details p {
-        font-size: 0.8rem !important;
-    }
+  .details p {
+    font-size: 0.8rem !important;
+  }
 }
 
 /* ================================
@@ -620,117 +681,115 @@ body {
 ================================ */
 
 @media (max-width: 768px) {
+  /* Messages layout stacks inbox on top, chat below */
+  .messages-layout {
+    flex-direction: column !important;
+    height: auto !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
 
-    /* Messages layout stacks inbox on top, chat below */
-    .messages-layout {
-        flex-direction: column !important;
-        height: auto !important;
-        border-radius: 10px !important;
-        overflow: hidden !important;
-    }
+  /* Inbox becomes a fixed-height scrollable strip */
+  .inbox-sidebar {
+    width: 100% !important;
+    height: 220px !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    flex-shrink: 0 !important;
+  }
 
-    /* Inbox becomes a fixed-height scrollable strip */
-    .inbox-sidebar {
-        width: 100% !important;
-        height: 220px !important;
-        border-right: none !important;
-        border-bottom: 1px solid var(--border) !important;
-        flex-shrink: 0 !important;
-    }
+  /* Search bar inside inbox */
+  .inbox-sidebar .search-input {
+    margin: 10px !important;
+    flex-shrink: 0 !important;
+  }
 
-    /* Search bar inside inbox */
-    .inbox-sidebar .search-input {
-        margin: 10px !important;
-        flex-shrink: 0 !important;
-    }
+  .inbox-sidebar .search-input input {
+    width: 100% !important;
+  }
 
-    .inbox-sidebar .search-input input {
-        width: 100% !important;
-    }
+  /* Chat area fills remaining height */
+  .chat-area {
+    min-height: 400px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
 
-    /* Chat area fills remaining height */
-    .chat-area {
-        min-height: 400px !important;
-        display: flex !important;
-        flex-direction: column !important;
-    }
+  .chat-history {
+    flex: 1 !important;
+    padding: 14px !important;
+  }
 
-    .chat-history {
-        flex: 1 !important;
-        padding: 14px !important;
-    }
+  .bubble {
+    max-width: 88% !important;
+  }
 
-    .bubble {
-        max-width: 88% !important;
-    }
+  /* Footer: privacy banner + input row */
+  .chat-footer {
+    padding: 10px 14px !important;
+    flex-shrink: 0 !important;
+  }
 
-    /* Footer: privacy banner + input row */
-    .chat-footer {
-        padding: 10px 14px !important;
-        flex-shrink: 0 !important;
-    }
+  .privacy-banner {
+    font-size: 0.7rem !important;
+    margin-bottom: 10px !important;
+    padding: 6px 10px !important;
+  }
 
-    .privacy-banner {
-        font-size: 0.7rem !important;
-        margin-bottom: 10px !important;
-        padding: 6px 10px !important;
-    }
+  /* Input row stays on one line — attach icon, input, send btn */
+  .input-area {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
 
-    /* Input row stays on one line — attach icon, input, send btn */
-    .input-area {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        gap: 8px !important;
-    }
+  .attach-icon {
+    flex-shrink: 0 !important;
+    font-size: 1rem !important;
+  }
 
-    .attach-icon {
-        flex-shrink: 0 !important;
-        font-size: 1rem !important;
-    }
+  .input-area input {
+    flex: 1 !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
 
-    .input-area input {
-        flex: 1 !important;
-        min-width: 0 !important;
-        width: auto !important;
-    }
-
-    .send-btn {
-        width: auto !important;
-        flex-shrink: 0 !important;
-        white-space: nowrap !important;
-        padding: 10px 14px !important;
-    }
+  .send-btn {
+    width: auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 10px 14px !important;
+  }
 }
 
 @media (max-width: 480px) {
+  .inbox-sidebar {
+    height: 190px !important;
+  }
 
-    .inbox-sidebar {
-        height: 190px !important;
-    }
+  .chat-area {
+    min-height: 340px !important;
+  }
 
-    .chat-area {
-        min-height: 340px !important;
-    }
+  .bubble {
+    max-width: 94% !important;
+    font-size: 0.85rem !important;
+  }
 
-    .bubble {
-        max-width: 94% !important;
-        font-size: 0.85rem !important;
-    }
+  /* Hide "Send" text, keep icon only */
+  .send-btn span {
+    display: none !important;
+  }
 
-    /* Hide "Send" text, keep icon only */
-    .send-btn span {
-        display: none !important;
-    }
+  .send-btn {
+    padding: 10px 12px !important;
+  }
 
-    .send-btn {
-        padding: 10px 12px !important;
-    }
-
-    .privacy-banner {
-        display: none !important;
-    }
+  .privacy-banner {
+    display: none !important;
+  }
 }
 
 /* ================================
@@ -738,167 +797,165 @@ body {
 ================================ */
 
 @media (max-width: 768px) {
+  /* Container stacks sidebar below topbar */
+  .container {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    /* Container stacks sidebar below topbar */
-    .container {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-        min-width: 0 !important;
-    }
+  /* Sidebar on profile page — same slide-in behaviour */
+  .container .sidebar {
+    width: 240px !important;
+    padding: 16px 12px !important;
+  }
 
-    /* Sidebar on profile page — same slide-in behaviour */
-    .container .sidebar {
-        width: 240px !important;
-        padding: 16px 12px !important;
-    }
+  /* Profile area takes full width */
+  .profile-area {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 14px !important;
+  }
 
-    /* Profile area takes full width */
-    .profile-area {
-        width: 100% !important;
-        min-width: 0 !important;
-        padding: 14px !important;
-    }
-
-    /* ================================
+  /* ================================
        HERO CARD
     ================================ */
 
-    .hero-card {
-        padding: 16px !important;
-    }
+  .hero-card {
+    padding: 16px !important;
+  }
 
-    .hero-top {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 12px !important;
-    }
+  .hero-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
 
-    .hero-details h1 {
-        font-size: 1.3rem !important;
-    }
+  .hero-details h1 {
+    font-size: 1.3rem !important;
+  }
 
-    .status-badge {
-        margin-left: 0 !important;
-        align-self: flex-start !important;
-    }
+  .status-badge {
+    margin-left: 0 !important;
+    align-self: flex-start !important;
+  }
 
-    /* Hero metrics row — 2 columns */
-    .hero-bottom {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 12px !important;
-        margin-top: 16px !important;
-    }
+  /* Hero metrics row — 2 columns */
+  .hero-bottom {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    margin-top: 16px !important;
+  }
 
-    /* ================================
+  /* ================================
        ONBOARDING CARD
     ================================ */
 
-    .onboarding-card {
-        padding: 16px !important;
-    }
+  .onboarding-card {
+    padding: 16px !important;
+  }
 
-    .checklist-grid {
-        grid-template-columns: 1fr !important;
-        gap: 8px !important;
-    }
+  .checklist-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
 
-    /* ================================
+  /* ================================
        PROFILE TABS
     ================================ */
 
-    .tabs {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        gap: 6px !important;
-        width: 100% !important;
-        overflow: hidden !important;
-    }
+  .tabs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
 
-    .tabs .tab-btn {
-        flex: 1 1 auto !important;
-        width: auto !important;
-        min-width: 0 !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        padding: 9px 10px !important;
-        font-size: 13px !important;
-    }
+  .tabs .tab-btn {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 9px 10px !important;
+    font-size: 13px !important;
+  }
 
-    /* ================================
+  /* ================================
        OVERVIEW LAYOUT
     ================================ */
 
-    .overview-layout {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 14px !important;
-    }
+  .overview-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
 
-    .left-col,
-    .right-col {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
+  .left-col,
+  .right-col {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    /* Editable sections */
-    .editable-section {
-        padding: 14px !important;
-    }
+  /* Editable sections */
+  .editable-section {
+    padding: 14px !important;
+  }
 
-    .section-header {
-        flex-wrap: wrap !important;
-        gap: 8px !important;
-    }
+  .section-header {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
 
-    /* ================================
+  /* ================================
        CREDENTIALS GRID
     ================================ */
 
-    .cred-input-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
-    }
+  .cred-input-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
 
-    /* ================================
+  /* ================================
        SAVE / EDIT BUTTONS
     ================================ */
 
-    .edit-btn,
-    .save-btn,
-    .book-btn,
-    .tab-btn {
-        width: auto !important;
-        min-width: unset !important;
-    }
+  .edit-btn,
+  .save-btn,
+  .book-btn,
+  .tab-btn {
+    width: auto !important;
+    min-width: unset !important;
+  }
 
-    /* Submit verification button IS full width */
-    #submit-verification-btn {
-        width: 100% !important;
-        margin-top: 12px !important;
-    }
+  /* Submit verification button IS full width */
+  #submit-verification-btn {
+    width: 100% !important;
+    margin-top: 12px !important;
+  }
 }
 
 @media (max-width: 480px) {
+  .hero-bottom {
+    grid-template-columns: 1fr 1fr !important;
+  }
 
-    .hero-bottom {
-        grid-template-columns: 1fr 1fr !important;
-    }
+  .hero-details h1 {
+    font-size: 1.1rem !important;
+  }
 
-    .hero-details h1 {
-        font-size: 1.1rem !important;
-    }
+  .tabs .tab-btn {
+    font-size: 12px !important;
+    padding: 8px 8px !important;
+  }
 
-    .tabs .tab-btn {
-        font-size: 12px !important;
-        padding: 8px 8px !important;
-    }
-
-    .profile-area {
-        padding: 10px !important;
-    }
+  .profile-area {
+    padding: 10px !important;
+  }
 }
 
 /* ================================
@@ -906,62 +963,60 @@ body {
 ================================ */
 
 @media (max-width: 768px) {
+  .resource-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    padding: 0 14px 20px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    .resource-layout {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 14px !important;
-        padding: 0 14px 20px !important;
-        width: 100% !important;
-        min-width: 0 !important;
-    }
+  .resource-form-card,
+  .resource-list-card {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    .resource-form-card,
-    .resource-list-card {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
+  .section-heading {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
+  }
 
-    .section-heading {
-        display: flex !important;
-        align-items: center !important;
-        gap: 10px !important;
-        flex-wrap: nowrap !important;
-    }
+  #resourceForm label {
+    font-size: 13px !important;
+  }
 
-    #resourceForm label {
-        font-size: 13px !important;
-    }
+  .resource-form-card .btn-primary {
+    width: 100% !important;
+  }
 
-    .resource-form-card .btn-primary {
-        width: 100% !important;
-    }
+  .resource-card,
+  .resource-item {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    .resource-card,
-    .resource-item {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    .stats-row {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 12px !important;
-    }
+  .stats-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
 }
 
 @media (max-width: 480px) {
+  .resource-layout {
+    padding: 0 10px 16px !important;
+  }
 
-    .resource-layout {
-        padding: 0 10px 16px !important;
-    }
+  .stats-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
 
-    .stats-row {
-        grid-template-columns: 1fr 1fr !important;
-    }
-
-    .section-heading h3 {
-        font-size: 15px !important;
-    }
+  .section-heading h3 {
+    font-size: 15px !important;
+  }
 }
 
 /* ================================
@@ -969,101 +1024,96 @@ body {
 ================================ */
 
 @media (max-width: 768px) {
+  .report-layout,
+  div[style*="grid-template-columns: 2fr 1fr"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
 
-    .report-layout,
-    div[style*="grid-template-columns: 2fr 1fr"] {
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        gap: 14px !important;
-    }
+  .category-grid,
+  #report-category-selector,
+  div[style*="grid-template-columns: repeat(3"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
 
-    .category-grid,
-    #report-category-selector,
-    div[style*="grid-template-columns: repeat(3"] {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 10px !important;
-    }
+  .cat-btn {
+    padding: 16px 10px !important;
+    font-size: 13px !important;
+    min-height: 70px !important;
+    width: auto !important;
+  }
 
-    .cat-btn {
-        padding: 16px 10px !important;
-        font-size: 13px !important;
-        min-height: 70px !important;
-        width: auto !important;
-    }
+  .alert-red {
+    font-size: 13px !important;
+    padding: 12px !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+  }
 
-    .alert-red {
-        font-size: 13px !important;
-        padding: 12px !important;
-        flex-wrap: nowrap !important;
-        align-items: flex-start !important;
-    }
+  .form-card,
+  .reports-sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
 
-    .form-card,
-    .reports-sidebar {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
-
-    #report-issue-form .btn-primary {
-        width: 100% !important;
-    }
+  #report-issue-form .btn-primary {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 480px) {
+  .category-grid,
+  #report-category-selector,
+  div[style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
 
-    .category-grid,
-    #report-category-selector,
-    div[style*="grid-template-columns: repeat(3"] {
-        grid-template-columns: 1fr !important;
-    }
-
-    .cat-btn {
-        min-height: 60px !important;
-        padding: 14px 10px !important;
-    }
+  .cat-btn {
+    min-height: 60px !important;
+    padding: 14px 10px !important;
+  }
 }
 
 /* ===================================================
    MOBILE MENU BUTTON
 =================================================== */
 
-.mobile-menu-btn{
-    display:none;
+.mobile-menu-btn {
+  display: none;
 }
 
-@media (max-width:768px){
-
-    .mobile-menu-btn{
-        display:flex !important;
-        align-items:center;
-        justify-content:center;
-        width:42px;
-        height:42px;
-        border:none;
-        background:transparent;
-        cursor:pointer;
-        font-size:24px;
-        color:#7e22ce;
-        z-index:9999;
-    }
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 24px;
+    color: #7e22ce;
+    z-index: 9999;
+  }
 }
-@media (max-width:768px){
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed !important;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    background: white;
+    z-index: 9998;
+    transition: 0.3s ease;
+    overflow-y: auto;
+  }
 
-    .sidebar{
-        position:fixed !important;
-        top:0;
-        left:-280px;
-        width:280px;
-        height:100vh;
-        background:white;
-        z-index:9998;
-        transition:0.3s ease;
-        overflow-y:auto;
-    }
-
-    .sidebar.active{
-        left:0;
-    }
-
+  .sidebar.active {
+    left: 0;
+  }
 }

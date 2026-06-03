@@ -2,423 +2,640 @@
    GLOBAL & RESET
 ========================= */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    touch-action: manipulation; 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  touch-action: manipulation;
 }
 
-html, body {
-    width: 100%;
-    min-height: 100dvh; 
-    background: #f8fafc; /* Soft off-white background for desktop */
-    overscroll-behavior: none; 
-    overflow-x: hidden; 
-    position: relative;
+html,
+body {
+  width: 100%;
+  min-height: 100dvh;
+  background: #f8fafc;
+  overscroll-behavior: none;
+  overflow-x: hidden;
+  position: relative;
 }
-
-/* =========================
-   PAGE-LEVEL LOGO (Desktop Only)
-========================= */
-/* .pageLogoContainer {
-    position: absolute;
-    top: 40px;
-    left: 50px;
-    z-index: 100;
-    background: #ffffff;
-    padding: 15px 25px; 
-    border-radius: 24px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
-}
-
-.pageLogo {
-    height: 85px; 
-    width: auto;
-    display: block;
-} */
 
 /* =========================
    LAYOUT
 ========================= */
 .mainContainer {
-    min-height: 100dvh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
 }
 
 .loginCard {
-    width: 100%;
-    max-width: 1200px;
-    height: 750px;
-    background: #ffffff;
-    border-radius: 30px;
-    overflow: hidden;
-    display: flex;
-    
-    /* SHINING PURPLE BORDER & AURA */
-    border: 2px solid rgba(192, 38, 211, 0.4);
-    box-shadow: 0 0 30px rgba(192, 38, 211, 0.25), 0 20px 50px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1200px;
+  height: 750px;
+  background: #ffffff;
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  border: 2px solid rgba(192, 38, 211, 0.4);
+  box-shadow:
+    0 0 30px rgba(192, 38, 211, 0.25),
+    0 20px 50px rgba(0, 0, 0, 0.1);
 }
 
 /* =========================
-   LEFT SIDE & DECORATIONS
+   LEFT SIDE
 ========================= */
 .leftSide {
-    flex: 1;
-    background: linear-gradient(145deg, #9333ea, #c026d3, #ec4899);
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 60px;
-    overflow: hidden;
-    color: white;
+  flex: 1;
+  background: linear-gradient(145deg, #9333ea, #c026d3, #ec4899);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  overflow: hidden;
+  color: white;
 }
 
 .leftContent {
-    position: relative;
-    z-index: 10;
+  position: relative;
+  z-index: 10;
 }
 
 .leftContent h1 {
-    font-size: 60px;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    text-transform: capitalize;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  text-transform: capitalize;
 }
 
 .leftContent p {
-    font-size: 18px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 85%;
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 85%;
 }
 
-/* Abstract CSS Shapes */
 .decorDots {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-image: radial-gradient(rgba(255,255,255,0.3) 2px, transparent 2px);
-    background-size: 16px 16px;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.3) 2px,
+    transparent 2px
+  );
+  background-size: 16px 16px;
 }
-.decorDotsTop { top: 40px; right: 40px; }
-.decorDotsBottom { bottom: 40px; left: 40px; }
+.decorDotsTop {
+  top: 40px;
+  right: 40px;
+}
+.decorDotsBottom {
+  bottom: 40px;
+  left: 40px;
+}
 
 .decorPill {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
 }
-.decorPillOne { width: 12px; height: 60px; top: -10px; left: 160px; }
-.decorPillTwo { width: 30px; height: 100px; top: -30px; left: 190px; }
+.decorPillOne {
+  width: 12px;
+  height: 60px;
+  top: -10px;
+  left: 160px;
+}
+.decorPillTwo {
+  width: 30px;
+  height: 100px;
+  top: -30px;
+  left: 190px;
+}
 
 .decorCircleRing {
-    position: absolute;
-    bottom: -60px;
-    right: -60px;
-    width: 300px;
-    height: 300px;
-    border: 8px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  border: 8px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
 }
 
 .decorCircleSolid {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 140px;
-    height: 140px;
-    background: linear-gradient(135deg, #c026d3, #ec4899); 
-    border-radius: 50%;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 140px;
+  height: 140px;
+  background: linear-gradient(135deg, #c026d3, #ec4899);
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .decorCross {
-    position: absolute;
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 20px;
-    transform: rotate(45deg);
+  position: absolute;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
+  transform: rotate(45deg);
 }
-.decorCrossOne { bottom: 100px; left: 180px; }
-.decorCrossTwo { top: 120px; right: 80px; }
+.decorCrossOne {
+  bottom: 100px;
+  left: 180px;
+}
+.decorCrossTwo {
+  top: 120px;
+  right: 80px;
+}
 
 /* =========================
-   RIGHT SIDE FORM
+   RIGHT SIDE
 ========================= */
 .rightSide {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    background: #ffffff;
-    position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: #ffffff;
+  position: relative;
 }
 
 .formWrapper {
-    width: 100%;
-    max-width: 440px;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
 }
 
-/* .logoContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
-} */
-
-/* .logoBox {
-    width: 70px;
-    height: 70px;
-    background: white;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 34px;
-    color: #c026d3; 
-    box-shadow: 0 8px 24px rgba(192, 38, 211, 0.15);
-} */
-
 .formHeader {
-    text-align: center;
-    margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 28px;
 }
 
 .brandText {
-    display: inline-block;
-    color: #c026d3;
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: rgba(192, 38, 211, 0.1);
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 16px;
+  display: inline-block;
+  color: #c026d3;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(192, 38, 211, 0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 16px;
 }
 
 .formHeader h2 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1e293b;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
 }
 
-/* Inputs & Labels */
+/* Role Toggle */
+.role-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: 14px;
+}
+.role-option {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #64748b;
+  font-size: 14px;
+  transition: 0.3s;
+}
+.role-option.active {
+  background: #ffffff;
+  color: #9333ea;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Inputs */
 .inputContainer {
-    margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .inputContainer label {
-    display: block;
-    font-size: 15px; 
-    font-weight: 600;
-    color: #475569;
-    margin-bottom: 10px;
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 10px;
 }
 
 .inputWrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .inputWrapper i {
-    position: absolute;
-    left: 18px;
-    color: #94a3b8;
-    font-size: 16px;
+  position: absolute;
+  left: 18px;
+  color: #94a3b8;
+  font-size: 16px;
 }
 
 .inputWrapper input {
-    width: 100%;
-    padding: 18px 18px 18px 48px; 
-    border: 1px solid #cbd5e1;
-    border-radius: 14px;
-    font-size: 16px; 
-    color: #0f172a;
-    background: #ffffff;
-    transition: all 0.2s ease;
+  width: 100%;
+  padding: 16px 16px 16px 48px;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 15px;
+  color: #0f172a;
+  background: #ffffff;
+  transition: all 0.2s ease;
 }
 
 .inputWrapper input:focus {
-    outline: none;
-    border-color: #c084fc;
-    box-shadow: 0 0 0 4px rgba(192, 38, 211, 0.15);
+  outline: none;
+  border-color: #c084fc;
+  box-shadow: 0 0 0 4px rgba(192, 38, 211, 0.15);
 }
 
 /* Action Row */
 .actionRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
 }
 
 .rememberMe {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px; 
-    color: #475569;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #475569;
+  cursor: pointer;
 }
 
 .rememberMe input {
-    width: 16px;
-    height: 16px;
-    accent-color: #c026d3;
+  width: 16px;
+  height: 16px;
+  accent-color: #c026d3;
 }
 
+/* FIX: resetLink is now a <button>, style it to look like a link */
 .resetLink {
-    font-size: 15px;
-    font-weight: 600;
-    color: #c026d3;
-    text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c026d3;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
 }
-
 .resetLink:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Submit Button */
 .submitBtn {
-    width: 100%;
-    padding: 18px; 
-    background: linear-gradient(90deg, #9333ea, #c026d3, #ec4899);
-    color: white;
-    border: none;
-    border-radius: 14px;
-    font-size: 18px; 
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(90deg, #9333ea, #c026d3, #ec4899);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
-
 .submitBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(192, 38, 211, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(192, 38, 211, 0.3);
 }
 
 /* Divider */
 .divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 30px 0;
-    color: #94a3b8;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0;
+  color: #94a3b8;
 }
-
 .divider::before,
 .divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #e2e8f0;
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
 }
-
 .divider span {
-    padding: 0 15px;
-    font-size: 14px;
+  padding: 0 15px;
+  font-size: 14px;
 }
 
 /* Social Logins */
 .socialLoginContainer {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 .socialBtn {
-    width: 55px; 
-    height: 55px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  width: 55px;
+  height: 55px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
-
 .socialBtn:hover {
-    border-color: #cbd5e1;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Footer */
 .footerText {
-    text-align: center;
-    font-size: 15px; 
-    color: #475569;
+  text-align: center;
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 0;
 }
-
 .footerText a {
-    color: #c026d3;
-    font-weight: 700;
-    text-decoration: none;
+  color: #c026d3;
+  font-weight: 700;
+  text-decoration: none;
+}
+.footerText a:hover {
+  text-decoration: underline;
 }
 
-.footerText a:hover {
-    text-decoration: underline;
+.legal-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #64748b;
+}
+.legal-footer a {
+  color: #9333ea;
+  text-decoration: none;
+  margin: 0 6px;
 }
 
 /* =========================
-   MOBILE RESPONSIVENESS
+   MODALS
+========================= */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.modal-box {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 36px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modal-box h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.modal-box > p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #94a3b8;
+  line-height: 1;
+}
+.modal-close:hover {
+  color: #475569;
+}
+
+.modalInputGroup {
+  margin-bottom: 16px;
+}
+.modalInputGroup label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+.modalInputGroup input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.modalInputGroup input:focus {
+  border-color: #c084fc;
+  box-shadow: 0 0 0 3px rgba(192, 38, 211, 0.12);
+}
+
+/* Password Input Wrapper (for toggle button) */
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 44px;
+}
+
+.toggle-password-modal {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.toggle-password-modal:hover {
+  color: #64748b;
+}
+
+.send-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.send-row > div {
+  flex: 1;
+}
+
+.sendPinBtn {
+  padding: 13px 18px;
+  border: 2px solid #c026d3;
+  color: #c026d3;
+  background: #ffffff;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: inherit;
+  height: 46px;
+  align-self: flex-end;
+}
+.sendPinBtn:hover {
+  background: rgba(192, 38, 211, 0.06);
+}
+.sendPinBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.reset-message {
+  font-size: 13px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: none;
+}
+.reset-message.success {
+  display: block;
+  background: #f0fdf4;
+  color: #166534;
+}
+.reset-message.error {
+  display: block;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+/* Loading Modal */
+.loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 20px;
+}
+.loading-box p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #c026d3;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #c026d3;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   MOBILE
 ========================= */
 @media (max-width: 768px) {
-    body {
-        background: #ffffff; 
-    }
+  body {
+    background: #ffffff;
+  }
 
-    .mainContainer {
-        padding: 0;
-        display: block;
-    }
-/* 
-    .pageLogoContainer {
-        display: none; 
-    } */
+  .mainContainer {
+    padding: 0;
+    display: block;
+  }
 
-    .loginCard {
-        display: block; /* Changed from flex to block to fix scrolling */
-        min-height: 100dvh;
-        height: auto;
-        border-radius: 0; 
-        border: none;
-        box-shadow: none;
-        overflow: visible; /* Prevents mobile clipping */
-    }
-    
-    .leftSide {
-        display: none; 
-    }
+  .loginCard {
+    display: block;
+    min-height: 100dvh;
+    height: auto;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
 
-    .rightSide {
-        display: block; /* Changed from flex to block for natural scrolling */
-        width: 100%;
-        min-height: 100dvh;
-        padding: 60px 24px; /* Natural spacing from the top instead of flex centering */
-    }
+  .leftSide {
+    display: none;
+  }
 
-    .formWrapper {
-        margin: 0 auto;
-        width: 100%;
-    }
+  .rightSide {
+    display: block;
+    width: 100%;
+    min-height: 100dvh;
+    padding: 60px 24px 40px;
+  }
 
-    .formHeader {
-        text-align: center; 
-    }
+  .formWrapper {
+    margin: 0 auto;
+  }
 
-    .formHeader h2 {
-        font-size: 26px;
-    }
+  .formHeader h2 {
+    font-size: 24px;
+  }
 }

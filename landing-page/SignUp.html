@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -7,7 +8,10 @@
     <link rel="stylesheet" href="signup.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
 
     <!-- <div class="brand-header">
@@ -17,7 +21,7 @@
 
     <div class="container">
         <div class="form-box">
-            
+
             <h2>Join HearMe</h2>
             <p class="subtitle">Please complete all information below:</p>
 
@@ -36,7 +40,7 @@
                 </div>
 
                 <div id="user-fields">
-                    
+
                     <div class="anon-box">
                         <div class="anon-icon">
                             <i class="fa-solid fa-user-secret"></i>
@@ -82,7 +86,7 @@
                 </div>
 
                 <div id="therapist-fields" style="display:none;">
-                    
+
                     <div class="triple-input">
                         <div class="input-group">
                             <i class="fa-regular fa-user"></i>
@@ -135,21 +139,53 @@
                 <div class="verification-row">
                     <div class="input-group verification-input">
                         <i class="fa-solid fa-shield-halved"></i>
-                        <input id="verificationCode" type="text" inputmode="numeric" maxlength="6" placeholder="Email Verification Code" required>
+                        <input id="verificationCode" type="text" inputmode="numeric" maxlength="6"
+                            placeholder="Email Verification Code" required>
                     </div>
                     <button type="button" id="sendVerificationCode">Send Code</button>
                 </div>
                 <p id="verificationMessage" class="verification-message" aria-live="polite"></p>
 
                 <div class="double-input">
-                    <div class="input-group">
+                    <div class="input-group password-group">
                         <i class="fa-solid fa-lock"></i>
                         <input id="password" type="password" placeholder="Password" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group password-group">
                         <i class="fa-solid fa-lock"></i>
                         <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+                        <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
                     </div>
+                </div>
+
+                <!-- Password Strength Indicator -->
+                <div id="passwordStrengthContainer" class="password-strength-container" style="display: none;">
+                    <div class="strength-bar-wrapper">
+                        <div id="passwordStrengthBar" class="strength-bar"></div>
+                    </div>
+                    <div id="passwordStrengthText" class="strength-text">Password strength: Weak</div>
+                    <ul id="passwordRequirements" class="password-requirements">
+                        <li id="req-length" class="req-item">
+                            <span class="req-icon">✓</span> At least 8 characters
+                        </li>
+                        <li id="req-upper" class="req-item">
+                            <span class="req-icon">✓</span> At least one uppercase letter (A-Z)
+                        </li>
+                        <li id="req-lower" class="req-item">
+                            <span class="req-icon">✓</span> At least one lowercase letter (a-z)
+                        </li>
+                        <li id="req-number" class="req-item">
+                            <span class="req-icon">✓</span> At least one number (0-9)
+                        </li>
+                        <li id="req-special" class="req-item">
+                            <span class="req-icon">✓</span> At least one special character (!@#$%^&*)
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="terms-box">
@@ -190,4 +226,5 @@
     <script src="signup.js"></script>
 
 </body>
+
 </html>

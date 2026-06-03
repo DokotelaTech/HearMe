@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HearMe - Data Deletion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #ffffff;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            /* Branded gradient top border */
+            border-top: 6px solid transparent;
+            border-image: linear-gradient(90deg, #9333ea, #c026d3, #ec4899) 1;
+        }
+
+        .header-icon {
+            font-size: 32px;
+            color: #ec4899; /* Pink accent for deletion */
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        p {
+            color: #475569;
+            margin-bottom: 16px;
+        }
+
+        .steps-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        ol {
+            color: #1e293b;
+            font-weight: 500;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+
+        .warning-text {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            margin-top: 32px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 40px;
+            color: #c026d3;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-4px);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <i class="fa-solid fa-user-xmark header-icon"></i>
+        <h1>Data Deletion Instructions</h1>
+        
+        <p>If you no longer wish to use HearMe, you have the right to request the complete deletion of your account and all associated personal data from our servers. According to social platform compliance rules, we provide an easy way to wipe your digital footprint from our application.</p>
+
+        <div class="steps-box">
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 16px; font-weight: 600; text-transform: uppercase;">How to delete your data:</p>
+            <ol>
+                <li>Log into your HearMe account using your email or social login.</li>
+                <li>Navigate to your <strong>Account Settings</strong> dashboard.</li>
+                <li>Scroll to the bottom and click the <strong>"Delete Account"</strong> button.</li>
+                <li>Confirm your choice in the security popup.</li>
+            </ol>
+        </div>
+
+        <p>Alternatively, if you cannot access your account, you may email our support team at <strong>dokotelaxolo@gmail.com</strong> from the email address associated with your account, and we will manually process your deletion request within 48 hours.</p>
+
+        <div class="warning-text">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>Please note: This action is permanent and cannot be undone. All your history, settings, and connections will be wiped entirely.</div>
+        </div>
+
+        <a href="/login" class="back-link"><i class="fa-solid fa-arrow-left"></i> Return to HearMe</a>
+    </div>
+
+</body>
+</html>

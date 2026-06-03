@@ -5,6 +5,25 @@ const crypto = require('crypto');
 const dns = require('dns').promises;
 const nodemailer = require('nodemailer');
 const User = require('../database/models/users'); // Path to your users model
+const { verifyCaptcha } = require('../utils/captchaVerification'); // Import CAPTCHA verification
+
+// Helper function to validate password strength
+function validatePasswordStrength(password) {
+    const requirements = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /\d/.test(password),
+        special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+    };
+    
+    const meetsRequirements = Object.values(requirements).filter(Boolean).length;
+    return {
+        isStrong: meetsRequirements >= 3,
+        score: meetsRequirements,
+        requirements
+    };
+}
 
 const emailVerificationCodes = new Map();
 const passwordResetPins = new Map();
@@ -279,12 +298,30 @@ router.post('/signup', async (req, res) => {
             role, email, password, username, anonymousName, 
             userPhone, race, struggles, firstName, lastName, 
             phone, qualification, licenseNumber, institutionName, 
-            specialization, location, termsAccepted, verificationCode
+            specialization, location, termsAccepted, verificationCode, recaptchaToken
         } = req.body;
         const normalizedEmail = normalizeEmail(email);
 
+        // Verify CAPTCHA token
+        if (recaptchaToken) {
+            const captchaResult = await verifyCaptcha(recaptchaToken);
+            if (!captchaResult.success) {
+                return res.status(400).json({ 
+                    message: 'CAPTCHA verification failed. Please try again.' 
+                });
+            }
+        }
+
         if (!isValidEmail(normalizedEmail)) {
             return res.status(400).json({ message: 'Please enter a valid email address.' });
+        }
+
+        // Validate password strength
+        const passwordValidation = validatePasswordStrength(password);
+        if (!passwordValidation.isStrong) {
+            return res.status(400).json({ 
+                message: 'Password is too weak. It must contain at least 8 characters, including uppercase letters, lowercase letters, numbers, and special characters.' 
+            });
         }
 
         const verificationError = verifySubmittedCode(normalizedEmail, verificationCode);
@@ -352,7 +389,17 @@ router.post('/signup', async (req, res) => {
 ========================================================================= */
 router.post('/login', async (req, res) => {
     try {
-        const { role, email, password } = req.body;
+        const { role, email, password, recaptchaToken } = req.body;
+
+        // Verify CAPTCHA token
+        if (recaptchaToken) {
+            const captchaResult = await verifyCaptcha(recaptchaToken);
+            if (!captchaResult.success) {
+                return res.status(400).json({ 
+                    message: 'CAPTCHA verification failed. Please try again.' 
+                });
+            }
+        }
 
         // 1. Find user by email
         const user = await User.findOne({ email });

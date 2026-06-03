@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,34 +27,34 @@
         <!-- TOP RIGHT USER SIDE LOGO -->
         <div class="user-profile-section">
 
-                    <a href="messages.html" class="msg-icon-btn" title="Messages">
-                        <i data-lucide="message-square"></i>
-                        <span class="msg-badge"></span> </a>
+            <a href="messages.html" class="msg-icon-btn" title="Messages">
+                <i data-lucide="message-square"></i>
+                <span class="msg-badge"></span> </a>
 
-                    <div class="user-dropdown-container">
-                        <div class="user-profile-trigger" id="dropdownTrigger">
-                            <div class="user-badge">
-                                User
-                            </div>
-                            <div class="user-avatar">
-                                U
-                            </div>
-                        </div>
-
-                        <div class="dropdown-menu" id="dropdownMenu">
-                            <a href="profile.html" class="dropdown-item">
-                                <i data-lucide="user"></i>
-                                <span>My Profile</span>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="logout.html" class="dropdown-item logout-item">
-                                <i data-lucide="log-out"></i>
-                                <span>Log Out</span>
-                            </a>
+            <div class="user-dropdown-container">
+                <div class="user-profile-trigger" id="dropdownTrigger">
+                    <div class="user-badge">
+                        User
+                    </div>
+                    <div class="user-avatar">
+                        U
                     </div>
                 </div>
 
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="profile.html" class="dropdown-item">
+                        <i data-lucide="user"></i>
+                        <span>My Profile</span>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="logout.html" class="dropdown-item logout-item">
+                        <i data-lucide="log-out"></i>
+                        <span>Log Out</span>
+                    </a>
+                </div>
             </div>
+
+        </div>
 
     </header>
 
@@ -176,12 +177,7 @@
                     </div>
 
                     <div class="group-chat-input">
-                        <input
-                            id="groupMessageInput"
-                            type="text"
-                            placeholder="Type a message..."
-                            disabled
-                        >
+                        <input id="groupMessageInput" type="text" placeholder="Type a message..." disabled>
                         <button id="sendGroupMessage" disabled>
                             Send
                         </button>
@@ -204,6 +200,8 @@
     </script>
 
     <script src="/user/user-shared.js"></script>
+    <script src="groups.js"></script>
     <script src="mobileFixes.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -7,16 +8,17 @@
     <link rel="stylesheet" href="login.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
 
     <div class="mainContainer">
         <div class="loginCard">
-            
-            <!-- Left Side: HearMe Gradient with Abstract Shapes -->
+
+            <!-- Left Side -->
             <div class="leftSide">
-                
-                <!-- Decorative Elements -->
                 <div class="decorDots decorDotsTop"></div>
                 <div class="decorDots decorDotsBottom"></div>
                 <div class="decorPill decorPillOne"></div>
@@ -25,32 +27,30 @@
                 <div class="decorCircleSolid"></div>
                 <div class="decorCross decorCrossOne"><i class="fa-solid fa-plus"></i></div>
                 <div class="decorCross decorCrossTwo"><i class="fa-solid fa-plus"></i></div>
-
-                <!-- Left Content -->
                 <div class="leftContent">
                     <h1>Your safe<br>space starts<br>here</h1>
-                    <p>Log in to continue your healing journey, connect anonymously, and find the support you deserve.</p>
+                    <p>Log in to continue your healing journey, connect anonymously, and find the support you deserve.
+                    </p>
                 </div>
             </div>
 
-            <!-- Right Side: Clean Form Area with HearMe Text -->
+            <!-- Right Side -->
             <div class="rightSide">
-                
                 <div class="formWrapper">
-                    
-                    <div class="logoContainer">
-                        <div class="logoBox">
-                            <i class="fa-solid fa-leaf"></i>
-                        </div>
-                    </div>
 
                     <div class="formHeader">
                         <span class="brandText">HearMe</span>
                         <h2>Hello! Welcome back</h2>
                     </div>
 
+                    <!-- Role Toggle -->
+                    <div class="role-selector">
+                        <div class="role-option active" data-role="user">User</div>
+                        <div class="role-option" data-role="therapist">Therapist</div>
+                    </div>
+
                     <form id="loginForm">
-                        
+
                         <div class="inputContainer">
                             <label>Email Address</label>
                             <div class="inputWrapper">
@@ -71,24 +71,26 @@
                             <label class="rememberMe">
                                 <input type="checkbox"> Remember me
                             </label>
-                            <a href="#" class="resetLink">Reset Password!</a>
+                            <!-- FIX: changed to button with correct id so JS can find it -->
+                            <button type="button" id="forgotPasswordLink" class="resetLink">Reset Password!</button>
                         </div>
+
+                        <!-- reCAPTCHA Token (hidden) -->
+                        <input type="hidden" id="recaptchaToken" name="recaptchaToken">
 
                         <button type="submit" class="submitBtn">Login</button>
 
-                        <div class="divider">
-                            <span>or</span>
-                        </div>
+                        <div class="divider"><span>or</span></div>
 
                         <div class="socialLoginContainer">
                             <button type="button" class="socialBtn">
-                                <i class="fa-brands fa-google" style="color: #ea4335;"></i>
+                                <i class="fa-brands fa-google" style="color:#ea4335;"></i>
                             </button>
                             <button type="button" class="socialBtn">
-                                <i class="fa-brands fa-facebook-f" style="color: #1877f2;"></i>
+                                <i class="fa-brands fa-facebook-f" style="color:#1877f2;"></i>
                             </button>
                             <button type="button" class="socialBtn">
-                                <i class="fa-brands fa-apple" style="color: #000000;"></i>
+                                <i class="fa-brands fa-apple" style="color:#000;"></i>
                             </button>
                         </div>
 
@@ -97,11 +99,72 @@
                         </p>
 
                     </form>
+
+                    <div class="legal-footer">
+                        <a href="/privacy">Privacy Policy</a> | <a href="/deletion">Data Deletion</a>
+                    </div>
+
                 </div>
             </div>
-            
+
         </div>
     </div>
 
+    <!-- Password Reset Modal -->
+    <div class="modal-overlay" id="resetModal">
+        <div class="modal-box">
+            <button class="modal-close" id="closeResetModal">&times;</button>
+            <h3>Reset Password</h3>
+            <p>Enter your email, receive a temporary PIN, then set a new password.</p>
+
+            <div class="modalInputGroup">
+                <label>Email</label>
+                <input id="resetEmail" type="email" placeholder="your@email.com">
+            </div>
+
+            <div class="modalInputGroup send-row">
+                <div style="flex:1;">
+                    <label>Temporary PIN</label>
+                    <input id="resetPin" type="text" placeholder="Enter PIN">
+                </div>
+                <button type="button" id="sendResetPin" class="sendPinBtn">Send PIN</button>
+            </div>
+
+            <div class="modalInputGroup">
+                <label>New Password</label>
+                <div class="password-input-wrapper">
+                    <input id="newPassword" type="password" placeholder="New password">
+                    <button type="button" class="toggle-password-modal" id="toggleNewPassword">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modalInputGroup">
+                <label>Confirm Password</label>
+                <div class="password-input-wrapper">
+                    <input id="confirmNewPassword" type="password" placeholder="Confirm password">
+                    <button type="button" class="toggle-password-modal" id="toggleConfirmNewPassword">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" id="resetPasswordBtn" class="submitBtn" style="margin-top:8px;">Reset
+                Password</button>
+            <div id="resetMessage" class="reset-message"></div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal-overlay" id="loadingModal">
+        <div class="loading-box">
+            <div class="spinner"></div>
+            <p>Logging you in…</p>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
 </body>
+
 </html>

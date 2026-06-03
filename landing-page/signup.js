@@ -18,9 +18,153 @@ const verificationMessage =
 const emailInput =
     document.getElementById('email');
 
+const passwordInput = 
+    document.getElementById('password');
+
+const confirmPasswordInput = 
+    document.getElementById('confirmPassword');
+
+const togglePasswordBtn = 
+    document.getElementById('togglePassword');
+
+const toggleConfirmPasswordBtn = 
+    document.getElementById('toggleConfirmPassword');
+
+const passwordStrengthContainer = 
+    document.getElementById('passwordStrengthContainer');
+
 function setVerificationMessage(message, type = '') {
     verificationMessage.textContent = message;
     verificationMessage.className = `verification-message ${type}`.trim();
+}
+
+/* =========================================
+   PASSWORD REQUIREMENTS VALIDATION
+========================================= */
+
+function validatePasswordStrength(password) {
+    const requirements = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /\d/.test(password),
+        special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+    };
+
+    return requirements;
+}
+
+function getPasswordStrengthScore(requirements) {
+    const meetsRequirements = Object.values(requirements).filter(Boolean).length;
+    return meetsRequirements;
+}
+
+function updatePasswordStrengthUI(password) {
+    if (!password) {
+        passwordStrengthContainer.style.display = 'none';
+        return;
+    }
+
+    passwordStrengthContainer.style.display = 'block';
+
+    const requirements = validatePasswordStrength(password);
+    const score = getPasswordStrengthScore(requirements);
+
+    // Update requirement indicators
+    document.getElementById('req-length').classList.toggle('met', requirements.length);
+    document.getElementById('req-upper').classList.toggle('met', requirements.uppercase);
+    document.getElementById('req-lower').classList.toggle('met', requirements.lowercase);
+    document.getElementById('req-number').classList.toggle('met', requirements.number);
+    document.getElementById('req-special').classList.toggle('met', requirements.special);
+
+    // Update strength bar and text
+    const strengthBar = document.getElementById('passwordStrengthBar');
+    const strengthText = document.getElementById('passwordStrengthText');
+
+    strengthBar.className = 'strength-bar';
+
+    if (score <= 1) {
+        strengthBar.classList.add('weak');
+        strengthText.textContent = 'Password strength: Weak';
+    } else if (score <= 2) {
+        strengthBar.classList.add('fair');
+        strengthText.textContent = 'Password strength: Fair';
+    } else if (score <= 3) {
+        strengthBar.classList.add('good');
+        strengthText.textContent = 'Password strength: Good';
+    } else if (score <= 4) {
+        strengthBar.classList.add('strong');
+        strengthText.textContent = 'Password strength: Strong';
+    } else {
+        strengthBar.classList.add('very-strong');
+        strengthText.textContent = 'Password strength: Very Strong';
+    }
+
+    strengthBar.style.width = (score / 5) * 100 + '%';
+}
+
+/* =========================================
+   PASSWORD VISIBILITY TOGGLE
+========================================= */
+
+togglePasswordBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const icon = togglePasswordBtn.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+
+toggleConfirmPasswordBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const icon = toggleConfirmPasswordBtn.querySelector('i');
+    
+    if (confirmPasswordInput.type === 'password') {
+        confirmPasswordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        confirmPasswordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+
+/* =========================================
+   PASSWORD STRENGTH ON INPUT
+========================================= */
+
+passwordInput.addEventListener('input', () => {
+    updatePasswordStrengthUI(passwordInput.value);
+});
+
+/* =========================================
+   RECAPTCHA TOKEN GENERATION
+========================================= */
+
+async function getRecaptchaToken() {
+    try {
+        if (typeof grecaptcha === 'undefined') {
+            console.warn('reCAPTCHA not loaded');
+            return null;
+        }
+
+        const token = await grecaptcha.execute(
+            'YOUR_RECAPTCHA_SITE_KEY', // Replace with your site key
+            { action: 'signup' }
+        );
+        return token;
+    } catch (error) {
+        console.error('Error getting reCAPTCHA token:', error);
+        return null;
+    }
 }
 
 /* =========================================
@@ -180,6 +324,17 @@ document.getElementById('signup-form')
     const confirmPassword =
         document.getElementById('confirmPassword').value;
 
+    /* PASSWORD STRENGTH CHECK */
+
+    const requirements = validatePasswordStrength(password);
+    const score = getPasswordStrengthScore(requirements);
+
+    if (score < 3) {
+        alert('Password is too weak. Please ensure it meets all requirements.');
+        updatePasswordStrengthUI(password);
+        return;
+    }
+
     /* PASSWORD CHECK */
 
     if(password !== confirmPassword){
@@ -198,6 +353,14 @@ document.getElementById('signup-form')
 
         alert('Please accept Terms & Conditions');
 
+        return;
+    }
+
+    /* GET RECAPTCHA TOKEN */
+
+    const recaptchaToken = await getRecaptchaToken();
+    if (!recaptchaToken) {
+        alert('CAPTCHA verification failed. Please try again.');
         return;
     }
 
@@ -234,6 +397,8 @@ document.getElementById('signup-form')
         confirmPassword,
 
         termsAccepted,
+
+        recaptchaToken,
 
         /* USER */
 

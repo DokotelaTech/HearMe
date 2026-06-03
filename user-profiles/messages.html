@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <header class="navbar">
@@ -21,7 +23,7 @@
     </header>
 
     <div class="app-container">
-            <nav class="sidebar">
+        <nav class="sidebar">
             <a href="/user/community" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
             <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
             <a href="/user/chat" class="nav-item"><i data-lucide="message-square"></i><span>Venting-Space</span></a>
@@ -34,27 +36,44 @@
         <main class="messages-area">
             <div class="page-header">
                 <h2 class="page-title">My Messages</h2>
-                <p class="page-subtitle">Conversations with your therapists</p>
+                <p class="page-subtitle">Conversations with therapists and group chats</p>
             </div>
 
             <div class="messages-layout">
                 <div class="inbox-sidebar">
-                    <div class="inbox-list" id="inbox-list">
-                        <p class="inbox-empty" id="inbox-status">Loading conversations...</p>
+                    <!-- Tabs for switching between Therapists and Groups -->
+                    <div class="inbox-tabs">
+                        <button class="inbox-tab active" data-tab="therapists">
+                            <i data-lucide="user-plus"></i> Therapists
+                        </button>
+                        <button class="inbox-tab" data-tab="groups">
+                            <i data-lucide="users"></i> Groups
+                        </button>
+                    </div>
+
+                    <!-- Therapist Conversations -->
+                    <div class="inbox-list" id="therapist-inbox-list" data-type="therapists">
+                        <p class="inbox-empty" id="therapist-inbox-status">Loading conversations...</p>
+                    </div>
+
+                    <!-- Group Conversations -->
+                    <div class="inbox-list hidden" id="group-inbox-list" data-type="groups">
+                        <p class="inbox-empty" id="group-inbox-status">Loading groups...</p>
                     </div>
                 </div>
+
                 <div class="chat-area">
                     <div class="chat-header" id="chat-header">
                         <div class="chat-header-info">
                             <div class="chat-avatar" id="chat-avatar">--</div>
                             <div>
                                 <strong id="chat-therapist-name">Select a conversation</strong>
-                                <span class="chat-meta" id="chat-therapist-meta">Therapist replies appear here</span>
+                                <span class="chat-meta" id="chat-therapist-meta">Messages appear here</span>
                             </div>
                         </div>
                     </div>
                     <div class="chat-history" id="chat-history">
-                        <p class="inbox-empty">Select a therapist from the left to view your conversation.</p>
+                        <p class="inbox-empty">Select a conversation to view messages.</p>
                     </div>
                     <div class="chat-footer">
                         <div class="input-area">
@@ -74,4 +93,5 @@
     <script src="/user/user-shared.js"></script>
     <script src="mobileFixes.js"></script>
 </body>
+
 </html>

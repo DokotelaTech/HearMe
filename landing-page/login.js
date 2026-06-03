@@ -1,92 +1,101 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const roleOptions =
-        document.querySelectorAll('.role-option');
-
-    const loadingModal =
-        document.getElementById('loadingModal');
-
-    const avatarIcon =
-        document.querySelector('.avatar-circle i');
-
-    const forgotPasswordLink =
-        document.getElementById('forgotPasswordLink');
-
-    const resetModal =
-        document.getElementById('resetModal');
-
-    const closeResetModal =
-        document.getElementById('closeResetModal');
-
-    const sendResetPin =
-        document.getElementById('sendResetPin');
-
-    const resetPasswordBtn =
-        document.getElementById('resetPasswordBtn');
-
-    const resetMessage =
-        document.getElementById('resetMessage');
-
-    const loginEmail =
-        document.getElementById('email');
+    const roleOptions        = document.querySelectorAll('.role-option');
+    const loadingModal       = document.getElementById('loadingModal');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const resetModal         = document.getElementById('resetModal');
+    const closeResetModal    = document.getElementById('closeResetModal');
+    const sendResetPin       = document.getElementById('sendResetPin');
+    const resetPasswordBtn   = document.getElementById('resetPasswordBtn');
+    const resetMessage       = document.getElementById('resetMessage');
+    const loginEmail         = document.getElementById('email');
 
     let selectedRole = 'user';
 
+    /* =========================
+       HELPERS
+    ========================= */
     function setResetMessage(message, type = '') {
         resetMessage.textContent = message;
         resetMessage.className = `reset-message ${type}`.trim();
     }
 
     /* =========================
+       PASSWORD VISIBILITY TOGGLE (Reset Modal)
+    ========================= */
+    const toggleNewPasswordBtn = document.getElementById('toggleNewPassword');
+    const toggleConfirmNewPasswordBtn = document.getElementById('toggleConfirmNewPassword');
+    const newPasswordInput = document.getElementById('newPassword');
+    const confirmNewPasswordInput = document.getElementById('confirmNewPassword');
+
+    if (toggleNewPasswordBtn) {
+        toggleNewPasswordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const icon = toggleNewPasswordBtn.querySelector('i');
+            
+            if (newPasswordInput.type === 'password') {
+                newPasswordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                newPasswordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    }
+
+    if (toggleConfirmNewPasswordBtn) {
+        toggleConfirmNewPasswordBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const icon = toggleConfirmNewPasswordBtn.querySelector('i');
+            
+            if (confirmNewPasswordInput.type === 'password') {
+                confirmNewPasswordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                confirmNewPasswordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    }
+
+    /* =========================
        ROLE SWITCHING
     ========================= */
-
     roleOptions.forEach(option => {
-
         option.addEventListener('click', () => {
-
-            roleOptions.forEach(opt =>
-                opt.classList.remove('active')
-            );
-
+            roleOptions.forEach(opt => opt.classList.remove('active'));
             option.classList.add('active');
-
             selectedRole = option.dataset.role;
-
-            if (selectedRole === 'user') {
-                avatarIcon.className = 'fa-solid fa-user';
-            } else {
-                avatarIcon.className = 'fa-solid fa-user-doctor';
-            }
         });
     });
 
     /* =========================
-       PASSWORD RESET
+       PASSWORD RESET — OPEN MODAL
     ========================= */
-
     forgotPasswordLink.addEventListener('click', (e) => {
-
         e.preventDefault();
-
-        document.getElementById('resetEmail').value =
-            loginEmail.value.trim();
-
+        document.getElementById('resetEmail').value = loginEmail.value.trim();
         setResetMessage('');
         resetModal.style.display = 'flex';
         document.getElementById('resetEmail').focus();
     });
 
+    /* Close modal */
     closeResetModal.addEventListener('click', () => {
         resetModal.style.display = 'none';
     });
 
     resetModal.addEventListener('click', (e) => {
-        if (e.target === resetModal) {
-            resetModal.style.display = 'none';
-        }
+        if (e.target === resetModal) resetModal.style.display = 'none';
     });
 
+    /* =========================
+       PASSWORD RESET — SEND PIN
+    ========================= */
     sendResetPin.addEventListener('click', async () => {
 
         const email = document.getElementById('resetEmail').value.trim();
@@ -97,18 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         sendResetPin.disabled = true;
-        sendResetPin.textContent = 'Sending...';
+        sendResetPin.textContent = 'Sending…';
         setResetMessage('');
 
         try {
-            const response = await fetch(
-                '/api/auth/request-password-reset',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                }
-            );
+            const response = await fetch('/api/auth/request-password-reset', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
 
             const data = await response.json();
 
@@ -124,10 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
             setResetMessage('Server connection failed while sending PIN.', 'error');
         } finally {
             sendResetPin.disabled = false;
-            sendResetPin.textContent = 'Send Temporary PIN';
+            sendResetPin.textContent = 'Send PIN';
         }
     });
 
+    /* =========================
+       PASSWORD RESET — SUBMIT
+    ========================= */
     resetPasswordBtn.addEventListener('click', async () => {
 
         const email           = document.getElementById('resetEmail').value.trim();
@@ -141,17 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         resetPasswordBtn.disabled = true;
-        resetPasswordBtn.textContent = 'Resetting...';
+        resetPasswordBtn.textContent = 'Resetting…';
 
         try {
-            const response = await fetch(
-                '/api/auth/reset-password',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, pin, password, confirmPassword })
-                }
-            );
+            const response = await fetch('/api/auth/reset-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, pin, password, confirmPassword })
+            });
 
             const data = await response.json();
 
@@ -174,53 +180,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================
-       LOGIN
+       RECAPTCHA TOKEN GENERATION
     ========================= */
+    async function getRecaptchaToken() {
+        try {
+            // Check if reCAPTCHA is loaded
+            if (typeof grecaptcha === 'undefined') {
+                console.warn('reCAPTCHA not loaded');
+                return null;
+            }
 
-    document.getElementById('login-form')
-    .addEventListener('submit', async (e) => {
+            // Get the reCAPTCHA token
+            const token = await grecaptcha.execute(
+                'YOUR_RECAPTCHA_SITE_KEY', // Replace with your site key
+                { action: 'login' }
+            );
+            return token;
+        } catch (error) {
+            console.error('Error getting reCAPTCHA token:', error);
+            return null;
+        }
+    }
+
+    /* =========================
+       LOGIN FORM SUBMIT
+    ========================= */
+    // FIX: was 'login-form', corrected to match HTML id="loginForm"
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
         e.preventDefault();
 
-        const email    = document.getElementById('email').value.trim();
+        const email    = loginEmail.value.trim();
         const password = document.getElementById('password').value.trim();
 
+        // Get reCAPTCHA token
+        const recaptchaToken = await getRecaptchaToken();
+        if (!recaptchaToken) {
+            alert('CAPTCHA verification failed. Please try again.');
+            return;
+        }
+
         try {
-            const response = await fetch(
-                '/api/auth/login',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ role: selectedRole, email, password })
-                }
-            );
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    role: selectedRole, 
+                    email, 
+                    password,
+                    recaptchaToken 
+                })
+            });
 
             const data = await response.json();
 
             if (response.ok) {
 
-                // ── Save token and user data ──
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 localStorage.setItem('role', data.user.role);
                 localStorage.setItem('anonymousName', data.user.anonymousName || '');
-
-                // ── Save identifier for community feed avatar and display name ──
-                // Falls back through anonymousName → username → email
                 localStorage.setItem(
                     'userIdentifier',
                     data.user.anonymousName || data.user.username || data.user.email || 'U'
                 );
 
-                // ── Show loading and redirect ──
                 loadingModal.style.display = 'flex';
 
                 setTimeout(() => {
-                    if (selectedRole === 'user') {
-                        window.location.href = '/user/community';
-                    } else {
-                        window.location.href = '/therapist/profile';
-                    }
+                    window.location.href = selectedRole === 'user'
+                        ? '/user/community'
+                        : '/therapist/profile';
                 }, 3000);
 
             } else {

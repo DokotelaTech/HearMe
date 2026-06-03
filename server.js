@@ -43,6 +43,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const messageRoutes = require('./routes/messageRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
+const appointmentManagementRoutes = require('./routes/appointmentManagementRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const adminRoutes = require('./routes/adminRoutes');
@@ -61,6 +62,7 @@ app.use('/api/therapist', therapistRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/session', appointmentManagementRoutes);
 app.use('/api/reports', reportRoutes);
 
 app.get('/api/config/giphy', verifyToken, (req, res) => {
@@ -89,6 +91,17 @@ app.get('/login', (req, res) => {
 });
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'landing-page', 'SignUp.html'));
+});
+
+const path = require('path');
+
+// Serve your static HTML files
+app.get('/privacy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'privacy.html'));
+});
+
+app.get('/deletion', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'deletion.html'));
 });
 
 // Therapist routes
@@ -168,6 +181,18 @@ app.get('/admin/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin', 'adminProfile.html'));
 });
  
+// Google Auth Routes
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect('/user/community'); // Or wherever they should go after login
+});
+
+// Facebook Auth Routes
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect('/user/community');
+});
+
 
 // =========================================
 // MODELS
@@ -386,6 +411,21 @@ app.post('/api/chat', verifyToken, async (req, res) => {
         res.status(500).json({ error: 'Failed to communicate with AI API.' });
     }
 });
+
+const FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "https://hearme-i94l.onrender.com/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'emails']
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    // Here you will add the logic to find or create the user in your MongoDB
+    return cb(null, profile);
+  }
+));
+
 
 // =========================================
 // CONNECT TO MONGODB & START SERVER

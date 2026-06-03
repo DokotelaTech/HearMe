@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,11 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest" defer></script>
-    
+
     <link rel="stylesheet" href="/user/profile.css">
     <link rel="stylesheet" href="/user/user-shared.css">
 </head>
+
 <body>
 
     <header class="navbar">
@@ -90,7 +92,7 @@
             </div>
 
             <div class="profile-grid">
-                
+
                 <div class="card roadmap-card">
                     <div class="card-header">
                         <h3>Your Healing Roadmap</h3>
@@ -106,16 +108,16 @@
                 </div>
 
                 <div class="right-column">
-                    
+
                     <div class="card side-card">
                         <div class="card-header">
                             <h3>
-                                <i data-lucide="calendar" class="purple-icon"></i>
+                                <i data-lucide="video" class="purple-icon"></i>
                                 Upcoming Sessions
                             </h3>
                         </div>
-                        <div id="dynamic-events" class="dynamic-container">
-                            <p class="empty-state">No upcoming sessions</p>
+                        <div id="dynamic-events" class="dynamic-container session-list">
+                            <p class="empty-state">Loading sessions...</p>
                         </div>
                     </div>
 
@@ -128,39 +130,44 @@
                             <span class="flower-stage-badge" id="stage-badge">🌱 Seed</span>
                         </div>
 
-                        <p class="flower-stage-label" id="stage-label">Keep going — your flower is just getting started</p>
+                        <p class="flower-stage-label" id="stage-label">Keep going — your flower is just getting started
+                        </p>
 
                         <div class="flower-svg-wrap">
                             <div id="water-droplet" class="water-drop"></div>
-                            
+
                             <svg id="flower-svg" width="150" height="150" viewBox="0 0 160 160">
-                                <line x1="80" y1="125" x2="80" y2="80" stroke="#16a34a" stroke-width="3" stroke-linecap="round"/>
-                                
+                                <line x1="80" y1="125" x2="80" y2="80" stroke="#16a34a" stroke-width="3"
+                                    stroke-linecap="round" />
+
                                 <g id="flower-leaves" style="opacity:0; transition: opacity 0.6s ease;">
-                                    <ellipse cx="64" cy="100" rx="14" ry="7" fill="#22c55e" transform="rotate(-30 64 100)"/>
-                                    <ellipse cx="96" cy="100" rx="14" ry="7" fill="#22c55e" transform="rotate(30 96 100)"/>
+                                    <ellipse cx="64" cy="100" rx="14" ry="7" fill="#22c55e"
+                                        transform="rotate(-30 64 100)" />
+                                    <ellipse cx="96" cy="100" rx="14" ry="7" fill="#22c55e"
+                                        transform="rotate(30 96 100)" />
                                 </g>
-                                
-                                <g id="flower-petals" style="opacity:0; transition: opacity 0.8s ease;" transform="translate(80,62)">
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(0)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(45)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(90)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(135)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(180)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(225)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(270)"/>
-                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(315)"/>
+
+                                <g id="flower-petals" style="opacity:0; transition: opacity 0.8s ease;"
+                                    transform="translate(80,62)">
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(0)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(45)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(90)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(135)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(180)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(225)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(270)" />
+                                    <ellipse cx="0" cy="-20" rx="8" ry="13" fill="#c084fc" transform="rotate(315)" />
                                 </g>
-                                
-                                <circle id="flower-center" cx="80" cy="62" r="10" fill="#fbbf24"/>
-                                
+
+                                <circle id="flower-center" cx="80" cy="62" r="10" fill="#fbbf24" />
+
                                 <path d="M 60 130 L 70 155 L 90 155 L 100 130 Z" fill="#d97706" />
-                                
+
                                 <rect x="55" y="123" width="50" height="7" rx="3" fill="#b45309" />
-                                
-                                <ellipse cx="80" cy="123" rx="23" ry="3" fill="#78350f" opacity=".9"/>
-                                
-                                <ellipse id="flower-seed" cx="80" cy="120" rx="8" ry="5" fill="#92400e" opacity=".9"/>
+
+                                <ellipse cx="80" cy="123" rx="23" ry="3" fill="#78350f" opacity=".9" />
+
+                                <ellipse id="flower-seed" cx="80" cy="120" rx="8" ry="5" fill="#92400e" opacity=".9" />
                             </svg>
                         </div>
 
@@ -199,7 +206,8 @@
                             <button class="flower-water-btn" id="flower-water-btn" onclick="flowerWaterToday()">
                                 Water today
                             </button>
-                            <button class="flower-info-btn" id="flower-info-btn" onclick="flowerToggleInfo()" aria-label="How to grow your flower">
+                            <button class="flower-info-btn" id="flower-info-btn" onclick="flowerToggleInfo()"
+                                aria-label="How to grow your flower">
                                 ℹ
                             </button>
                         </div>
@@ -213,10 +221,11 @@
                             🌿 <strong>Sprout</strong> — make 3 posts &amp; book 1 session<br>
                             🌸 <strong>Budding</strong> — complete 5 tasks &amp; 5 AI chats<br>
                             🌺 <strong>Blooming</strong> — water daily for 7 days<br><br>
-                            Tap <strong>Water today</strong> once a day to keep your streak alive. Each activity fills a bar — all four full unlocks the next stage.
+                            Tap <strong>Water today</strong> once a day to keep your streak alive. Each activity fills a
+                            bar — all four full unlocks the next stage.
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -228,15 +237,16 @@
             <button class="close-btn" id="close-video-modal">✕ End Session</button>
         </div>
         <div class="video-modal-body">
-            <iframe id="daily-iframe"
-                allow="camera; microphone; fullscreen; display-capture"
+            <iframe id="daily-iframe" allow="camera; microphone; fullscreen; display-capture"
                 style="width:100%; height:100%; border:none; border-radius:8px;">
             </iframe>
         </div>
     </div>
 
     <script src="/user/profile.js"></script>
+    <script src="sessionManager.js"></script>
     <script src="mobileFixes.js"></script>
     <!-- <script>lucide.createIcons();</script> -->
 </body>
+
 </html>
