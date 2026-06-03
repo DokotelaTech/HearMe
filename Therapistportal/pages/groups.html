@@ -23,21 +23,56 @@
         html, body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
         /* ----- Main Layout Grid ----- */
-        .groups-main-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 2fr; 
-            gap: 24px; 
-            margin-top: 24px; 
+        /* Changed from padding around container to allow grid items to expand */
+        .content-container {
+            padding: 24px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        /* ----- Header Buttons ----- */
-        .header-actions { display: flex; gap: 12px; }
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        .groups-main-grid { 
+            display: grid; 
+            grid-template-columns: 1.2fr 2fr; /* Adjusted ratio to fill space nicely */
+            gap: 24px; 
+            width: 100%;
+            align-items: start;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ----- Header within Card ----- */
+        .card-header-top {
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .card-header-top h1 {
+            margin: 0 0 8px 0;
+            font-size: 24px;
+            color: var(--text-main);
+        }
+        .card-header-top p {
+            margin: 0 0 16px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* ----- Buttons ----- */
+        .header-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-primary, .btn-secondary {
             padding: 10px 20px;
             border-radius: 8px;
             border: none;
@@ -49,25 +84,13 @@
             align-items: center;
             gap: 8px;
         }
+        .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #0f766e; }
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .btn-secondary { background: var(--secondary); color: white; }
         .btn-secondary:hover { background: #1d4ed8; }
         .full-width { width: 100%; justify-content: center; margin-top: 8px; padding: 12px; font-size: 16px; }
 
-        /* ----- Modal Overlay & Animations ----- */
+        /* ----- Modal Overlay & UI ----- */
         .modal-overlay { 
             display: none; 
             position: fixed; 
@@ -81,18 +104,13 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .modal-overlay.show { 
-            display: flex; 
-            opacity: 1;
-        }
-
-        /* ----- Clean, Large Modal UI ----- */
+        .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { 
             background: #ffffff; 
             padding: 32px; 
             border-radius: 16px; 
             width: 100%;
-            max-width: 600px; /* Made the modal wider and bigger */
+            max-width: 600px;
             max-height: 90vh; 
             overflow-y: auto; 
             position: relative; 
@@ -100,86 +118,30 @@
             transform: translateY(20px);
             transition: transform 0.3s ease;
         }
-        .modal-overlay.show .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-content h3 {
-            margin: 0 0 24px 0;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        /* Modal Close Button */
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        .modal-content h3 { margin: 0 0 24px 0; font-size: 24px; color: var(--text-main); }
         .close-modal { 
-            position: absolute; 
-            top: 24px; 
-            right: 24px; 
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f3f4f6; 
-            border: none; 
-            font-size: 20px; 
-            cursor: pointer; 
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            position: absolute; top: 24px; right: 24px; width: 36px; height: 36px;
+            border-radius: 50%; background: #f3f4f6; border: none; font-size: 20px; 
+            cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center;
         }
         .close-modal:hover { background: #e5e7eb; color: var(--text-main); }
 
-        /* ----- Premium Form Inputs ----- */
-        .group-form label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #374151;
-            font-size: 14px;
-        }
+        /* ----- Form Inputs ----- */
+        .group-form label { display: block; font-weight: 600; margin-bottom: 8px; color: #374151; font-size: 14px; }
         .group-form input, .group-form textarea {
-            width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 15px;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-input);
-            box-sizing: border-box;
-            transition: all 0.2s ease;
-            color: var(--text-main);
-        }
-        .group-form input::placeholder, .group-form textarea::placeholder {
-            color: #9ca3af;
+            width: 100%; padding: 14px 16px; margin-bottom: 20px; border: 1px solid var(--border-color);
+            border-radius: 10px; font-size: 15px; font-family: 'Inter', sans-serif; background: var(--bg-input); box-sizing: border-box;
         }
         .group-form input:focus, .group-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: #ffffff;
-            box-shadow: 0 0 0 4px var(--primary-light);
+            outline: none; border-color: var(--primary); background: #ffffff; box-shadow: 0 0 0 4px var(--primary-light);
         }
-        .group-form textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
+        .group-form textarea { min-height: 120px; resize: vertical; }
+        .form-row { display: flex; gap: 16px; }
+        .form-row > div { flex: 1; }
 
-        /* Split inputs side-by-side for Date/Time */
-        .form-row {
-            display: flex;
-            gap: 16px;
-        }
-        .form-row > div {
-            flex: 1;
-        }
-
-        /* Mobile tweaks for main grid */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .groups-main-grid { grid-template-columns: 1fr; }
-            .modal-content { padding: 24px; }
-            .form-row { flex-direction: column; gap: 0; }
         }
     </style>
 </head>
@@ -188,37 +150,32 @@
     <div class="app-layout">
         <aside class="sidebar">
             <div class="brand-area">
-                <span class="logo">HearMe</span>
+                <!-- <span class="logo">HearMe</span> -->
                 <span class="badge">Therapist Portal</span>
             </div>
+            
             <nav class="nav-menu">
-                <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
-                <a href="#" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
-                <a href="#" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="#" class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
+                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="/therapist/groups" class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
+                <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
+                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
         </aside>
 
         <main class="main-workspace">
             
             <header class="topbar">
-                <div class="topbar-left">
-                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                    <span class="logo">HearMe</span>
-                </div>
                 <div class="topbar-right">
                     <div class="profile-container">
-                        <button class="profile-btn" id="profileBtn">
-                            <div class="avatar" id="therapistInitials"></div>
+                        <button id="profileToggle" class="profile-btn">
+                            <div class="avatar" id="nav-avatar"></div>
                             <div class="profile-info">
-                                <span class="profile-name" id="therapistName"></span>
-                                <span class="profile-role" id="therapistRole"></span>
+                                <span class="profile-name" id="nav-name">Loading...</span>
+                                <span class="profile-role" id="nav-role">Therapist</span>
                             </div>
-                            <i class="fa-solid fa-chevron-down"></i>
+                            <div class="dropdown-arrow"><i class="fa-solid fa-chevron-down" id="dropdownIcon"></i></div>
                         </button>
                         <div id="profileDropdown" class="dropdown-menu">
                             <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
@@ -231,39 +188,38 @@
             </header>
 
             <div class="content-container">
-                <div class="page-header flex-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <h1>Groups</h1>
-                        <p style="color: var(--text-muted); margin-top: 4px;">Create support groups, guide conversations, and manage members.</p>
-                    </div>
-                    <div class="header-actions">
-                        <button class="btn-primary" onclick="document.getElementById('createModal').classList.add('show')">
-                            <i class="fa-solid fa-plus"></i> Create Group
-                        </button>
-                        <button class="btn-secondary" onclick="document.getElementById('eventModal').classList.add('show')">
-                            <i class="fa-regular fa-calendar-plus"></i> Schedule Event
-                        </button>
-                    </div>
-                </div>
-
                 <div class="groups-main-grid">
+                    
                     <section class="card">
-                        <h3><i class="fa-solid fa-users"></i> Your Groups</h3>
+                        <div class="card-header-top">
+                            <h1>Groups</h1>
+                            <p>Create support groups, guide conversations, and manage members.</p>
+                            <div class="header-actions">
+                                <button class="btn-primary" onclick="document.getElementById('createModal').classList.add('show')">
+                                    <i class="fa-solid fa-plus"></i> Create Group
+                                </button>
+                                <button class="btn-secondary" onclick="document.getElementById('eventModal').classList.add('show')">
+                                    <i class="fa-regular fa-calendar-plus"></i> Schedule Event
+                                </button>
+                            </div>
+                        </div>
+
+                        <h3 style="margin: 0 0 16px 0;"><i class="fa-solid fa-users"></i> Your Groups</h3>
                         <div id="therapistGroupsList" class="therapist-groups-list">
                             <p class="inbox-empty" style="color: var(--text-muted);">Loading groups...</p>
                         </div>
                     </section>
                     
-                    <section class="card" style="display: flex; flex-direction: column;">
-                        <h3><i class="fa-regular fa-message"></i> Group Chat <span class="therapist-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 8px;">Therapist</span></h3>
+                    <section class="card" style="height: calc(100vh - 120px); justify-content: flex-end;">
+                        <h3 style="margin: 0 0 16px 0;"><i class="fa-regular fa-message"></i> Group Chat <span class="therapist-badge" style="background: var(--primary-light); color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-left: 8px;">Therapist</span></h3>
                         
-                        <div id="therapistGroupMessages" style="flex: 1; min-height: 500px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 16px; overflow-y: auto;">
+                        <div id="therapistGroupMessages" style="flex: 1; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 16px; overflow-y: auto;">
                             <p class="inbox-empty" style="color: var(--text-muted); text-align: center; margin-top: 20px;">Select a group to open chat.</p>
                         </div>
                         
                         <div class="therapist-group-chat-input" style="display: flex; gap: 10px;">
-                            <input id="therapistGroupMessageInput" type="text" placeholder="Message the group..." disabled style="flex: 1; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px;">
-                            <button id="therapistSendGroupMessage" disabled class="btn-primary">Send</button>
+                            <input id="therapistGroupMessageInput" type="text" placeholder="Message the group..." disabled style="flex: 1; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px;">
+                            <button id="therapistSendGroupMessage" disabled class="btn-primary" style="padding: 0 24px;">Send</button>
                         </div>
                     </section>
                 </div>
@@ -276,7 +232,6 @@
             <button class="close-modal" onclick="document.getElementById('createModal').classList.remove('show')"><i class="fa-solid fa-xmark"></i></button>
             <h3>Create New Group</h3>
             <form id="createGroupForm" class="group-form">
-                
                 <label for="groupName">Group name</label>
                 <input id="groupName" type="text" placeholder="e.g. Anxiety Support Circle" required>
                 
@@ -301,7 +256,6 @@
             <button class="close-modal" onclick="document.getElementById('eventModal').classList.remove('show')"><i class="fa-solid fa-xmark"></i></button>
             <h3>Schedule Group Event</h3>
             <form id="groupEventForm" class="group-form">
-                
                 <label for="eventTitle">Event title</label>
                 <input id="eventTitle" type="text" placeholder="e.g. Guided grounding session" required>
                 
@@ -326,18 +280,5 @@
         </div>
     </div>
 
-        <!-- Shared Scripts -->
-    <script src="/therapist/js/shared/loadTherapistData.js"></script>
-    <script src="/therapist/js/shared/profileDropdown.js"></script>
-    <script src="/therapist/js/shared/api.js"></script>
-    <script src="/therapist/js/shared/utils.js"></script>
-    <script src="/therapist/js/shared/authGuard.js"></script>
-    <script src="/therapist/js/shared/sidebar.js"></script>
-
-    <!-- Page Script -->
-    <script src="/therapist/js/stressRelief.js"></script>
-
-    <!-- Mobile Fixes -->
-    <script src="/therapist/js/shared/mobileFixes.js" defer></script>
 </body>
 </html>
