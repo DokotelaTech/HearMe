@@ -64,6 +64,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/session', appointmentManagementRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/emergency', require('./routes/emergencyRoutes'));
+
 
 app.get('/api/config/giphy', verifyToken, (req, res) => {
     res.json({ apiKey: process.env.GIPHY_API_KEY?.trim() || '' });

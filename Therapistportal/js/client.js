@@ -253,33 +253,36 @@ async function updateStatus(appointmentId, status) {
 
 async function startEmergencyCall(appointmentId, clientName, userId) {
     try {
+        // ── Notify client + therapist via Brevo emails ──────────
         if (userId) {
-            fetch('/api/notifications/session-started', {
+            fetch('/api/emergency/session-started', {   // ← updated endpoint
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type':  'application/json'
                 },
-                body: JSON.stringify({ userId, appointmentId })
-            }).catch(err => console.error('Notification failed:', err));
+                body: JSON.stringify({ clientId: userId })  // ← renamed key
+            }).catch(err => console.error('Email notification failed:', err));
         }
 
+        // ── Join the Daily.co call ───────────────────────────────
         const res = await fetch(`/api/appointments/${appointmentId}/join`, {
-            method: 'POST',
+            method:  'POST',
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Failed to start emergency call');
 
-        const title = document.getElementById('video-modal-title');
-        const iframe = document.getElementById('daily-iframe');
-        const modal = document.getElementById('video-modal');
+        const title   = document.getElementById('video-modal-title');
+        const iframe  = document.getElementById('daily-iframe');
+        const modal   = document.getElementById('video-modal');
         const overlay = document.getElementById('video-modal-overlay');
 
-        if (title) title.textContent = `Emergency SOS with ${clientName}`;
-        if (iframe) iframe.src = data.url;
-        if (modal) modal.classList.add('active');
+        if (title)   title.textContent = `Emergency SOS with ${clientName}`;
+        if (iframe)  iframe.src = data.url;
+        if (modal)   modal.classList.add('active');
         if (overlay) overlay.classList.add('active');
+
     } catch (error) {
         alert(error.message || 'Emergency accepted, but the call could not start.');
     }
