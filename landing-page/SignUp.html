@@ -8,14 +8,208 @@
     <link rel="stylesheet" href="signup.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* =========================================
+           CERTIFICATE UPLOAD — NEW STYLES ONLY
+           (All other styles remain in signup.css)
+        ========================================= */
+
+        .certificate-upload-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted, #8a9ab5);
+            margin-bottom: 8px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .certificate-dropzone {
+            position: relative;
+            border: 2px dashed var(--border-color, #c8d3e8);
+            border-radius: 14px;
+            background: var(--input-bg, #f4f7fd);
+            padding: 28px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+            margin-bottom: 6px;
+        }
+
+        .certificate-dropzone:hover,
+        .certificate-dropzone.dragover {
+            border-color: var(--primary, #6c63ff);
+            background: var(--input-focus-bg, #eef0ff);
+            box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.08);
+        }
+
+        .certificate-dropzone.has-file {
+            border-color: #34c77b;
+            background: #f0fef6;
+            box-shadow: 0 0 0 4px rgba(52, 199, 123, 0.08);
+        }
+
+        .certificate-dropzone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cert-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e8eaff 0%, #d8f5e9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .certificate-dropzone:hover .cert-icon-wrap,
+        .certificate-dropzone.has-file .cert-icon-wrap {
+            transform: scale(1.08);
+        }
+
+        .cert-icon-wrap i {
+            font-size: 1.3rem;
+            color: var(--primary, #6c63ff);
+            transition: color 0.2s ease;
+        }
+
+        .certificate-dropzone.has-file .cert-icon-wrap i {
+            color: #34c77b;
+        }
+
+        .cert-drop-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main, #2d3a52);
+            margin-bottom: 4px;
+        }
+
+        .cert-drop-subtitle {
+            font-size: 0.76rem;
+            color: var(--text-muted, #8a9ab5);
+            line-height: 1.5;
+        }
+
+        .cert-drop-subtitle span {
+            display: block;
+            margin-top: 2px;
+            font-size: 0.71rem;
+            color: #b0bdd0;
+        }
+
+        .cert-file-preview {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: #f0fef6;
+            border: 1.5px solid #34c77b;
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-top: 8px;
+        }
+
+        .cert-file-preview.visible {
+            display: flex;
+        }
+
+        .cert-file-preview i {
+            font-size: 1.1rem;
+            color: #34c77b;
+            flex-shrink: 0;
+        }
+
+        .cert-file-name {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #2d3a52;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cert-file-size {
+            font-size: 0.72rem;
+            color: #8a9ab5;
+            flex-shrink: 0;
+        }
+
+        .cert-remove-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 4px;
+            color: #c0c8d8;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .cert-remove-btn:hover {
+            color: #e05e5e;
+        }
+
+        .cert-error-msg {
+            font-size: 0.76rem;
+            color: #e05e5e;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .cert-error-msg.visible {
+            display: block;
+        }
+
+        /* ---- Mobile overrides ---- */
+        @media (max-width: 480px) {
+            .certificate-dropzone {
+                padding: 22px 14px;
+                border-radius: 11px;
+            }
+
+            .cert-icon-wrap {
+                width: 44px;
+                height: 44px;
+            }
+
+            .cert-icon-wrap i {
+                font-size: 1.1rem;
+            }
+
+            .cert-drop-title {
+                font-size: 0.85rem;
+            }
+
+            .cert-drop-subtitle {
+                font-size: 0.74rem;
+            }
+
+            .cert-file-preview {
+                padding: 9px 11px;
+                gap: 8px;
+            }
+
+            .cert-file-name {
+                font-size: 0.78rem;
+            }
+
+            .cert-file-size {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
-    <!-- <div class="brand-header">
-        <h1>HearMe</h1>
-        <p>Your safe space for healing</p>
-    </div> -->
 
     <div class="container">
         <div class="form-box">
@@ -23,7 +217,7 @@
             <h2>Join HearMe</h2>
             <p class="subtitle">Please complete all information below:</p>
 
-            <form id="signup-form">
+            <form id="signup-form" novalidate>
 
                 <p class="label-text">I am a:</p>
                 <div class="role-selector">
@@ -37,6 +231,7 @@
                     </div>
                 </div>
 
+                <!-- ===== USER FIELDS ===== -->
                 <div id="user-fields">
 
                     <div class="anon-box">
@@ -83,52 +278,93 @@
 
                 </div>
 
+                <!-- ===== THERAPIST FIELDS ===== -->
                 <div id="therapist-fields" style="display:none;">
 
                     <div class="triple-input">
                         <div class="input-group">
                             <i class="fa-regular fa-user"></i>
-                            <input type="text" id="firstName" placeholder="First Name">
+                            <input type="text" id="firstName" placeholder="First Name *">
                         </div>
                         <div class="input-group">
                             <i class="fa-regular fa-user"></i>
-                            <input type="text" id="lastName" placeholder="Last Name">
+                            <input type="text" id="lastName" placeholder="Last Name *">
                         </div>
                         <div class="input-group">
                             <i class="fa-solid fa-phone"></i>
-                            <input type="text" id="phone" placeholder="Phone Number">
+                            <input type="text" id="phone" placeholder="Phone Number *">
                         </div>
                     </div>
 
                     <div class="double-input">
                         <div class="input-group">
                             <i class="fa-solid fa-location-dot"></i>
-                            <input type="text" id="location" placeholder="Location">
+                            <input type="text" id="location" placeholder="Location *">
                         </div>
                         <div class="input-group">
                             <i class="fa-solid fa-graduation-cap"></i>
-                            <input type="text" id="qualification" placeholder="Qualification">
+                            <input type="text" id="qualification" placeholder="Qualification *">
                         </div>
                     </div>
 
                     <div class="double-input">
                         <div class="input-group">
                             <i class="fa-solid fa-id-card"></i>
-                            <input type="text" id="licenseNumber" placeholder="License Number">
+                            <input type="text" id="licenseNumber" placeholder="License Number *">
                         </div>
                         <div class="input-group">
                             <i class="fa-solid fa-building"></i>
-                            <input type="text" id="institutionName" placeholder="Institution Name">
+                            <input type="text" id="institutionName" placeholder="Institution Name *">
                         </div>
                     </div>
 
                     <div class="input-group">
                         <i class="fa-solid fa-brain"></i>
-                        <input type="text" id="specialization" placeholder="Specialization">
+                        <input type="text" id="specialization" placeholder="Specialization *">
                     </div>
+
+                    <!-- ===== QUALIFICATION CERTIFICATE UPLOAD ===== -->
+                    <div id="certificate-section" style="margin-top: 16px;">
+                        <label class="certificate-upload-label">
+                            <i class="fa-solid fa-file-certificate" style="margin-right:5px;"></i>
+                            Qualification Certificate <span style="color:#e05e5e;">*</span>
+                        </label>
+
+                        <div class="certificate-dropzone" id="certDropzone">
+                            <input
+                                type="file"
+                                id="qualificationCertificate"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                                tabindex="0"
+                                aria-label="Upload qualification certificate"
+                            >
+                            <div class="cert-icon-wrap">
+                                <i class="fa-solid fa-cloud-arrow-up" id="certDropIcon"></i>
+                            </div>
+                            <p class="cert-drop-title" id="certDropTitle">Click or drag &amp; drop your certificate</p>
+                            <p class="cert-drop-subtitle">
+                                Accepted formats: PDF, JPG, PNG
+                                <span>Max file size: 5 MB</span>
+                            </p>
+                        </div>
+
+                        <!-- File preview row -->
+                        <div class="cert-file-preview" id="certFilePreview">
+                            <i class="fa-solid fa-file-check"></i>
+                            <span class="cert-file-name" id="certFileName">—</span>
+                            <span class="cert-file-size" id="certFileSize">—</span>
+                            <button type="button" class="cert-remove-btn" id="certRemoveBtn" aria-label="Remove file">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+
+                        <p class="cert-error-msg" id="certErrorMsg">Please upload your qualification certificate.</p>
+                    </div>
+                    <!-- ===== END CERTIFICATE UPLOAD ===== -->
 
                 </div>
 
+                <!-- ===== SHARED FIELDS ===== -->
                 <div class="input-group">
                     <i class="fa-regular fa-envelope"></i>
                     <input id="email" type="email" placeholder="Email Address" required>
@@ -168,28 +404,18 @@
                     </div>
                     <div id="passwordStrengthText" class="strength-text">Password strength: Weak</div>
                     <ul id="passwordRequirements" class="password-requirements">
-                        <li id="req-length" class="req-item">
-                            <span class="req-icon">✓</span> At least 8 characters
-                        </li>
-                        <li id="req-upper" class="req-item">
-                            <span class="req-icon">✓</span> At least one uppercase letter (A-Z)
-                        </li>
-                        <li id="req-lower" class="req-item">
-                            <span class="req-icon">✓</span> At least one lowercase letter (a-z)
-                        </li>
-                        <li id="req-number" class="req-item">
-                            <span class="req-icon">✓</span> At least one number (0-9)
-                        </li>
-                        <li id="req-special" class="req-item">
-                            <span class="req-icon">✓</span> At least one special character (!@#$%^&*)
-                        </li>
+                        <li id="req-length"  class="req-item"><span class="req-icon">✓</span> At least 8 characters</li>
+                        <li id="req-upper"   class="req-item"><span class="req-icon">✓</span> At least one uppercase letter (A-Z)</li>
+                        <li id="req-lower"   class="req-item"><span class="req-icon">✓</span> At least one lowercase letter (a-z)</li>
+                        <li id="req-number"  class="req-item"><span class="req-icon">✓</span> At least one number (0-9)</li>
+                        <li id="req-special" class="req-item"><span class="req-icon">✓</span> At least one special character (!@#$%^&*)</li>
                     </ul>
                 </div>
 
                 <div class="terms-box">
                     <input type="checkbox" id="terms" required>
                     <label for="terms">
-                        I accept the <span id="openTerms">Terms & Conditions</span>
+                        I accept the <span id="openTerms">Terms &amp; Conditions</span>
                     </label>
                 </div>
 
@@ -205,10 +431,11 @@
         </div>
     </div>
 
+    <!-- Terms Modal -->
     <div class="modal" id="termsModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>HearMe Terms & Conditions</h3>
+                <h3>HearMe Terms &amp; Conditions</h3>
                 <span id="closeModal">&times;</span>
             </div>
             <div class="modal-body">
@@ -224,5 +451,4 @@
     <script src="signup.js"></script>
 
 </body>
-
 </html>
