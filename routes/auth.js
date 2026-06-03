@@ -9,18 +9,17 @@ const { recordAuditLog } = require('../utils/auditLogger');
 /* =========================================================================
    BREVO EMAIL SETUP  (uses HTTPS — works on Render free tier)
 ========================================================================= */
-const Brevo = require('@getbrevo/brevo');
+const { BrevoClient } = require('@getbrevo/brevo');
 
-const brevoApi = new Brevo.TransactionalEmailsApi();
-brevoApi.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
+const brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
 
 async function sendEmail({ to, subject, html }) {
-    const email = new Brevo.SendSmtpEmail();
-    email.sender  = { email: process.env.EMAIL_USER || 'noreply@hearme.app', name: 'HearMe' };
-    email.to      = [{ email: to }];
-    email.subject = subject;
-    email.htmlContent = html;
-    await brevoApi.sendTransacEmail(email);
+    await brevo.transactionalEmails.sendTransacEmail({
+        sender:      { email: process.env.EMAIL_USER || 'noreply@hearme.app', name: 'HearMe' },
+        to:          [{ email: to }],
+        subject,
+        htmlContent: html,
+    });
 }
 
 /* =========================================================================
