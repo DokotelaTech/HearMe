@@ -1,52 +1,79 @@
 const express = require('express');
-const router  = express.Router();
-const jwt     = require('jsonwebtoken');
-const crypto  = require('crypto');
-const dns     = require('dns').promises;
-const User    = require('../database/models/users');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const dns = require('dns').promises;
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const stream = require('stream');
+const User = require('../database/models/users');
 const { recordAuditLog } = require('../utils/auditLogger');
 
 /* =========================================================================
+   CLOUDINARY CONFIGURATION
+========================================================================= */
+// Make sure these are set in your root .env file
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+/* =========================================================================
+   MULTER CONFIGURATION
+========================================================================= */
+// Store the uploaded file in server RAM (memory) so we can stream it to Cloudinary
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 } // 5 MB limit
+});
+
+/* =========================================================================
    BREVO EMAIL SETUP  (v5 SDK — CommonJS interop)
-=========================================================================*/
-let _brevo = null;
+========================================================================= */
+let brevoInstance = null;
 async function getBrevoClient() {
-    if (_brevo) return _brevo;
+    if (brevoInstance) return brevoInstance;
+    
     // v5 is ESM-only; dynamically import so CommonJS projects work
     const mod = await import('@getbrevo/brevo');
     const BrevoClient = mod.BrevoClient || mod.default?.BrevoClient;
-    _brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
-    return _brevo;
+    brevoInstance = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
+    return brevoInstance;
 }
 
 async function sendEmail({ to, subject, html }) {
     const brevo = await getBrevoClient();
     await brevo.transactionalEmails.sendTransacEmail({
-        sender:      { email: process.env.EMAIL_USER || 'noreply@hearme.app', name: 'HearMe' },
-        to:          [{ email: to }],
+        sender: { email: process.env.EMAIL_USER || 'noreply@hearme.app', name: 'HearMe' },
+        to: [{ email: to }],
         subject,
         htmlContent: html,
     });
 }
+
 /* =========================================================================
-   HELPERS
+   HELPERS & STATE
 ========================================================================= */
 const emailVerificationCodes = new Map();
-const passwordResetPins      = new Map();
-const CODE_EXPIRY_MS         = 10 * 60 * 1000; // 10 minutes
+const passwordResetPins = new Map();
+const CODE_EXPIRY_MS = 10 * 60 * 1000; // 10 minutes
 
 function validatePasswordStrength(password) {
+    if (!password) return { isStrong: false, score: 0, requirements: {} };
+    
     const requirements = {
-        length:    password.length >= 8,
+        length: password.length >= 8,
         uppercase: /[A-Z]/.test(password),
         lowercase: /[a-z]/.test(password),
-        number:    /\d/.test(password),
-        special:   /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+        number: /\d/.test(password),
+        special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
     };
+    
     const meetsRequirements = Object.values(requirements).filter(Boolean).length;
     return {
         isStrong: meetsRequirements >= 3,
-        score:    meetsRequirements,
+        score: meetsRequirements,
         requirements
     };
 }
@@ -78,18 +105,22 @@ async function emailDomainAcceptsMail(email) {
 
 function verifySubmittedCode(email, verificationCode) {
     const storedCode = emailVerificationCodes.get(email);
-    if (!storedCode)                   return 'Please verify your email before creating an account.';
+    if (!storedCode) return 'Please verify your email before creating an account.';
+    
     if (Date.now() > storedCode.expiresAt) {
         emailVerificationCodes.delete(email);
         return 'Your verification code has expired. Please request a new one.';
     }
+    
     if (storedCode.attempts >= 5) {
         emailVerificationCodes.delete(email);
         return 'Too many incorrect verification attempts. Please request a new code.';
     }
+    
     const submittedHash = hashCode(email, verificationCode);
-    const storedBuffer  = Buffer.from(storedCode.codeHash, 'hex');
+    const storedBuffer = Buffer.from(storedCode.codeHash, 'hex');
     const submittedBuffer = Buffer.from(submittedHash, 'hex');
+    
     if (
         storedBuffer.length !== submittedBuffer.length ||
         !crypto.timingSafeEqual(storedBuffer, submittedBuffer)
@@ -102,18 +133,22 @@ function verifySubmittedCode(email, verificationCode) {
 
 function verifyPasswordResetPin(email, pin) {
     const storedPin = passwordResetPins.get(email);
-    if (!storedPin)                    return 'Please request a temporary PIN before resetting your password.';
+    if (!storedPin) return 'Please request a temporary PIN before resetting your password.';
+    
     if (Date.now() > storedPin.expiresAt) {
         passwordResetPins.delete(email);
         return 'Your temporary PIN has expired. Please request a new one.';
     }
+    
     if (storedPin.attempts >= 5) {
         passwordResetPins.delete(email);
         return 'Too many incorrect PIN attempts. Please request a new PIN.';
     }
-    const submittedHash   = hashCode(email, pin);
-    const storedBuffer    = Buffer.from(storedPin.pinHash, 'hex');
+    
+    const submittedHash = hashCode(email, pin);
+    const storedBuffer = Buffer.from(storedPin.pinHash, 'hex');
     const submittedBuffer = Buffer.from(submittedHash, 'hex');
+    
     if (
         storedBuffer.length !== submittedBuffer.length ||
         !crypto.timingSafeEqual(storedBuffer, submittedBuffer)
@@ -123,6 +158,21 @@ function verifyPasswordResetPin(email, pin) {
     }
     return null;
 }
+
+const uploadToCloudinary = (buffer) => {
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+            { folder: "hearme_certificates" },
+            (error, result) => {
+                if (error) return reject(error);
+                resolve(result);
+            }
+        );
+        const readableStream = new stream.PassThrough();
+        readableStream.end(buffer);
+        readableStream.pipe(uploadStream);
+    });
+};
 
 /* =========================================================================
    SEND EMAIL VERIFICATION CODE  POST /api/auth/send-verification-code
@@ -151,13 +201,13 @@ router.post('/send-verification-code', async (req, res) => {
 
         const code = String(crypto.randomInt(100000, 1000000));
         emailVerificationCodes.set(email, {
-            codeHash:  hashCode(email, code),
+            codeHash: hashCode(email, code),
             expiresAt: Date.now() + CODE_EXPIRY_MS,
-            attempts:  0
+            attempts: 0
         });
 
         await sendEmail({
-            to:      email,
+            to: email,
             subject: 'Your HearMe verification code',
             html: `
                 <div style="font-family:Inter,Arial,sans-serif;max-width:480px;margin:0 auto;padding:32px;background:#f8fafc;border-radius:12px;">
@@ -199,13 +249,13 @@ router.post('/request-password-reset', async (req, res) => {
 
         const pin = String(crypto.randomInt(100000, 1000000));
         passwordResetPins.set(email, {
-            pinHash:   hashCode(email, pin),
+            pinHash: hashCode(email, pin),
             expiresAt: Date.now() + CODE_EXPIRY_MS,
-            attempts:  0
+            attempts: 0
         });
 
         await sendEmail({
-            to:      email,
+            to: email,
             subject: 'Your HearMe password reset PIN',
             html: `
                 <div style="font-family:Inter,Arial,sans-serif;max-width:480px;margin:0 auto;padding:32px;background:#f8fafc;border-radius:12px;">
@@ -265,8 +315,9 @@ router.post('/reset-password', async (req, res) => {
 
 /* =========================================================================
    SIGNUP  POST /api/auth/signup
+   --> Requires upload.single('qualificationCertificate')
 ========================================================================= */
-router.post('/signup', async (req, res) => {
+router.post('/signup', upload.single('qualificationCertificate'), async (req, res) => {
     try {
         const {
             role, email, password, username, anonymousName,
@@ -296,24 +347,44 @@ router.post('/signup', async (req, res) => {
             return res.status(400).json({ message: 'An account with this email already exists.' });
         }
 
+        let parsedStruggles = [];
+        try {
+            parsedStruggles = struggles ? JSON.parse(struggles) : [];
+        } catch (e) {
+            console.error("Failed to parse struggles", e);
+        }
+
+        // Handle Cloudinary Upload if a file exists
+        let certificateUrl = '';
+        if (role === 'therapist' && req.file) {
+            try {
+                const uploadResult = await uploadToCloudinary(req.file.buffer);
+                certificateUrl = uploadResult.secure_url;
+            } catch (uploadError) {
+                console.error("Cloudinary Upload Error:", uploadError);
+                return res.status(500).json({ message: 'Failed to upload certificate document.' });
+            }
+        }
+
         const newUser = new User({
             role,
-            email:          normalizedEmail,
+            email: normalizedEmail,
             password,
             termsAccepted,
-            username:        role === 'user'      ? username        : undefined,
-            anonymousName:   role === 'user'      ? anonymousName   : undefined,
-            userPhone:       role === 'user'      ? userPhone       : undefined,
-            race:            role === 'user'      ? race            : undefined,
-            struggles:       role === 'user'      ? struggles       : [],
-            firstName:       role === 'therapist' ? firstName       : undefined,
-            lastName:        role === 'therapist' ? lastName        : undefined,
-            phone:           role === 'therapist' ? phone           : undefined,
-            qualification:   role === 'therapist' ? qualification   : undefined,
-            licenseNumber:   role === 'therapist' ? licenseNumber   : undefined,
+            username: role === 'user' ? username : undefined,
+            anonymousName: role === 'user' ? anonymousName : undefined,
+            userPhone: role === 'user' ? userPhone : undefined,
+            race: role === 'user' ? race : undefined,
+            struggles: role === 'user' ? parsedStruggles : [],
+            firstName: role === 'therapist' ? firstName : undefined,
+            lastName: role === 'therapist' ? lastName : undefined,
+            phone: role === 'therapist' ? phone : undefined,
+            qualification: role === 'therapist' ? qualification : undefined,
+            licenseNumber: role === 'therapist' ? licenseNumber : undefined,
             institutionName: role === 'therapist' ? institutionName : undefined,
-            specialization:  role === 'therapist' ? specialization  : undefined,
-            location:        role === 'therapist' ? location        : undefined
+            specialization: role === 'therapist' ? specialization : undefined,
+            location: role === 'therapist' ? location : undefined,
+            qualificationCertificateUrl: certificateUrl // Save the Cloudinary link to DB
         });
 
         await newUser.save();
@@ -372,8 +443,8 @@ router.post('/login', async (req, res) => {
             message: 'Login successful',
             token,
             user: {
-                id:            user._id,
-                role:          user.role,
+                id: user._id,
+                role: user.role,
                 anonymousName: user.anonymousName || ''
             }
         });

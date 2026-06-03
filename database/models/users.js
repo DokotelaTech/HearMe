@@ -46,7 +46,12 @@ const userSchema = new mongoose.Schema({
         default: 'incomplete'
     },
     profileImage: { type: String },
-    credentialDocument: { type: String },  // ✅ comma here — this was the bug
+    
+    
+    qualificationCertificateUrl: {
+        type: String,
+        default: ''
+    },
 
     // =========================================
     //    COMMON FIELDS
