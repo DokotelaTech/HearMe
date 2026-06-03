@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>HearMe | AI Chat</title>
 
@@ -19,10 +17,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
 
@@ -40,9 +35,9 @@
         <!-- USER SIDE LOGO -->
         <div class="user-profile-section">
 
-            <a href="messages.html" class="msg-icon-btn" title="Messages">
+            <!-- <a href="messages.html" class="msg-icon-btn" title="Messages">
                 <i data-lucide="message-square"></i>
-                <span class="msg-badge"></span> </a>
+                <span class="msg-badge"></span> </a> -->
 
             <div class="user-dropdown-container">
                 <div class="user-profile-trigger" id="dropdownTrigger">
@@ -50,17 +45,17 @@
                         User
                     </div>
                     <div class="user-avatar">
-                        U
+                        A
                     </div>
                 </div>
 
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="profile.html" class="dropdown-item">
+                    <a href="/user/profile" class="dropdown-item">
                         <i data-lucide="user"></i>
                         <span>My Profile</span>
                     </a>
                     <hr class="dropdown-divider">
-                    <a href="logout.html" class="dropdown-item logout-item">
+                    <a href="user/logout" class="dropdown-item logout-item">
                         <i data-lucide="log-out"></i>
                         <span>Log Out</span>
                     </a>
@@ -74,10 +69,11 @@
     <div class="app-container">
 
         <!-- SIDEBAR -->
-               <nav class="sidebar">
+        <nav class="sidebar">
             <a href="/user/community" class="nav-item"><i data-lucide="home"></i><span>Feed</span></a>
             <a href="/user/groups" class="nav-item"><i data-lucide="users"></i><span>Groups</span></a>
-            <a href="/user/chat" class="nav-item active"><i data-lucide="message-square"></i><span>Venting-Space</span></a>
+            <a href="/user/chat" class="nav-item active"><i
+                    data-lucide="message-square"></i><span>Venting-Space</span></a>
             <a href="/user/experts" class="nav-item"><i data-lucide="user-plus"></i><span>Experts</span></a>
             <a href="/user/sos" class="nav-item"><i data-lucide="alert-circle"></i><span>SOS</span></a>
             <a href="/user/relief" class="nav-item"><i data-lucide="heart"></i><span>Relief</span></a>
@@ -125,11 +121,8 @@
 
                         <div class="input-container">
 
-                            <input
-                                type="text"
-                                id="aiUserInput"
-                                placeholder="Type your message... Remember, this is a safe space."
-                            >
+                            <input type="text" id="aiUserInput"
+                                placeholder="Type your message... Remember, this is a safe space.">
 
                             <button id="aiSendBtn">
 
@@ -145,7 +138,8 @@
 
                             <i class="fa-solid fa-heart"></i>
 
-                            This AI provides emotional support but is not a replacement for professional help. In crisis? Use the SOS button.
+                            This AI provides emotional support but is not a replacement for professional help. In
+                            crisis? Use the SOS button.
 
                         </p>
 
@@ -172,4 +166,5 @@
     <script src="/user/user-shared.js"></script>
     <script src="mobileFixes.js"></script>
 </body>
+
 </html>
