@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HearMe - Messages</title>
+    <title>HearMe - Groups</title>
     <link rel="stylesheet" href="/therapist/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         html, body { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; }
         .mobile-topbar { display: none; position: sticky; top: 0; z-index: 3000; height: 60px; background: #ffffff; border-bottom: 1px solid #e2e8f0; align-items: center; justify-content: space-between; padding: 0 16px; box-sizing: border-box; width: 100%; }
@@ -34,12 +35,8 @@
             .mobile-menu-btn { display: none !important; }
             .main-workspace { width: 100% !important; margin-left: 0 !important; }
             .content-container { padding: 16px !important; }
-            .messages-layout { flex-direction: column !important; height: auto !important; }
-            .inbox-sidebar { width: 100% !important; border-right: none !important; border-bottom: 1px solid #e2e8f0 !important; height: 220px !important; }
-            .chat-area { min-height: 420px !important; }
-            .input-area { flex-wrap: wrap !important; }
-            .input-area input { width: 100% !important; }
-            .send-btn { width: 100% !important; justify-content: center !important; }
+            .therapist-groups-layout { grid-template-columns: 1fr !important; }
+            .group-members-card { position: static !important; }
         }
     </style>
 </head>
@@ -76,16 +73,15 @@
             <nav class="nav-menu">
                 <a href="/therapist/clients"  class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
-                <a href="/therapist/messages" class="nav-item active"><i class="fa-regular fa-message"></i> Messages</a>
-                <a href="/therapist/groups"   class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
+                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <a href="/therapist/groups"   class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
                 <a href="/therapist/reliefs"  class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="/therapist/report"   class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
             <div class="overview-box">
-                <h4>Today's Overview</h4>
-                <div class="ov-line">Active Clients <span id="overview-active-clients">0</span></div>
-                <div class="ov-line">Sessions Today <span id="overview-sessions-today">0</span></div>
-                <div class="ov-line">Unread Messages <span class="red-text" id="overview-unread">0</span></div>
+                <h4>Group Safety</h4>
+                <div class="ov-line">Host access <span>Therapist</span></div>
+                <div class="ov-line">Member removal <span>Enabled</span></div>
             </div>
         </aside>
 
@@ -103,7 +99,6 @@
                         </button>
                         <div id="profileDropdown" class="dropdown-menu">
                             <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
-                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                             <hr>
                             <button id="logoutBtn" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign Out</span></button>
                         </div>
@@ -112,43 +107,61 @@
             </header>
 
             <div class="content-container">
-                <div class="page-header">
-                    <h1>Messages</h1>
-                    <p>Communicate securely with your clients</p>
+                <div class="page-header flex-header">
+                    <div>
+                        <h1>Groups</h1>
+                        <p>Create support groups, guide conversations, and manage members.</p>
+                    </div>
                 </div>
-                <div class="messages-layout">
-                    <div class="inbox-sidebar">
-                        <div class="search-input">
-                            <i class="fa-solid fa-search"></i>
-                            <input type="text" id="message-search" placeholder="Search conversations...">
+                <div class="therapist-groups-layout">
+                    <section class="card">
+                        <h3><i class="fa-solid fa-plus"></i> Create Group</h3>
+                        <form id="createGroupForm" class="group-form">
+                            <label for="groupName">Group name</label>
+                            <input id="groupName" type="text" placeholder="Anxiety Support Circle" required>
+                            <label for="groupCategory">Category</label>
+                            <input id="groupCategory" type="text" placeholder="Anxiety & Stress" required>
+                            <label for="groupMeetingTime">Meeting time</label>
+                            <input id="groupMeetingTime" type="text" placeholder="Wednesdays at 18:00">
+                            <label for="groupDescription">Description</label>
+                            <textarea id="groupDescription" placeholder="Describe who this group supports and what members can expect." required></textarea>
+                            <button class="btn-primary full-width" type="submit"><i class="fa-solid fa-plus"></i> Create Group</button>
+                        </form>
+                    </section>
+                    <section>
+                        <div id="therapistGroupsList" class="therapist-groups-list">
+                            <p class="inbox-empty">Loading groups...</p>
                         </div>
-                        <div class="inbox-list" id="inbox-list-container">
-                            <p class="muted text-sm" style="padding:20px;text-align:center;">Loading conversations...</p>
+                    </section>
+                    <aside class="card group-members-card">
+                        <h3><i class="fa-solid fa-users"></i> Members</h3>
+                        <p class="muted text-sm" id="selectedGroupLabel">Select one of your groups to manage members.</p>
+                        <div id="groupMembersList" class="group-members-list"></div>
+                    </aside>
+                </div>
+                <div class="therapist-group-tools">
+                    <section class="card">
+                        <h3><i class="fa-regular fa-message"></i> Group Chat <span class="therapist-badge">Therapist</span></h3>
+                        <div id="therapistGroupMessages" class="therapist-group-messages"><p class="inbox-empty">Select a group to open chat.</p></div>
+                        <div class="therapist-group-chat-input">
+                            <input id="therapistGroupMessageInput" type="text" placeholder="Message the group..." disabled>
+                            <button id="therapistSendGroupMessage" disabled>Send</button>
                         </div>
-                    </div>
-                    <div class="chat-area">
-                        <div class="chat-header" id="active-chat-header">
-                            <div class="flex-align">
-                                <div class="c-avatar blue sm">--</div>
-                                <div><strong>Select a conversation</strong><br><span class="muted text-sm">--</span></div>
-                            </div>
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                        </div>
-                        <div class="chat-history" id="chat-history-container">
-                            <div class="bubble incoming" style="opacity:0.5;">
-                                <p>Waiting for database sync...</p>
-                                <span class="time">Just now</span>
-                            </div>
-                        </div>
-                        <div class="chat-footer">
-                            <div class="privacy-banner"><strong>Privacy Reminder:</strong> All messages are encrypted and HIPAA-compliant.</div>
-                            <div class="input-area">
-                                <i class="fa-solid fa-paperclip attach-icon"></i>
-                                <input type="text" id="chat-input" placeholder="Type your message... (Press Enter to send)" disabled>
-                                <button class="send-btn" id="btn-send-message" disabled><i class="fa-regular fa-paper-plane"></i> Send</button>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
+                    <section class="card">
+                        <h3><i class="fa-regular fa-calendar-plus"></i> Schedule Group Event</h3>
+                        <form id="groupEventForm" class="group-form">
+                            <label for="eventTitle">Event title</label>
+                            <input id="eventTitle" type="text" placeholder="Guided grounding session" required>
+                            <label for="eventDate">Date</label>
+                            <input id="eventDate" type="date" required>
+                            <label for="eventTime">Time</label>
+                            <input id="eventTime" type="time" required>
+                            <label for="eventNotes">Notes</label>
+                            <textarea id="eventNotes" placeholder="What members should prepare"></textarea>
+                            <button class="btn-primary full-width" type="submit">Schedule Event</button>
+                        </form>
+                    </section>
                 </div>
             </div>
         </main>
@@ -159,9 +172,8 @@
     <script src="/therapist/js/shared/api.js"></script>
     <script src="/therapist/js/shared/utils.js"></script>
     <script src="/therapist/js/shared/authGuard.js"></script>
-    <script src="/therapist/js/shared/sidebar.js"></script>
-    <script src="/therapist/js/client.js"></script>
-    <script src="/therapist/js/portal.js"></script>
+    <script src="/therapist/js/groups.js"></script>
+    <script>lucide.createIcons();</script>
     <script>
     (function(){
         var hb=document.getElementById("hamburgerBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay"),pp=document.getElementById("mobileProfilePill"),dd=document.getElementById("mobileProfileDropdown"),di=document.getElementById("mobileDropdownIcon"),ml=document.getElementById("mobileLogoutBtn");
