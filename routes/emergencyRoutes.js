@@ -1,9 +1,3 @@
-// ============================================================
-//  routes/emergencyRoutes.js
-//  Already mounted in server.js as:
-//  app.use('/api/emergency', require('./routes/emergencyRoutes'));
-// ============================================================
-
 const express    = require('express');
 const router     = express.Router();
 const jwt        = require('jsonwebtoken');
