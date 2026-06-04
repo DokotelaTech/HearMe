@@ -24,9 +24,10 @@ async function loadTherapistAppointments() {
 
         const pending = all.filter(a => a.status === 'pending');
         const approved = all.filter(a => a.status === 'approved' || a.status === 'confirmed');
+        const pendingEmergency = pending.filter(a => a.isEmergency);
 
         updateDashboardStats(approved, pending);
-        renderSchedule(approved);
+        renderSchedule([...pendingEmergency, ...approved]);
 
     } catch (error) {
         console.error('Appointments load error:', error);
@@ -70,7 +71,13 @@ function renderSchedule(appointmentsList) {
 
         let actionHtml = '';
 
-        if (a.type === 'online' && (a.isEmergency || (diffMinutes <= 10 && diffMinutes >= -60))) {
+        if (a.isEmergency && a.status === 'pending') {
+            actionHtml = `
+                <button onclick="acceptEmergencyAppointment('${a._id}', '${a.userName || a.clientName || 'Client'}', '${a.userId}')"
+                    style="background:#dc2626; color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:700; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-phone-volume"></i> Accept & Start Emergency Call
+                </button>`;
+        } else if (a.type === 'online' && (a.isEmergency || (diffMinutes <= 10 && diffMinutes >= -60))) {
             actionHtml = `
                 <button onclick="startSessionAndNotify('${a._id}', '${a.userName || a.clientName}', '${a.userId}')"
                     style="background:${a.isEmergency ? '#dc2626' : '#0ea5e9'}; color:white; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:700; display:flex; align-items:center; gap:8px;">
@@ -117,11 +124,39 @@ function renderSchedule(appointmentsList) {
 }
 
 // =========================================
+// ACCEPT EMERGENCY APPOINTMENT
+// =========================================
+async function acceptEmergencyAppointment(appointmentId, userName, userId) {
+    try {
+        const res = await fetch(`${apiBaseUrl}/appointments/${appointmentId}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'approved' })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+            alert(data.message || 'Could not accept emergency SOS.');
+            return;
+        }
+
+        await startSessionAndNotify(appointmentId, userName || 'Client', userId);
+        loadTherapistAppointments();
+    } catch (error) {
+        alert('Could not accept emergency SOS. Please try again.');
+        console.error('Accept emergency error:', error);
+    }
+}
+
+// =========================================
 // START SESSION & NOTIFY USER
 // =========================================
 async function startSessionAndNotify(appointmentId, userName, userId) {
     try {
-        fetch(`${apiBaseUrl}/notifications/session-started`, {
+        fetch(`${apiBaseUrl}/emergency/session-started`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -332,6 +367,8 @@ function updateTime(index, field, value) {
     availability[index][field] = value;
     updateNextAvailable();
 }
+
+window.acceptEmergencyAppointment = acceptEmergencyAppointment;
 
 // =========================================
 // EDIT / SAVE AVAILABILITY BUTTON

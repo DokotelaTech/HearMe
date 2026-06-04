@@ -10,6 +10,8 @@ const router            = express.Router();
 const jwt               = require('jsonwebtoken');
 const { BrevoClient }   = require('@getbrevo/brevo');
 const User              = require('../database/models/users');
+const Appointment       = require('../database/models/Appointment');
+const crypto            = require('crypto');
 
 // ── Brevo setup ───────────────────────────────────────────────
 const brevo        = new BrevoClient({ apiKey: process.env.BREVO_API_KEY });
@@ -188,7 +190,7 @@ function sessionStartedToTherapistHTML(therapistName, clientName) {
 
 // ============================================================
 //  POST /api/emergency/sos
-//  Client triggers SOS -> emails all verified therapists
+//  Client triggers SOS -> creates therapist-side cards and emails all verified therapists
 // ============================================================
 router.post('/sos', verifyToken, async (req, res) => {
     try {
@@ -198,7 +200,7 @@ router.post('/sos', verifyToken, async (req, res) => {
             role:          'therapist',
             profileStatus: 'verified',
             accountStatus: 'active',
-        }).select('email firstName');
+        }).select('_id email firstName lastName');
 
         if (!therapists.length) {
             return res.status(503).json({
@@ -206,8 +208,27 @@ router.post('/sos', verifyToken, async (req, res) => {
             });
         }
 
-        const clientUser = await User.findById(client.userId).select('anonymousName username');
-        const clientName = clientUser?.anonymousName || clientUser?.username || 'A HearMe user';
+        const clientUser = await User.findById(client.userId).select('anonymousName username email');
+        const clientName = clientUser?.anonymousName || clientUser?.username || clientUser?.email || 'A HearMe user';
+        const now = new Date();
+        const date = now.toISOString().split('T')[0];
+        const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        const emergencyGroupId = crypto.randomUUID();
+        const note = 'Emergency SOS request. Please accept only if you can start the call immediately.';
+
+        const appointments = await Appointment.insertMany(therapists.map(therapist => ({
+            userId: client.userId,
+            therapistId: therapist._id,
+            therapistName: `${therapist.firstName || ''} ${therapist.lastName || ''}`.trim() || therapist.email,
+            clientName,
+            date,
+            time,
+            type: 'online',
+            note,
+            status: 'pending',
+            isEmergency: true,
+            emergencyGroupId
+        })));
 
         const emailResults = await Promise.allSettled(
             therapists.map(t =>
@@ -223,7 +244,10 @@ router.post('/sos', verifyToken, async (req, res) => {
 
         return res.status(200).json({
             message: `SOS sent to ${sent} therapist(s).`,
-            count:   sent,
+            count: therapists.length,
+            emergencyGroupId,
+            appointmentCount: appointments.length,
+            emailCount: sent
         });
 
     } catch (err) {
