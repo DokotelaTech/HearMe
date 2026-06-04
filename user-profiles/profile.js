@@ -375,6 +375,96 @@ async function uploadAvatar(file) {
 // =========================================
 // LOAD APPOINTMENTS
 // =========================================
+function escapeEventHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+async function loadGroupEvents() {
+    try {
+        const res = await fetch(`${API_BASE}/groups/events/my`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error('Failed to fetch group events');
+
+        const data = await res.json();
+        return data.events || [];
+    } catch (error) {
+        console.error('Group events load error:', error);
+        return [];
+    }
+}
+
+function formatEventDate(date, time) {
+    const eventDateTime = new Date(`${date}T${time || '00:00'}`);
+    if (Number.isNaN(eventDateTime.getTime())) return `${date || ''} ${time || ''}`.trim();
+
+    const now = new Date();
+    if (eventDateTime.toDateString() === now.toDateString()) {
+        return `Today at ${eventDateTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+    }
+
+    return eventDateTime.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function renderGroupEventCard(event) {
+    const statusConfig = {
+        pending:   { text: 'Awaiting Response', bg: '#fef3c7', color: '#d97706' },
+        attending: { text: 'Attending',         bg: '#dcfce7', color: '#16a34a' },
+        rejected:  { text: 'Rejected',          bg: '#fee2e2', color: '#dc2626' }
+    };
+    const badge = statusConfig[event.status] || statusConfig.pending;
+    const hasResponded = event.status === 'attending' || event.status === 'rejected';
+
+    return `
+        <div style="background:#f0fdfa; border:1px solid #ccfbf1; border-radius:12px; padding:16px; margin-bottom:16px; ${event.status === 'rejected' ? 'opacity:0.7;' : ''}">
+            <div style="display:flex; align-items:flex-start; gap:14px;">
+                <div style="background:#0d9488; color:white; width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.2rem;">
+                    <i data-lucide="users"></i>
+                </div>
+                <div style="flex:1; min-width:0;">
+                    <p style="margin:0 0 4px 0; font-weight:700; font-size:0.95rem; color:#0f172a;">
+                        ${escapeEventHtml(event.title)}
+                    </p>
+                    <p style="margin:0 0 8px 0; font-size:0.82rem; color:#64748b;">
+                        ${formatEventDate(event.date, event.time)} - ${escapeEventHtml(event.groupName)}
+                    </p>
+                    <p style="margin:0 0 10px 0; font-size:0.8rem; color:#475569;">
+                        Hosted by ${escapeEventHtml(event.therapistName || 'Therapist')}
+                        ${event.notes ? `<br>${escapeEventHtml(event.notes)}` : ''}
+                    </p>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; justify-content:space-between;">
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <span style="background:#ccfbf1; color:#0f766e; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600;">Group Event</span>
+                            <span style="background:${badge.bg}; color:${badge.color}; padding:3px 10px; border-radius:20px; font-size:0.72rem; font-weight:600;">${badge.text}</span>
+                        </div>
+                        ${hasResponded ? '' : `
+                            <div style="display:flex; gap:8px;">
+                                <button onclick="respondToGroupEvent('${event.groupId}', '${event.id}', 'attending')"
+                                    style="background:#16a34a; color:white; border:none; padding:6px 14px; border-radius:8px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+                                    Attend
+                                </button>
+                                <button onclick="respondToGroupEvent('${event.groupId}', '${event.id}', 'rejected')"
+                                    style="background:#fee2e2; color:#dc2626; border:none; padding:6px 14px; border-radius:8px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+                                    Reject
+                                </button>
+                            </div>`}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+}
+
 async function loadUpcomingAppointments() {
     const container = document.getElementById('dynamic-events');
     if (!container) return;
@@ -405,17 +495,18 @@ async function loadUpcomingAppointments() {
         const approvedCount = appointments.filter(a => a.status === 'approved').length;
         const statEl = document.getElementById('stat-sessions');
         if (statEl) statEl.textContent = approvedCount;
+        const groupEvents = await loadGroupEvents();
 
-        if (appointments.length === 0) {
+        if (appointments.length === 0 && groupEvents.length === 0) {
             container.innerHTML = `
                 <p style="text-align:center; padding:20px; color:#64748b;">
-                    No upcoming sessions yet.<br><br>
+                    No upcoming sessions or group events yet.<br><br>
                     <a href="/user/experts" style="background:#a855f7; color:white; padding:8px 16px; border-radius:8px; text-decoration:none;">Book one now</a>
                 </p>`;
             return;
         }
 
-        container.innerHTML = appointments.map(a => {
+        const appointmentCards = appointments.map(a => {
             const sessionDateTime = new Date(`${a.date}T${a.time}`);
             const diffMinutes     = (sessionDateTime - now) / (1000 * 60);
 
@@ -480,7 +571,10 @@ async function loadUpcomingAppointments() {
                         </div>
                     </div>
                 </div>`;
-        }).join('');
+        });
+
+        const groupEventCards = groupEvents.map(renderGroupEventCard);
+        container.innerHTML = [...appointmentCards, ...groupEventCards].join('');
 
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
@@ -489,6 +583,29 @@ async function loadUpcomingAppointments() {
         if (container) container.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">Could not load sessions.</p>';
     }
 }
+
+async function respondToGroupEvent(groupId, eventId, status) {
+    try {
+        const res = await fetch(`${API_BASE}/groups/${groupId}/events/${eventId}/respond`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Could not update event response.');
+
+        await loadUpcomingAppointments();
+    } catch (err) {
+        alert(err.message || 'Could not update event response.');
+        console.error('Group event response error:', err);
+    }
+}
+
+window.respondToGroupEvent = respondToGroupEvent;
 
 // =========================================
 // CANCEL SESSION

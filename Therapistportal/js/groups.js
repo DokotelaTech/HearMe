@@ -62,6 +62,53 @@
         `).join('');
     }
 
+    function renderSelectedGroupEvents(group) {
+        const list = document.getElementById('groupEventsList');
+        if (!list) return;
+
+        if (!group) {
+            list.innerHTML = '<p class="inbox-empty">No group selected.</p>';
+            return;
+        }
+
+        const events = group.events || [];
+        if (!events.length) {
+            list.innerHTML = '<p class="inbox-empty">No events scheduled for this group yet.</p>';
+            return;
+        }
+
+        list.innerHTML = events
+            .slice()
+            .sort((a, b) => new Date(`${a.date}T${a.time || '00:00'}`) - new Date(`${b.date}T${b.time || '00:00'}`))
+            .map(event => {
+                const attendees = event.attendees || [];
+                const pending = attendees.filter(item => item.status === 'pending').length;
+                const attending = attendees.filter(item => item.status === 'attending').length;
+                const rejected = attendees.filter(item => item.status === 'rejected').length;
+                const eventDate = new Date(`${event.date}T${event.time || '00:00'}`);
+                const dateLabel = Number.isNaN(eventDate.getTime())
+                    ? `${event.date || ''} ${event.time || ''}`.trim()
+                    : eventDate.toLocaleString(undefined, {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                return `
+                    <div style="border:1px solid #e5e7eb; border-radius:10px; padding:12px; margin-bottom:10px; background:#f9fafb;">
+                        <strong style="display:block; color:#111827; font-size:14px;">${escapeHtml(event.title)}</strong>
+                        <span style="display:block; color:#6b7280; font-size:12px; margin-top:3px;">${escapeHtml(dateLabel)}</span>
+                        ${event.notes ? `<span style="display:block; color:#475569; font-size:12px; margin-top:6px;">${escapeHtml(event.notes)}</span>` : ''}
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;">
+                            <span style="background:#fef3c7; color:#b45309; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700;">${pending} pending</span>
+                            <span style="background:#dcfce7; color:#15803d; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700;">${attending} attending</span>
+                            <span style="background:#fee2e2; color:#b91c1c; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700;">${rejected} rejected</span>
+                        </div>
+                    </div>`;
+            }).join('');
+    }
+
     async function loadGroups() {
         const data = await apiRequest('/groups/mine');
         therapistGroups = data.groups || [];
@@ -75,6 +122,7 @@
         const group = therapistGroups.find(item => item.id === groupId);
         document.getElementById('selectedGroupLabel').textContent =
             group ? `Managing members for ${group.name}` : 'Members';
+        renderSelectedGroupEvents(group);
 
         const data = await apiRequest(`/groups/${groupId}/members`);
         const list = document.getElementById('groupMembersList');
@@ -198,6 +246,10 @@
         event.target.reset();
         document.getElementById('eventModal').classList.remove('show');
         await loadGroups();
+        if (selectedGroupId) {
+            const group = therapistGroups.find(item => item.id === selectedGroupId);
+            renderSelectedGroupEvents(group);
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {

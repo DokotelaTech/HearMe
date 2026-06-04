@@ -49,6 +49,32 @@ function serializeGroup(group, viewerId) {
     };
 }
 
+function isUpcomingEvent(event) {
+    const eventDateTime = new Date(`${event.date}T${event.time || '00:00'}`);
+    return Number.isNaN(eventDateTime.getTime()) || eventDateTime >= new Date();
+}
+
+function serializeGroupEvent(group, event, userId) {
+    const attendee = (event.attendees || []).find(item =>
+        item.userId?.toString() === userId
+    );
+
+    return {
+        id: event._id,
+        groupId: group._id,
+        groupName: group.name,
+        therapistId: group.therapistId?._id || group.therapistId,
+        therapistName: displayName(group.therapistId),
+        title: event.title,
+        date: event.date,
+        time: event.time,
+        notes: event.notes || '',
+        status: attendee?.status || 'pending',
+        respondedAt: attendee?.respondedAt,
+        createdAt: event.createdAt
+    };
+}
+
 async function findGroupForParticipant(groupId, userId) {
     const group = await Group.findById(groupId);
 
@@ -82,6 +108,29 @@ router.get('/mine', verifyToken, ensureRole('therapist'), async (req, res) => {
             .populate('therapistId', 'firstName lastName email')
             .sort({ createdAt: -1 });
         res.status(200).json({ groups: groups.map(group => serializeGroup(group, req.user.userId)) });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.get('/events/my', verifyToken, ensureRole('user'), async (req, res) => {
+    try {
+        const groups = await Group.find({ members: req.user.userId })
+            .populate('therapistId', 'firstName lastName email')
+            .sort({ createdAt: -1 });
+
+        const events = groups.flatMap(group =>
+            (group.events || [])
+                .filter(isUpcomingEvent)
+                .filter(event => (event.attendees || []).some(item =>
+                    item.userId?.toString() === req.user.userId
+                ))
+                .map(event => serializeGroupEvent(group, event, req.user.userId))
+        ).sort((a, b) =>
+            new Date(`${a.date}T${a.time || '00:00'}`) - new Date(`${b.date}T${b.time || '00:00'}`)
+        );
+
+        res.status(200).json({ events });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -122,6 +171,14 @@ router.post('/:id/join', verifyToken, ensureRole('user'), async (req, res) => {
 
         if (!alreadyJoined) {
             group.members.push(req.user.userId);
+            group.events.forEach(event => {
+                if (
+                    isUpcomingEvent(event) &&
+                    !(event.attendees || []).some(item => item.userId?.toString() === req.user.userId)
+                ) {
+                    event.attendees.push({ userId: req.user.userId, status: 'pending' });
+                }
+            });
             await group.save();
         }
 
@@ -181,7 +238,13 @@ router.post('/:id/events', verifyToken, ensureRole('therapist'), async (req, res
         if (!group) return res.status(404).json({ message: 'Group not found.' });
 
         const { title, date, time, notes } = req.body;
-        group.events.push({ title, date, time, notes });
+        group.events.push({
+            title,
+            date,
+            time,
+            notes,
+            attendees: group.members.map(userId => ({ userId, status: 'pending' }))
+        });
         await group.save();
 
         res.status(201).json({
@@ -193,6 +256,42 @@ router.post('/:id/events', verifyToken, ensureRole('therapist'), async (req, res
             return res.status(400).json({ message: error.message });
         }
 
+        res.status(500).json({ message: error.message });
+    }
+});
+
+router.patch('/:id/events/:eventId/respond', verifyToken, ensureRole('user'), async (req, res) => {
+    try {
+        const { status } = req.body;
+        if (!['attending', 'rejected'].includes(status)) {
+            return res.status(400).json({ message: 'Status must be attending or rejected.' });
+        }
+
+        const group = await Group.findOne({
+            _id: req.params.id,
+            members: req.user.userId
+        }).populate('therapistId', 'firstName lastName email');
+
+        if (!group) return res.status(404).json({ message: 'Group event not found.' });
+
+        const event = group.events.id(req.params.eventId);
+        if (!event) return res.status(404).json({ message: 'Group event not found.' });
+
+        let attendee = event.attendees.find(item => item.userId?.toString() === req.user.userId);
+        if (!attendee) {
+            event.attendees.push({ userId: req.user.userId, status, respondedAt: new Date() });
+        } else {
+            attendee.status = status;
+            attendee.respondedAt = new Date();
+        }
+
+        await group.save();
+
+        res.status(200).json({
+            message: status === 'attending' ? 'Event accepted.' : 'Event rejected.',
+            event: serializeGroupEvent(group, event, req.user.userId)
+        });
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });

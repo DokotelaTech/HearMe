@@ -38,6 +38,15 @@ const groupSchema = new mongoose.Schema({
         date: { type: String, required: true },
         time: { type: String, required: true },
         notes: { type: String, trim: true, maxlength: 300 },
+        attendees: [{
+            userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+            status: {
+                type: String,
+                enum: ['pending', 'attending', 'rejected'],
+                default: 'pending'
+            },
+            respondedAt: { type: Date }
+        }],
         createdAt: { type: Date, default: Date.now }
     }]
 }, { timestamps: true });

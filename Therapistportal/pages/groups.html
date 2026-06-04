@@ -180,7 +180,7 @@
             <nav class="nav-menu">
                 <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
                 <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
-                <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a>
+                <!-- <a href="/therapist/messages" class="nav-item"><i class="fa-regular fa-message"></i> Messages</a> -->
                 <a href="/therapist/groups" class="nav-item active"><i class="fa-solid fa-people-group"></i> Groups</a>
                 <a href="/therapist/reliefs" class="nav-item"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
                 <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
@@ -236,6 +236,14 @@
                             <h3><i class="fa-solid fa-user-minus"></i> Members</h3>
                             <p id="selectedGroupLabel">Select a group to manage members.</p>
                             <div id="groupMembersList">
+                                <p class="inbox-empty" style="color: var(--text-muted);">No group selected.</p>
+                            </div>
+                        </div>
+
+                        <div class="members-panel">
+                            <h3><i class="fa-regular fa-calendar-check"></i> Scheduled Events</h3>
+                            <p>Events sent to clients who joined the selected group.</p>
+                            <div id="groupEventsList">
                                 <p class="inbox-empty" style="color: var(--text-muted);">No group selected.</p>
                             </div>
                         </div>
