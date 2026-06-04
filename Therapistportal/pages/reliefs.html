@@ -7,72 +7,22 @@
     <title>HearMe - Therapist Portal</title>
 
     <link rel="stylesheet" href="/therapist/css/stressRelief.css">
-    <link rel="stylesheet" href="responsive.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        /* ── Topbar layout: logo left, profile right ── */
-        .topbar {
-            justify-content: space-between !important;
-        }
-
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .topbar-left .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary, #2563eb);
-        }
-
-        /* Hamburger — hidden on desktop, shown on mobile */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: #0f172a;
-            cursor: pointer;
-            padding: 6px;
-            line-height: 1;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Hide the sidebar brand since logo lives in topbar on mobile */
-            .brand-area {
-                display: none;
-            }
-
-            /* Sidebar overlay */
-            .sidebar-overlay {
-                position: fixed;
-                inset: 0;
-                background: rgba(15, 23, 42, 0.35);
-                z-index: 2400;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
     <div class="app-layout">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <!-- ═══════════════════════════════════════
+             SIDEBAR
+        ════════════════════════════════════════ -->
+        <aside class="sidebar" id="sidebar">
 
+            <!-- Brand (hidden on mobile — logo shows in topbar) -->
             <div class="brand-area">
                 <span class="logo">HearMe</span>
             </div>
@@ -130,13 +80,15 @@
 
         </aside>
 
-        <!-- MAIN -->
+        <!-- ═══════════════════════════════════════
+             MAIN WORKSPACE
+        ════════════════════════════════════════ -->
         <main class="main-workspace">
 
             <!-- TOPBAR -->
             <header class="topbar">
 
-                <!-- Left: hamburger + logo -->
+                <!-- Left: hamburger (mobile only) + logo -->
                 <div class="topbar-left">
                     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
                         <i class="fa-solid fa-bars"></i>
@@ -146,45 +98,34 @@
 
                 <!-- Right: profile -->
                 <div class="topbar-right">
-
                     <div class="profile-container">
 
                         <button class="profile-btn" id="profileBtn">
-
                             <div class="avatar" id="therapistInitials"></div>
-
                             <div class="profile-info">
                                 <span class="profile-name" id="therapistName"></span>
                                 <span class="profile-role" id="therapistRole"></span>
                             </div>
-
-                            <i class="fa-solid fa-chevron-down"></i>
-
+                            <i class="fa-solid fa-chevron-down" style="font-size:12px;color:#6b7280;margin-left:4px;"></i>
                         </button>
 
                         <div id="profileDropdown" class="dropdown-menu">
-
                             <a href="/therapist/profile">
                                 <i class="fa-regular fa-user"></i>
                                 <span>My Profile</span>
                             </a>
-
                             <a href="#">
                                 <i class="fa-solid fa-gear"></i>
                                 <span>Settings</span>
                             </a>
-
                             <hr>
-
                             <button id="logoutBtn" class="logout-btn">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 <span>Sign Out</span>
                             </button>
-
                         </div>
 
                     </div>
-
                 </div>
 
             </header>
@@ -203,27 +144,22 @@
                 </div>
 
                 <div class="stats-row">
-
                     <div class="stat-card">
                         <span>Total Resources</span>
                         <strong id="totalResources">0</strong>
                     </div>
-
                     <div class="stat-card">
                         <span>Total Videos</span>
                         <strong class="purple-text" id="videoCount">0</strong>
                     </div>
-
                     <div class="stat-card">
                         <span>Total Podcasts</span>
                         <strong class="green-text" id="podcastCount">0</strong>
                     </div>
-
                     <div class="stat-card">
                         <span>Most Popular Category</span>
                         <strong class="yellow-text" id="popularCategory">None</strong>
                     </div>
-
                 </div>
 
                 <ul id="tipsList"></ul>
@@ -234,14 +170,12 @@
             <div class="resource-layout">
 
                 <div class="resource-form-card">
-
                     <div class="section-heading">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                         <h3>Upload New Resource</h3>
                     </div>
 
                     <form id="resourceForm">
-
                         <label>Resource Title</label>
                         <input
                             type="text"
@@ -280,27 +214,19 @@
                             placeholder="Paste image URL"
                         >
 
-                        <button
-                            type="submit"
-                            class="btn-primary full-width mt-20"
-                        >
+                        <button type="submit" class="btn-primary full-width mt-20">
                             <i class="fa-solid fa-plus"></i>
                             Publish Resource
                         </button>
-
                     </form>
-
                 </div>
 
                 <div class="resource-list-card">
-
                     <div class="section-heading">
                         <i class="fa-solid fa-photo-film"></i>
                         <h3>Published Resources</h3>
                     </div>
-
                     <div id="resourcesContainer"></div>
-
                 </div>
 
             </div>
@@ -324,34 +250,55 @@
     <script src="/therapist/js/shared/mobileFixes.js" defer></script>
 
     <script>
-        // Hamburger toggle
+        // ── Hamburger sidebar toggle ──
         document.addEventListener("DOMContentLoaded", () => {
             const menuBtn = document.getElementById("mobileMenuBtn");
-            const sidebar = document.querySelector(".sidebar");
+            const sidebar = document.getElementById("sidebar");
 
-            if (menuBtn && sidebar) {
-                menuBtn.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    sidebar.classList.toggle("open");
-                    sidebar.classList.toggle("show");
+            if (!menuBtn || !sidebar) return;
 
-                    let overlay = document.querySelector(".sidebar-overlay");
-                    if (!overlay) {
-                        overlay = document.createElement("div");
-                        overlay.className = "sidebar-overlay";
-                        document.body.appendChild(overlay);
+            menuBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
 
-                        overlay.addEventListener("click", () => {
-                            sidebar.classList.remove("open", "show");
-                            overlay.remove();
-                        });
-                    } else {
-                        overlay.remove();
-                    }
-                });
+                const isOpen = sidebar.classList.contains("open");
+
+                if (isOpen) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            });
+
+            function openSidebar() {
+                sidebar.classList.add("open", "show");
+
+                // Create overlay
+                let overlay = document.getElementById("sidebarOverlay");
+                if (!overlay) {
+                    overlay = document.createElement("div");
+                    overlay.id = "sidebarOverlay";
+                    overlay.className = "sidebar-overlay";
+                    document.body.appendChild(overlay);
+                    overlay.addEventListener("click", closeSidebar);
+                }
             }
+
+            function closeSidebar() {
+                sidebar.classList.remove("open", "show");
+
+                const overlay = document.getElementById("sidebarOverlay");
+                if (overlay) overlay.remove();
+            }
+
+            // Close sidebar when a nav link is clicked on mobile
+            sidebar.querySelectorAll(".nav-item").forEach(link => {
+                link.addEventListener("click", () => {
+                    if (window.innerWidth <= 768) closeSidebar();
+                });
+            });
         });
 
+        // ── Lucide icons ──
         if (typeof lucide !== "undefined") {
             lucide.createIcons();
         }

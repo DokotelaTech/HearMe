@@ -4,7 +4,7 @@
  */
 
 const SESSION_STORAGE_KEY = 'hearme_sessions';
-const API_BASE = '/api';
+ API_BASE = '/api';
 
 function token() {
     return localStorage.getItem('token');
