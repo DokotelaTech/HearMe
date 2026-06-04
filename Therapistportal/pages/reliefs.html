@@ -84,7 +84,7 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    <span class="logo">HearMe</span>
+                    <span class="logo"></span>
                 </div>
 
                 <!-- Right: profile pill -->
@@ -209,6 +209,23 @@
     <script src="/therapist/js/shared/sidebar.js"></script>
     <script src="/therapist/js/stressRelief.js"></script>
     <script src="/therapist/js/shared/mobileFixes.js" defer></script>
+    <script>lucide.createIcons();</script>
+    <script>
+    (function(){
+        var hb=document.getElementById("hamburgerBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay"),pp=document.getElementById("mobileProfilePill"),dd=document.getElementById("mobileProfileDropdown"),di=document.getElementById("mobileDropdownIcon"),ml=document.getElementById("mobileLogoutBtn");
+        function open(){sb.classList.add("show");ov.classList.add("show");hb.classList.add("open");document.body.style.overflow="hidden";}
+        function close(){sb.classList.remove("show");ov.classList.remove("show");hb.classList.remove("open");document.body.style.overflow="";}
+        hb.addEventListener("click",function(e){e.stopPropagation();sb.classList.contains("show")?close():open();});
+        ov.addEventListener("click",close);
+        sb.querySelectorAll("a.nav-item").forEach(function(l){l.addEventListener("click",function(){if(window.innerWidth<=768)close();});});
+        pp.addEventListener("click",function(e){e.stopPropagation();var o=dd.classList.contains("show-dropdown");dd.classList.toggle("show-dropdown",!o);di.style.transform=o?"":"rotate(180deg)";});
+        document.addEventListener("click",function(){dd.classList.remove("show-dropdown");di.style.transform="";});
+        if(ml){ml.addEventListener("click",function(){var d=document.getElementById("logoutBtn");if(d)d.click();else{localStorage.clear();window.location.href="/login";}});}
+        function sync(){var da=document.getElementById("nav-avatar"),dn=document.getElementById("nav-name"),ma=document.getElementById("mobile-nav-avatar"),mn=document.getElementById("mobile-nav-name");if(da&&ma){ma.textContent=da.textContent||"--";if(da.style.backgroundImage){ma.style.backgroundImage=da.style.backgroundImage;ma.style.backgroundSize="cover";ma.style.backgroundPosition="center";ma.textContent="";}}if(dn&&mn)mn.textContent=dn.textContent||"Therapist";}
+        var si=setInterval(function(){var n=document.getElementById("nav-name");if(n&&n.textContent&&n.textContent!=="Loading..."){sync();clearInterval(si);}},300);
+        var obs=new MutationObserver(sync);["nav-avatar","nav-name"].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el,{childList:true,subtree:true,attributes:true,characterData:true});});
+    })();
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
