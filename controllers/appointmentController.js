@@ -1,6 +1,6 @@
 const Appointment = require('../database/models/Appointment');
-const User = require('../database/models/users');
-const Review = require('../database/models/Review');
+const User        = require('../database/models/users');
+const Review      = require('../database/models/Review');
 
 // ==========================================
 // GET ALL APPOINTMENTS FOR LOGGED-IN USER
@@ -19,7 +19,6 @@ const getAppointments = async (req, res) => {
 
 // ==========================================
 // GET MY APPOINTMENTS (user profile page)
-// Shows pending + approved — not denied/cancelled/completed
 // ==========================================
 const getMyAppointments = async (req, res) => {
     try {
@@ -36,11 +35,19 @@ const getMyAppointments = async (req, res) => {
 
 // ==========================================
 // GET THERAPIST'S APPOINTMENTS
+// FIX: also return pending emergency appointments
+//      that have no therapist assigned yet (therapistId: null)
 // ==========================================
 const getTherapistAppointments = async (req, res) => {
     try {
         const appointments = await Appointment.find({
-            therapistId: req.user.userId
+            $or: [
+                // Normal appointments assigned to this therapist
+                { therapistId: req.user.userId },
+
+                // SOS emergency appointments not yet claimed by anyone
+                { isEmergency: true, status: 'pending', therapistId: null }
+            ]
         }).sort({ isEmergency: -1, createdAt: -1, date: 1, time: 1 });
 
         return res.status(200).json({ appointments });
@@ -63,18 +70,18 @@ const createAppointment = async (req, res) => {
         const therapist = await User.findById(therapistId).select('firstName lastName');
         if (!therapist) return res.status(404).json({ message: 'Therapist not found' });
 
-        const client = await User.findById(req.user.userId).select('username anonymousName email');
+        const client     = await User.findById(req.user.userId).select('username anonymousName email');
         const clientName = client.anonymousName || client.username || client.email || 'Anonymous';
 
         const appointment = new Appointment({
-            userId: req.user.userId,
+            userId:        req.user.userId,
             therapistId,
             therapistName: `${therapist.firstName} ${therapist.lastName}`,
             clientName,
             date,
             time,
-            type: type || 'online',
-            note: note || '',
+            type:   type || 'online',
+            note:   note || '',
             status: 'pending'
         });
 
@@ -87,6 +94,8 @@ const createAppointment = async (req, res) => {
 
 // ==========================================
 // THERAPIST: APPROVE OR DENY APPOINTMENT
+// FIX: allow therapist to claim SOS appointments
+//      where therapistId is currently null
 // ==========================================
 const updateAppointmentStatus = async (req, res) => {
     try {
@@ -96,20 +105,42 @@ const updateAppointmentStatus = async (req, res) => {
             return res.status(400).json({ message: 'Status must be approved or denied' });
         }
 
+        // Try to find the appointment:
+        // — either already assigned to this therapist (normal booking)
+        // — or an unclaimed SOS (therapistId is null)
         const appointment = await Appointment.findOneAndUpdate(
-            { _id: req.params.id, therapistId: req.user.userId },
-            { $set: { status, ...(status === 'approved' ? { emergencyAcceptedAt: new Date() } : {}) } },
+            {
+                _id: req.params.id,
+                $or: [
+                    { therapistId: req.user.userId },
+                    { therapistId: null, isEmergency: true }
+                ]
+            },
+            {
+                $set: {
+                    status,
+                    // Claim the appointment by setting therapistId when approving SOS
+                    ...(status === 'approved' ? {
+                        therapistId:         req.user.userId,
+                        emergencyAcceptedAt: new Date()
+                    } : {})
+                }
+            },
             { new: true }
         );
 
-        if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+        if (!appointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
 
+        // Mark all other pending SOS appointments in the same group
+        // as accepted_by_other so they stop glowing for other therapists
         if (appointment.isEmergency && status === 'approved' && appointment.emergencyGroupId) {
             await Appointment.updateMany(
                 {
-                    _id: { $ne: appointment._id },
+                    _id:              { $ne: appointment._id },
                     emergencyGroupId: appointment.emergencyGroupId,
-                    status: 'pending'
+                    status:           'pending'
                 },
                 { $set: { status: 'accepted_by_other' } }
             );
@@ -138,7 +169,7 @@ const createAppointmentReview = async (req, res) => {
         }
 
         const appointment = await Appointment.findOne({
-            _id: req.params.id,
+            _id:    req.params.id,
             userId: req.user.userId,
             status: { $in: ['approved', 'completed'] }
         });
@@ -147,18 +178,18 @@ const createAppointmentReview = async (req, res) => {
             return res.status(404).json({ message: 'Reviewable appointment not found' });
         }
 
-        const client = await User.findById(req.user.userId).select('anonymousName username email');
+        const client   = await User.findById(req.user.userId).select('anonymousName username email');
         const userName = client?.anonymousName || client?.username || client?.email || 'Anonymous User';
 
         const savedReview = await Review.findOneAndUpdate(
             { appointmentId: appointment._id },
             {
                 appointmentId: appointment._id,
-                therapistId: appointment.therapistId,
-                userId: appointment.userId,
+                therapistId:   appointment.therapistId,
+                userId:        appointment.userId,
                 userName,
-                rating: parsedRating,
-                review: String(review || '').trim()
+                rating:        parsedRating,
+                review:        String(review || '').trim()
             },
             { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true }
         );
@@ -176,7 +207,6 @@ const createAppointmentReview = async (req, res) => {
 
 // ==========================================
 // USER: CANCEL APPOINTMENT
-// Sets status to 'cancelled' — does NOT delete
 // ==========================================
 const cancelAppointment = async (req, res) => {
     try {
@@ -219,7 +249,7 @@ const updateAppointment = async (req, res) => {
 const deleteAppointment = async (req, res) => {
     try {
         const appointment = await Appointment.findOneAndDelete({
-            _id: req.params.id,
+            _id:    req.params.id,
             userId: req.user.userId
         });
 
