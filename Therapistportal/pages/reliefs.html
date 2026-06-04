@@ -1,129 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HearMe - Therapist Portal</title>
+    <title>HearMe - Therapist Portal (Stress Relief)</title>
 
     <link rel="stylesheet" href="/therapist/css/stressRelief.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        html, body { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        
+        /* ----- Mobile Topbar & Sidebar Overlay ----- */
+        .mobile-topbar { display: none; position: sticky; top: 0; z-index: 3000; height: 60px; background: #ffffff; border-bottom: 1px solid #e2e8f0; align-items: center; justify-content: space-between; padding: 0 16px; box-sizing: border-box; width: 100%; }
+        .mobile-topbar .m-left { display: flex; align-items: center; gap: 12px; }
+        .hamburger-btn { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 0; flex-shrink: 0; }
+        .hamburger-btn span { display: block; width: 22px; height: 2px; background: #374151; border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .mobile-brand { font-size: 20px; font-weight: 800; color: #2563eb; letter-spacing: -0.5px; line-height: 1; }
+        .mobile-profile-pill { display: flex; align-items: center; gap: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 30px; padding: 5px 10px 5px 5px; cursor: pointer; position: relative; }
+        .mobile-profile-pill .m-avatar { width: 32px; height: 32px; border-radius: 50%; background: #0ea5e9; color: white; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; flex-shrink: 0; }
+        .mobile-profile-pill .m-name { font-size: 13px; font-weight: 600; color: #111827; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mobile-profile-pill .m-chevron { font-size: 10px; color: #9ca3af; transition: transform 0.2s; }
+        .mobile-profile-pill .dropdown-menu { top: 44px; right: 0; min-width: 180px; }
+        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 2499; }
+        .sidebar-overlay.show { display: block; }
+
+        @media (max-width: 768px) {
+            .mobile-topbar { display: flex; }
+            .topbar { display: none !important; }
+            .app-layout { display: block !important; height: auto !important; }
+            .sidebar { position: fixed !important; top: 60px !important; left: -280px !important; width: 260px !important; height: calc(100vh - 60px) !important; z-index: 2500 !important; background: #fff !important; box-shadow: 4px 0 20px rgba(0,0,0,0.12) !important; transition: left 0.3s cubic-bezier(0.4,0,0.2,1) !important; overflow-y: auto !important; padding: 20px 16px !important; box-sizing: border-box !important; }
+            .sidebar.show { left: 0 !important; }
+            .brand-area { position: static !important; background: transparent !important; box-shadow: none !important; padding: 0 0 20px 0 !important; border-bottom: 1px solid #e2e8f0; margin-bottom: 10px; }
+            .mobile-menu-btn { display: none !important; }
+            .main-workspace { width: 100% !important; margin-left: 0 !important; }
+            .content-container { padding: 16px !important; }
+            .stats-row { grid-template-columns: repeat(2,1fr) !important; gap: 12px !important; }
+            .resource-layout { flex-direction: column; }
+        }
+        @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr !important; } }
+        
+        /* Quick form styles port to ensure layout matches */
+        .resource-layout { display: flex; gap: 24px; margin-top: 24px; align-items: flex-start; }
+        .resource-form-card, .resource-list-card { background: #fff; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .resource-form-card { flex: 1; }
+        .resource-list-card { flex: 2; }
+        .section-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; color: #111827; }
+        .section-heading h3 { margin: 0; font-size: 18px; }
+        #resourceForm label { display: block; font-weight: 600; margin-bottom: 8px; color: #374151; font-size: 14px; }
+        #resourceForm input, #resourceForm textarea, #resourceForm select { width: 100%; padding: 12px 16px; margin-bottom: 20px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        #resourceForm input:focus, #resourceForm textarea:focus, #resourceForm select:focus { outline: none; border-color: #0d9488; box-shadow: 0 0 0 3px #ccfbf1; }
+        .btn-primary { background: #0d9488; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
+        .btn-primary:hover { background: #0f766e; }
+        .full-width { width: 100%; }
+        .mt-20 { margin-top: 20px; }
+    </style>
 </head>
 
 <body>
 
+    <header class="mobile-topbar">
+        <div class="m-left">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <span class="mobile-brand">HearMe</span>
+        </div>
+        <div class="mobile-profile-pill" id="mobileProfilePill">
+            <div class="m-avatar" id="mobile-nav-avatar">--</div>
+            <span class="m-name" id="mobile-nav-name">Loading...</span>
+            <i class="fa-solid fa-chevron-down m-chevron" id="mobileDropdownIcon"></i>
+            <div id="mobileProfileDropdown" class="dropdown-menu">
+                <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                <hr>
+                <button id="mobileLogoutBtn" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign Out</span></button>
+            </div>
+        </div>
+    </header>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="app-layout">
-
-        <!-- ═══════════════════════════════════════
-             SIDEBAR (off-canvas on mobile)
-        ════════════════════════════════════════ -->
+        
         <aside class="sidebar" id="sidebar">
-
-            <!-- Brand: shown inside drawer on mobile after open -->
             <div class="brand-area">
+                <button id="mobileMenuBtn" class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
                 <span class="logo">HearMe</span>
+                <span class="badge">Therapist Portal</span>
             </div>
 
             <nav class="nav-menu">
-                <a href="/therapist/clients" class="nav-item">
-                    <i class="fa-solid fa-user-group"></i>
-                    My Clients
-                </a>
-                <a href="/therapist/calendar" class="nav-item">
-                    <i class="fa-regular fa-calendar"></i>
-                    Calendar
-                </a>
-                <!-- <a href="/therapist/messages" class="nav-item">
-                    <i class="fa-regular fa-message"></i>
-                    Messages
-                </a> -->
-                <a href="/therapist/groups" class="nav-item">
-                    <i class="fa-solid fa-people-group"></i>
-                    Groups
-                </a>
-                <a href="/therapist/reliefs" class="nav-item active">
-                    <i class="fa-solid fa-heart"></i>
-                    Stress Relief Uploads
-                </a>
-                <a href="/therapist/report" class="nav-item">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    Report Issue
-                </a>
+                <a href="/therapist/clients" class="nav-item"><i class="fa-solid fa-user-group"></i> My Clients</a>
+                <a href="/therapist/calendar" class="nav-item"><i class="fa-regular fa-calendar"></i> Calendar</a>
+                <a href="/therapist/groups" class="nav-item"><i class="fa-solid fa-people-group"></i> Groups</a>
+                <a href="/therapist/reliefs" class="nav-item active"><i class="fa-solid fa-heart"></i> Stress Relief Uploads</a>
+                <a href="/therapist/report" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Report Issue</a>
             </nav>
 
             <div class="overview-box">
                 <h4>Today's Overview</h4>
-                <div class="ov-line">
-                    Active Clients
-                    <span id="activeClientsCount">0</span>
-                </div>
-                <div class="ov-line">
-                    Sessions Today
-                    <span id="sessionsTodayCount">0</span>
-                </div>
-                <div class="ov-line">
-                    Unread Messages
-                    <span class="red-text" id="unreadMessagesCount">0</span>
-                </div>
+                <div class="ov-line">Active Clients <span id="activeClientsCount">0</span></div>
+                <div class="ov-line">Sessions Today <span id="sessionsTodayCount">0</span></div>
+                <div class="ov-line">Unread Messages <span class="red-text" id="unreadMessagesCount">0</span></div>
             </div>
-
         </aside>
 
-        <!-- ═══════════════════════════════════════
-             MAIN WORKSPACE
-        ════════════════════════════════════════ -->
         <main class="main-workspace">
 
-            <!-- TOPBAR -->
-             <!-- -->
             <header class="topbar">
-
-                <!-- Left: hamburger (mobile only) + HearMe logo -->
-                <div class="topbar-left">
-                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                    <span class="logo">HearMe</span>
-                </div>
-
-                <!-- Right: profile pill -->
                 <div class="topbar-right">
                     <div class="profile-container">
-
-                        <button class="profile-btn" id="profileBtn">
+                        <button id="profileBtn" class="profile-btn">
                             <div class="avatar" id="therapistInitials"></div>
                             <div class="profile-info">
-                                <span class="profile-name" id="therapistName">Nkosiyethu N...</span>
-                                <span class="profile-role" id="therapistRole">Bsc Phycology</span>
+                                <span class="profile-name" id="therapistName">Loading...</span>
+                                <span class="profile-role" id="therapistRole">Therapist</span>
                             </div>
-                            <i class="fa-solid fa-chevron-down" style="font-size:11px;color:#9ca3af;margin-left:2px;"></i>
+                            <div class="dropdown-arrow"><i class="fa-solid fa-chevron-down" id="dropdownIcon"></i></div>
                         </button>
-
                         <div id="profileDropdown" class="dropdown-menu">
-                            <a href="/therapist/profile">
-                                <i class="fa-regular fa-user"></i>
-                                <span>My Profile</span>
-                            </a>
-                            <a href="#">
-                                <i class="fa-solid fa-gear"></i>
-                                <span>Settings</span>
-                            </a>
+                            <a href="/therapist/profile"><i class="fa-regular fa-user"></i><span>My Profile</span></a>
+                            <a href="#"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                             <hr>
-                            <button id="logoutBtn" class="logout-btn">
-                                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                                <span>Sign Out</span>
-                            </button>
+                            <button id="logoutBtn" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Sign Out</span></button>
                         </div>
-
                     </div>
                 </div>
-
             </header>
-
             
-            <!-- PAGE CONTENT -->
             <div class="content-container">
 
                 <div class="page-header">
@@ -131,7 +139,6 @@
                     <p>Upload calming resources, meditation videos, motivational podcasts, and healing content for your users.</p>
                 </div>
 
-                <!-- Stats: 4-col desktop, 2-col mobile -->
                 <div class="stats-row">
                     <div class="stat-card">
                         <span>Total Resources</span>
@@ -153,60 +160,56 @@
 
                 <ul id="tipsList"></ul>
 
-            </div>
+                <div class="resource-layout">
 
-            <!-- RESOURCE UPLOAD + LIST -->
-            <div class="resource-layout">
+                    <div class="resource-form-card">
+                        <div class="section-heading">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h3>Upload New Resource</h3>
+                        </div>
 
-                <div class="resource-form-card">
-                    <div class="section-heading">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <h3>Upload New Resource</h3>
+                        <form id="resourceForm">
+                            <label>Resource Title</label>
+                            <input type="text" id="resourceTitle" placeholder="Enter resource title" required>
+
+                            <label>Description</label>
+                            <textarea id="resourceDescription" placeholder="Describe how this resource helps users..." required></textarea>
+
+                            <label>Online Resource Link</label>
+                            <input type="url" id="resourceLink" placeholder="Paste YouTube, Spotify, article, or podcast link" required>
+
+                            <label>Category</label>
+                            <select id="resourceCategory">
+                                <option value="Video">Educational Video</option>
+                                <option value="Podcast">Podcast / Audio</option>
+                                <option value="Meditation">Meditation</option>
+                                <option value="Motivation">Motivation</option>
+                            </select>
+
+                            <label>Thumbnail Image URL</label>
+                            <input type="url" id="resourceImage" placeholder="Paste image URL">
+
+                            <button type="submit" class="btn-primary full-width mt-20">
+                                <i class="fa-solid fa-plus"></i>
+                                Publish Resource
+                            </button>
+                        </form>
                     </div>
 
-                    <form id="resourceForm">
-                        <label>Resource Title</label>
-                        <input type="text" id="resourceTitle" placeholder="Enter resource title" required>
-
-                        <label>Description</label>
-                        <textarea id="resourceDescription" placeholder="Describe how this resource helps users..." required></textarea>
-
-                        <label>Online Resource Link</label>
-                        <input type="url" id="resourceLink" placeholder="Paste YouTube, Spotify, article, or podcast link" required>
-
-                        <label>Category</label>
-                        <select id="resourceCategory">
-                            <option value="Video">Educational Video</option>
-                            <option value="Podcast">Podcast / Audio</option>
-                            <option value="Meditation">Meditation</option>
-                            <option value="Motivation">Motivation</option>
-                        </select>
-
-                        <label>Thumbnail Image URL</label>
-                        <input type="url" id="resourceImage" placeholder="Paste image URL">
-
-                        <button type="submit" class="btn-primary full-width mt-20">
-                            <i class="fa-solid fa-plus"></i>
-                            Publish Resource
-                        </button>
-                    </form>
-                </div>
-
-                <div class="resource-list-card">
-                    <div class="section-heading">
-                        <i class="fa-solid fa-photo-film"></i>
-                        <h3>Published Resources</h3>
+                    <div class="resource-list-card">
+                        <div class="section-heading">
+                            <i class="fa-solid fa-photo-film"></i>
+                            <h3>Published Resources</h3>
+                        </div>
+                        <div id="resourcesContainer"></div>
                     </div>
-                    <div id="resourcesContainer"></div>
+
                 </div>
 
             </div>
-
         </main>
-
     </div>
 
-    <!-- Shared Scripts -->
     <script src="/therapist/js/shared/loadTherapistData.js"></script>
     <script src="/therapist/js/shared/profileDropdown.js"></script>
     <script src="/therapist/js/shared/api.js"></script>
@@ -217,59 +220,42 @@
     <script src="/therapist/js/shared/mobileFixes.js" defer></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+    (function(){
+        // Lucide initialization (if any dynamic elements use it)
+        if (typeof lucide !== 'undefined') { lucide.createIcons(); }
 
-            /* ── Sidebar toggle ── */
-            const menuBtn = document.getElementById("mobileMenuBtn");
-            const sidebar = document.getElementById("sidebar");
-
-            function openSidebar() {
-                sidebar.classList.add("open", "show");
-                if (!document.getElementById("sidebarOverlay")) {
-                    const overlay = document.createElement("div");
-                    overlay.id = "sidebarOverlay";
-                    overlay.className = "sidebar-overlay";
-                    overlay.addEventListener("click", closeSidebar);
-                    document.body.appendChild(overlay);
-                }
-            }
-
-            function closeSidebar() {
-                sidebar.classList.remove("open", "show");
-                const overlay = document.getElementById("sidebarOverlay");
-                if (overlay) overlay.remove();
-            }
-
-            if (menuBtn) {
-                menuBtn.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
-                });
-            }
-
-            // Close when a nav link is tapped on mobile
-            sidebar.querySelectorAll(".nav-item").forEach(link => {
-                link.addEventListener("click", () => {
-                    if (window.innerWidth <= 768) closeSidebar();
-                });
+        // Sidebar & Mobile Topbar logic
+        var hb=document.getElementById("hamburgerBtn"),sb=document.getElementById("sidebar"),ov=document.getElementById("sidebarOverlay"),pp=document.getElementById("mobileProfilePill"),dd=document.getElementById("mobileProfileDropdown"),di=document.getElementById("mobileDropdownIcon"),ml=document.getElementById("mobileLogoutBtn");
+        function open(){sb.classList.add("show");ov.classList.add("show");hb.classList.add("open");document.body.style.overflow="hidden";}
+        function close(){sb.classList.remove("show");ov.classList.remove("show");hb.classList.remove("open");document.body.style.overflow="";}
+        if(hb) { hb.addEventListener("click",function(e){e.stopPropagation();sb.classList.contains("show")?close():open();}); }
+        if(ov) { ov.addEventListener("click",close); }
+        if(sb) { sb.querySelectorAll("a.nav-item").forEach(function(l){l.addEventListener("click",function(){if(window.innerWidth<=768)close();});}); }
+        if(pp) { pp.addEventListener("click",function(e){e.stopPropagation();var o=dd.classList.contains("show-dropdown");dd.classList.toggle("show-dropdown",!o);di.style.transform=o?"":"rotate(180deg)";}); }
+        
+        // Desktop Profile Dropdown
+        const profileBtn = document.getElementById("profileBtn");
+        const profileDropdown = document.getElementById("profileDropdown");
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle("show-dropdown");
             });
+        }
 
-            /* ── Profile dropdown ── */
-            const profileBtn = document.getElementById("profileBtn");
-            const profileDropdown = document.getElementById("profileDropdown");
-
-            if (profileBtn && profileDropdown) {
-                profileBtn.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    profileDropdown.classList.toggle("show-dropdown");
-                });
-
-                document.addEventListener("click", () => {
-                    profileDropdown.classList.remove("show-dropdown");
-                });
-            }
-
+        document.addEventListener("click",function(){
+            if(dd){dd.classList.remove("show-dropdown");}
+            if(di){di.style.transform="";}
+            if(profileDropdown){profileDropdown.classList.remove("show-dropdown");}
         });
+
+        if(ml){ml.addEventListener("click",function(){var d=document.getElementById("logoutBtn");if(d)d.click();else{localStorage.clear();window.location.href="/login";}});}
+        
+        // Auto-sync topbar names to mobile topbar names
+        function sync(){var da=document.getElementById("therapistInitials"),dn=document.getElementById("therapistName"),ma=document.getElementById("mobile-nav-avatar"),mn=document.getElementById("mobile-nav-name");if(da&&ma){ma.textContent=da.textContent||"--";if(da.style.backgroundImage){ma.style.backgroundImage=da.style.backgroundImage;ma.style.backgroundSize="cover";ma.style.backgroundPosition="center";ma.textContent="";}}if(dn&&mn)mn.textContent=dn.textContent||"Therapist";}
+        var si=setInterval(function(){var n=document.getElementById("therapistName");if(n&&n.textContent&&n.textContent!=="Loading..."){sync();clearInterval(si);}},300);
+        var obs=new MutationObserver(sync);["therapistInitials","therapistName"].forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el,{childList:true,subtree:true,attributes:true,characterData:true});});
+    })();
     </script>
 
 </body>
