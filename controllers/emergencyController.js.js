@@ -2,7 +2,8 @@
 //  controllers/emergencyController.js
 // ============================================================
 
-const User = require('../database/models/users');   // matches your actual file: database/models/users.js
+const User        = require('../database/models/users');
+const Appointment = require('../database/models/appointments'); // ← ADD THIS — adjust path if different
 const { BrevoClient } = require('@getbrevo/brevo');
 
 // ── Brevo setup ───────────────────────────────────────────────
@@ -61,7 +62,7 @@ function sosAlertToTherapistHTML(therapistName, clientName) {
       <div class="alert-box">
         <p>Client: ${clientName} is requesting urgent help right now.</p>
       </div>
-      <p>Please log in to your HearMe therapist portal as soon as possible and start a session with this client. Every minute counts.</p>
+      <p>Please log in to your HearMe therapist portal as soon as possible and accept the emergency session.</p>
       <div class="btn-wrap">
         <a href="${LOGIN_URL}" class="btn">Go to HearMe Portal →</a>
       </div>
@@ -109,11 +110,10 @@ function sessionStartedToClientHTML(clientName, therapistName) {
       <div class="info-box">
         <p>Your therapist: ${therapistName} has started the call.</p>
       </div>
-      <p>Click the button below to view your profile and join the session. Your therapist is waiting for you.</p>
+      <p>Click the button below to join your session. Your therapist is waiting for you.</p>
       <div class="btn-wrap">
         <a href="${LOGIN_URL}" class="btn">Start Talking with ${therapistName} →</a>
       </div>
-      <p style="font-size:13px;color:#888;text-align:center;">If you no longer need support, you may disregard this message.</p>
     </div>
     <div class="footer">© ${new Date().getFullYear()} HearMe · You're receiving this because you activated an SOS on HearMe.</div>
   </div>
@@ -157,7 +157,7 @@ function sessionStartedToTherapistHTML(therapistName, clientName) {
       <div class="info-box">
         <p>Client in session: ${clientName}</p>
       </div>
-      <p>The client has been notified and directed to join. Click below to return to the portal at any time.</p>
+      <p>The client has been notified and directed to join.</p>
       <div class="btn-wrap">
         <a href="${LOGIN_URL}" class="btn">Go to HearMe Portal →</a>
       </div>
@@ -172,18 +172,24 @@ function sessionStartedToTherapistHTML(therapistName, clientName) {
 
 /**
  * POST /api/emergency/sos
- * Authenticated user triggers SOS → emails all verified therapists.
+ * Authenticated user triggers SOS →
+ *   1. Creates ONE emergency appointment visible to ALL therapists
+ *   2. Emails all verified therapists
  */
 async function triggerSOS(req, res) {
     try {
-        const client = req.user; // set by verifyToken in server.js
+        const client = req.user; // set by verifyToken middleware
 
-        // Fetch all verified active therapists
+        // ── Get client display name ───────────────────────────
+        const clientUser = await User.findById(client.userId).select('anonymousName username email');
+        const clientName = clientUser?.anonymousName || clientUser?.username || 'Anonymous User';
+
+        // ── Fetch all verified active therapists ──────────────
         const therapists = await User.find({
             role:          'therapist',
             profileStatus: 'verified',
             accountStatus: 'active',
-        }).select('email firstName');
+        }).select('_id email firstName');
 
         if (!therapists.length) {
             return res.status(503).json({
@@ -191,11 +197,30 @@ async function triggerSOS(req, res) {
             });
         }
 
-        // Get client display name from DB
-        const clientUser  = await User.findById(client.userId).select('anonymousName username');
-        const clientName  = clientUser?.anonymousName || clientUser?.username || 'A HearMe user';
+        // ── Create ONE emergency appointment in the DB ─────────
+        // This is what appears on every therapist's client list.
+        // We use today's date/time and leave therapistId null so
+        // ALL therapists can see and claim it.
+        const now  = new Date();
+        const date = now.toISOString().split('T')[0];          // "YYYY-MM-DD"
+        const time = now.toTimeString().split(' ')[0].slice(0,5); // "HH:MM"
 
-        // Send emails in parallel — failures don't block the response
+        const appointment = await Appointment.create({
+            userId:      client.userId,   // the client who triggered SOS
+            therapistId: null,            // no specific therapist yet — visible to all
+            userName:    clientName,
+            clientName:  clientName,
+            date,
+            time,
+            type:        'online',
+            status:      'pending',       // ← MUST be pending so therapists see Accept/Decline
+            isEmergency: true,
+            note:        'Emergency SOS request from client. Immediate online support needed.',
+        });
+
+        console.log('[SOS] Emergency appointment created:', appointment._id);
+
+        // ── Email all therapists in parallel ──────────────────
         const emailResults = await Promise.allSettled(
             therapists.map(t =>
                 sendEmail({
@@ -209,8 +234,9 @@ async function triggerSOS(req, res) {
         const sent = emailResults.filter(r => r.status === 'fulfilled').length;
 
         return res.status(200).json({
-            message: `SOS sent to ${sent} therapist(s).`,
-            count:   sent,
+            message:       `SOS sent to ${sent} therapist(s).`,
+            count:         sent,
+            appointmentId: appointment._id,
         });
 
     } catch (err) {
@@ -228,33 +254,30 @@ async function triggerSOS(req, res) {
  */
 async function notifySessionStarted(req, res) {
     try {
-        const therapist = req.user; // set by verifyToken in server.js
+        const therapist = req.user;
         const { clientId } = req.body;
 
         if (!clientId) {
             return res.status(400).json({ message: 'clientId is required.' });
         }
 
-        // Get full therapist details from DB
         const therapistUser = await User.findById(therapist.userId).select('firstName lastName email');
-        const client        = await User.findById(clientId).select('email username anonymousName');
+        const clientDbUser  = await User.findById(clientId).select('email username anonymousName');
 
-        if (!client) {
+        if (!clientDbUser) {
             return res.status(404).json({ message: 'Client not found.' });
         }
 
         const therapistName = `${therapistUser?.firstName || ''} ${therapistUser?.lastName || ''}`.trim()
                               || 'Your HearMe Therapist';
-        const clientName    = client.anonymousName || client.username || 'HearMe User';
+        const clientName    = clientDbUser.anonymousName || clientDbUser.username || 'HearMe User';
 
-        // Email the client
         await sendEmail({
-            to:      client.email,
+            to:      clientDbUser.email,
             subject: `✅ Your session with ${therapistName} has started – HearMe`,
             html:    sessionStartedToClientHTML(clientName, therapistName),
         });
 
-        // Confirmation email to therapist
         if (therapistUser?.email) {
             await sendEmail({
                 to:      therapistUser.email,
