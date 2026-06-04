@@ -5,11 +5,13 @@ const { verifyToken } = require("../middleware/authMiddleware");
 
 const {
     getTherapistProfile,
-    getTherapistClients
+    getTherapistClients,
+    getTherapistReviews
 } = require("../controllers/therapistController");
 
 router.get("/profile", verifyToken, getTherapistProfile);
 router.get("/clients", verifyToken, getTherapistClients);
+router.get("/reviews", verifyToken, getTherapistReviews);
 
 
 // POST /api/therapist/submit-for-review

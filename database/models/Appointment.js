@@ -15,7 +15,7 @@ const appointmentSchema = new mongoose.Schema({
     
     status: {
         type: String,
-        enum: ['pending_payment', 'pending', 'approved', 'denied', 'cancelled', 'completed'],
+        enum: ['pending_payment', 'pending', 'approved', 'denied', 'cancelled', 'completed', 'accepted_by_other'],
         default: 'pending_payment'
     },
     reminder10Sent: {

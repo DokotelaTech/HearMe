@@ -14,7 +14,8 @@ const {
     updateAppointmentStatus,
     cancelAppointment,
     updateAppointment,
-    deleteAppointment
+    deleteAppointment,
+    createAppointmentReview
 } = require('../controllers/appointmentController');
 
 // =========================================
@@ -120,6 +121,8 @@ router.patch('/:id/status', verifyToken, updateAppointmentStatus);
 
 // PATCH /api/appointments/:id/cancel — user cancels (sets status to cancelled, does NOT delete)
 router.patch('/:id/cancel', verifyToken, cancelAppointment);
+
+router.post('/:id/review', verifyToken, createAppointmentReview);
 
 // POST /api/appointments/:id/join — creates Daily.co room and returns URL
 router.post('/:id/join', verifyToken, async (req, res) => {

@@ -1,4 +1,5 @@
 const User = require("../database/models/users");
+const Review = require("../database/models/Review");
 
 // ==========================================
 // 1. GET LOGGED-IN THERAPIST PROFILE
@@ -50,8 +51,30 @@ const getTherapistClients = async (req, res) => {
     }
 };
 
+// ==========================================
+// 4. GET LOGGED-IN THERAPIST REVIEWS
+// ==========================================
+const getTherapistReviews = async (req, res) => {
+    try {
+        const therapist = await User.findById(req.user.userId).select('role');
+
+        if (!therapist || therapist.role !== 'therapist') {
+            return res.status(403).json({ message: 'Only therapists can view therapist reviews' });
+        }
+
+        const reviews = await Review.find({ therapistId: req.user.userId })
+            .sort({ createdAt: -1 })
+            .lean();
+
+        return res.status(200).json({ reviews });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getTherapistProfile,
     updateTherapistProfile,
-    getTherapistClients
+    getTherapistClients,
+    getTherapistReviews
 };

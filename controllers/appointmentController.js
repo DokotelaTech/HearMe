@@ -1,5 +1,6 @@
 const Appointment = require('../database/models/Appointment');
 const User = require('../database/models/users');
+const Review = require('../database/models/Review');
 
 // ==========================================
 // GET ALL APPOINTMENTS FOR LOGGED-IN USER
@@ -40,7 +41,7 @@ const getTherapistAppointments = async (req, res) => {
     try {
         const appointments = await Appointment.find({
             therapistId: req.user.userId
-        }).sort({ date: 1, time: 1 });
+        }).sort({ isEmergency: -1, createdAt: -1, date: 1, time: 1 });
 
         return res.status(200).json({ appointments });
     } catch (error) {
@@ -110,11 +111,64 @@ const updateAppointmentStatus = async (req, res) => {
                     emergencyGroupId: appointment.emergencyGroupId,
                     status: 'pending'
                 },
-                { $set: { status: 'cancelled' } }
+                { $set: { status: 'accepted_by_other' } }
             );
         }
 
         return res.status(200).json({ message: `Appointment ${status}`, appointment });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+// ==========================================
+// USER: SUBMIT REVIEW AFTER SESSION
+// ==========================================
+const createAppointmentReview = async (req, res) => {
+    try {
+        const { rating, review } = req.body;
+        const parsedRating = Number(rating);
+
+        if (!Number.isInteger(parsedRating) || parsedRating < 1 || parsedRating > 5) {
+            return res.status(400).json({ message: 'Rating must be a whole number between 1 and 5' });
+        }
+
+        if (review && String(review).length > 500) {
+            return res.status(400).json({ message: 'Review must be 500 characters or fewer' });
+        }
+
+        const appointment = await Appointment.findOne({
+            _id: req.params.id,
+            userId: req.user.userId,
+            status: { $in: ['approved', 'completed'] }
+        });
+
+        if (!appointment) {
+            return res.status(404).json({ message: 'Reviewable appointment not found' });
+        }
+
+        const client = await User.findById(req.user.userId).select('anonymousName username email');
+        const userName = client?.anonymousName || client?.username || client?.email || 'Anonymous User';
+
+        const savedReview = await Review.findOneAndUpdate(
+            { appointmentId: appointment._id },
+            {
+                appointmentId: appointment._id,
+                therapistId: appointment.therapistId,
+                userId: appointment.userId,
+                userName,
+                rating: parsedRating,
+                review: String(review || '').trim()
+            },
+            { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true }
+        );
+
+        if (appointment.status !== 'completed') {
+            appointment.status = 'completed';
+            await appointment.save();
+        }
+
+        return res.status(201).json({ message: 'Review submitted', review: savedReview });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -185,5 +239,6 @@ module.exports = {
     updateAppointmentStatus,
     cancelAppointment,
     updateAppointment,
-    deleteAppointment
+    deleteAppointment,
+    createAppointmentReview
 };
