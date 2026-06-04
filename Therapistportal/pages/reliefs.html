@@ -10,7 +10,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -18,11 +17,11 @@
     <div class="app-layout">
 
         <!-- ═══════════════════════════════════════
-             SIDEBAR
+             SIDEBAR (off-canvas on mobile)
         ════════════════════════════════════════ -->
         <aside class="sidebar" id="sidebar">
 
-            <!-- Brand (hidden on mobile — logo shows in topbar) -->
+            <!-- Brand: shown inside drawer on mobile after open -->
             <div class="brand-area">
                 <span class="logo">HearMe</span>
             </div>
@@ -32,27 +31,22 @@
                     <i class="fa-solid fa-user-group"></i>
                     My Clients
                 </a>
-
                 <a href="/therapist/calendar" class="nav-item">
                     <i class="fa-regular fa-calendar"></i>
                     Calendar
                 </a>
-
                 <a href="/therapist/messages" class="nav-item">
                     <i class="fa-regular fa-message"></i>
                     Messages
                 </a>
-
                 <a href="/therapist/groups" class="nav-item">
                     <i class="fa-solid fa-people-group"></i>
                     Groups
                 </a>
-
                 <a href="/therapist/reliefs" class="nav-item active">
                     <i class="fa-solid fa-heart"></i>
                     Stress Relief Uploads
                 </a>
-
                 <a href="/therapist/report" class="nav-item">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                     Report Issue
@@ -61,17 +55,14 @@
 
             <div class="overview-box">
                 <h4>Today's Overview</h4>
-
                 <div class="ov-line">
                     Active Clients
                     <span id="activeClientsCount">0</span>
                 </div>
-
                 <div class="ov-line">
                     Sessions Today
                     <span id="sessionsTodayCount">0</span>
                 </div>
-
                 <div class="ov-line">
                     Unread Messages
                     <span class="red-text" id="unreadMessagesCount">0</span>
@@ -88,7 +79,7 @@
             <!-- TOPBAR -->
             <header class="topbar">
 
-                <!-- Left: hamburger (mobile only) + logo -->
+                <!-- Left: hamburger (mobile only) + HearMe logo -->
                 <div class="topbar-left">
                     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
                         <i class="fa-solid fa-bars"></i>
@@ -96,17 +87,17 @@
                     <span class="logo">HearMe</span>
                 </div>
 
-                <!-- Right: profile -->
+                <!-- Right: profile pill -->
                 <div class="topbar-right">
                     <div class="profile-container">
 
                         <button class="profile-btn" id="profileBtn">
                             <div class="avatar" id="therapistInitials"></div>
                             <div class="profile-info">
-                                <span class="profile-name" id="therapistName"></span>
-                                <span class="profile-role" id="therapistRole"></span>
+                                <span class="profile-name" id="therapistName">Nkosiyethu N...</span>
+                                <span class="profile-role" id="therapistRole">Bsc Phycology</span>
                             </div>
-                            <i class="fa-solid fa-chevron-down" style="font-size:12px;color:#6b7280;margin-left:4px;"></i>
+                            <i class="fa-solid fa-chevron-down" style="font-size:11px;color:#9ca3af;margin-left:2px;"></i>
                         </button>
 
                         <div id="profileDropdown" class="dropdown-menu">
@@ -130,19 +121,15 @@
 
             </header>
 
-            <!-- CONTENT -->
+            <!-- PAGE CONTENT -->
             <div class="content-container">
 
                 <div class="page-header">
-                    <div>
-                        <h1>Stress Relief Resources</h1>
-                        <p>
-                            Upload calming resources, meditation videos,
-                            motivational podcasts, and healing content for your users.
-                        </p>
-                    </div>
+                    <h1>Stress Relief Resources</h1>
+                    <p>Upload calming resources, meditation videos, motivational podcasts, and healing content for your users.</p>
                 </div>
 
+                <!-- Stats: 4-col desktop, 2-col mobile -->
                 <div class="stats-row">
                     <div class="stat-card">
                         <span>Total Resources</span>
@@ -166,7 +153,7 @@
 
             </div>
 
-            <!-- RESOURCE AREA -->
+            <!-- RESOURCE UPLOAD + LIST -->
             <div class="resource-layout">
 
                 <div class="resource-form-card">
@@ -177,27 +164,13 @@
 
                     <form id="resourceForm">
                         <label>Resource Title</label>
-                        <input
-                            type="text"
-                            id="resourceTitle"
-                            placeholder="Enter resource title"
-                            required
-                        >
+                        <input type="text" id="resourceTitle" placeholder="Enter resource title" required>
 
                         <label>Description</label>
-                        <textarea
-                            id="resourceDescription"
-                            placeholder="Describe how this resource helps users..."
-                            required
-                        ></textarea>
+                        <textarea id="resourceDescription" placeholder="Describe how this resource helps users..." required></textarea>
 
                         <label>Online Resource Link</label>
-                        <input
-                            type="url"
-                            id="resourceLink"
-                            placeholder="Paste YouTube, Spotify, article, or podcast link"
-                            required
-                        >
+                        <input type="url" id="resourceLink" placeholder="Paste YouTube, Spotify, article, or podcast link" required>
 
                         <label>Category</label>
                         <select id="resourceCategory">
@@ -208,11 +181,7 @@
                         </select>
 
                         <label>Thumbnail Image URL</label>
-                        <input
-                            type="url"
-                            id="resourceImage"
-                            placeholder="Paste image URL"
-                        >
+                        <input type="url" id="resourceImage" placeholder="Paste image URL">
 
                         <button type="submit" class="btn-primary full-width mt-20">
                             <i class="fa-solid fa-plus"></i>
@@ -242,66 +211,63 @@
     <script src="/therapist/js/shared/utils.js"></script>
     <script src="/therapist/js/shared/authGuard.js"></script>
     <script src="/therapist/js/shared/sidebar.js"></script>
-
-    <!-- Page Script -->
     <script src="/therapist/js/stressRelief.js"></script>
-
-    <!-- Mobile Fixes -->
     <script src="/therapist/js/shared/mobileFixes.js" defer></script>
 
     <script>
-        // ── Hamburger sidebar toggle ──
         document.addEventListener("DOMContentLoaded", () => {
+
+            /* ── Sidebar toggle ── */
             const menuBtn = document.getElementById("mobileMenuBtn");
             const sidebar = document.getElementById("sidebar");
 
-            if (!menuBtn || !sidebar) return;
-
-            menuBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-
-                const isOpen = sidebar.classList.contains("open");
-
-                if (isOpen) {
-                    closeSidebar();
-                } else {
-                    openSidebar();
-                }
-            });
-
             function openSidebar() {
                 sidebar.classList.add("open", "show");
-
-                // Create overlay
-                let overlay = document.getElementById("sidebarOverlay");
-                if (!overlay) {
-                    overlay = document.createElement("div");
+                if (!document.getElementById("sidebarOverlay")) {
+                    const overlay = document.createElement("div");
                     overlay.id = "sidebarOverlay";
                     overlay.className = "sidebar-overlay";
-                    document.body.appendChild(overlay);
                     overlay.addEventListener("click", closeSidebar);
+                    document.body.appendChild(overlay);
                 }
             }
 
             function closeSidebar() {
                 sidebar.classList.remove("open", "show");
-
                 const overlay = document.getElementById("sidebarOverlay");
                 if (overlay) overlay.remove();
             }
 
-            // Close sidebar when a nav link is clicked on mobile
+            if (menuBtn) {
+                menuBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+                });
+            }
+
+            // Close when a nav link is tapped on mobile
             sidebar.querySelectorAll(".nav-item").forEach(link => {
                 link.addEventListener("click", () => {
                     if (window.innerWidth <= 768) closeSidebar();
                 });
             });
-        });
 
-        // ── Lucide icons ──
-        if (typeof lucide !== "undefined") {
-            lucide.createIcons();
-        }
+            /* ── Profile dropdown ── */
+            const profileBtn = document.getElementById("profileBtn");
+            const profileDropdown = document.getElementById("profileDropdown");
+
+            if (profileBtn && profileDropdown) {
+                profileBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    profileDropdown.classList.toggle("show-dropdown");
+                });
+
+                document.addEventListener("click", () => {
+                    profileDropdown.classList.remove("show-dropdown");
+                });
+            }
+
+        });
     </script>
 
 </body>

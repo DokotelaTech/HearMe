@@ -17,17 +17,9 @@
     --brand-blue: #0ea5e9;
     --nav-active-bg: #eff6ff;
 
-    --green-bg: #dcfce7;
     --green-text: #15803d;
-
-    --yellow-bg: #fefce8;
-    --yellow-border: #fef08a;
     --yellow-text: #f59e0b;
-
     --purple-text: #a855f7;
-
-    --red-bg: #fef2f2;
-    --red-text: #dc2626;
 
     --sidebar-w: 260px;
     --topbar-h: 70px;
@@ -61,7 +53,7 @@ body {
 }
 
 /* ===================================================================
-   SIDEBAR (desktop — fixed left column)
+   SIDEBAR — desktop fixed left column
 =================================================================== */
 
 .sidebar {
@@ -118,9 +110,7 @@ body {
     transition: background 0.2s, color 0.2s;
 }
 
-.nav-item:hover {
-    background: #f1f5f9;
-}
+.nav-item:hover { background: #f1f5f9; }
 
 .nav-item.active {
     background: var(--nav-active-bg);
@@ -135,9 +125,7 @@ body {
     font-size: 0.85rem;
 }
 
-.overview-box h4 {
-    margin-bottom: 12px;
-}
+.overview-box h4 { margin-bottom: 12px; }
 
 .ov-line {
     display: flex;
@@ -162,12 +150,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    /* Push content right of the fixed sidebar on desktop */
     margin-left: var(--sidebar-w);
 }
 
 /* ===================================================================
-   TOPBAR — desktop (sits above main-workspace)
+   TOPBAR
 =================================================================== */
 
 .topbar {
@@ -194,7 +181,7 @@ body {
     display: none;
     background: none;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--text-dark);
     cursor: pointer;
     padding: 6px;
@@ -228,7 +215,7 @@ body {
 }
 
 /* ===================================================================
-   PROFILE DROPDOWN
+   PROFILE BUTTON & DROPDOWN
 =================================================================== */
 
 .profile-container {
@@ -238,22 +225,23 @@ body {
 .profile-btn {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: white;
-    border: none;
+    border: 1px solid var(--border);
     cursor: pointer;
-    padding: 10px 14px;
-    border-radius: 12px;
-    transition: background 0.2s;
+    padding: 7px 12px 7px 7px;
+    border-radius: 40px;
+    transition: background 0.2s, border-color 0.2s;
 }
 
 .profile-btn:hover {
     background: #f3f4f6;
+    border-color: #cbd5e1;
 }
 
 .avatar {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: var(--brand-blue);
     color: white;
@@ -261,44 +249,52 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     background-size: cover;
     background-position: center;
     flex-shrink: 0;
+    overflow: hidden;
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
     text-align: left;
+    max-width: 120px;
 }
 
 .profile-name {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-role {
-    font-size: 12px;
-    color: #6b7280;
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 60px;
+    top: 56px;
     right: 0;
     width: 220px;
     background: white;
     border-radius: 14px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border);
     overflow: hidden;
     display: none;
     z-index: 2000;
 }
 
-.show-dropdown {
-    display: block;
-}
+.show-dropdown { display: block; }
 
 .dropdown-menu a,
 .logout-btn {
@@ -317,9 +313,7 @@ body {
 }
 
 .dropdown-menu a:hover,
-.logout-btn:hover {
-    background: #f9fafb;
-}
+.logout-btn:hover { background: #f9fafb; }
 
 .logout-btn { color: #ef4444; }
 
@@ -359,13 +353,13 @@ body {
 }
 
 /* ===================================================================
-   STATS ROW
+   STATS ROW — 4 columns desktop, 2 columns mobile
 =================================================================== */
 
 .stats-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 30px;
 }
 
@@ -373,18 +367,19 @@ body {
     background: white;
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 22px;
+    padding: 20px;
 }
 
 .stat-card span {
     display: block;
     color: var(--text-muted);
-    font-size: 0.85rem;
-    margin-bottom: 10px;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
 }
 
 .stat-card strong {
     font-size: 1.7rem;
+    font-weight: 700;
 }
 
 .green-text  { color: var(--green-text); }
@@ -430,9 +425,7 @@ body {
     font-size: 1.1rem;
 }
 
-.section-heading h3 {
-    font-size: 1.1rem;
-}
+.section-heading h3 { font-size: 1.1rem; }
 
 /* ===================================================================
    FORM
@@ -464,9 +457,7 @@ select {
 
 input:focus,
 textarea:focus,
-select:focus {
-    border-color: var(--primary);
-}
+select:focus { border-color: var(--primary); }
 
 textarea {
     min-height: 120px;
@@ -488,9 +479,7 @@ textarea {
     transition: background 0.2s;
 }
 
-.btn-primary:hover {
-    background: var(--primary-hover);
-}
+.btn-primary:hover { background: var(--primary-hover); }
 
 .full-width { width: 100%; }
 .mt-20 { margin-top: 20px; }
@@ -537,9 +526,7 @@ textarea {
     margin-bottom: 12px;
 }
 
-.resource-top small {
-    display: none;
-}
+.resource-top small { display: none; }
 
 .resource-badge {
     background: #f4e8ff;
@@ -551,7 +538,7 @@ textarea {
 }
 
 .resource-content h4 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--text-dark);
     margin-bottom: 8px;
     font-weight: 700;
@@ -561,7 +548,7 @@ textarea {
     color: var(--text-muted);
     font-size: 0.9rem;
     line-height: 1.5;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     flex: 1;
 }
 
@@ -617,13 +604,13 @@ textarea {
 }
 
 /* ===================================================================
-   SIDEBAR OVERLAY (mobile — created by JS)
+   SIDEBAR OVERLAY — injected by JS on mobile
 =================================================================== */
 
 .sidebar-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.35);
+    background: rgba(15, 23, 42, 0.4);
     z-index: 1300;
 }
 
@@ -647,54 +634,71 @@ textarea {
 
 @media (max-width: 768px) {
 
-    /* Body */
-    body {
-        overflow-x: hidden;
-    }
+    body { overflow-x: hidden; }
 
-    /* ── Sidebar becomes off-canvas drawer ── */
+    /* ── Sidebar: off-canvas drawer ── */
     .sidebar {
         position: fixed;
-        top: var(--mobile-topbar-h);          /* sit below mobile topbar */
-        left: -280px;                          /* hidden off-screen */
+        top: var(--mobile-topbar-h);
+        left: -280px;
         width: 260px;
         height: calc(100vh - var(--mobile-topbar-h));
         z-index: 1400;
         box-shadow: 6px 0 24px rgba(15, 23, 42, 0.15);
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         padding: 20px 16px;
-        /* override flex layout for drawer */
         display: flex;
         flex-direction: column;
+        /* Re-show it (no display:none) */
+        visibility: visible;
     }
 
-    /* JS adds .open or .show to slide it in */
+    /* Slide in when JS adds .open or .show */
     .sidebar.open,
     .sidebar.show {
         left: 0;
     }
 
-    /* ── Main workspace fills full width ── */
-    .main-workspace {
-        margin-left: 0;
+    /* ── Brand hidden inside drawer — logo is in topbar ── */
+    .brand-area {
+        display: none;
     }
 
-    /* ── Topbar: show hamburger, hide topbar logo (logo lives in topbar-left) ── */
+    /* ── Main workspace: full width ── */
+    .main-workspace {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    /* ── Topbar: compact, 60px, hamburger visible ── */
     .topbar {
-        padding: 0 20px;
+        height: var(--mobile-topbar-h);
+        padding: 0 16px;
         position: sticky;
         top: 0;
         z-index: 800;
-        height: var(--mobile-topbar-h);
     }
 
     .mobile-menu-btn {
         display: flex;
     }
 
-    /* Hide sidebar brand since logo shows in topbar on mobile */
-    .brand-area {
-        display: none;
+    /* ── Profile pill: compact on mobile ── */
+    .profile-btn {
+        padding: 5px 10px 5px 5px;
+        gap: 8px;
+    }
+
+    .profile-info {
+        max-width: 90px;
+    }
+
+    .profile-name {
+        font-size: 12px;
+    }
+
+    .profile-role {
+        font-size: 10px;
     }
 
     /* ── Content ── */
@@ -702,22 +706,34 @@ textarea {
         padding: 20px 16px;
     }
 
+    /* ── Stats: 2-column grid on mobile (matches target image) ── */
+    .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-card strong {
+        font-size: 1.4rem;
+    }
+
+    /* ── Resource layout: single column ── */
     .resource-layout {
         grid-template-columns: 1fr;
         padding: 0 16px 24px;
     }
 
-    .stats-row {
-        grid-template-columns: 1fr;
-    }
-
+    /* ── Resource cards: single column ── */
     #resourcesContainer {
         grid-template-columns: 1fr;
     }
 
     /* ── Page header ── */
     .page-header h1 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -727,20 +743,19 @@ textarea {
 
 @media (max-width: 440px) {
     .stats-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .resource-actions {
-        flex-direction: column;
+        flex-wrap: wrap;
     }
 
-    .open-btn,
+    .open-btn { flex: 1 1 100%; }
+
     .delete-btn {
         width: 100%;
-    }
-
-    .delete-btn {
         height: auto;
         padding: 12px;
+        border-radius: 10px;
     }
 }
